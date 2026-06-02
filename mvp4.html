@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Respira · MVP 4 · A Gasometria como Narrativa</title>
+  <meta name="description" content="Módulo 4 da série Respira: leitura narrativa da gasometria, pH, pCO2, bicarbonato, compensação, fórmula de Winter e ânion-gap.">
+  <meta name="theme-color" content="#F4EFE4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/respira.css">
+  <style>
+    :root{--acid:#B0503E;--base:#3C7F86;--warn:#B8862F;--warn-bg:#F2E9D2;--mono:'JetBrains Mono',ui-monospace,monospace;--hero-a:rgba(192,96,58,.07);--hero-b:rgba(60,127,134,.08)}
+    code,.mono{font-family:var(--mono);font-size:.92em;background:var(--paper-deep);padding:1px 6px;border-radius:5px}.phbar{max-width:340px;margin:0 auto 16px}.phscale{position:relative;height:14px;border-radius:99px;border:1px solid var(--line);background:linear-gradient(90deg,var(--acid) 0%,#C98a5e 32%,var(--correct) 50%,#5fa0a6 68%,var(--base) 100%);box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.phneedle{position:absolute;top:-7px;left:50%;width:3px;height:28px;background:var(--ink);border-radius:2px;transform:translateX(-50%);animation:sway 6s ease-in-out infinite}.phneedle::after{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink)}.phticks{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:.64rem;color:var(--ink-soft)}@keyframes sway{0%,100%{left:46%}50%{left:54%}}.bench{margin-top:24px}.formula-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}.formula{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px}.formula b{display:block;margin-bottom:4px}.case-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}.case{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:13px;padding:15px 16px}.case h3{font-family:'Fraunces',serif;font-size:1.06rem;font-weight:600;margin-bottom:7px}.case p{color:var(--ink-soft);font-size:.94rem}.warnbox{border-left:4px solid var(--warn);background:var(--warn-bg);border-radius:13px;padding:16px 18px;margin:16px 0;color:#5a4318}@media(max-width:640px){.formula-grid,.case-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="phbar" aria-hidden="true"><div class="phscale"><div class="phneedle"></div></div><div class="phticks"><span>6.8</span><span>7.2</span><span>7.4</span><span>7.6</span><span>7.8</span></div></div>
+    <div class="kicker">Respira · Módulo 4</div>
+    <h1>A gasometria<br><em>como narrativa</em></h1>
+    <p class="sub">Três números contam uma história coerente. Aprenda a lê-la por mecanismo: pH, pCO₂, bicarbonato, compensação e ânion-gap.</p>
+    <nav class="nav" aria-label="Navegação dos módulos"><a class="ghost" href="mvp3.html">← Módulo 3</a><a href="index.html">Trilha</a></nav>
+  </header>
+
+  <section class="card intro">
+    <p class="lead">Nos três primeiros módulos você aprendeu a mover o ar, seguir o oxigênio e entender o encontro ar-sangue. A gasometria é onde tudo isso vira um exame que você lê em segundos.</p>
+    <p>O segredo é parar de decorar valores soltos e ler <code>pH</code>, <code>pCO₂</code> e <code>HCO₃⁻</code> como uma história com começo, meio e fim. Esta versão é estática: pense, escolha mentalmente e abra o raciocínio.</p>
+    <ul><li>Primeiro: quem é pulmão, quem é rim e quem diz o estado atual.</li><li>Depois: primário, compensação e distúrbio misto.</li><li>No fim: uma bancada guiada com fórmulas e casos para treinar.</li></ul>
+  </section>
+
+  <main class="lesson">
+    <article class="qa"><div class="qtag">Aquecimento · questão 1</div><h2>A gasometria arterial cospe vários valores, mas três sustentam a história ácido-base. Quais são?</h2><div class="opts"><div class="opt"><span class="mark">A</span>hemoglobina, sódio e potássio</div><div class="opt"><span class="mark">B</span>pH, pCO₂ e HCO₃⁻</div><div class="opt"><span class="mark">C</span>lactato, glicose e ureia</div><div class="opt"><span class="mark">D</span>frequência, pressão e temperatura</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> O <code>pH</code> diz como está o equilíbrio agora; a <code>pCO₂</code> é a voz do pulmão; o <code>HCO₃⁻</code> é a voz do rim. Esse trio é a espinha ácido-base.</p></details></article>
+
+    <article class="qa"><div class="qtag">Aquecimento · questão 2</div><h2>O pH normal é estreito: 7,35 a 7,45. O que significa pH abaixo de 7,35?</h2><div class="opts"><div class="opt"><span class="mark">A</span>alcalemia</div><div class="opt"><span class="mark">B</span>acidemia</div><div class="opt"><span class="mark">C</span>exame errado</div><div class="opt"><span class="mark">D</span>nada relevante</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Quanto menor o pH, mais ácido. Abaixo de 7,35 é acidemia; acima de 7,45 é alcalemia. Essa é sempre a primeira leitura.</p></details></article>
+
+    <article class="qa"><div class="qtag">Aquecimento · questão 3</div><h2>Qual número é controlado pelo pulmão rapidamente e qual é controlado pelo rim lentamente?</h2><div class="opts"><div class="opt"><span class="mark">A</span>pulmão controla HCO₃⁻; rim controla pCO₂</div><div class="opt"><span class="mark">B</span>pulmão controla pCO₂; rim controla HCO₃⁻</div><div class="opt"><span class="mark">C</span>ambos controlam só o pH diretamente</div><div class="opt"><span class="mark">D</span>nenhum controla nada</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> O pulmão regula CO₂ respirando, em segundos a minutos. O rim regula bicarbonato, em horas a dias. Essa diferença decide agudo versus crônico.</p></details></article>
+
+    <article class="qa"><div class="qtag">A lógica · questão 4</div><h2>CO₂ dissolvido forma ácido. Se o paciente ventila mal e o CO₂ acumula, o que acontece com o pH?</h2><div class="opts"><div class="opt"><span class="mark">A</span>fica mais alcalino</div><div class="opt"><span class="mark">B</span>fica mais ácido: acidose respiratória</div><div class="opt"><span class="mark">C</span>não muda</div><div class="opt"><span class="mark">D</span>o bicarbonato some obrigatoriamente</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Mais CO₂ significa mais carga ácida. Ventilação ruim eleva pCO₂ e reduz pH: acidose respiratória. Hiperventilar faz o oposto: alcalose respiratória.</p></details></article>
+
+    <article class="qa"><div class="qtag">A lógica · questão 5</div><h2>pH 7,28, pCO₂ normal-baixa e HCO₃⁻ 12. Qual é o distúrbio primário?</h2><div class="opts"><div class="opt"><span class="mark">A</span>acidose respiratória</div><div class="opt"><span class="mark">B</span>acidose metabólica</div><div class="opt"><span class="mark">C</span>alcalose metabólica</div><div class="opt"><span class="mark">D</span>não dá para saber</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> pH ácido com bicarbonato baixo significa que a queda do HCO₃⁻ está puxando o pH para baixo. A pCO₂ baixa é compensação pulmonar, não causa primária.</p></details></article>
+
+    <article class="qa"><div class="qtag">A lógica · questão 6</div><h2>Na acidose metabólica, por que a pCO₂ costuma cair?</h2><div class="opts"><div class="opt"><span class="mark">A</span>segundo problema sem relação</div><div class="opt"><span class="mark">B</span>compensação: o pulmão hiperventila para lavar CO₂ ácido</div><div class="opt"><span class="mark">C</span>o pulmão parou</div><div class="opt"><span class="mark">D</span>coincidência</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> O bicarbonato caiu; o pulmão tenta ajudar hiperventilando e reduzindo CO₂. Compensação aproxima o pH do normal, mas não ultrapassa nem corrige totalmente.</p></details></article>
+
+    <article class="qa"><div class="qtag">A lógica · questão 7</div><h2>Como usar a regra da compensação para flagrar distúrbio misto?</h2><div class="opts"><div class="opt"><span class="mark">A</span>pH 7,40 nunca tem distúrbio</div><div class="opt"><span class="mark">B</span>se a compensação é exagerada ou insuficiente, ou se os dois parceiros empurram o pH para o mesmo lado, há segundo distúrbio</div><div class="opt"><span class="mark">C</span>distúrbio misto não existe</div><div class="opt"><span class="mark">D</span>basta olhar só o pH</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Compensação tem tamanho esperado. Se pCO₂ ou HCO₃⁻ fogem do esperado, ou se ambos conspiram na mesma direção, há mais de um processo ácido-base.</p></details></article>
+
+    <article class="qa"><div class="qtag">À beira do leito · questão 8</div><h2>Diabético jovem, Kussmaul. Gasometria: pH 7,12 · pCO₂ 22 · HCO₃⁻ 7. Leia a história.</h2><div class="opts"><div class="opt"><span class="mark">A</span>alcalose respiratória pura</div><div class="opt"><span class="mark">B</span>acidose metabólica grave com compensação respiratória</div><div class="opt"><span class="mark">C</span>acidose respiratória</div><div class="opt"><span class="mark">D</span>normal</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> pH ácido + HCO₃⁻ muito baixo = acidose metabólica. A pCO₂ 22 é o pulmão soprando CO₂ para compensar. A respiração de Kussmaul é essa compensação visível.</p></details></article>
+
+    <article class="qa"><div class="qtag">À beira do leito · questão 9</div><h2>Na acidose metabólica, por que calcular ânion-gap?</h2><div class="opts"><div class="opt"><span class="mark">A</span>para saber idade</div><div class="opt"><span class="mark">B</span>para separar ácido adicionado de bicarbonato perdido</div><div class="opt"><span class="mark">C</span>para medir pressão arterial</div><div class="opt"><span class="mark">D</span>não serve</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Gap alto sugere ácido adicionado: cetoácidos, lactato, toxinas. Gap normal sugere perda de bicarbonato: diarreia, acidose tubular renal. Corrija pela albumina quando possível.</p></details></article>
+
+    <article class="qa"><div class="qtag">À beira do leito · questão 10</div><h2>DPOC retentor crônico: pH 7,34 · pCO₂ 65 · HCO₃⁻ 33. Por que o pH quase normal?</h2><div class="opts"><div class="opt"><span class="mark">A</span>gasometria errada</div><div class="opt"><span class="mark">B</span>acidose respiratória crônica com compensação metabólica renal</div><div class="opt"><span class="mark">C</span>alcalose metabólica pura</div><div class="opt"><span class="mark">D</span>normalidade absoluta</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> pCO₂ alta acidifica. O rim teve tempo para reter bicarbonato e amortecer o pH. HCO₃⁻ alto é o carimbo do tempo: crônico, não agudo puro.</p></details></article>
+
+    <article class="qa"><div class="qtag">À beira do leito · questão 11</div><h2>Vômitos há dois dias: pH 7,52 · pCO₂ 47 · HCO₃⁻ 37. Qual a história?</h2><div class="opts"><div class="opt"><span class="mark">A</span>acidose metabólica</div><div class="opt"><span class="mark">B</span>alcalose metabólica por perda de ácido gástrico, com compensação respiratória</div><div class="opt"><span class="mark">C</span>alcalose respiratória</div><div class="opt"><span class="mark">D</span>normal</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Vômito perde HCl; sobra base. pH alto + HCO₃⁻ alto = alcalose metabólica. O pulmão compensa hipoventilando e retendo CO₂ ácido.</p></details></article>
+
+    <article class="qa"><div class="qtag">À beira do leito · questão 12</div><h2>Intoxicação por salicilato: pH 7,40 · pCO₂ 22 · HCO₃⁻ 13 · gap alto. Está tudo bem?</h2><div class="opts"><div class="opt"><span class="mark">A</span>sim, pH 7,40 exclui distúrbio</div><div class="opt"><span class="mark">B</span>não: alcalose respiratória + acidose metabólica de gap alto</div><div class="opt"><span class="mark">C</span>só acidose metabólica simples</div><div class="opt"><span class="mark">D</span>só alcalose respiratória simples</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> pH normal pode ser empate, não saúde. Salicilato causa hiperventilação (pCO₂ baixa) e acidose metabólica de gap alto (HCO₃⁻ baixo). Quem olha só pH perde o paciente.</p></details></article>
+
+    <article class="qa"><div class="qtag">Síntese · questão 13</div><h2>Diante de qualquer gasometria, qual sequência desmonta a história?</h2><div class="opts"><div class="opt"><span class="mark">A</span>decorar valores soltos</div><div class="opt"><span class="mark">B</span>pH; primário; compensação; ânion-gap se acidose metabólica</div><div class="opt"><span class="mark">C</span>olhar só pH</div><div class="opt"><span class="mark">D</span>pedir exame mais caro</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Primeiro o lado do pH. Depois quem causou: pCO₂ ou HCO₃⁻. Depois se a compensação é adequada. Em acidose metabólica, calcule o ânion-gap para apontar etiologia.</p></details></article>
+
+    <section class="synth"><h2>Ferramenta final do módulo</h2><ol><li><strong>pH:</strong> acidemia, alcalemia ou faixa normal com possível distúrbio mascarado.</li><li><strong>Primário:</strong> respiratório se a pCO₂ acompanha o pH; metabólico se o HCO₃⁻ acompanha o pH.</li><li><strong>Compensação:</strong> veja se o outro eixo respondeu no tamanho esperado.</li><li><strong>Ânion-gap:</strong> se acidose metabólica, separe ácido adicionado de bicarbonato perdido.</li></ol></section>
+
+    <section class="card bench">
+      <div class="qtag">Bancada guiada · análise manual</div>
+      <p class="bench-lead">Use esta bancada como checklist determinístico. Ela não calcula sozinha nesta versão, mas deixa a sequência pronta para aplicar em qualquer gasometria real.</p>
+      <div class="formula-grid">
+        <div class="formula"><b>1 · Estado do pH</b><code>&lt;7,35 = acidemia</code><br><code>&gt;7,45 = alcalemia</code></div>
+        <div class="formula"><b>2 · Ânion-gap</b><code>AG = Na − (Cl + HCO₃)</code><br><code>AG corrigido = AG + 2,5×(4 − albumina)</code></div>
+        <div class="formula"><b>3 · Winter</b><code>pCO₂ esperada = 1,5×HCO₃ + 8 ± 2</code><br><span class="note">Para acidose metabólica.</span></div>
+        <div class="formula"><b>4 · Alcalose metabólica</b><code>pCO₂ esperada = 0,7×(HCO₃−24)+40 ± 2</code></div>
+        <div class="formula"><b>5 · Acidose respiratória</b><code>Aguda: HCO₃ sobe ~1/10 mmHg CO₂</code><br><code>Crônica: sobe ~3,5/10</code></div>
+        <div class="formula"><b>6 · Alcalose respiratória</b><code>Aguda: HCO₃ cai ~2/10 mmHg CO₂</code><br><code>Crônica: cai ~4/10</code></div>
+      </div>
+      <div class="warnbox"><strong>Regra operacional:</strong> compensação aproxima o pH do normal, mas não passa para o outro lado. Se a conta não fecha, trate como distúrbio misto até prova em contrário.</div>
+      <div class="case-grid">
+        <div class="case"><h3>Cetoacidose diabética</h3><p><span class="mono">pH 7,20 · pCO₂ 20 · HCO₃ 8</span><br>Acidose metabólica grave com hiperventilação compensatória. Gap esperado alto.</p></div>
+        <div class="case"><h3>DPOC retentor crônico</h3><p><span class="mono">pH 7,34 · pCO₂ 65 · HCO₃ 33</span><br>Acidose respiratória crônica com compensação metabólica renal.</p></div>
+        <div class="case"><h3>Vômitos persistentes</h3><p><span class="mono">pH 7,52 · pCO₂ 47 · HCO₃ 37</span><br>Alcalose metabólica com hipoventilação compensatória.</p></div>
+        <div class="case"><h3>Salicilato</h3><p><span class="mono">pH 7,40 · pCO₂ 22 · HCO₃ 13</span><br>pH normal por empate: alcalose respiratória + acidose metabólica de gap alto.</p></div>
+      </div>
+      <p class="disclaimer">Ferramenta didática. As fórmulas orientam raciocínio, mas não substituem contexto clínico, tempo de instalação, lactato, eletrólitos completos, albumina e julgamento à beira do leito.</p>
+    </section>
+  </main>
+
+  <nav class="nav" aria-label="Navegação inferior"><a class="ghost" href="mvp3.html">← Módulo 3</a><a href="index.html">Voltar à trilha</a></nav>
+  <footer>Respira — material didático · Dr. Matheus M. Coelho · MVP 4 / gasometria & equilíbrio ácido-base</footer>
+</div>
+</body>
+</html>
