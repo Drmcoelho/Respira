@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Respira · A Curva Viva da Hemoglobina</title>
+  <meta name="description" content="Módulo interativo de oxigenação e ventilação com curva de dissociação da hemoglobina manipulável por PaO2 e P50.">
+  <meta name="theme-color" content="#F4EFE4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--crimson:#8E2F39;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 78% -8%,rgba(142,47,57,.07),transparent 60%),radial-gradient(900px 700px at -5% 110%,rgba(78,124,90,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.6;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}.wrap{max-width:760px;margin:0 auto;position:relative;z-index:2}header{padding:46px 0 20px;text-align:center}.backlink{display:inline-block;margin-bottom:14px;font-size:.82rem;color:var(--accent-deep);text-decoration:none}.backlink:hover{text-decoration:underline}.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}.sub{color:var(--ink-soft);font-size:1.02rem;max-width:560px;margin:0 auto}.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0 0}.nav a{font-family:inherit;font-weight:600;font-size:.98rem;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:11px;box-shadow:0 8px 20px -10px var(--accent-deep)}.nav a.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:34px 34px 30px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}.bench-lead{color:var(--ink-soft);margin-bottom:20px;font-size:1.02rem}.bench-lead strong{color:var(--ink)}.readouts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}.ro{text-align:center;background:var(--paper-deep);border:1px solid var(--line);border-radius:12px;padding:12px 6px}.ro .v{font-family:var(--mono);font-weight:600;font-size:1.5rem;color:var(--crimson);line-height:1}.ro .v small{font-size:.8rem;color:var(--ink-soft);font-weight:400}.ro .k{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}.plot{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:10px 8px 4px;margin-bottom:18px}.plot svg{width:100%;height:auto;display:block}.ctrl{margin-bottom:16px}.ctrl label{display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}.ctrl label span{font-family:var(--mono);color:var(--crimson)}.ctrl input[type=range]{width:100%;accent-color:var(--accent);height:24px}.ctrl .ends{display:flex;justify-content:space-between;font-size:.68rem;color:var(--ink-soft);margin-top:2px}.presets{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}.preset{font-family:inherit;font-size:.82rem;font-weight:500;color:var(--ink);background:var(--paper-deep);border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;transition:all .16s ease}.preset:hover{border-color:var(--accent);color:var(--accent-deep)}.insight{border-left:4px solid var(--crimson);background:var(--wrong-bg);border-radius:11px;padding:16px 18px;font-size:.98rem;line-height:1.6;color:#5e2c22}.insight b{color:#3e1c16}.disclaimer{margin-top:18px;font-size:.82rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem}@media(max-width:560px){.card{padding:26px 20px}.ro .v{font-size:1.25rem}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+    <div class="kicker">Respira · Módulo 2 · versão interativa</div>
+    <h1>Saturar não é<br><em>respirar bem</em></h1>
+    <p class="sub">Pegue a curva da hemoglobina pela mão: arraste a PaO₂, desloque o P50 e veja o platô, o penhasco e o efeito Bohr responderem.</p>
+    <nav class="nav" aria-label="Navegação"><a class="ghost" href="mvp2.html">Trilha estática</a><a href="index.html">Capa</a></nav>
+  </header>
+
+  <main class="card">
+    <div class="qtag">Curva viva · dissociação da hemoglobina</div>
+    <p class="bench-lead">Arraste a <strong>PaO₂</strong> e veja a saturação subir pela curva. Depois mexa no <strong>P50</strong>: acidez, calor e CO₂ deslocam a curva à direita; alcalose, hipotermia e monóxido deslocam à esquerda.</p>
+
+    <div class="readouts">
+      <div class="ro"><div class="v" id="roPao2">60<small> mmHg</small></div><div class="k">PaO₂</div></div>
+      <div class="ro"><div class="v" id="roSpo2">90<small> %</small></div><div class="k">SpO₂</div></div>
+      <div class="ro"><div class="v" id="roP50">27<small> mmHg</small></div><div class="k">P50</div></div>
+    </div>
+
+    <div class="plot"><svg id="plot" viewBox="0 0 340 240" role="img" aria-label="Curva de dissociação da hemoglobina"></svg></div>
+
+    <div class="ctrl">
+      <label>PaO₂ no sangue <span id="lblPao2">60 mmHg</span></label>
+      <input id="slPao2" type="range" min="0" max="120" step="1" value="60" oninput="renderCurve()">
+      <div class="ends"><span>0 · anóxia</span><span>~100 · normal arterial</span></div>
+    </div>
+
+    <div class="ctrl">
+      <label>Desvio da curva · P50 <span id="lblP50">27 mmHg</span></label>
+      <input id="slP50" type="range" min="18" max="38" step="0.5" value="26.6" oninput="renderCurve()">
+      <div class="ends"><span>← esquerda · mais afinidade</span><span>direita · entrega fácil →</span></div>
+    </div>
+
+    <div class="presets" id="presets"></div>
+    <div class="insight" id="insight"></div>
+
+    <p class="disclaimer">Modelo pela equação de Severinghaus (1979), com deslocamento didático por P50. O oxímetro não distingue O₂ de monóxido, não mede CO₂ e não mede quantidade de hemoglobina.</p>
+  </main>
+
+  <footer>Respira — MVP 2 · curva viva da hemoglobina</footer>
+</div>
+<script>
+const P50_NORMAL=26.6;
+function so2(P,p50){if(P<=0)return 0;const Peff=P*(P50_NORMAL/p50);const s=1/(23400/(Math.pow(Peff,3)+150*Peff)+1);return Math.max(0,Math.min(1,s))*100}
+const PLOT={x0:40,x1:320,y0:200,y1:20,pMax:120};
+const el=id=>document.getElementById(id); const xToPx=p=>PLOT.x0+(p/PLOT.pMax)*(PLOT.x1-PLOT.x0); const yToPx=s=>PLOT.y0-(s/100)*(PLOT.y0-PLOT.y1);
+function curvePath(p50){let d='';for(let p=0;p<=PLOT.pMax;p+=2){const x=xToPx(p),y=yToPx(so2(p,p50));d+=(p===0?'M':'L')+x.toFixed(1)+' '+y.toFixed(1)+' '}return d.trim()}
+const PRESETS=[{nome:'Normal',p50:26.6},{nome:'Direita: exercício, febre, acidose, ↑CO₂',p50:34},{nome:'Esquerda: hipotermia, alcalose, monóxido',p50:20}];
+function buildPresets(){el('presets').innerHTML=PRESETS.map((p,i)=>'<button class="preset" onclick="loadPreset('+i+')">'+p.nome+'</button>').join('')}
+function loadPreset(i){el('slP50').value=PRESETS[i].p50;renderCurve()}
+function renderCurve(){
+ const paO2=parseFloat(el('slPao2').value),p50=parseFloat(el('slP50').value),sAct=so2(paO2,p50),sNorm=so2(paO2,P50_NORMAL);
+ el('roPao2').innerHTML=paO2+'<small> mmHg</small>';el('roSpo2').innerHTML=sAct.toFixed(0)+'<small> %</small>';el('roP50').innerHTML=p50.toFixed(1)+'<small> mmHg</small>';el('lblPao2').textContent=paO2+' mmHg';el('lblP50').textContent=p50.toFixed(1)+' mmHg';
+ const g=PLOT;let svg='';
+ for(let s=0;s<=100;s+=25){const y=yToPx(s);svg+='<line x1="'+g.x0+'" y1="'+y+'" x2="'+g.x1+'" y2="'+y+'" stroke="#D7CCB8" stroke-width="0.6"/><text x="'+(g.x0-6)+'" y="'+(y+3)+'" text-anchor="end" font-size="8" fill="#4A6164" font-family="monospace">'+s+'</text>'}
+ for(let p=0;p<=g.pMax;p+=20){const x=xToPx(p);svg+='<text x="'+x+'" y="'+(g.y0+13)+'" text-anchor="middle" font-size="8" fill="#4A6164" font-family="monospace">'+p+'</text>'}
+ svg+='<text x="'+((g.x0+g.x1)/2)+'" y="'+(g.y0+26)+'" text-anchor="middle" font-size="9" fill="#4A6164">PaO₂ (mmHg)</text><text transform="translate(12,'+((g.y0+g.y1)/2)+') rotate(-90)" text-anchor="middle" font-size="9" fill="#4A6164">SpO₂ (%)</text>';
+ const x60=xToPx(60),y90=yToPx(90);svg+='<rect x="'+x60+'" y="'+g.y1+'" width="'+(g.x1-x60)+'" height="'+(g.y0-g.y1)+'" fill="#4E7C5A" opacity="0.06"/><line x1="'+g.x0+'" y1="'+y90+'" x2="'+g.x1+'" y2="'+y90+'" stroke="#4E7C5A" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.6"/><text x="'+g.x1+'" y="'+(y90-3)+'" text-anchor="end" font-size="7.5" fill="#4E7C5A">~90% · beira do penhasco</text>';
+ if(Math.abs(p50-P50_NORMAL)>0.6){svg+='<path d="'+curvePath(P50_NORMAL)+'" fill="none" stroke="#8E2F39" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.35"/><circle cx="'+xToPx(paO2)+'" cy="'+yToPx(sNorm)+'" r="3" fill="#8E2F39" opacity="0.3"/>'}
+ svg+='<path d="'+curvePath(p50)+'" fill="none" stroke="#8E2F39" stroke-width="2.6" stroke-linecap="round"/>';
+ const mx=xToPx(paO2),my=yToPx(sAct);svg+='<line x1="'+mx+'" y1="'+g.y0+'" x2="'+mx+'" y2="'+my+'" stroke="#16383B" stroke-width="0.7" stroke-dasharray="2 2" opacity="0.5"/><line x1="'+g.x0+'" y1="'+my+'" x2="'+mx+'" y2="'+my+'" stroke="#16383B" stroke-width="0.7" stroke-dasharray="2 2" opacity="0.5"/><circle cx="'+mx+'" cy="'+my+'" r="5" fill="#C0603A" stroke="#fff" stroke-width="1.5"/>';
+ el('plot').innerHTML=svg;
+ let pos=paO2>=70?'Você está <b>no platô</b>: derrubar a PaO₂ daqui ainda mexe pouco na saturação.':paO2>=55?'Você está na <b>beira do platô</b>: a partir daqui a queda começa a pesar.':'Você está na <b>rampa íngreme</b>: cada queda agora desaba a saturação.';
+ let shift=p50>29?' Curva à <b>direita</b>: a Hb segura menos O₂ — entrega melhor ao tecido, mas exige PaO₂ maior para saturar.':p50<24?' Curva à <b>esquerda</b>: a Hb agarra o O₂ — satura fácil, mas solta pior no tecido.':' Curva em <b>posição normal</b>.';
+ let delta='';if(Math.abs(p50-P50_NORMAL)>0.6){const d=sAct-sNorm;delta=' Na mesma PaO₂, a curva normal daria '+sNorm.toFixed(0)+'%; a curva atual dá <b>'+sAct.toFixed(0)+'%</b> ('+(d>0?'+':'')+d.toFixed(0)+' ponto(s)).'}
+ el('insight').innerHTML=pos+shift+delta;
+}
+buildPresets();renderCurve();
+</script>
+</body>
+</html>
