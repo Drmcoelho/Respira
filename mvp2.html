@@ -1,60 +1,26 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Respira · MVP 2 · Saturar não é respirar bem</title>
-  <meta name="description" content="Módulo 2 da série Respira: oxigenação versus ventilação, curva da hemoglobina, SpO2, CO2, monóxido, anemia e entrega de oxigênio.">
-  <meta name="theme-color" content="#F4EFE4">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/respira.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respira · Módulo 2</title>
+<meta name="description" content="Redirecionamento para a versão canônica interativa do Módulo 2: Trilha progressiva + Curva Viva da Hemoglobina.">
+<meta http-equiv="refresh" content="0; url=mvp2-interativo.html">
+<link rel="canonical" href="mvp2-interativo.html">
+<script>
+  window.location.replace('mvp2-interativo.html');
+</script>
+<style>
+  :root{--paper:#F4EFE4;--ink:#16383B;--accent:#C0603A;--line:#D7CCB8}
+  *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:24px;text-align:center}.box{max-width:560px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.75);padding:30px;box-shadow:0 14px 40px -24px rgba(22,56,59,.20)}a{color:#fff;background:var(--accent);text-decoration:none;padding:12px 18px;border-radius:12px;font-weight:700;display:inline-block;margin-top:14px}p{line-height:1.55}
+</style>
 </head>
-<body class="o2" style="--hero-a:rgba(142,47,57,.07)">
-<div class="wrap">
-  <header>
-    <div class="o2curve" aria-hidden="true"><svg viewBox="0 0 120 80"><line class="axis" x1="12" y1="14" x2="12" y2="68"/><line class="axis" x1="12" y1="68" x2="112" y2="68"/><text class="lbl" x="2" y="16" transform="rotate(-90 6,40)" text-anchor="middle">SpO₂</text><text class="lbl" x="60" y="78" text-anchor="middle">PaO₂</text><path class="line" pathLength="1" d="M 12 64 C 34 63, 42 58, 54 40 C 62 28, 74 18, 108 15"/><circle class="dot" r="3.2"/></svg></div>
-    <div class="kicker">Respira · Módulo 2</div>
-    <h1>Saturar não é<br><em>respirar bem</em></h1>
-    <p class="sub">O ar já entrou — e agora? Oxigenação, ventilação, a curva da hemoglobina, e o paciente que sorri enquanto piora. Um passo de cada vez, para a Dani.</p>
-    <nav class="nav" aria-label="Navegação dos módulos"><a class="ghost" href="mvp1.html">← Módulo 1</a><a href="mvp3.html">Próximo módulo →</a></nav>
-  </header>
-
-  <section class="card intro"><p class="lead">No Módulo 1, fizemos o ar entrar e sair. Agora vem a parte que engana gente experiente.</p><p>O oxímetro de dedo virou onipresente — e, com ele, a armadilha de achar que <strong>saturação boa = paciente bem</strong>. Aqui a regra é desmontar o número, não venerá-lo.</p><ul><li>Separar oxigenação de ventilação.</li><li>Entender o platô e a ladeira da curva O₂-Hb.</li><li>Reconhecer as cegueiras do oxímetro: CO₂, monóxido, anemia e fluxo.</li></ul></section>
-
-  <main class="lesson">
-    <article class="qa"><div class="qtag">Aquecimento · questão 1</div><h2>O oxigênio que chega aos tecidos viaja no sangue principalmente de que forma?</h2><div class="opts"><div class="opt"><span class="mark">A</span>dissolvido no plasma</div><div class="opt"><span class="mark">B</span>ligado à hemoglobina, dentro das hemácias</div><div class="opt"><span class="mark">C</span>empurrado pelas plaquetas</div><div class="opt"><span class="mark">D</span>como bolhas de gás</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> A maior parte do oxigênio é transportada pela hemoglobina. Por isso dois fatores dominam o módulo: quão cheia está a hemoglobina e quanta hemoglobina existe.</p></details></article>
-
-    <article class="qa"><div class="qtag">Aquecimento · questão 2</div><h2>Respirar tem dois trabalhos: mover ar e carregar O₂. Qual gás melhor mede se o paciente está ventilando?</h2><div class="opts"><div class="opt"><span class="mark">A</span>oxigênio</div><div class="opt"><span class="mark">B</span>gás carbônico</div><div class="opt"><span class="mark">C</span>nitrogênio</div><div class="opt"><span class="mark">D</span>vapor d’água</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Ventilar é eliminar CO₂. Se a ventilação cai, o CO₂ sobe. Oxigenação e ventilação são trabalhos diferentes e podem falhar separadamente.</p></details></article>
-
-    <article class="qa"><div class="qtag">Aquecimento · questão 3</div><h2>O oxímetro mostra SpO₂. O que esse número mede?</h2><div class="opts"><div class="opt"><span class="mark">A</span>litros de oxigênio no sangue</div><div class="opt"><span class="mark">B</span>porcentagem dos sítios da hemoglobina ocupados por oxigênio</div><div class="opt"><span class="mark">C</span>pressão arterial</div><div class="opt"><span class="mark">D</span>frequência respiratória</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Saturação é porcentagem de ocupação, não quantidade absoluta de oxigênio. Ela não informa hemoglobina total, débito cardíaco nem CO₂.</p></details></article>
-
-    <article class="qa"><div class="qtag">A curva · questão 4</div><h2>No platô da curva O₂-Hb, com SpO₂ por volta de 95–100%, o que acontece se a PaO₂ cai um pouco?</h2><div class="opts"><div class="opt"><span class="mark">A</span>a saturação despenca imediatamente</div><div class="opt"><span class="mark">B</span>a saturação quase não muda — o platô esconde a queda inicial</div><div class="opt"><span class="mark">C</span>o oxímetro para de funcionar</div><div class="opt"><span class="mark">D</span>nada nunca se altera</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> No platô, a PaO₂ pode cair antes de a SpO₂ denunciar a perda de reserva. Por isso saturação boa não encerra o caso.</p></details></article>
-
-    <article class="qa"><div class="qtag">A curva · questão 5</div><h2>Quando a saturação cruza para baixo de aproximadamente 90%, entramos na parte íngreme. O que isso significa?</h2><div class="opts"><div class="opt"><span class="mark">A</span>pequena piora passa a derrubar muito a saturação</div><div class="opt"><span class="mark">B</span>nada muda</div><div class="opt"><span class="mark">C</span>o paciente melhora sozinho</div><div class="opt"><span class="mark">D</span>a curva passa a subir</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: A.</strong> Abaixo de 90%, você saiu do platô e entrou na ladeira. Uma queda pequena de PaO₂ pode virar queda grande de SpO₂.</p></details></article>
-
-    <article class="qa"><div class="qtag">A curva · questão 6</div><h2>Um músculo ativo fica quente, ácido e cheio de CO₂. A hemoglobina passa a soltar O₂ com mais facilidade. Por que isso é útil?</h2><div class="opts"><div class="opt"><span class="mark">A</span>é defeito sem função</div><div class="opt"><span class="mark">B</span>o tecido que mais precisa de O₂ é o que mais recebe</div><div class="opt"><span class="mark">C</span>faz a hemoglobina parar de funcionar</div><div class="opt"><span class="mark">D</span>só ocorre em doença</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Calor, acidez e CO₂ são assinatura metabólica de tecido trabalhando. O efeito Bohr facilita a entrega local de O₂ onde há maior demanda.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 7</div><h2>Paciente resgatado de casa com aquecedor defeituoso: confuso, cefaleia, náusea e SpO₂ 99%. Por que esse 99% não é confiável?</h2><div class="opts"><div class="opt"><span class="mark">A</span>porque o oxímetro está sem bateria</div><div class="opt"><span class="mark">B</span>porque o monóxido ocupa hemoglobina e o oxímetro comum o confunde com oxigênio</div><div class="opt"><span class="mark">C</span>porque febre invalida qualquer oxímetro</div><div class="opt"><span class="mark">D</span>porque 99% sempre é errado</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> O oxímetro comum vê “sítio ocupado”, mas não diferencia adequadamente oxi-hemoglobina de carboxi-hemoglobina. Em suspeita de CO, SpO₂ pode tranquilizar de modo perigoso.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 8</div><h2>Por que o paciente do monóxido sufoca por dentro apesar do 99%?</h2><div class="opts"><div class="opt"><span class="mark">A</span>porque CO é inofensivo</div><div class="opt"><span class="mark">B</span>porque CO gruda forte na hemoglobina, toma assentos e dificulta a liberação do pouco O₂ restante</div><div class="opt"><span class="mark">C</span>porque bebeu água demais</div><div class="opt"><span class="mark">D</span>porque o pulmão encolheu</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> O CO rouba capacidade de transporte e desloca a curva para a esquerda, dificultando liberação tecidual de O₂. O tratamento com oxigênio em alta concentração é coerente: compete com o CO.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 9</div><h2>DPOC grave em O₂, SpO₂ 95%, mas ficando sonolento e apagando. Que trabalho está falhando?</h2><div class="opts"><div class="opt"><span class="mark">A</span>oxigenação</div><div class="opt"><span class="mark">B</span>ventilação — ele não elimina CO₂ suficiente</div><div class="opt"><span class="mark">C</span>circulação das pernas</div><div class="opt"><span class="mark">D</span>visão</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> SpO₂ mostra oxigenação, não ventilação. Se o paciente retém CO₂, pode ficar sonolento com saturação aparentemente confortável. O dado clínico manda mais que o número bonito.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 10</div><h2>Qual a lição central do paciente “rosado piorando calado”?</h2><div class="opts"><div class="opt"><span class="mark">A</span>o oxímetro mostra tudo</div><div class="opt"><span class="mark">B</span>SpO₂ avalia oxigenação, mas é cega para ventilação e CO₂</div><div class="opt"><span class="mark">C</span>saturação alta é segurança total</div><div class="opt"><span class="mark">D</span>basta olhar o monitor</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Saturação boa não garante paciente bem. Em risco de hipercapnia, observe consciência, padrão ventilatório e gasometria quando indicada; oxigênio deve ser titulado para alvo, não despejado sem raciocínio.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 11</div><h2>Paciente com anemia muito grave e SpO₂ 100%. A oxigenação tecidual está garantida?</h2><div class="opts"><div class="opt"><span class="mark">A</span>sim, 100% é o máximo</div><div class="opt"><span class="mark">B</span>não — 100% de poucos assentos ainda é pouco oxigênio total</div><div class="opt"><span class="mark">C</span>sim, anemia não afeta oxigênio</div><div class="opt"><span class="mark">D</span>não dá para saber nunca</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Saturação é percentual. Sem hemoglobina suficiente, o conteúdo arterial de O₂ cai mesmo com SpO₂ perfeita.</p></details></article>
-
-    <article class="qa"><div class="qtag">À beira do leito · questão 12</div><h2>Para o oxigênio realmente chegar ao tecido, três coisas precisam dar certo. Quais?</h2><div class="opts"><div class="opt"><span class="mark">A</span>cor do quarto, marca do oxímetro e horário</div><div class="opt"><span class="mark">B</span>hemoglobina saturada, hemoglobina suficiente e sangue circulando</div><div class="opt"><span class="mark">C</span>apenas saturação</div><div class="opt"><span class="mark">D</span>apenas pressão arterial</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Entrega de oxigênio depende de conteúdo arterial e fluxo. Oximetria ilumina só parte da equação: saturação.</p></details></article>
-
-    <article class="qa"><div class="qtag">Síntese · questão 13</div><h2>Diante de um paciente “mal de oxigênio”, quais perguntas organizam o raciocínio?</h2><div class="opts"><div class="opt"><span class="mark">A</span>qual remédio é mais caro?</div><div class="opt"><span class="mark">B</span>é oxigenação ou ventilação? a SpO₂ é confiável? a entrega está completa?</div><div class="opt"><span class="mark">C</span>decorar valores de cor</div><div class="opt"><span class="mark">D</span>ignorar o paciente e olhar só monitor</div></div><details><summary>Ver raciocínio</summary><p><strong>Resposta: B.</strong> Separe O₂ de CO₂, desconfie do número quando o contexto exige e pense em saturação × hemoglobina × fluxo.</p></details></article>
-
-    <section class="synth"><h2>Ferramenta final do módulo</h2><ol><li>Oxigenação ou ventilação? O oxímetro vê O₂, não CO₂.</li><li>Dá para confiar nessa SpO₂? Pense em monóxido, anemia e perfusão.</li><li>A entrega está inteira? Saturação × hemoglobina × fluxo.</li></ol></section>
+<body>
+  <main class="box">
+    <h1>Respira · Módulo 2</h1>
+    <p>Este módulo agora usa a versão canônica: <strong>Trilha progressiva + Curva Viva da Hemoglobina</strong>.</p>
+    <p>Se o redirecionamento não ocorrer automaticamente, toque abaixo.</p>
+    <a href="mvp2-interativo.html">Abrir Módulo 2 interativo →</a>
   </main>
-
-  <nav class="nav" aria-label="Navegação inferior"><a class="ghost" href="mvp1.html">← Módulo 1</a><a href="mvp3.html">Módulo 3 →</a></nav>
-  <footer>Respira — material didático · Dr. Matheus M. Coelho · MVP 2 / oxigenação × ventilação</footer>
-</div>
 </body>
 </html>
