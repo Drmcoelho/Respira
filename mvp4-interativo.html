@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Respira · Gasometria — Bancada que calcula</title>
+  <meta name="description" content="Bancada interativa de gasometria: pH, pCO2, bicarbonato, compensação, ânion-gap, Henderson-Hasselbalch e delta-delta.">
+  <meta name="theme-color" content="#F4EFE4">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--acid:#B0503E;--base:#3C7F86;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 78% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -5% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.6;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}.wrap{max-width:760px;margin:0 auto;position:relative;z-index:2}header{padding:46px 0 20px;text-align:center}.backlink{display:inline-block;margin-bottom:10px;font-size:.82rem;color:var(--accent-deep);text-decoration:none}.backlink:hover{text-decoration:underline}.phbar{max-width:340px;margin:0 auto 16px}.phscale{position:relative;height:14px;border-radius:99px;border:1px solid var(--line);background:linear-gradient(90deg,var(--acid) 0%,#C98a5e 32%,var(--correct) 50%,#5fa0a6 68%,var(--base) 100%);box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}.phneedle{position:absolute;top:-7px;left:50%;width:3px;height:28px;background:var(--ink);border-radius:2px;transform:translateX(-50%);transition:left .6s cubic-bezier(.22,1,.36,1)}.phneedle::after{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--ink)}.phticks{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:.64rem;color:var(--ink-soft)}.phbar.idle .phneedle{animation:sway 6s ease-in-out infinite}@keyframes sway{0%,100%{left:46%}50%{left:54%}}.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}.sub{color:var(--ink-soft);font-size:1.02rem;max-width:570px;margin:0 auto}.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:34px 34px 30px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}.lead{color:var(--ink-soft);margin-bottom:8px;font-size:1.02rem}.bench-note{font-size:.88rem;color:var(--accent-deep);background:var(--paper-deep);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:12px 0 20px}.inputs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:.78rem;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}.field label .ref{font-family:var(--mono);font-weight:400;font-size:.68rem;color:var(--ink-soft);opacity:.75}.field input{font-family:var(--mono);font-size:1.05rem;color:var(--ink);text-align:center;background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:11px 8px;transition:border-color .18s ease;width:100%}.field input:focus{outline:none;border-color:var(--accent)}.opt-divider{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:6px 0 12px;display:flex;align-items:center;gap:10px}.opt-divider::before,.opt-divider::after{content:"";flex:1;height:1px;background:var(--line)}.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.preset{font-family:inherit;font-size:.82rem;font-weight:500;color:var(--ink);background:var(--paper-deep);border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;transition:all .16s ease}.preset:hover{border-color:var(--accent);color:var(--accent-deep)}.row{display:flex;gap:12px;margin-bottom:8px}.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep);flex:1}.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.err-msg{color:var(--wrong);font-size:.9rem;margin-top:8px;min-height:1.2em}.result{margin-top:24px;opacity:0;transform:translateY(10px);transition:all .4s ease}.result.show{opacity:1;transform:translateY(0)}.verdict{border-radius:14px;padding:20px 22px;margin-bottom:16px;border:1.5px solid var(--line);background:var(--paper-deep)}.verdict.acid{border-color:var(--acid);background:var(--wrong-bg)}.verdict.base{border-color:var(--base);background:#E2ECEC}.verdict.ok{border-color:var(--correct);background:var(--correct-bg)}.verdict.mixed{border-color:var(--warn);background:var(--warn-bg)}.verdict h2{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin-bottom:6px}.vsub{font-size:.95rem;color:var(--ink-soft)}.steps{display:flex;flex-direction:column;gap:10px}.step{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:14px 16px}.step .sn{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.78rem;font-family:var(--mono)}.step .stxt{font-size:.96rem;line-height:1.55}.step .stxt code{font-family:var(--mono);font-size:.86em;background:var(--paper-deep);padding:1px 6px;border-radius:5px}.step.warn{border-color:var(--warn);background:var(--warn-bg)}.step.warn .sn{background:var(--warn)}.step.flag{border-color:var(--wrong);background:var(--wrong-bg)}.step.flag .sn{background:var(--wrong)}.disclaimer{margin-top:18px;font-size:.82rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:22px 0 0}.nav a{font-family:inherit;font-weight:600;font-size:.98rem;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:11px;box-shadow:0 8px 20px -10px var(--accent-deep)}.nav a.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem}@media(max-width:560px){.card{padding:26px 20px}.inputs{grid-template-columns:repeat(3,1fr);gap:9px}.field input{font-size:.95rem;padding:10px 4px}.field label{font-size:.72rem}.row{flex-direction:column}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+    <div class="phbar idle" id="phbar"><div class="phscale"><div class="phneedle" id="phneedle"></div></div><div class="phticks"><span>6.8</span><span>7.2</span><span>7.4</span><span>7.6</span><span>7.8</span></div></div>
+    <div class="kicker">Respira · Módulo 4 · versão interativa</div>
+    <h1>A gasometria<br><em>como narrativa</em></h1>
+    <p class="sub">Bancada que calcula: pH, primário, compensação, ânion-gap, consistência interna e delta-delta.</p>
+    <nav class="nav" aria-label="Navegação"><a class="ghost" href="mvp4.html">Trilha estática</a><a href="index.html">Capa</a></nav>
+  </header>
+
+  <main class="card">
+    <div class="qtag">Bancada · analisador ácido-base</div>
+    <p class="lead">Digite os três números da gasometria. Eletrólitos são opcionais, mas habilitam ânion-gap e delta-delta.</p>
+    <div class="bench-note">Esta versão calcula a compensação esperada, corrige o ânion-gap pela albumina, checa coerência interna por Henderson-Hasselbalch/Kassirer-Bleich e procura distúrbio metabólico oculto por delta-delta.</div>
+
+    <div class="inputs">
+      <div class="field"><label>pH <span class="ref">7.35–7.45</span></label><input id="inPh" type="number" step="0.01" inputmode="decimal" placeholder="7.40"></div>
+      <div class="field"><label>pCO₂ <span class="ref">35–45 mmHg</span></label><input id="inCo2" type="number" step="1" inputmode="decimal" placeholder="40"></div>
+      <div class="field"><label>HCO₃⁻ <span class="ref">22–26 mEq/L</span></label><input id="inHco3" type="number" step="0.1" inputmode="decimal" placeholder="24"></div>
+    </div>
+
+    <div class="opt-divider">eletrólitos · opcional</div>
+    <div class="inputs">
+      <div class="field"><label>Na⁺ <span class="ref">mEq/L</span></label><input id="inNa" type="number" step="1" inputmode="decimal" placeholder="140"></div>
+      <div class="field"><label>Cl⁻ <span class="ref">mEq/L</span></label><input id="inCl" type="number" step="1" inputmode="decimal" placeholder="104"></div>
+      <div class="field"><label>Albumina <span class="ref">g/dL</span></label><input id="inAlb" type="number" step="0.1" inputmode="decimal" placeholder="4.0"></div>
+    </div>
+
+    <div class="opt-divider">casos prontos</div>
+    <div class="presets" id="presets"></div>
+
+    <div class="row"><button class="btn" onclick="runBench()">Analisar gasometria →</button><button class="btn ghost" onclick="clearBench()">Limpar</button></div>
+    <div class="err-msg" id="benchErr"></div>
+    <div class="result" id="benchResult"></div>
+    <p class="disclaimer">Ferramenta didática. Não substitui história clínica, tempo de instalação, lactato, eletrólitos completos, albumina, suspeita toxicológica ou julgamento à beira do leito.</p>
+  </main>
+
+  <footer>Respira — MVP 4 · bancada interativa de gasometria</footer>
+</div>
+<script>
+const REF={ph:[7.35,7.45],co2:[35,45],hco3:[22,26],hco3Mid:24,agNormal:12};
+const PRESETS=[
+ {nome:'Cetoacidose diabética',ph:7.20,co2:20,hco3:8,na:138,cl:100,alb:4.0},
+ {nome:'DPOC retentor crônico',ph:7.34,co2:65,hco3:33,na:140,cl:98,alb:4.0},
+ {nome:'Vômitos: alcalose metabólica',ph:7.50,co2:46,hco3:35,na:140,cl:90,alb:4.0},
+ {nome:'Salicilato: misto',ph:7.40,co2:22,hco3:13,na:140,cl:100,alb:4.0},
+ {nome:'Sepse/choque: lactato',ph:7.25,co2:28,hco3:12,na:137,cl:103,alb:3.0},
+ {nome:'Diarreia: gap normal',ph:7.32,co2:32,hco3:16,na:140,cl:116,alb:4.0},
+ {nome:'Gap alto + vômitos',ph:7.35,co2:30,hco3:16,na:140,cl:95,alb:4.0},
+ {nome:'Normal',ph:7.40,co2:40,hco3:24,na:140,cl:104,alb:4.0}
+];
+const el=id=>document.getElementById(id); const r=(x,d=1)=>Number(x.toFixed(d));
+function setNeedle(pH){let p=Math.max(0,Math.min(100,((pH-6.8)/(7.8-6.8))*100));el('phneedle').style.left=p+'%'}
+function num(id){const v=parseFloat(el(id).value);return isFinite(v)?v:null}
+function buildPresets(){el('presets').innerHTML=PRESETS.map((p,i)=>'<button class="preset" onclick="loadPreset('+i+')">'+p.nome+'</button>').join('')}
+function loadPreset(i){const p=PRESETS[i];el('inPh').value=p.ph;el('inCo2').value=p.co2;el('inHco3').value=p.hco3;el('inNa').value=p.na;el('inCl').value=p.cl;el('inAlb').value=p.alb;el('benchErr').textContent='';runBench()}
+function clearBench(){['inPh','inCo2','inHco3','inNa','inCl','inAlb'].forEach(id=>el(id).value='');el('benchResult').classList.remove('show');el('benchResult').innerHTML='';el('benchErr').textContent='';el('phbar').classList.add('idle');setNeedle(7.40)}
+function runBench(){
+ const ph=num('inPh'),co2=num('inCo2'),hco3=num('inHco3'),na=num('inNa'),cl=num('inCl'),alb=num('inAlb'); const err=el('benchErr'); err.textContent='';
+ if(ph===null||co2===null||hco3===null){err.textContent='Preencha ao menos pH, pCO₂ e HCO₃⁻.';return}
+ if(ph<6.5||ph>7.9){err.textContent='pH fora de faixa plausível (6,5–7,9). Confira.';return} if(co2<5||co2>150){err.textContent='pCO₂ fora de faixa plausível. Confira.';return} if(hco3<2||hco3>60){err.textContent='HCO₃⁻ fora de faixa plausível. Confira.';return}
+ el('phbar').classList.remove('idle');setNeedle(ph);
+ const steps=[]; let verdictClass='ok',primario=null,lado='neutro';
+ const hPh=Math.pow(10,9-ph),hGas=24*co2/hco3,diff=Math.abs(hGas-hPh)/hPh;
+ if(diff>0.12&&Math.abs(hGas-hPh)>4)steps.push(['!','<b>Atenção — possível inconsistência interna.</b> Henderson-Hasselbalch/Kassirer-Bleich não fecha: <code>[H⁺] do pH ≈ '+r(hPh,0)+'</code> vs <code>24×pCO₂/HCO₃ ≈ '+r(hGas,0)+'</code> nmol/L. Confira coleta/digitação.','flag']);
+ if(ph<REF.ph[0]){lado='acid';steps.push(['1','<b>pH '+r(ph,2)+'</b> &lt; 7,35 → <b>acidemia</b>.'])}else if(ph>REF.ph[1]){lado='base';steps.push(['1','<b>pH '+r(ph,2)+'</b> &gt; 7,45 → <b>alcalemia</b>.'])}else steps.push(['1','<b>pH '+r(ph,2)+'</b> na faixa: pode ser normal ou empate entre distúrbios opostos.']);
+ const co2Alta=co2>REF.co2[1],co2Baixa=co2<REF.co2[0],hco3Alto=hco3>REF.hco3[1],hco3Baixo=hco3<REF.hco3[0];
+ if(lado==='acid'){if(hco3Baixo){primario='acidM';steps.push(['2','HCO₃⁻ baixo ('+r(hco3,1)+') acompanha o pH ácido → <b>acidose metabólica</b>.'])}else if(co2Alta){primario='acidR';steps.push(['2','pCO₂ alta ('+r(co2,0)+') acompanha o pH ácido → <b>acidose respiratória</b>.'])}else{primario=hco3<REF.hco3Mid?'acidM':'acidR';steps.push(['2','Acidemia com parceiros atípicos; primário provável: <b>'+(primario==='acidM'?'acidose metabólica':'acidose respiratória')+'</b>.'])}}
+ else if(lado==='base'){if(hco3Alto){primario='alcM';steps.push(['2','HCO₃⁻ alto ('+r(hco3,1)+') acompanha o pH alcalino → <b>alcalose metabólica</b>.'])}else if(co2Baixa){primario='alcR';steps.push(['2','pCO₂ baixa ('+r(co2,0)+') acompanha o pH alcalino → <b>alcalose respiratória</b>.'])}else{primario=hco3>REF.hco3Mid?'alcM':'alcR';steps.push(['2','Alcalemia com parceiros atípicos; primário provável: <b>'+(primario==='alcM'?'alcalose metabólica':'alcalose respiratória')+'</b>.'])}}
+ else{if((co2Alta&&hco3Alto)||(co2Baixa&&hco3Baixo)){primario=co2Alta?'acidR':'alcR';steps.push(['2','pH normal com pCO₂ e HCO₃⁻ alterados na mesma direção → provável distúrbio primário compensado.'])}else if(co2Alta&&hco3Baixo){primario='misto';verdictClass='mixed';steps.push(['2','pH normal com pCO₂ alta e HCO₃⁻ baixo → <b>distúrbio misto</b>.','warn'])}else if(co2Baixa&&hco3Alto){primario='misto';verdictClass='mixed';steps.push(['2','pH normal com pCO₂ baixa e HCO₃⁻ alto → <b>distúrbio misto</b>.','warn'])}else{primario='nenhum';steps.push(['2','pH, pCO₂ e HCO₃⁻ próximos do normal → sem distúrbio evidente.'])}}
+ const faixa=(c,d=2)=>r(c-d,1)+'–'+r(c+d,1);
+ if(primario==='acidM'){const esp=1.5*hco3+8,lo=esp-2,hi=esp+2;let t='Winter: pCO₂ esperada ≈ <code>1,5×'+r(hco3,1)+'+8 = '+r(esp,0)+'</code> ('+faixa(esp)+'). ';let w=null;if(co2>=lo&&co2<=hi)t+='pCO₂ '+r(co2,0)+' dentro → compensação adequada.';else if(co2>hi){t+='pCO₂ '+r(co2,0)+' acima → <b>acidose respiratória associada</b>.';w='warn';verdictClass='mixed'}else{t+='pCO₂ '+r(co2,0)+' abaixo → <b>alcalose respiratória associada</b>.';w='warn';verdictClass='mixed'}steps.push(['3',t,w])}
+ else if(primario==='alcM'){const esp=0.7*(hco3-24)+40,lo=esp-2,hi=esp+2;let t='Alcalose metabólica: pCO₂ esperada ≈ <code>0,7×('+r(hco3,1)+'−24)+40 = '+r(esp,0)+'</code> ('+faixa(esp)+'). ';let w=null;if(co2>=lo&&co2<=hi)t+='pCO₂ dentro → compensação adequada.';else if(co2<lo){t+='pCO₂ abaixo → <b>alcalose respiratória associada</b>.';w='warn';verdictClass='mixed'}else{t+='pCO₂ acima → <b>acidose respiratória associada</b>.';w='warn';verdictClass='mixed'}steps.push(['3',t,w])}
+ else if(primario==='acidR'){const d=(co2-40)/10,ag=24+d,cr=24+3.5*d;let t='Acidose respiratória: HCO₃ esperado se aguda ≈ <code>'+r(ag,1)+'</code>; se crônica ≈ <code>'+r(cr,1)+'</code>. Medido '+r(hco3,1)+'. ';let w=null;if(hco3<=ag+1.5)t+='Compatível com <b>aguda</b>.';else if(hco3>=cr-2&&hco3<=cr+3)t+='Compatível com <b>crônica compensada</b>.';else if(hco3>cr+3){t+='Acima do crônico → <b>alcalose metabólica associada</b>.';w='warn';verdictClass='mixed'}else t+='Entre agudo e crônico: transição/compensação parcial.';steps.push(['3',t,w])}
+ else if(primario==='alcR'){const d=(40-co2)/10,ag=24-2*d,cr=24-4*d;let t='Alcalose respiratória: HCO₃ esperado se aguda ≈ <code>'+r(ag,1)+'</code>; se crônica ≈ <code>'+r(cr,1)+'</code>. Medido '+r(hco3,1)+'. ';let w=null;if(hco3>=ag-1.5)t+='Compatível com <b>aguda</b>.';else if(hco3<=cr+2&&hco3>=cr-3)t+='Compatível com <b>crônica compensada</b>.';else if(hco3<cr-3){t+='Abaixo do crônico → <b>acidose metabólica associada</b>.';w='warn';verdictClass='mixed'}else t+='Entre agudo e crônico: transição/compensação parcial.';steps.push(['3',t,w])}
+ else if(primario==='misto')steps.push(['3','Sem primário único para compensação: dois eixos já estão alterados.','warn']); else steps.push(['3','Sem distúrbio primário, não há compensação a avaliar.']);
+ if(na!==null&&cl!==null){const ag=na-(cl+hco3);let agc=ag,corr='';if(alb!==null){agc=ag+2.5*(4-alb);corr=' Corrigido pela albumina: <code>'+r(ag,1)+' + 2,5×(4−'+r(alb,1)+') = '+r(agc,1)+'</code>.'}const alto=agc>14;steps.push(['4','Ânion-gap = <code>'+r(na,0)+'−('+r(cl,0)+'+'+r(hco3,1)+') = '+r(ag,1)+'</code>.'+corr+' '+(alto?'Gap <b>alto</b> → ácido adicionado.':'Gap <b>normal</b> → se há acidose metabólica, pense em perda de bicarbonato.')]);if(alto){const dAG=agc-12,dH=24-hco3;if(dH>1){const ratio=dAG/dH;let t='Delta-delta = <code>('+r(agc,1)+'−12)/(24−'+r(hco3,1)+') = '+r(ratio,1)+'</code>. ';let w=null;if(ratio<1){t+='&lt;1 → <b>acidose metabólica de gap normal associada</b>.';w='warn';verdictClass='mixed'}else if(ratio>2){t+='&gt;2 → <b>alcalose metabólica associada</b> ou acidose respiratória crônica prévia.';w='warn';verdictClass='mixed'}else t+='1–2 → compatível com acidose metabólica de gap alto pura.';steps.push(['5',t,w])}}}
+ else steps.push(['4','Ânion-gap não calculado: informe Na⁺ e Cl⁻.']);
+ const nomes={acidM:'Acidose metabólica',acidR:'Acidose respiratória',alcM:'Alcalose metabólica',alcR:'Alcalose respiratória',misto:'Distúrbio misto',nenhum:'Sem distúrbio evidente'};let title,sub;if(verdictClass==='mixed'){title='Distúrbio misto (≥2 processos)';sub='As contas de compensação e/ou delta-delta não fecham para um distúrbio único.'}else if(primario==='nenhum'){verdictClass='ok';title='Sem distúrbio ácido-base evidente';sub='Os três números estão próximos do normal.'}else{title=nomes[primario]||'Distúrbio ácido-base';verdictClass=lado==='acid'?'acid':lado==='base'?'base':'ok';sub=lado==='acid'?'pH ácido — veja o passo a passo.':lado==='base'?'pH alcalino — veja o passo a passo.':'pH na faixa, com distúrbio compensado.'}
+ const out=el('benchResult');out.innerHTML='<div class="verdict '+verdictClass+'"><h2>'+title+'</h2><div class="vsub">'+sub+'</div></div><div class="steps">'+steps.map(s=>'<div class="step '+(s[2]||'')+'"><span class="sn">'+s[0]+'</span><span class="stxt">'+s[1]+'</span></div>').join('')+'</div>';out.classList.add('show')
+}
+buildPresets();setNeedle(7.40);
+</script>
+</body>
+</html>
