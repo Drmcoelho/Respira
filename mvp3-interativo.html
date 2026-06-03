@@ -116,7 +116,7 @@
   /* ===== INSTRUMENTO: LABORATÓRIO DE V/Q ===== */
   .bench-lead{ color:var(--ink-soft); margin-bottom:18px; font-size:1.02rem; }
   .bench-lead strong{ color:var(--ink); }
-  .readouts{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  .readouts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(92px,1fr)); gap:10px; margin-bottom:16px; }
   .ro{ text-align:center; background:var(--paper-deep); border:1px solid var(--line); border-radius:11px; padding:11px 4px; }
   .ro .v{ font-family:var(--mono); font-weight:600; font-size:1.2rem; color:var(--accent-deep); line-height:1.05; }
   .ro .v small{ font-size:.62rem; color:var(--ink-soft); font-weight:400; }
@@ -140,12 +140,33 @@
   .insight b{ color:inherit; } .insight + .insight{ margin-top:10px; }
   .disclaimer{ margin-top:18px; font-size:.82rem; color:var(--ink-soft); line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; }
 
+  /* ===== acréscimos v3.1: P:F, armadilha, acoplamento, partilha ===== */
+  .ro .tier{ font-size:.56rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; margin-top:3px; min-height:.7em; }
+  .ro .tier.ok{ color:var(--correct); } .ro .tier.warn{ color:var(--warn); }
+  .ro .tier.bad{ color:var(--wrong); } .ro .tier.sev{ color:#7a1f27; }
+  .trap{ display:none; border-left:4px solid var(--warn); background:var(--warn-bg); color:#5b4715;
+         border-radius:11px; padding:16px 18px; font-size:.96rem; line-height:1.6; margin-bottom:10px; }
+  .trap.show{ display:block; }
+  .trap .ih{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:6px; }
+  .trap b{ color:inherit; }
+  .toggle{ display:flex; align-items:center; gap:12px; margin:2px 0 18px; padding:12px 15px;
+           background:var(--paper-deep); border:1px solid var(--line); border-radius:11px; }
+  .toggle input{ width:40px; height:23px; accent-color:var(--air); cursor:pointer; flex:0 0 auto; }
+  .toggle label{ font-size:.84rem; color:var(--ink-soft); cursor:pointer; line-height:1.45; }
+  .toggle label b{ color:var(--ink); }
+  .sharerow{ display:flex; justify-content:flex-end; margin:-4px 0 16px; }
+  .share{ font-family:inherit; font-size:.8rem; font-weight:600; color:var(--accent-deep);
+          background:transparent; border:1.5px solid var(--line); border-radius:99px;
+          padding:7px 15px; cursor:pointer; transition:all .16s ease; }
+  .share:hover{ border-color:var(--accent); color:var(--accent); }
+  .share.ok{ border-color:var(--correct); color:var(--correct); }
+
   footer{ text-align:center; margin-top:44px; color:var(--ink-soft); font-size:.82rem; }
 
   @media (max-width:560px){
     .card{ padding:26px 20px; }
     .stem{ font-size:1.18rem; }
-    .readouts{ grid-template-columns:repeat(2,1fr); }
+    .readouts{ grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); }
     .ro .v{ font-size:1.05rem; }
   }
 </style>
@@ -204,35 +225,42 @@
       <div class="qtag">Laboratório de V/Q · o teste do oxigênio</div>
       <p class="bench-lead">Ajuste a <strong>fração de shunt</strong> (sangue sem ar) e de <strong>espaço morto</strong> (ar sem sangue), e a <strong>FiO₂</strong>. O gráfico plota a PaO₂ contra a FiO₂ — a curva de <strong>isoshunt</strong>. Suba o oxigênio e veja: no shunt alto, a curva achata e a PaO₂ se recusa a subir.</p>
 
-      <div class="readouts">
+      <div class="readouts" aria-live="polite">
         <div class="ro"><div class="v" id="roPAO2">—</div><div class="k">P<small>A</small>O₂ alveolar</div></div>
         <div class="ro"><div class="v" id="roPaO2">—</div><div class="k">PaO₂ arterial</div></div>
         <div class="ro"><div class="v" id="roAa">—</div><div class="k">Gradiente A–a</div></div>
         <div class="ro"><div class="v" id="roSaO2">—</div><div class="k">SaO₂</div></div>
+        <div class="ro"><div class="v" id="roPF">—</div><div class="k">Relação P:F</div><div class="tier" id="roPFt"></div></div>
       </div>
 
       <div class="stage"><svg id="stage" viewBox="0 0 340 220" aria-label="Curva PaO2 versus FiO2 (isoshunt)"></svg></div>
 
       <div class="ctrl shunt">
         <label>Fração de shunt · sangue sem ar <span id="lblShunt">20%</span></label>
-        <input id="slShunt" type="range" min="0" max="50" step="1" value="20" oninput="renderLab()">
+        <input id="slShunt" type="range" min="0" max="50" step="1" value="20" oninput="renderLab()" aria-label="Fração de shunt em porcentagem">
       </div>
       <div class="ctrl dead">
         <label>Espaço morto · Vd/Vt (ar sem sangue) <span id="lblDead">30%</span></label>
-        <input id="slDead" type="range" min="30" max="70" step="1" value="30" oninput="renderLab()">
+        <input id="slDead" type="range" min="30" max="70" step="1" value="30" oninput="renderLab()" aria-label="Fração de espaço morto Vd sobre Vt em porcentagem">
       </div>
       <div class="ctrl">
         <label>FiO₂ · oxigênio ofertado <span id="lblFio2">21%</span></label>
-        <input id="slFio2" type="range" min="21" max="100" step="1" value="21" oninput="renderLab()">
+        <input id="slFio2" type="range" min="21" max="100" step="1" value="21" oninput="renderLab()" aria-label="Fração inspirada de oxigênio em porcentagem">
+      </div>
+
+      <div class="toggle">
+        <input type="checkbox" id="tgCompensa" checked onchange="renderLab()" aria-label="Paciente compensa o espaço morto elevando a ventilação">
+        <label for="tgCompensa">O paciente <b>compensa</b> o espaço morto — ventila mais e mantém a PaCO₂ ~40. Desmarque para simular quem <b>não dá conta</b>: a PaCO₂ sobe e, pela equação alveolar, derruba a PAO₂ por <b>hipoventilação</b> (não pelo espaço morto em si).</label>
       </div>
 
       <div class="presets" id="presets"></div>
+      <div class="sharerow"><button class="share" id="btnShare" onclick="shareScenario()">↗ copiar link deste cenário</button></div>
 
+      <div class="trap" id="insightTrap"></div>
       <div class="insight" id="insightO2"></div>
-      <div class="insight hidden" id="insightSpo2Trap"></div>
       <div class="insight" id="insightVent"></div>
 
-      <p class="disclaimer">Modelo <b>didático</b>: equação do gás alveolar (<code>P<sub>A</sub>O₂ = FiO₂·(760−47) − PaCO₂/0,8</code>), equação do shunt com a curva de Severinghaus (Mód. 2), oxigênio dissolvido e diferença arteriovenosa fixa (~5 mL/dL). Hb fixada em 15 g/dL. Valores em ordem de grandeza fisiológica — o shunt verdadeiro (V/Q=0) é refratário; o V/Q apenas baixo responde ao O₂, e é isso que o teste separa. O A–a aqui é dirigido pelo componente shunt do modelo, sem difusão isolada nem heterogeneidade V/Q distribuída.</p>
+      <p class="disclaimer">Modelo <b>didático</b>: equação do gás alveolar (<code>P<sub>A</sub>O₂ = FiO₂·(760−47) − PaCO₂/0,8</code>), equação do shunt com a curva de Severinghaus (Mód. 2), oxigênio dissolvido e diferença arteriovenosa fixa (~5 mL/dL). Hb fixada em 15 g/dL. A <b>relação P:F</b> usa as faixas de Berlim (≤300 leve, ≤200 moderada, ≤100 grave) e <b>pressupõe</b> o contexto clínico (PEEP ≥5, falha do tipo shunt/V-Q) — por isso o <b>A–a</b> entra como juiz: shunt alarga o A–a, hipoventilação não. Quando o paciente "não compensa", a PaCO₂ realimenta a equação alveolar — a queda de PaO₂ aí é <b>hipoventilação</b>, não shunt. Valores em ordem de grandeza fisiológica; o shunt verdadeiro (V/Q=0) é refratário, o V/Q apenas baixo responde ao O₂.</p>
     </div>
   </div>
 
@@ -396,10 +424,10 @@ function again(){ idx=0; correct=0; answered=false; el('final').classList.add('h
 const HB=15, PB=760, PH2O=47, R_RQ=0.8, PACO2=40, CAV=5;
 
 function sev(P){ if(P<=0) return 0; const s=1/(23400/(P*P*P+150*P)+1); return Math.max(0,Math.min(1,s)); }
-function PAO2(fio2){ return fio2*(PB-PH2O) - PACO2/R_RQ; }
+function PAO2(fio2,paco2){ return fio2*(PB-PH2O) - (paco2===undefined?PACO2:paco2)/R_RQ; }
 function content(P){ return 1.34*HB*sev(P) + 0.003*P; }              // conteúdo arterial p/ dado PO2
-function ccO2(fio2){ const pa=PAO2(fio2); return 1.34*HB*sev(pa) + 0.003*pa; } // conteúdo capilar terminal
-function caO2(fio2,s){ return ccO2(fio2) - CAV*s/(1-s); }            // equação do shunt (forma fechada)
+function ccO2(fio2,paco2){ const pa=PAO2(fio2,paco2); return 1.34*HB*sev(pa) + 0.003*pa; } // conteúdo capilar terminal
+function caO2(fio2,s,paco2){ return ccO2(fio2,paco2) - CAV*s/(1-s); }            // equação do shunt (forma fechada)
 // inverte conteúdo → PaO2 (bisseção, exato e estável)
 function paFromContent(Ca){
   if(Ca<=0) return 0;
@@ -407,10 +435,10 @@ function paFromContent(Ca){
   for(let i=0;i<42;i++){ const m=(lo+hi)/2; (content(m)<Ca)?lo=m:hi=m; }
   return (lo+hi)/2;
 }
-// estado de oxigenação para uma FiO2 e fração de shunt
-function oxy(fio2,s){
-  const pao2=PAO2(fio2);
-  const ca=Math.max(0, caO2(fio2,s));
+// estado de oxigenação para uma FiO2, fração de shunt e PaCO2 (acoplamento opcional)
+function oxy(fio2,s,paco2){
+  const pao2=PAO2(fio2,paco2);
+  const ca=Math.max(0, caO2(fio2,s,paco2));
   const paO2=paFromContent(ca);
   const saO2=sev(paO2)*100;
   return { pao2, paO2, saO2, aa: pao2-paO2 };
@@ -429,11 +457,18 @@ function renderLab(){
   const s=parseFloat(el('slShunt').value)/100;
   const d=parseFloat(el('slDead').value)/100;
   const fio2=parseFloat(el('slFio2').value)/100;
+  const compensa = el('tgCompensa').checked;
   el('lblShunt').textContent=`${(s*100).toFixed(0)}%`;
   el('lblDead').textContent=`${(d*100).toFixed(0)}%`;
   el('lblFio2').textContent=`${(fio2*100).toFixed(0)}%`;
 
-  const cur=oxy(fio2,s);
+  // PaCO2 efetiva: se NÃO compensa, o espaço morto vira hipoventilação alveolar
+  const paco2base = 40 * 0.7/(1-d);          // CO2 se a ventilação-minuto não acompanhar
+  const ventMult  = (1-0.3)/(1-d);           // ventilação extra p/ manter o CO2
+  const paco2eff  = compensa ? 40 : paco2base;
+
+  const cur=oxy(fio2,s,paco2eff);
+  if(cur.aa<0) cur.aa=0;            // A–a negativo aqui é só ruído numérico (s≈0); não-físico
   // readouts
   el('roPAO2').innerHTML=`${cur.pao2.toFixed(0)}<small> mmHg</small>`;
   const paBad=cur.paO2<60, paWarn=cur.paO2>=60&&cur.paO2<80;
@@ -446,6 +481,18 @@ function renderLab(){
   el('roSaO2').innerHTML=`${cur.saO2.toFixed(0)}<small> %</small>`;
   el('roSaO2').className='v'+(saBad?' bad':saWarn?' warn':' ok');
 
+  // relação P:F (PaO2/FiO2) — índice de cabeceira, normalizado pela FiO2
+  const pf = cur.paO2/fio2;
+  let pfTier, pfCls;
+  if(pf>300){ pfTier='—'; pfCls='ok'; }
+  else if(pf>200){ pfTier='SDRA leve'; pfCls='warn'; }
+  else if(pf>100){ pfTier='SDRA moderada'; pfCls='bad'; }
+  else { pfTier='SDRA grave'; pfCls='sev'; }
+  el('roPF').innerHTML=`${pf.toFixed(0)}`;
+  el('roPF').className='v'+(pf>300?' ok':pf>200?' warn':' bad');
+  el('roPFt').textContent=pfTier;
+  el('roPFt').className='tier '+pfCls;
+
   // ---- gráfico PaO2 × FiO2 (isoshunt) ----
   const x0=40,x1=326,y0=190,y1=14, fMin=0.21,fMax=1.0, yMax=650;
   const xF=f=> x0 + ((f-fMin)/(fMax-fMin))*(x1-x0);
@@ -457,26 +504,47 @@ function renderLab(){
   svg+=`<text x="${(x0+x1)/2}" y="${y0+24}" text-anchor="middle" font-size="8.5" fill="#4A6164">FiO₂ (%)</text>`;
   // alvo PaO2 60 (limiar de hipoxemia)
   const y60=yP(60); svg+=`<line x1="${x0}" y1="${y60.toFixed(1)}" x2="${x1}" y2="${y60.toFixed(1)}" stroke="#B0503E" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.55"/><text x="${x1}" y="${(y60-3).toFixed(1)}" text-anchor="end" font-size="7" fill="#B0503E">PaO₂ 60</text>`;
-  // curva de referência: sem shunt (s=0)
+  // curva de referência: pulmão ideal (s=0, PaCO2 40) — o benchmark não tem nem shunt nem hipoventilação
   let dRef='';
-  for(let f=fMin; f<=fMax+1e-9; f+=0.02){ const o=oxy(f,0); dRef+=(dRef===''?'M':'L')+xF(f).toFixed(1)+' '+yP(Math.min(o.paO2,yMax)).toFixed(1)+' '; }
+  for(let f=fMin; f<=fMax+1e-9; f+=0.02){ const o=oxy(f,0,40); dRef+=(dRef===''?'M':'L')+xF(f).toFixed(1)+' '+yP(Math.min(o.paO2,yMax)).toFixed(1)+' '; }
   svg+=`<path d="${dRef.trim()}" fill="none" stroke="#4E7C5A" stroke-width="1.3" stroke-dasharray="4 3" opacity="0.5"/>`;
   svg+=`<text x="${xF(0.62).toFixed(1)}" y="${yP(560).toFixed(1)}" font-size="7.5" fill="#4E7C5A">sem shunt (ideal)</text>`;
-  // curva ativa: shunt atual
+  // curva ativa: shunt atual + PaCO2 efetiva
   let dAct='';
-  for(let f=fMin; f<=fMax+1e-9; f+=0.02){ const o=oxy(f,s); dAct+=(dAct===''?'M':'L')+xF(f).toFixed(1)+' '+yP(Math.min(o.paO2,yMax)).toFixed(1)+' '; }
+  for(let f=fMin; f<=fMax+1e-9; f+=0.02){ const o=oxy(f,s,paco2eff); dAct+=(dAct===''?'M':'L')+xF(f).toFixed(1)+' '+yP(Math.min(o.paO2,yMax)).toFixed(1)+' '; }
   svg+=`<path d="${dAct.trim()}" fill="none" stroke="#8E2F39" stroke-width="2.4" stroke-linecap="round"/>`;
+  // teto a 100% O2 — só anota quando a refratariedade é a história (teto baixo)
+  const ceil=oxy(1.0,s,paco2eff);
+  if(ceil.paO2<500){
+    const xc=xF(1.0), yc=yP(Math.min(ceil.paO2,yMax));
+    svg+=`<circle cx="${xc.toFixed(1)}" cy="${yc.toFixed(1)}" r="3.2" fill="none" stroke="#8E2F39" stroke-width="1.3"/>`;
+    svg+=`<text x="${(xc-4).toFixed(1)}" y="${(yc-5).toFixed(1)}" text-anchor="end" font-size="7" fill="#8E2F39">teto 100%: ${ceil.paO2.toFixed(0)}</text>`;
+  }
   // marcador na FiO2 atual
   svg+=`<line x1="${xF(fio2).toFixed(1)}" y1="${y0}" x2="${xF(fio2).toFixed(1)}" y2="${yP(Math.min(cur.paO2,yMax)).toFixed(1)}" stroke="#16383B" stroke-width="0.7" stroke-dasharray="2 2" opacity="0.5"/>`;
   svg+=`<circle cx="${xF(fio2).toFixed(1)}" cy="${yP(Math.min(cur.paO2,yMax)).toFixed(1)}" r="5" fill="#C0603A" stroke="#fff" stroke-width="1.5"/>`;
   el('stage').innerHTML=svg;
 
+  // ---- ARMADILHA: o A–a é o juiz. Separa shunt-mascarado de hipoventilação ----
+  const trap=el('insightTrap');
+  if(pf<=300 && cur.aa>40 && cur.saO2>=94){
+    // sat tranquiliza, mas a troca é catastrófica → shunt escondido pelo platô da Hb
+    trap.className='trap show';
+    trap.innerHTML=`<div class="ih">⚠ A saturação tranquiliza — a relação P:F denuncia</div>SaO₂ de <b>${cur.saO2.toFixed(0)}%</b> parece confortável, mas a P:F está em <b>${pf.toFixed(0)}</b> (faixa de SDRA) e o A–a em <b>${cur.aa.toFixed(0)}</b>. É o platô da hemoglobina do Mód. 2: a sat satura e <b>esconde o shunt</b>. Normalize pela FiO₂ (P:F) ou leia o A–a — esses não mentem.`;
+  } else if(pf<=300 && cur.aa<=20){
+    // P:F baixa com A–a preservado → não é shunt, é hipoventilação puxando PAO2 e PaO2 juntas
+    trap.className='trap show';
+    trap.innerHTML=`<div class="ih">⚠ P:F baixa, mas o A–a está normal</div>A P:F caiu para <b>${pf.toFixed(0)}</b>, porém o A–a é só <b>${cur.aa.toFixed(0)}</b>. Isto <b>não é shunt</b>: é hipoventilação derrubando PAO₂ e PaO₂ juntas (gradiente preservado). Mais O₂ ajuda pouco — o que falta é <b>ventilar</b>. A P:F sozinha enganaria; o A–a separa as duas hipoxemias.`;
+  } else {
+    trap.className='trap'; trap.innerHTML='';
+  }
+
   // ---- teste do oxigênio (insight oxigenação) ----
-  const at100=oxy(1.0,s);
+  const at100=oxy(1.0,s,paco2eff);
   const boxO=el('insightO2');
   if(s>=0.30){
     boxO.className='insight bad';
-    boxO.innerHTML=`<div class="ih">↺ Hipoxemia refratária ao O₂ — shunt</div>Com shunt de <b>${(s*100).toFixed(0)}%</b>, mesmo a <b>100% de O₂</b> a PaO₂ chega só a <b>${at100.paO2.toFixed(0)} mmHg</b> — um pulmão sem shunt atingiria <b>~${PAO2(1.0).toFixed(0)}</b>. A curva achatou: subir o oxigênio quase não move a PaO₂. O O₂ sozinho não resolve — é hora de <b>reabrir o alvéolo</b> (PEEP/recrutamento).`;
+    boxO.innerHTML=`<div class="ih">↺ Hipoxemia refratária ao O₂ — shunt</div>Com shunt de <b>${(s*100).toFixed(0)}%</b>, mesmo a <b>100% de O₂</b> a PaO₂ chega só a <b>${at100.paO2.toFixed(0)} mmHg</b> — um pulmão sem shunt atingiria <b>~${PAO2(1.0,40).toFixed(0)}</b>. A curva achatou: subir o oxigênio quase não move a PaO₂. O O₂ sozinho não resolve — é hora de <b>reabrir o alvéolo</b> (PEEP/recrutamento).`;
   } else if(s>=0.12){
     boxO.className='insight warn';
     boxO.innerHTML=`<div class="ih">⚠ Hipoxemia parcialmente responsiva</div>Shunt de <b>${(s*100).toFixed(0)}%</b>: subir a FiO₂ ainda ajuda um pouco (a 100%, PaO₂ ≈ <b>${at100.paO2.toFixed(0)}</b>), mas o gradiente A–a permanece alargado (<b>${cur.aa.toFixed(0)}</b>). Quanto mais shunt, mais a curva achata — observe-a ao arrastar a fração de shunt.`;
@@ -485,27 +553,24 @@ function renderLab(){
     boxO.innerHTML=`<div class="ih">✦ Oxigenação responsiva ao O₂</div>Com pouco shunt (<b>${(s*100).toFixed(0)}%</b>), a PaO₂ <b>sobe</b> ao aumentar a FiO₂ — a curva dispara para cima, como no V/Q baixo. É o oposto do shunt verdadeiro: aqui o oxigênio resolve. Suba a fração de shunt e veja a curva começar a achatar.`;
   }
 
-  // ---- armadilha didática: saturação bonita, A-a ruim ----
-  const boxTrap = el('insightSpo2Trap');
-  if(cur.saO2 >= 96 && cur.aa >= 150){
-    boxTrap.className='insight warn';
-    boxTrap.innerHTML=`<div class="ih">⚠ Saturação bonita, fisiologia feia</div>A SaO₂ está em <b>${cur.saO2.toFixed(0)}%</b>, mas isso não absolve o pulmão: o gradiente A–a está em <b>${cur.aa.toFixed(0)} mmHg</b>. O oxímetro te tranquiliza porque a hemoglobina está no platô; o A–a mostra o quanto de oxigênio alveolar está sendo desperdiçado pelo shunt. É o Módulo 2 voltando aqui: <b>saturar não é respirar bem</b>.`;
-  } else {
-    boxTrap.className='insight hidden';
-    boxTrap.innerHTML='';
-  }
-
   // ---- espaço morto (insight ventilação) ----
   const boxV=el('insightVent');
-  const paco2 = 40 * 0.7/(1-d);   // CO2 se a ventilação-minuto não acompanhar (Vd/Vt basal 0.3)
-  const ventMult = (1-0.3)/(1-d); // ventilação extra p/ manter o CO2
+  let vhtml='';
   if(d>=0.5){
     boxV.className='insight warn';
-    boxV.innerHTML=`<div class="ih">⚠ Espaço morto elevado — ventilação desperdiçada</div>Vd/Vt = <b>${(d*100).toFixed(0)}%</b>: para manter o CO₂ normal, a ventilação-minuto teria de subir <b>${ventMult.toFixed(1)}×</b> — daí a taquipneia (o paciente 'soprando'). Se ele não acompanhar, a PaCO₂ vai a <b>~${paco2.toFixed(0)} mmHg</b>. Note: o espaço morto ataca a <b>ventilação/CO₂</b>, não causa hipoxemia refratária.`;
+    vhtml=`<div class="ih">⚠ Espaço morto elevado — ventilação desperdiçada</div>Vd/Vt = <b>${(d*100).toFixed(0)}%</b>: para manter o CO₂ normal, a ventilação-minuto teria de subir <b>${ventMult.toFixed(1)}×</b> — daí a taquipneia (o paciente 'soprando'). `;
   } else {
     boxV.className='insight';
-    boxV.innerHTML=`<div class="ih">Espaço morto: o eixo da ventilação</div>Vd/Vt = <b>${(d*100).toFixed(0)}%</b> (normal ~30%). O espaço morto desperdiça ventilação e pesa sobre o <b>CO₂</b>, não sobre a oxigenação. Suba-o e veja a ventilação necessária crescer — é o mecanismo do paciente da embolia, taquipneico.`;
+    vhtml=`<div class="ih">Espaço morto: o eixo da ventilação</div>Vd/Vt = <b>${(d*100).toFixed(0)}%</b> (normal ~30%). Desperdiça ventilação e pesa sobre o <b>CO₂</b>, não sobre a oxigenação. `;
   }
+  if(compensa){
+    vhtml+=`O paciente está <b>compensando</b> (PaCO₂ ~40): a oxigenação não sofre por esta via. Desmarque o controle para ver o que acontece se ele cansar.`;
+  } else {
+    vhtml+=`<b>Sem compensar</b>: a PaCO₂ sobe a <b>~${paco2base.toFixed(0)} mmHg</b> e, pela equação alveolar, derruba a PAO₂ → a PaO₂ cai por <b>hipoventilação</b>, com A–a preservado. Não é o espaço morto que dessatura; é a ventilação alveolar que faltou.`;
+  }
+  boxV.innerHTML=vhtml;
+
+  writeHash();
 }
 
 /* ---------- ALTERNÂNCIA DE MODO ---------- */
@@ -522,8 +587,37 @@ function setMode(m){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+/* ---------- CENÁRIO PARTILHÁVEL (hash da URL, sem storage) ---------- */
+const clampI=(v,lo,hi)=>Math.max(lo,Math.min(hi,Math.round(v)));
+function writeHash(){
+  if(el('labMode').classList.contains('hidden')) return;   // só estampa em modo laboratório
+  const h=`#s=${el('slShunt').value}&d=${el('slDead').value}&f=${el('slFio2').value}&c=${el('tgCompensa').checked?1:0}&m=lab`;
+  history.replaceState(null,'',h);
+}
+function readHash(){
+  const raw=location.hash.replace(/^#/,''); if(!raw) return false;
+  const p=new URLSearchParams(raw);
+  if(p.has('s')) el('slShunt').value=clampI(+p.get('s'),0,50);
+  if(p.has('d')) el('slDead').value =clampI(+p.get('d'),30,70);
+  if(p.has('f')) el('slFio2').value =clampI(+p.get('f'),21,100);
+  if(p.has('c')) el('tgCompensa').checked = p.get('c')!=='0';
+  return p.get('m')==='lab' || p.has('s') || p.has('d') || p.has('f');
+}
+async function shareScenario(){
+  writeHash();
+  const b=el('btnShare'), txt=b.textContent;
+  try{ await navigator.clipboard.writeText(location.href); b.textContent='✓ link copiado'; }
+  catch(e){ b.textContent='copie a URL ↑'; }
+  b.classList.add('ok');
+  setTimeout(()=>{ b.textContent=txt; b.classList.remove('ok'); }, 1900);
+}
+
 /* ---------- INIT ---------- */
-buildPresets(); renderLab();
+buildPresets();
+const openLab = readHash();
+renderLab();
+if(openLab) setMode('lab');
+
 </script>
 </body>
 </html>
