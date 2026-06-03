@@ -111,7 +111,7 @@
   /* ===== INSTRUMENTO: SIMULADOR DE MECÂNICA ===== */
   .bench-lead{ color:var(--ink-soft); margin-bottom:18px; font-size:1.02rem; }
   .bench-lead strong{ color:var(--ink); }
-  .readouts{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px; }
+  .readouts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(90px,1fr)); gap:12px; margin-bottom:16px; }
   .ro{ text-align:center; background:var(--paper-deep); border:1px solid var(--line); border-radius:12px; padding:12px 6px; }
   .ro .v{ font-family:var(--mono); font-weight:600; font-size:1.35rem; color:var(--accent-deep); line-height:1.05; }
   .ro .v small{ font-size:.7rem; color:var(--ink-soft); font-weight:400; }
@@ -133,6 +133,9 @@
   .insight .ih{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:6px; }
   .insight b{ color:inherit; }
   .disclaimer{ margin-top:18px; font-size:.82rem; color:var(--ink-soft); line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; }
+  .sharerow{ display:flex; justify-content:flex-end; margin:-4px 0 16px; }
+  .share{ font-family:inherit; font-size:.8rem; font-weight:600; color:var(--accent-deep); background:transparent; border:1.5px solid var(--line); border-radius:99px; padding:7px 15px; cursor:pointer; transition:all .16s ease; }
+  .share:hover{ border-color:var(--accent); color:var(--accent); } .share.ok{ border-color:var(--correct); color:var(--correct); }
 
   footer{ text-align:center; margin-top:44px; color:var(--ink-soft); font-size:.82rem; }
 
@@ -191,9 +194,10 @@
       <div class="qtag">Simulador de mecânica · resistência × complacência</div>
       <p class="bench-lead">Ajuste a <strong>resistência</strong> da via (o cano) e a <strong>complacência</strong> do pulmão (o balão). O traçado mostra o volume ao longo de 4 respirações — veja a expiração demorar, o ar <strong>aprisionar</strong> e o <strong>esforço</strong> subir.</p>
 
-      <div class="readouts">
+      <div class="readouts" aria-live="polite">
         <div class="ro"><div class="v" id="roTau">—</div><div class="k">Constante de tempo τ</div></div>
         <div class="ro"><div class="v" id="roTrap">—</div><div class="k">Ar aprisionado</div></div>
+        <div class="ro"><div class="v" id="roPEEP">—</div><div class="k">Auto-PEEP (PEEPi)</div></div>
         <div class="ro"><div class="v" id="roWork">—</div><div class="k">Trabalho respiratório</div></div>
       </div>
 
@@ -201,16 +205,22 @@
 
       <div class="ctrl">
         <label>Resistência da via aérea (o cano) <span id="lblR">3 cmH₂O/L/s</span></label>
-        <input id="slR" type="range" min="2" max="24" step="1" value="3" oninput="renderSim()">
+        <input id="slR" type="range" min="2" max="24" step="1" value="3" oninput="renderSim()" aria-label="Resistência da via aérea em cmH2O por litro por segundo">
         <div class="ends"><span>aberta</span><span>apertada (asma/DPOC)</span></div>
       </div>
       <div class="ctrl">
         <label>Complacência do pulmão (o balão) <span id="lblC">0.06 L/cmH₂O</span></label>
-        <input id="slC" type="range" min="0.02" max="0.12" step="0.005" value="0.06" oninput="renderSim()">
+        <input id="slC" type="range" min="0.02" max="0.12" step="0.005" value="0.06" oninput="renderSim()" aria-label="Complacência do pulmão em litros por cmH2O">
         <div class="ends"><span>duro (fibrose/SDRA)</span><span>macio (normal/enfisema)</span></div>
+      </div>
+      <div class="ctrl">
+        <label>Frequência respiratória (a manobra) <span id="lblRR">15 irpm</span></label>
+        <input id="slRR" type="range" min="8" max="35" step="1" value="15" oninput="renderSim()" aria-label="Frequência respiratória em incursões por minuto">
+        <div class="ends"><span>lenta (mais tempo p/ expirar)</span><span>rápida (aprisiona)</span></div>
       </div>
 
       <div class="presets" id="presets"></div>
+      <div class="sharerow"><button class="share" id="btnShare" onclick="shareScenario()">↗ copiar link deste cenário</button></div>
 
       <div class="insight" id="insight"></div>
 
@@ -238,7 +248,7 @@ const QUESTIONS = [
     answer:1,
     good:"<strong>O coração de tudo.</strong> O pulmão não 'suga': obedece à física. O diafragma desce, o tórax expande, a pressão interna cai abaixo da atmosférica → o ar escorrega para dentro. Inspirar = criar um <strong>vácuo relativo</strong>. Segure essa ideia de <em>gradiente de pressão</em>.",
     bad:"Ninguém empurra o ar de fora: o tórax expande, a pressão interna <strong>cai</strong>, e o ar flui sozinho de onde há mais para onde há menos. É um <em>gradiente de pressão</em>." },
-  { block:"Aquecimento",
+  { block:"Aquecamento",
     stem:"Em repouso, soltar o ar (expirar) normalmente exige esforço muscular?",
     opts:["sim, tão ativa quanto inspirar","não — é passiva: o pulmão é elástico e volta sozinho, como um balão que murcha","depende da idade","só em pé"],
     answer:1,
@@ -383,78 +393,78 @@ function again(){ idx=0; correct=0; answered=false; el('final').classList.add('h
      k = e^(-Te/τ);  B* = k·Vt/(1-k)
    Trabalho ≈ elástico (Vt²/2C) + resistivo (R·fluxo·Vt)
    ============================================================ */
-const VT=0.5, RR=15, TCYC=60/RR, TI=TCYC*0.4, TE=TCYC*0.6, NB=4;
-const W_NORMAL = (VT*VT)/(2*0.06) + 3*(VT/TI)*VT;
+const VT=0.5, NB=4, TI_REF=1.6;                 // VT (L), nº de respirações, TI de referência (RR=15) p/ o trabalho
+const W_NORMAL = (VT*VT)/(2*0.06) + 3*(VT/TI_REF)*VT;
+function timing(RR){ const TCYC=60/RR; return { TCYC, TI:TCYC*0.4, TE:TCYC*0.6 }; }
 
-function sim(R,C){
-  const tau=R*C, k=Math.exp(-TE/tau);
-  const Bstar = k*VT/(1-k);              // ar aprisionado no estado estacionário
-  const work = (VT*VT)/(2*C) + R*(VT/TI)*VT;
-  return { tau, k, Bstar, workRel: work/W_NORMAL };
+function sim(R,C,RR){
+  const tau=R*C, {TE}=timing(RR), k=Math.exp(-TE/tau);
+  const Bstar = k*VT/(1-k);                       // ar aprisionado no estado estacionário
+  const work = (VT*VT)/(2*C) + R*(VT/TI_REF)*VT;  // elástico + resistivo (TI de referência → trabalho reflete R,C)
+  const autoPEEP = Bstar/C;                        // PEEPi = volume preso / complacência (cmH2O)
+  return { tau, k, Bstar, autoPEEP, workRel: work/W_NORMAL };
 }
 
-// gera o traçado volume×tempo ao longo de NB respirações
-function trace(R,C){
-  const {tau,k}=sim(R,C);
+// gera o traçado volume×tempo ao longo de NB respirações, na frequência atual
+function trace(R,C,RR){
+  const {tau}=sim(R,C,RR), {TCYC,TI,TE}=timing(RR);
   const pts=[]; let B=0; const dt=0.04;
   for(let n=0;n<NB;n++){
     const t0=n*TCYC;
-    // inspiração (linear de B a B+VT)
-    for(let t=0;t<TI;t+=dt) pts.push([t0+t, B + VT*(t/TI)]);
-    // expiração (decaimento exponencial para 0)
+    for(let t=0;t<TI;t+=dt) pts.push([t0+t, B + VT*(t/TI)]);   // inspiração linear
     const peak=B+VT;
-    for(let t=0;t<TE;t+=dt) pts.push([t0+TI+t, peak*Math.exp(-t/tau)]);
-    B = peak*Math.exp(-TE/tau);          // base do próximo ciclo
+    for(let t=0;t<TE;t+=dt) pts.push([t0+TI+t, peak*Math.exp(-t/tau)]); // expiração exponencial
+    B = peak*Math.exp(-TE/tau);                                 // base do próximo ciclo
   }
   return pts;
 }
 
 const PRESETS=[
-  { nome:"Normal", r:3, c:0.06 },
-  { nome:"Crise asmática / DPOC (cano apertado)", r:20, c:0.07 },
-  { nome:"Fibrose / SDRA (balão duro)", r:3, c:0.025 },
-  { nome:"Obstrução grave (aprisiona muito)", r:24, c:0.10 }
+  { nome:"Normal", r:3, c:0.06, rr:15 },
+  { nome:"Crise asmática / DPOC (cano apertado)", r:20, c:0.07, rr:22 },
+  { nome:"Fibrose / SDRA (balão duro)", r:3, c:0.025, rr:15 },
+  { nome:"Obstrução grave (aprisiona muito)", r:24, c:0.10, rr:24 }
 ];
 function buildPresets(){ el('presets').innerHTML = PRESETS.map((p,i)=>`<button class="preset" onclick="loadPreset(${i})">${p.nome}</button>`).join(''); }
-function loadPreset(i){ const p=PRESETS[i]; el('slR').value=p.r; el('slC').value=p.c; renderSim(); }
+function loadPreset(i){ const p=PRESETS[i]; el('slR').value=p.r; el('slC').value=p.c; el('slRR').value=p.rr??15; renderSim(); }
 
 function renderSim(){
-  const R=parseFloat(el('slR').value), C=parseFloat(el('slC').value);
-  const {tau,Bstar,workRel}=sim(R,C);
-  el('lblR').textContent=`${R} cmH₂O/L/s`; el('lblC').textContent=`${C.toFixed(3)} L/cmH₂O`;
+  const R=parseFloat(el('slR').value), C=parseFloat(el('slC').value), RR=parseFloat(el('slRR').value);
+  const {tau,Bstar,autoPEEP,workRel}=sim(R,C,RR);
+  el('lblR').textContent=`${R} cmH₂O/L/s`; el('lblC').textContent=`${C.toFixed(3)} L/cmH₂O`; el('lblRR').textContent=`${RR} irpm`;
 
   const trapML=Math.round(Bstar*1000);
   const trapBad = trapML>=120, trapWarn = trapML>=50 && trapML<120;
+  const peepBad = autoPEEP>=8, peepWarn = autoPEEP>=4 && autoPEEP<8;
   const workBad = workRel>=2.2, workWarn = workRel>=1.6 && workRel<2.2;
 
   el('roTau').innerHTML=`${tau.toFixed(2)}<small> s</small>`;
   el('roTrap').innerHTML=`${trapML}<small> mL</small>`;
   el('roTrap').className='v'+(trapBad?' bad':trapWarn?' warn':'');
+  el('roPEEP').innerHTML=`${autoPEEP.toFixed(1)}<small> cmH₂O</small>`;
+  el('roPEEP').className='v'+(peepBad?' bad':peepWarn?' warn':'');
   el('roWork').innerHTML=`${workRel.toFixed(1)}<small> ×</small>`;
   el('roWork').className='v'+(workBad?' bad':workWarn?' warn':'');
 
   // ---- traçado ----
-  const pts=trace(R,C);
-  const x0=34,x1=330,y0=178,y1=14, tMax=NB*TCYC;
+  const pts=trace(R,C,RR);
+  const x0=34,x1=330,y0=178,y1=14, tMax=NB*timing(RR).TCYC;
   const vMax=Math.max(0.8, (VT+Bstar)*1.12);
   const xT=t=> x0 + (t/tMax)*(x1-x0);
   const yV=v=> y0 - (v/vMax)*(y0-y1);
   let svg='';
-  // grade horizontal (volumes)
   for(let v=0; v<=vMax+0.001; v+=0.25){
     const y=yV(v);
     svg+=`<line x1="${x0}" y1="${y.toFixed(1)}" x2="${x1}" y2="${y.toFixed(1)}" stroke="#D7CCB8" stroke-width="0.6"/>`;
     svg+=`<text x="${x0-5}" y="${(y+3).toFixed(1)}" text-anchor="end" font-size="7.5" fill="#4A6164" font-family="monospace">${v.toFixed(1)}</text>`;
   }
   svg+=`<text transform="translate(10,${(y0+y1)/2}) rotate(-90)" text-anchor="middle" font-size="8.5" fill="#4A6164">Volume (L)</text>`;
-  svg+=`<text x="${(x0+x1)/2}" y="${y0+18}" text-anchor="middle" font-size="8.5" fill="#4A6164">tempo · 4 respirações →</text>`;
-  // linha do aprisionamento (base estacionária)
+  svg+=`<text x="${(x0+x1)/2}" y="${y0+18}" text-anchor="middle" font-size="8.5" fill="#4A6164">tempo · ${NB} respirações →</text>`;
   if(Bstar>0.02){
     const yb=yV(Bstar);
     svg+=`<line x1="${x0}" y1="${yb.toFixed(1)}" x2="${x1}" y2="${yb.toFixed(1)}" stroke="#B0503E" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>`;
     svg+=`<text x="${x1}" y="${(yb-3).toFixed(1)}" text-anchor="end" font-size="7.5" fill="#B0503E">ar aprisionado</text>`;
   }
-  // traçado de volume
   let d='';
   pts.forEach((p,i)=>{ d+=(i===0?'M':'L')+xT(p[0]).toFixed(1)+' '+yV(p[1]).toFixed(1)+' '; });
   svg+=`<path d="${d.trim()}" fill="none" stroke="#C0603A" stroke-width="2.2" stroke-linejoin="round"/>`;
@@ -463,15 +473,19 @@ function renderSim(){
   // ---- narrativa ----
   const box=el('insight');
   if(trapBad){
+    // a manobra: quanto cairia o aprisionamento se desse mais tempo de expirar (RR mais baixa)
+    const slowRR=Math.max(8,RR-6), slow=sim(R,C,slowRR), slowML=Math.round(slow.Bstar*1000);
     box.className='insight bad';
-    box.innerHTML=`<div class="ih">↺ Aprisionamento de ar</div>Com resistência alta, a constante de tempo (<b>τ=${tau.toFixed(2)} s</b>) ficou grande: a <b>expiração não termina</b> antes do próximo ciclo, e o pulmão se enche progressivamente — <b>${trapML} mL</b> presos (hiperinsuflação dinâmica). É a crise asmática/DPOC: o paciente precisa de mais tempo para expirar, e franze os lábios para conseguir. Repare na linha de base subindo no traçado.`;
+    box.innerHTML=`<div class="ih">↺ Aprisionamento de ar (auto-PEEP)</div>τ=<b>${tau.toFixed(2)} s</b> e só há <b>${timing(RR).TE.toFixed(1)} s</b> para expirar: a expiração <b>não termina</b> e o pulmão se enche — <b>${trapML} mL</b> presos, gerando <b>${autoPEEP.toFixed(1)} cmH₂O de auto-PEEP</b> (a pressão escondida que dificulta o disparo do ventilador e empurra para o barotrauma). A manobra que salva não é mais ar — é <b>tempo</b>: baixe a frequência. A <b>${slowRR} irpm</b> o aprisionamento cairia para ~<b>${slowML} mL</b>. É a física dos lábios franzidos da DPOC.`;
   } else if(workBad){
     box.className='insight warn';
-    box.innerHTML=`<div class="ih">⚠ Trabalho respiratório alto</div>O esforço subiu para <b>${workRel.toFixed(1)}× o normal</b>. ${C<0.04?'O pulmão está <b>duro</b> (baixa complacência): encher um balão rígido custa muita energia elástica — é o caso da fibrose/SDRA.':'A via apertada cobra energia resistiva extra a cada respiração.'} Cada respiração custa caro — e o paciente cansa.`;
+    box.innerHTML=`<div class="ih">⚠ Trabalho respiratório alto</div>O esforço subiu para <b>${workRel.toFixed(1)}× o normal</b>. ${C<0.04?'O pulmão está <b>duro</b> (baixa complacência): encher um balão rígido custa muita energia elástica — fibrose/SDRA.':'A via apertada cobra energia resistiva extra a cada respiração.'} Cada respiração custa caro — e o paciente cansa.`;
   } else {
     box.className='insight';
-    box.innerHTML=`<div class="ih">✦ Mecânica tranquila</div>Constante de tempo curta (<b>τ=${tau.toFixed(2)} s</b>): a expiração completa com folga, sem aprisionar ar, e o trabalho está perto do normal (<b>${workRel.toFixed(1)}×</b>). Agora <b>aperte o cano</b> (resistência) e veja o ar aprisionar, ou <b>endureça o balão</b> (complacência) e veja o esforço disparar.`;
+    box.innerHTML=`<div class="ih">✦ Mecânica tranquila</div>τ curta (<b>${tau.toFixed(2)} s</b>): a expiração completa com folga, sem aprisionar ar (auto-PEEP <b>${autoPEEP.toFixed(1)}</b>), e o trabalho está perto do normal (<b>${workRel.toFixed(1)}×</b>). Agora <b>aperte o cano</b> e <b>acelere a frequência</b> — veja o ar aprisionar e o auto-PEEP nascer; depois desacelere e veja-o ceder.`;
   }
+
+  writeHash();
 }
 
 /* ---------- ALTERNÂNCIA DE MODO ---------- */
@@ -488,8 +502,32 @@ function setMode(m){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+/* ---------- CENÁRIO PARTILHÁVEL (hash, sem storage) ---------- */
+const clampN=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+function writeHash(){
+  if(el('simMode').classList.contains('hidden')) return;
+  history.replaceState(null,'',`#r=${el('slR').value}&c=${el('slC').value}&rr=${el('slRR').value}&m=sim`);
+}
+function readHash(){
+  const raw=location.hash.replace(/^#/,''); if(!raw) return false;
+  const p=new URLSearchParams(raw);
+  if(p.has('r'))  el('slR').value =clampN(+p.get('r'),2,24);
+  if(p.has('c'))  el('slC').value =clampN(+p.get('c'),0.02,0.12);
+  if(p.has('rr')) el('slRR').value=clampN(+p.get('rr'),8,35);
+  return p.get('m')==='sim' || p.has('r') || p.has('c') || p.has('rr');
+}
+async function shareScenario(){
+  writeHash(); const b=el('btnShare'), t=b.textContent;
+  try{ await navigator.clipboard.writeText(location.href); b.textContent='✓ link copiado'; }
+  catch(e){ b.textContent='copie a URL ↑'; }
+  b.classList.add('ok'); setTimeout(()=>{ b.textContent=t; b.classList.remove('ok'); },1900);
+}
+
 /* ---------- INIT ---------- */
-buildPresets(); renderSim();
+buildPresets();
+const openSim = readHash();
+renderSim();
+if(openSim) setMode('sim');
 </script>
 </body>
 </html>
