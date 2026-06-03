@@ -229,9 +229,10 @@
       <div class="presets" id="presets"></div>
 
       <div class="insight" id="insightO2"></div>
+      <div class="insight hidden" id="insightSpo2Trap"></div>
       <div class="insight" id="insightVent"></div>
 
-      <p class="disclaimer">Modelo <b>didático</b>: equação do gás alveolar (<code>P<sub>A</sub>O₂ = FiO₂·(760−47) − PaCO₂/0,8</code>), equação do shunt com a curva de Severinghaus (Mód. 2), oxigênio dissolvido e diferença arteriovenosa fixa (~5 mL/dL). Hb fixada em 15 g/dL. Valores em ordem de grandeza fisiológica — o shunt verdadeiro (V/Q=0) é refratário; o V/Q apenas baixo responde ao O₂, e é isso que o teste separa.</p>
+      <p class="disclaimer">Modelo <b>didático</b>: equação do gás alveolar (<code>P<sub>A</sub>O₂ = FiO₂·(760−47) − PaCO₂/0,8</code>), equação do shunt com a curva de Severinghaus (Mód. 2), oxigênio dissolvido e diferença arteriovenosa fixa (~5 mL/dL). Hb fixada em 15 g/dL. Valores em ordem de grandeza fisiológica — o shunt verdadeiro (V/Q=0) é refratário; o V/Q apenas baixo responde ao O₂, e é isso que o teste separa. O A–a aqui é dirigido pelo componente shunt do modelo, sem difusão isolada nem heterogeneidade V/Q distribuída.</p>
     </div>
   </div>
 
@@ -482,6 +483,16 @@ function renderLab(){
   } else {
     boxO.className='insight ok';
     boxO.innerHTML=`<div class="ih">✦ Oxigenação responsiva ao O₂</div>Com pouco shunt (<b>${(s*100).toFixed(0)}%</b>), a PaO₂ <b>sobe</b> ao aumentar a FiO₂ — a curva dispara para cima, como no V/Q baixo. É o oposto do shunt verdadeiro: aqui o oxigênio resolve. Suba a fração de shunt e veja a curva começar a achatar.`;
+  }
+
+  // ---- armadilha didática: saturação bonita, A-a ruim ----
+  const boxTrap = el('insightSpo2Trap');
+  if(cur.saO2 >= 96 && cur.aa >= 150){
+    boxTrap.className='insight warn';
+    boxTrap.innerHTML=`<div class="ih">⚠ Saturação bonita, fisiologia feia</div>A SaO₂ está em <b>${cur.saO2.toFixed(0)}%</b>, mas isso não absolve o pulmão: o gradiente A–a está em <b>${cur.aa.toFixed(0)} mmHg</b>. O oxímetro te tranquiliza porque a hemoglobina está no platô; o A–a mostra o quanto de oxigênio alveolar está sendo desperdiçado pelo shunt. É o Módulo 2 voltando aqui: <b>saturar não é respirar bem</b>.`;
+  } else {
+    boxTrap.className='insight hidden';
+    boxTrap.innerHTML='';
   }
 
   // ---- espaço morto (insight ventilação) ----
