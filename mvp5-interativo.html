@@ -62,6 +62,72 @@ function setSurf(v,silent){surfactante=v;el('btnSurfOn').classList.toggle('activ
 function renderLab(){const rA=parseFloat(el('slRA').value),rB=parseFloat(el('slRB').value),PA=pressao(rA),PB=pressao(rB);el('lblRA').textContent=`${rA} µm`;el('lblRB').textContent=`${rB} µm`;el('roPA').innerHTML=`${PA.toFixed(1)}<small> cmH₂O</small>`;el('roPB').innerHTML=`${PB.toFixed(1)}<small> cmH₂O</small>`;const scale=.20,cAx=95,cBx=245,cy=120,jx=170,jy=46,dA=rA*scale,dB=rB*scale,diff=PA-PB,instavel=Math.abs(diff)>1,aWarn=instavel&&PA>PB,bWarn=instavel&&PB>PA;let svg='';svg+=`<line x1="${jx}" y1="20" x2="${jx}" y2="${jy}" stroke="#C97F66" stroke-width="7" stroke-linecap="round"/>`;svg+=`<line x1="${jx}" y1="${jy}" x2="${cAx}" y2="${cy}" stroke="#C97F66" stroke-width="6" stroke-linecap="round"/>`;svg+=`<line x1="${jx}" y1="${jy}" x2="${cBx}" y2="${cy}" stroke="#C97F66" stroke-width="6" stroke-linecap="round"/>`;svg+=`<circle class="alv ${aWarn?'warn':'breathe'}" cx="${cAx}" cy="${cy}" r="${dA}" fill="#3C7F86" fill-opacity="0.16" stroke="${aWarn?'#B0503E':'#3C7F86'}" stroke-width="2"/>`;svg+=`<circle class="alv ${bWarn?'warn':'breathe'}" cx="${cBx}" cy="${cy}" r="${dB}" fill="#3C7F86" fill-opacity="0.16" stroke="${bWarn?'#B0503E':'#3C7F86'}" stroke-width="2"/>`;svg+=`<text x="${cAx}" y="${cy+dA+16}" text-anchor="middle" font-size="10" fill="#16383B" font-family="monospace">A · ${PA.toFixed(1)}</text>`;svg+=`<text x="${cBx}" y="${cy+dB+16}" text-anchor="middle" font-size="10" fill="#16383B" font-family="monospace">B · ${PB.toFixed(1)}</text>`;if(instavel){const fromX=PA>PB?cAx:cBx,toX=PA>PB?cBx:cAx,ay=78,dir=toX>fromX?1:-1,sx=fromX+dir*22,ex=toX-dir*22;svg+=`<line x1="${sx}" y1="${ay}" x2="${ex}" y2="${ay}" stroke="#B0503E" stroke-width="2.5"/><path d="M ${ex} ${ay} l ${-dir*8} -5 l 0 10 z" fill="#B0503E"/><text x="${(sx+ex)/2}" y="${ay-6}" text-anchor="middle" font-size="8.5" fill="#B0503E">ar escapa</text>`}el('stage').innerHTML=svg;const v=el('verdict');if(Math.abs(diff)<=1){v.className='verdict';v.innerHTML=`<div class="vh">✦ Estável</div>As pressões estão próximas (<b>${PA.toFixed(1)}</b> e <b>${PB.toFixed(1)}</b> cmH₂O). ${surfactante?'O <b>surfactante</b> baixou a tensão mais no alvéolo pequeno, equilibrando o <code>2T/r</code>.':'Como os raios estão próximos, as pressões batem mesmo sem surfactante.'}`}else{const menor=PA>PB?'A':'B';v.className='verdict bad';v.innerHTML=`<div class="vh">↺ Instável — colapso</div>O alvéolo <b>${menor}</b> tem pressão maior (<b>${Math.max(PA,PB).toFixed(1)}</b> vs <b>${Math.min(PA,PB).toFixed(1)}</b> cmH₂O): seu ar escapa para o vizinho maior e ele tende a <b>colapsar</b>. Ligue o surfactante e veja as pressões se aproximarem.`}}
 function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const iniciada=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',iniciada)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
 buildPresets();setSurf(true,true);renderLab();
+
+/* ===== CAMADA v3.1 — PEEP como pressao de recrutamento (surfactante biologico <-> PEEP mecanico) ===== */
+(function(){
+  const $=id=>document.getElementById(id);
+  // controle de PEEP apos o toggle de surfactante
+  const tg=$('btnSurfOn').closest('.toggle');
+  tg.insertAdjacentHTML('afterend',
+    '<div class="ctrl"><label>PEEP aplicada (pressao da via aerea) <span id="lblPEEP">0 cmH₂O</span></label>'+ 
+    '<input id="slPEEP" type="range" min="0" max="20" step="0.5" value="0" oninput="renderLab()" aria-label="PEEP em cmH2O">'+
+    '</div>');
+  // leituras: gradiente e pressao para manter o menor aberto
+  const ro=$('roPA').closest('.readouts');
+  ro.setAttribute('aria-live','polite');
+  ro.style.gridTemplateColumns='repeat(auto-fit,minmax(120px,1fr))';
+  ro.insertAdjacentHTML('beforeend',
+    '<div class="ro"><div class="v" id="roDP">—</div><div class="k">Gradiente ΔP</div></div>'+ 
+    '<div class="ro"><div class="v" id="roOpen">—</div><div class="k">Manter o menor aberto</div></div>');
+  $('verdict').insertAdjacentHTML('afterend','<div id="peepBox" style="margin-top:10px"></div>');
+  $('slRA').setAttribute('aria-label','Raio do alveolo A em micrometros'); $('slRB').setAttribute('aria-label','Raio do alveolo B em micrometros');
+  $('presets').insertAdjacentHTML('afterend','<div style="display:flex;justify-content:flex-end;margin:-2px 0 14px"><button id="btnShare" onclick="shareScenario()" style="font:600 .8rem/1 inherit;color:var(--accent-deep);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:7px 15px;cursor:pointer">↗ copiar link deste cenario</button></div>');
+
+  function enhanceLab(){
+    const rA=+$('slRA').value, rB=+$('slRB').value, peep=+$('slPEEP').value;
+    $('lblPEEP').textContent=peep+' cmH₂O';
+    const PA=pressao(rA), PB=pressao(rB), dP=Math.abs(PA-PB);
+    const rmin=Math.min(rA,rB), Popen=pressao(rmin);     // pressao para manter o menor aberto
+    const recruited = peep >= Popen-0.05;
+    const unstable = dP>1;
+    $('roDP').innerHTML=dP.toFixed(1)+'<small> cmH₂O</small>'; $('roDP').className='v'+(unstable?' bad':'');
+    $('roOpen').innerHTML=Popen.toFixed(1)+'<small> cmH₂O</small>'; $('roOpen').className='v'+(peep<Popen-0.05?' warn':'');
+    const box=$('peepBox');
+    let bs='border-radius:11px;padding:16px 18px;font-size:.96rem;line-height:1.6;';
+    if(!unstable){
+      box.innerHTML='<div style="'+bs+'border-left:4px solid var(--correct,#4E7C5A);background:var(--correct-bg,#E4ECE0);color:#2c4a35">'+
+        '<div style="font-family:Fraunces,serif;font-weight:600;font-size:1.05rem;margin-bottom:6px">Estavel — pouca PEEP necessaria</div>'+ 
+        'As pressoes estao proximas; o alveolo pequeno se mantem sem grande pressao externa. '+(surfactante?'O <b>surfactante</b> ja baixou a pressao de abertura (agora <b>'+Popen.toFixed(1)+' cmH₂O</b>): e o recrutamento biologico.':'Os raios estao proximos, entao as pressoes batem.')+'</div>';
+    } else if(recruited){
+      box.innerHTML='<div style="'+bs+'border-left:4px solid var(--correct,#4E7C5A);background:var(--correct-bg,#E4ECE0);color:#2c4a35">'+
+        '<div style="font-family:Fraunces,serif;font-weight:600;font-size:1.05rem;margin-bottom:6px">✓ Recrutado pela PEEP</div>'+ 
+        'O alveolo pequeno precisaria de <b>'+Popen.toFixed(1)+' cmH₂O</b> para nao colapsar; a PEEP de <b>'+peep.toFixed(1)+'</b> escora ele aberto. '+
+        'Repare: <b>'+(surfactante?'com surfactante a pressao de abertura ja era baixa':'sem surfactante a pressao de abertura e alta, exigindo mais PEEP')+'</b>. O surfactante faz <b>biologicamente</b> (baixa a tensao) o que a PEEP faz <b>mecanicamente</b> (aplica pressao) — dois caminhos para o mesmo alveolo aberto. E a logica do PEEP na SDRA, onde o surfactante esta inativado.</div>';
+    } else {
+      box.innerHTML='<div style="'+bs+'border-left:4px solid var(--wrong,#B0503E);background:var(--wrong-bg,#F0E1DB);color:#5e2c22">'+
+        '<div style="font-family:Fraunces,serif;font-weight:600;font-size:1.05rem;margin-bottom:6px">↺ Colapso — PEEP insuficiente</div>'+ 
+        'Para manter o alveolo pequeno aberto seriam precisos <b>~'+Popen.toFixed(1)+' cmH₂O</b>, mas a PEEP e so <b>'+peep.toFixed(1)+'</b>: ele esvazia no vizinho e colapsa. Duas saidas, mesma fisica do <code>2T/r</code>: <b>suba a PEEP</b> ate ~'+Popen.toFixed(1)+' (mecanico) ou <b>ligue o surfactante</b> (biologico, baixa a tensao e portanto a pressao de abertura).</div>';
+    }
+    writeHash();
+  }
+  const _rl=renderLab; renderLab=function(){ _rl.apply(this,arguments); enhanceLab(); };
+
+  const cl=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+  window.writeHash=function(){ if($('labMode').classList.contains('hidden')) return;
+    history.replaceState(null,'','#ra='+$('slRA').value+'&rb='+$('slRB').value+'&peep='+$('slPEEP').value+'&surf='+(surfactante?1:0)+'&m=lab'); };
+  function readHash(){ const raw=location.hash.replace(/^#/,''); if(!raw) return false; const p=new URLSearchParams(raw);
+    if(p.has('ra'))$('slRA').value=cl(+p.get('ra'),40,220);
+    if(p.has('rb'))$('slRB').value=cl(+p.get('rb'),40,220);
+    if(p.has('peep'))$('slPEEP').value=cl(+p.get('peep'),0,20);
+    if(p.has('surf'))setSurf(p.get('surf')!=='0',true);
+    return p.get('m')==='lab'||p.has('ra')||p.has('rb')||p.has('peep'); }
+  window.shareScenario=async function(){ writeHash(); const b=$('btnShare'),t=b.textContent;
+    try{await navigator.clipboard.writeText(location.href);b.textContent='✓ link copiado';}catch(e){b.textContent='copie a URL ↑';}
+    b.style.borderColor='var(--correct)';b.style.color='var(--correct)';setTimeout(()=>{b.textContent=t;b.style.borderColor='';b.style.color='var(--accent-deep)';},1900); };
+
+  const open=readHash(); enhanceLab(); if(open) setMode('lab');
+})();
+
 </script>
 </body>
 </html>
