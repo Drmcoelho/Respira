@@ -54,6 +54,66 @@ const faixa=(c,d=2)=>`${r(c-d,1)}–${r(c+d,1)}`;if(primario==='acidM'){const es
 if(na!==null&&cl!==null){const ag=na-(cl+hco3);let agc=ag,corr='';if(alb!==null){agc=ag+2.5*(4-alb);corr=` Corrigido pela albumina: <code>${r(ag,1)}+2,5×(4−${r(alb,1)})=${r(agc,1)}</code>.`}const alto=agc>14;steps.push(['4',`Ânion-gap = <code>${r(na,0)}−(${r(cl,0)}+${r(hco3,1)})=${r(ag,1)}</code>.${corr} ${alto?'Gap alto → ácido adicionado.':'Gap normal → se há acidose metabólica, sugere perda de bicarbonato.'}`]);if(alto){const dAG=agc-12,dH=24-hco3;if(dH>1){const ratio=dAG/dH;let t=`Delta-delta = <code>(${r(agc,1)}−12)/(24−${r(hco3,1)})=${r(ratio,1)}</code>. `,w=false;if(ratio<1){t+='Razão <1 → acidose metabólica de gap normal associada.';w=true;verdictClass='mixed'}else if(ratio>2){t+='Razão >2 → alcalose metabólica ou acidose respiratória crônica associada.';w=true;verdictClass='mixed'}else t+='Razão 1–2 → compatível com acidose metabólica de gap alto pura.';steps.push(['5',t,w?'warn':null])}}}else steps.push(['4','Ânion-gap não calculado: informe Na⁺ e Cl⁻.']);let title='Distúrbio ácido-base',sub='Veja o passo a passo.';if(verdictClass==='mixed'){title='Distúrbio misto (≥2 processos)';sub='As contas não fecham para um distúrbio único.'}else if(primario==='nenhum'){verdictClass='ok';title='Sem distúrbio evidente';sub='Os números principais estão próximos do normal.'}else{const names={acidM:'Acidose metabólica',acidR:'Acidose respiratória',alcM:'Alcalose metabólica',alcR:'Alcalose respiratória'};title=names[primario]||title;verdictClass=lado==='acid'?'acid':lado==='base'?'base':'ok'}const out=el('benchResult');out.innerHTML=`<div class="verdict ${verdictClass}"><h3>${title}</h3><div class="vsub">${sub}</div></div><div class="steps">${steps.map(s=>`<div class="step ${s[2]||''}"><span class="sn">${s[0]}</span><span class="stxt">${s[1]}</span></div>`).join('')}</div>`;out.classList.add('show')}
 function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segBench').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('benchMode').classList.toggle('hidden',trail);if(trail){const iniciada=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',iniciada);el('phbar').classList.add('idle');setNeedle(7.40)}else{el('meter').classList.remove('on')}window.scrollTo({top:0,behavior:'smooth'})}
 buildPresets();setNeedle(7.40);
+
+/* ===== CAMADA v3.1 — narrativa em uma frase + caso partilhavel ===== */
+(function(){
+  const $=id=>document.getElementById(id);
+  $('benchResult').insertAdjacentHTML('beforebegin','<div id="narr" aria-live="polite"></div>');
+  $('benchResult').setAttribute('aria-live','polite');
+  $('presets').insertAdjacentHTML('afterend','<div style="display:flex;justify-content:flex-end;margin:6px 0 0"><button id="btnShare" onclick="shareScenario()" style="font:600 .8rem/1 inherit;color:var(--accent-deep);background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:7px 15px;cursor:pointer">↗ copiar link deste caso</button></div>');
+
+  const val=id=>{const v=parseFloat($(id).value);return isFinite(v)?v:null;};
+
+  function narrative(){
+    const ph=val('inPh'),co2=val('inCo2'),hco3=val('inHco3'),na=val('inNa'),cl=val('inCl'),alb=val('inAlb');
+    const n=$('narr');
+    if(ph===null||co2===null||hco3===null){ n.innerHTML=''; return; }
+    if(ph<6.5||ph>7.9||co2<5||co2>150||hco3<2||hco3>60){ n.innerHTML=''; return; }
+    const acid=ph<7.35, alk=ph>7.45;
+    let prim='', primKind=null;
+    if(acid){ if(hco3<22){prim='Acidose metabolica';primKind='acidM';} else if(co2>45){prim='Acidose respiratoria';primKind='acidR';} else {prim='Acidemia';primKind='acidM';} }
+    else if(alk){ if(hco3>26){prim='Alcalose metabolica';primKind='alcM';} else if(co2<35){prim='Alcalose respiratoria';primKind='alcR';} else {prim='Alcalemia';primKind='alcM';} }
+    else { if((co2>45&&hco3>26)){prim='Acidose respiratoria compensada';primKind='acidR';} else if(co2<35&&hco3<22){prim='Acidose metabolica';primKind='acidM';} else {prim='Sem disturbio acido-base evidente';primKind='none';} }
+    // gap
+    let gapClause='', agc=null, high=false;
+    if(na!==null&&cl!==null){ const ag=na-(cl+hco3); agc=ag+(alb!==null?2.5*(4-alb):0); high=agc>14; gapClause=high?' de anion-gap alto':' de anion-gap normal'; }
+    // compensacao
+    let comp='', mixed=false;
+    if(primKind==='acidM'){ const esp=1.5*hco3+8; if(co2>esp+2){comp='com acidose respiratoria associada';mixed=true;} else if(co2<esp-2){comp='com alcalose respiratoria associada';mixed=true;} else comp='com compensacao respiratoria adequada (Winter)'; }
+    else if(primKind==='alcM'){ const esp=0.7*(hco3-24)+40; if(co2<esp-2){comp='com alcalose respiratoria associada';mixed=true;} else if(co2>esp+2){comp='com acidose respiratoria associada';mixed=true;} else comp='com compensacao respiratoria adequada'; }
+    else if(primKind==='acidR'){ comp='(avalie aguda vs cronica pelo HCO₃⁻)'; }
+    else if(primKind==='alcR'){ comp='(avalie aguda vs cronica pelo HCO₃⁻)'; }
+    // delta-delta
+    let dd='';
+    if(high&&agc!==null){ const dAG=agc-12,dH=24-hco3; if(dH>1){ const r=dAG/dH; if(r<1){dd=' + acidose metabolica de gap normal oculta';mixed=true;} else if(r>2){dd=' + alcalose metabolica ou acidose respiratoria cronica oculta';mixed=true;} } }
+    const onlyGap = (primKind==='acidM');
+    const sentence = prim + (onlyGap?gapClause:'') + (comp?(', '+comp):'') + dd + '.';
+    const col = mixed? 'var(--warn,#B8862F)' : (primKind==='none'?'var(--correct,#4E7C5A)':'var(--accent,#C0603A)');
+    n.innerHTML='<div style="border-radius:13px;padding:16px 18px;margin-bottom:12px;border-left:4px solid '+col+';background:var(--paper-deep);color:var(--ink)">'+
+      '<div style="font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:5px">A historia em uma frase</div>'+ 
+      '<div style="font-family:Fraunces,serif;font-size:1.12rem;line-height:1.35">'+sentence+'</div>'+ 
+      (mixed?'<div style="font-size:.82rem;color:var(--ink-soft);margin-top:7px">⚑ As contas nao fecham para um disturbio unico — veja o passo a passo abaixo.</div>':'')+'</div>';
+  }
+
+  const _rb=runBench; runBench=function(){ _rb.apply(this,arguments); narrative(); writeHash(); };
+  const _cb=clearBench; clearBench=function(){ _cb.apply(this,arguments); $('narr').innerHTML=''; history.replaceState(null,'',location.pathname); };
+
+  const cl=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+  window.writeHash=function(){ if($('benchMode').classList.contains('hidden')) return;
+    const f=['inPh','inCo2','inHco3','inNa','inCl','inAlb'],k=['ph','co2','hco3','na','cl','alb'];
+    const parts=[]; f.forEach((id,i)=>{ if($(id).value!=='') parts.push(k[i]+'='+$(id).value); });
+    if(parts.length) history.replaceState(null,'','#'+parts.join('&')+'&m=bench'); };
+  function readHash(){ const raw=location.hash.replace(/^#/,''); if(!raw) return false; const p=new URLSearchParams(raw);
+    const map={ph:'inPh',co2:'inCo2',hco3:'inHco3',na:'inNa',cl:'inCl',alb:'inAlb'}; let any=false;
+    Object.keys(map).forEach(k=>{ if(p.has(k)){ $(map[k]).value=p.get(k); any=true; } });
+    return p.get('m')==='bench'||any; }
+  window.shareScenario=async function(){ writeHash(); const b=$('btnShare'),t=b.textContent;
+    try{await navigator.clipboard.writeText(location.href);b.textContent='✓ link copiado';}catch(e){b.textContent='copie a URL ↑';}
+    b.style.borderColor='var(--correct)';b.style.color='var(--correct)';setTimeout(()=>{b.textContent=t;b.style.borderColor='';b.style.color='var(--accent-deep)';},1900); };
+
+  if(readHash()){ setMode('bench'); runBench(); }
+})();
+
 </script>
 </body>
 </html>
