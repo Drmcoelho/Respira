@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respira · a ideia por trás da série</title>
+<meta name="description" content="A transmissão do que foi idealizado: a concepção da série Respira de fisiologia respiratória — a escada, os cinco laboratórios, o fio que costura e a Fase II.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-deep:#EBE3D3; --ink:#16383B; --ink-soft:#4A6164;
+    --accent:#C0603A; --accent-deep:#A24B2C; --air:#3C7F86; --tissue:#C97F66;
+    --correct:#4E7C5A; --wrong:#B0503E; --warn:#B8862F;
+    --line:#D7CCB8; --shadow:rgba(22,56,59,.13);
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Hanken Grotesk', sans-serif;
+    background:
+      radial-gradient(1100px 600px at 80% -10%, rgba(192,96,58,.07), transparent 60%),
+      radial-gradient(900px 700px at -8% 108%, rgba(60,127,134,.08), transparent 55%),
+      var(--paper);
+    color:var(--ink); line-height:1.68; min-height:100vh;
+    padding:0 22px 110px; -webkit-font-smoothing:antialiased; position:relative; overflow-x:hidden;
+  }
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{ max-width:720px; margin:0 auto; position:relative; z-index:2; }
+
+  /* revelação suave, escalonada */
+  .rise{ opacity:0; transform:translateY(14px); animation:rise .9s cubic-bezier(.22,1,.36,1) forwards; }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  header{ padding:84px 0 30px; }
+  .eyebrow{ font-size:.72rem; letter-spacing:.34em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:18px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2.6rem, 8vw, 4.2rem); line-height:1.02; letter-spacing:-.018em; margin-bottom:20px; }
+  h1 em{ font-style:italic; color:var(--accent); }
+  .dek{ font-size:1.16rem; color:var(--ink-soft); max-width:30em; }
+  .dek b{ color:var(--ink); font-weight:600; }
+  .meta{ margin-top:26px; font-size:.82rem; color:var(--ink-soft); font-family:var(--mono); letter-spacing:.02em; }
+
+  .rule{ height:1px; background:linear-gradient(90deg, var(--line), transparent); margin:46px 0; border:none; }
+
+  section{ margin:54px 0; }
+  .sec-num{ font-family:var(--mono); font-size:.78rem; color:var(--accent); letter-spacing:.08em; }
+  h2{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(1.7rem,4.5vw,2.3rem); line-height:1.12; letter-spacing:-.01em; margin:6px 0 18px; }
+  p{ margin-bottom:18px; font-size:1.06rem; }
+  p .arr{ color:var(--accent); font-weight:600; }
+  em.k{ font-style:normal; color:var(--accent-deep); font-weight:600; }
+  code{ font-family:var(--mono); font-size:.86em; background:rgba(22,56,59,.06); padding:1px 6px; border-radius:5px; color:var(--ink); }
+  .lead{ font-family:'Fraunces',serif; font-size:1.28rem; line-height:1.5; color:var(--ink); font-weight:400; }
+  blockquote{ font-family:'Fraunces',serif; font-style:italic; font-size:1.34rem; line-height:1.45; color:var(--accent-deep); border-left:3px solid var(--accent); padding:4px 0 4px 22px; margin:30px 0; }
+
+  /* degraus — a escada */
+  .ladder{ position:relative; }
+  .step{ position:relative; padding:26px 26px 24px 30px; margin:18px 0; background:rgba(255,253,248,.66);
+    border:1px solid var(--line); border-radius:16px; box-shadow:0 14px 40px -28px var(--shadow); }
+  .step::before{ content:""; position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:3px; background:var(--accent); opacity:.55; }
+  .step .num{ font-family:var(--mono); font-size:.74rem; color:var(--accent); letter-spacing:.1em; }
+  .step h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.4rem; letter-spacing:-.005em; margin:3px 0 4px; }
+  .step .tag{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--air); font-weight:700; margin-bottom:12px; }
+  .step p{ font-size:1.02rem; margin-bottom:12px; }
+  .step p:last-child{ margin-bottom:0; }
+  .lever{ display:block; margin-top:14px; padding:13px 15px; background:var(--paper-deep); border-radius:11px; border:1px dashed var(--line);
+    font-size:.96rem; line-height:1.55; }
+  .lever b{ color:var(--accent-deep); }
+  .lever .mono{ font-family:var(--mono); font-size:.82em; color:var(--ink-soft); }
+
+  .pillars{ display:grid; gap:14px; margin:8px 0; }
+  .pillar{ padding:18px 20px; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; }
+  .pillar h4{ font-family:'Fraunces',serif; font-weight:600; font-size:1.06rem; margin-bottom:5px; }
+  .pillar p{ font-size:.98rem; color:var(--ink-soft); margin:0; }
+  .pillar p b{ color:var(--ink); }
+
+  .map{ font-family:var(--mono); font-size:.86rem; line-height:2; color:var(--ink-soft); background:var(--paper-deep);
+    border:1px solid var(--line); border-radius:13px; padding:18px 20px; margin:18px 0; overflow-x:auto; }
+  .map .on{ color:var(--accent-deep); font-weight:600; }
+  .map .soon{ opacity:.6; }
+
+  .honest{ font-size:1rem; color:var(--ink-soft); }
+  .honest b{ color:var(--ink); }
+
+  footer{ margin-top:74px; padding-top:30px; border-top:1px dashed var(--line); text-align:center; color:var(--ink-soft); }
+  footer .sig{ font-family:'Fraunces',serif; font-style:italic; font-size:1.05rem; color:var(--ink); margin-bottom:8px; }
+  footer .small{ font-size:.82rem; font-family:var(--mono); letter-spacing:.02em; }
+  footer .free{ margin-top:14px; font-size:.86rem; color:var(--accent-deep); }
+
+  @media (max-width:560px){
+    header{ padding:60px 0 20px; }
+    .step{ padding:22px 18px 20px 22px; }
+    p, .step p{ font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="rise" style="animation-delay:.02s">
+    <div class="eyebrow">Respira · a ideia por trás</div>
+    <h1>Pensar a respiração,<br><em>não decorá-la</em></h1>
+    <p class="dek">Esta página não ensina fisiologia. Ela transmite <b>o que foi idealizado</b> — a concepção da série: por que cada módulo existe, qual a ideia sagaz dentro de cada um, e o fio que costura os cinco num só raciocínio.</p>
+    <div class="meta">série de fisiologia respiratória · 10 módulos · 5 no ar</div>
+  </header>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.06s">
+    <div class="sec-num">00 · a tese</div>
+    <h2>Uma escada, não uma lista</h2>
+    <p class="lead">Da física do ar que entra até a ventilação mecânica à beira do leito — um passo de cada vez, e cada ideia aprendida num degrau <span class="arr">volta</span> no degrau seguinte, dentro de um paciente real.</p>
+    <p>O objetivo não é um banco de questões para prova. É <em class="k">raciocinar junto</em>: a cada pergunta a pessoa pensa, responde, e na hora entende o porquê — certo ou errado, sempre com o mecanismo. Até que mover o ar, ler uma gasometria e ajustar um ventilador sejam o <b>mesmo raciocínio</b>, visto de ângulos diferentes.</p>
+    <blockquote>Correção técnica não autoriza compressão intelectual.</blockquote>
+    <p>É a regra editorial da série: simplificar sem mentir, e nunca trocar profundidade por brevidade. Cada simplificação é assumida em voz alta — a incerteza é <em class="k">localizada</em>, não escondida.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.08s">
+    <div class="sec-num">01 · a forma</div>
+    <h2>Trilha que pergunta, laboratório que responde</h2>
+    <p>Cada módulo tem duas faces. A <em class="k">Trilha</em> é socrática: perguntas que constroem o conceito por dedução, com devolutiva imediata pelo mecanismo. O <em class="k">Laboratório</em> é manipulável: a pessoa arrasta, alterna, e <b>vê a física acontecer</b> na mão.</p>
+    <p>Três princípios guiaram a concepção dos laboratórios:</p>
+    <div class="pillars">
+      <div class="pillar"><h4>Física e mecanismo, não protocolo</h4><p>Antes da conduta vem a causa. Cada lab parte de uma equação — <code>τ=R·C</code>, <code>P=2T/r</code>, equação do gás alveolar — e deixa a doença <b>emergir</b> dela.</p></div>
+      <div class="pillar"><h4>Analogia como andaime</h4><p>Cano e balão; a curva viva; o alvéolo que quer fechar. A imagem segura o conceito enquanto o número o ancora.</p></div>
+      <div class="pillar"><h4>Um número de cabeceira, não um enfeite</h4><p>Cada lab entrega um valor que se usa de verdade à beira do leito — não uma animação bonita. É o que separa simulador didático de brinquedo.</p></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.1s">
+    <div class="sec-num">02 · os cinco degraus</div>
+    <h2>A ideia dentro de cada laboratório</h2>
+    <p>Para cada módulo: a ideia central, a <b>alavanca sagaz</b> que foi idealizada, e o ganho à beira do leito.</p>
+
+    <div class="ladder">
+
+      <div class="step">
+        <div class="num">MÓDULO 01</div>
+        <h3>Como o ar entra e sai</h3>
+        <div class="tag">mecânica · resistência × complacência</div>
+        <p>O ar obedece à física: a expiração é passiva e decai com a constante de tempo <code>τ = R·C</code>. Cano apertado (resistência) aprisiona ar; balão duro (complacência) cobra trabalho. Dois eixos, duas doenças.</p>
+        <p class="lever"><b>A alavanca:</b> o <b>auto-PEEP</b> (a pressão escondida do ar preso) como número de cabeceira — e a <b>frequência respiratória como manobra</b>. A lição que se sente na mão: <span class="mono">a salvação do aprisionamento não é mais ar — é tempo de expirar.</span> Baixar a frequência derruba o ar preso diante dos olhos. É a física dos lábios franzidos da DPOC.</p>
+      </div>
+
+      <div class="step">
+        <div class="num">MÓDULO 02</div>
+        <h3>Saturar não é respirar bem</h3>
+        <div class="tag">curva da hemoglobina · oxigenação × ventilação</div>
+        <p>A curva da hemoglobina tem platô e despenhadeiro; o efeito Bohr a desloca para entregar O₂ onde há demanda. O oxímetro virou onipresente — e com ele a armadilha de achar que saturação boa significa paciente bem.</p>
+        <p class="lever"><b>A alavanca:</b> separar <b>saturação ≠ conteúdo ≠ entrega</b>. Anemia com saturação de 98% e conteúdo no chão. E a cegueira do oxímetro na intoxicação por CO: <span class="mono">mostra 98%, a saturação real é 68%, o conteúdo desabou.</span> O número que tranquiliza é o que mente.</p>
+      </div>
+
+      <div class="step">
+        <div class="num">MÓDULO 03</div>
+        <h3>Onde o ar e o sangue se encontram</h3>
+        <div class="tag">relação V/Q · shunt × espaço morto</div>
+        <p>Por que o oxigênio salva um paciente e quase não toca em outro? Shunt verdadeiro é refratário ao O₂; V/Q apenas baixo responde. O espaço morto ataca o CO₂, não a oxigenação.</p>
+        <p class="lever"><b>A alavanca:</b> o <b>gradiente A–a como juiz honesto</b> — shunt alarga o A–a, hipoventilação não — e a <b>relação P:F</b> (faixas de Berlim), que normaliza pela FiO₂ e <b>desmascara o shunt que a SpO₂ esconde</b>. <span class="mono">A saturação tranquiliza; a P:F denuncia.</span></p>
+      </div>
+
+      <div class="step">
+        <div class="num">MÓDULO 04</div>
+        <h3>A gasometria como narrativa</h3>
+        <div class="tag">pH · pCO₂ · HCO₃⁻ · ânion-gap</div>
+        <p>Três números contam uma história coerente: quem causou, quem compensou, e quando há um segundo distúrbio escondido. Parar de decorar valores soltos e ler como narrativa, em quatro passos.</p>
+        <p class="lever"><b>A alavanca:</b> uma bancada que calcula — Winter, ânion-gap corrigido pela albumina, delta-delta — com um <b>juiz de coerência interna</b> (Henderson-Hasselbalch) que pega coleta trocada, e a <b>história resumida em uma frase</b>. <span class="mono">"Acidose metabólica de ânion-gap alto, com alcalose respiratória associada."</span></p>
+      </div>
+
+      <div class="step">
+        <div class="num">MÓDULO 05</div>
+        <h3>A arquitetura que respira</h3>
+        <div class="tag">Lei de Laplace · surfactante · pleura</div>
+        <p>O pulmão, por conta própria, <b>quer se fechar</b>. <code>P = 2T/r</code>: o alvéolo menor tem a maior pressão e tende a esvaziar no maior. Manter milhões de bolsas abertas é uma luta física constante.</p>
+        <p class="lever"><b>A alavanca:</b> a <b>PEEP como pressão de recrutamento</b>, fechando o ciclo terapêutico — <span class="mono">o surfactante faz biologicamente (baixa a tensão) o que a PEEP faz mecanicamente (aplica pressão)</span>. Dois caminhos para o mesmo alvéolo aberto. É a lógica do PEEP na SDRA, onde o surfactante está inativado.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.12s">
+    <div class="sec-num">03 · o fio</div>
+    <h2>O que costura os cinco</h2>
+    <p>A série não é cinco assuntos — é um raciocínio reaparecendo. O <em class="k">recrutamento</em> atravessa três degraus pelo mesmo eixo físico: o shunt refratário que pede para reabrir o alvéolo (03) <span class="arr">→</span> o surfactante e a PEEP que o reabrem (05) <span class="arr">→</span> e o "dar tempo de expirar" que desfaz o aprisionamento (01).</p>
+    <p>O tema <em class="k">"saturar não é respirar bem"</em> nasce na curva (02) e volta no V/Q (03): a SpO₂ que satura esconde a troca catastrófica, e é o A–a — não o oxímetro — quem decide. A gasometria (04) costura tudo num exame que se lê em segundos.</p>
+    <p>Por baixo, uma decisão de concepção: os laboratórios são <b>material livre para ensinar</b>. Cada estado tem um <b>link próprio</b> — um professor manda o cenário exato pronto para o aluno abrir, e a leitura das telas é acessível a leitores de tela. A ferramenta foi pensada para circular.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.14s">
+    <div class="sec-num">04 · as honestidades</div>
+    <h2>O que a série assume em voz alta</h2>
+    <p class="honest">Modelos didáticos simplificam — e a série confessa onde. No Laplace (05), alvéolos reais são <b>interdependentes</b> (os septos se tracionam, e isso também estabiliza), e a pressão de abertura é maior e <b>histerética</b>: reabrir custa mais que manter aberto. Na mecânica (01), o trabalho usa um tempo inspiratório de referência, para que a manobra de frequência mexa só no aprisionamento. Na curva (02), o oxímetro lê a CO-Hb quase como oxigenada e a entrega assume uma PvO₂ tecidual fixa. No V/Q (03), a relação P:F pressupõe o contexto clínico — por isso o A–a entra como juiz. Dizer isso faz parte da ideia: a confiança vem da transparência, não da ilusão de precisão.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section class="rise" style="animation-delay:.16s">
+    <div class="sec-num">05 · a Fase II idealizada</div>
+    <h2>Síndromes como curadoria de estados</h2>
+    <p>O degrau seguinte da concepção: a Fase II não reescreve física — ela <b>monta as grandes síndromes a partir dos laboratórios que já existem</b>, abrindo cada lab no estado exato e costurando a narrativa entre eles. A síndrome deixa de ser uma lista para decorar e vira um conjunto de peças que a pessoa já entende.</p>
+    <div class="map">
+      <span class="on">SDRA</span>  = V/Q [shunt alto, O₂ a 100%]  +  Laplace [sem surfactante]  +  mecânica [pulmão duro]<br>
+      <span class="on">DPOC</span>  = mecânica [resistência alta, frequência rápida → auto-PEEP]  +  curva da Hb<br>
+      <span class="on">Edema agudo</span>  = mecânica [encharcado]  +  V/Q  +  gasometria
+    </div>
+    <div class="map">
+      <span class="on">Fase I · fundamentos</span>   01 mecânica · 02 curva · 03 V/Q · 04 gasometria · 05 arquitetura<br>
+      <span class="soon">Fase II · estrutura e doença</span>   06 as grandes síndromes<br>
+      <span class="soon">Fase III · terapêutica</span>   07 farmacologia respiratória<br>
+      <span class="soon">Fase IV · escalada de suporte</span>   08 O₂ e suporte não invasivo · 09 VM fundamentos · 10 ventilação protetora e desmame
+    </div>
+    <p>É o ciclo se fechando: <b>fundamento → síndrome → terapêutica → suporte</b>, sempre o mesmo raciocínio subindo a escada.</p>
+  </section>
+
+  <footer class="rise" style="animation-delay:.18s">
+    <div class="sig">A forma explica a função. Quando algo falha, você deduz a doença.</div>
+    <div class="small">Respira · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira · Para a Dani</div>
+    <div class="free">Livre para usar, compartilhar e ensinar.</div>
+  </footer>
+
+</div>
+</body>
+</html>
