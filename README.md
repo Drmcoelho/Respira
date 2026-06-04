@@ -27,11 +27,12 @@ módulos 7–10 aparecem como "em breve" no índice.
 - `mvpN-interativo.html` — **versão canônica** de cada módulo: trilha de quiz com feedback
   por mecanismo e, na maioria dos módulos, um simulador interativo em JavaScript. É para
   onde o `index.html` aponta.
-- `mvpN.html` — em geral um **redirect** para a versão canônica (`mvp1.html`, `mvp6.html`).
-  O Módulo 6 preserva o hash da URL no redirect, porque a "Sala das síndromes" usa
-  deep-links para reabrir os laboratórios dos módulos 1–5.
-- `mvp4.html` — exceção: ainda é a **versão estática legada** (sem JavaScript, com
-  perguntas em `details/summary`), mantida como alternativa robusta e como referência.
+- `mvpN.html` — **redirect** para a versão canônica, existente para os módulos 1, 2, 3,
+  5 e 6. Todos **preservam o `location.hash`** ao redirecionar, para que deep-links na
+  forma curta (`mvp3.html#s=42&d=35&...`) cheguem ao laboratório no estado certo — a
+  "Sala das síndromes" do Módulo 6 usa esse mecanismo para reabrir os labs dos módulos 1–5.
+- `mvp4.html` — exceção: no lugar do stub há a **versão estática legada** (sem JavaScript,
+  com perguntas em `details/summary`), mantida como alternativa robusta e como referência.
 
 ## Interatividade
 
