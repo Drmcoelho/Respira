@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respira · A Terapêutica — as forças (Módulo 7 · interativo)</title>
+<meta name="description" content="Módulo 7: a terapêutica respiratória como mapa de forças. Cada intervenção classificada pelo eixo que move (resistência, complacência, shunt, recrutamento, conteúdo, ácido-base), com links que reabrem os laboratórios dos módulos 1–5 para aplicar a manobra. Mecanismo, não dose.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-deep:#EBE3D3; --ink:#16383B; --ink-soft:#4A6164;
+    --accent:#C0603A; --accent-deep:#A24B2C; --air:#3C7F86; --tissue:#C97F66;
+    --correct:#4E7C5A; --correct-bg:#E4ECE0; --wrong:#B0503E; --wrong-bg:#F0E1DB;
+    --warn:#B8862F; --warn-bg:#F2E9D2; --line:#D7CCB8; --shadow:rgba(22,56,59,.13);
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Hanken Grotesk', sans-serif;
+    background:
+      radial-gradient(1100px 600px at 80% -8%, rgba(192,96,58,.07), transparent 60%),
+      radial-gradient(900px 700px at -6% 110%, rgba(60,127,134,.08), transparent 55%),
+      var(--paper);
+    color:var(--ink); line-height:1.6; min-height:100vh;
+    padding:0 20px 80px; overflow-x:hidden; -webkit-font-smoothing:antialiased; position:relative;
+  }
+  body::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{ max-width:760px; margin:0 auto; position:relative; z-index:2; }
+
+  header{ padding:46px 0 16px; text-align:center; }
+  .backlink{ display:inline-block; margin-bottom:12px; font-size:.8rem; color:var(--accent-deep); text-decoration:none; letter-spacing:.04em; }
+  .backlink:hover{ text-decoration:underline; }
+  .kicker{ font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:12px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2.1rem, 6vw, 3.1rem); line-height:1.05; letter-spacing:-.01em; margin-bottom:14px; }
+  h1 em{ font-style:italic; color:var(--accent); }
+  .sub{ color:var(--ink-soft); font-size:1.02rem; max-width:580px; margin:0 auto; }
+
+  .segbar{ display:flex; gap:6px; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:5px; max-width:480px; margin:30px auto 6px; }
+  .seg{ flex:1; font-family:inherit; font-weight:600; font-size:.9rem; color:var(--ink-soft); background:transparent; border:none; padding:10px 8px; border-radius:9px; cursor:pointer; transition:all .18s ease; }
+  .seg.active{ background:var(--accent); color:#fff; box-shadow:0 6px 16px -8px var(--accent-deep); }
+  .seg:not(.active):hover{ color:var(--ink); }
+
+  .meter{ margin:22px 0 8px; display:none; }
+  .meter.on{ display:block; }
+  .meter-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:.78rem; letter-spacing:.04em; margin-bottom:8px; }
+  .meter-block{ color:var(--accent-deep); font-weight:600; text-transform:uppercase; letter-spacing:.18em; }
+  .meter-count{ color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .meter-track{ height:8px; background:var(--paper-deep); border-radius:99px; overflow:hidden; border:1px solid var(--line); }
+  .meter-fill{ height:100%; width:0; background:linear-gradient(90deg, var(--air), var(--tissue)); border-radius:99px; transition:width .6s cubic-bezier(.22,1,.36,1); }
+
+  .card{ background:rgba(255,253,248,.72); border:1px solid var(--line); border-radius:18px; padding:34px 34px 30px; box-shadow:0 14px 40px -22px var(--shadow); backdrop-filter:blur(2px); }
+  .intro p{ color:var(--ink-soft); margin-bottom:16px; font-size:1.04rem; }
+  .intro .lead{ color:var(--ink); font-size:1.1rem; }
+  .intro ul{ list-style:none; margin:18px 0 26px; }
+  .intro li{ padding:7px 0 7px 26px; position:relative; color:var(--ink-soft); }
+  .intro li::before{ content:""; position:absolute; left:0; top:14px; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+
+  .qtag{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:14px; }
+  .stem{ font-family:'Fraunces', serif; font-weight:400; font-size:1.32rem; line-height:1.4; margin-bottom:24px; letter-spacing:-.005em; }
+  .stem code,.fb code,.synth code{ font-family:var(--mono); font-size:.9em; background:rgba(0,0,0,.05); padding:1px 5px; border-radius:5px; }
+  .opts{ display:flex; flex-direction:column; gap:11px; }
+  .opt{ text-align:left; font-family:inherit; font-size:1rem; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:15px 18px; cursor:pointer; transition:all .18s ease; display:flex; gap:13px; align-items:flex-start; line-height:1.45; }
+  .opt .mark{ flex:0 0 auto; width:24px; height:24px; border-radius:7px; border:1.5px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:.82rem; color:var(--ink-soft); margin-top:1px; }
+  .opt:hover:not(:disabled){ border-color:var(--accent); transform:translateX(3px); }
+  .opt:disabled{ cursor:default; }
+  .opt.correct{ border-color:var(--correct); background:var(--correct-bg); }
+  .opt.correct .mark{ background:var(--correct); border-color:var(--correct); color:#fff; }
+  .opt.wrong{ border-color:var(--wrong); background:var(--wrong-bg); }
+  .opt.wrong .mark{ background:var(--wrong); border-color:var(--wrong); color:#fff; }
+  .opt.dim{ opacity:.5; }
+  .fb{ margin-top:22px; border-radius:13px; padding:20px 22px; border-left:4px solid var(--correct); background:var(--correct-bg); font-size:1rem; line-height:1.62; color:#2c4a35; opacity:0; transform:translateY(10px); max-height:0; overflow:hidden; transition:opacity .45s ease, transform .45s ease; }
+  .fb.show{ opacity:1; transform:translateY(0); max-height:none; }
+  .fb.bad{ border-left-color:var(--wrong); background:var(--wrong-bg); color:#5e2c22; }
+  .fb-head{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:8px; display:flex; align-items:center; gap:9px; }
+
+  .row{ margin-top:24px; display:flex; justify-content:flex-end; gap:12px; }
+  .btn{ font-family:inherit; font-weight:600; font-size:1rem; background:var(--accent); color:#fff; border:none; padding:13px 28px; border-radius:11px; cursor:pointer; transition:all .18s ease; box-shadow:0 8px 20px -10px var(--accent-deep); }
+  .btn:hover{ background:var(--accent-deep); transform:translateY(-2px); }
+  .btn.ghost{ background:transparent; color:var(--accent-deep); box-shadow:none; border:1.5px solid var(--line); }
+  .btn.big{ padding:15px 34px; font-size:1.05rem; }
+  .hidden{ display:none !important; }
+  .done{ text-align:center; }
+  .done .score{ font-family:'Fraunces',serif; font-size:3.4rem; font-weight:500; color:var(--accent); line-height:1; margin:10px 0; }
+  .done h2{ font-family:'Fraunces',serif; font-weight:500; font-size:1.7rem; margin-bottom:14px; }
+  .done p{ color:var(--ink-soft); margin-bottom:14px; }
+  .synth{ text-align:left; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:22px 24px; margin:22px 0; }
+  .synth h3{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:12px; }
+  .synth ol{ margin-left:18px; } .synth li{ margin-bottom:8px; color:var(--ink); }
+
+  .room-lead{ color:var(--ink-soft); margin-bottom:8px; font-size:1.02rem; }
+  .room-lead strong{ color:var(--ink); }
+  .fam{ margin:30px 0 8px; }
+  .fam-head{ display:flex; align-items:center; gap:11px; margin-bottom:4px; flex-wrap:wrap; }
+  .fam-head h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.42rem; letter-spacing:-.005em; }
+  .fam-axis{ font-family:var(--mono); font-size:.72rem; color:var(--air); font-weight:600; letter-spacing:.04em; }
+  .fam-blurb{ color:var(--ink-soft); font-size:.96rem; margin-bottom:14px; }
+  .iv{ background:rgba(255,253,248,.72); border:1px solid var(--line); border-radius:14px; padding:18px 20px 16px; margin-bottom:12px; box-shadow:0 14px 40px -30px var(--shadow); scroll-margin-top:18px; }
+  .iv.flash{ animation:flash 1.6s ease; }
+  @keyframes flash{ 0%{ box-shadow:0 0 0 3px rgba(192,96,58,.3);} 100%{ box-shadow:0 14px 40px -30px var(--shadow);} }
+  .iv-top{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:4px; }
+  .iv h4{ font-family:'Fraunces',serif; font-weight:600; font-size:1.12rem; }
+  .chips{ display:inline-flex; gap:5px; }
+  .chip{ font-family:var(--mono); font-size:.64rem; font-weight:600; color:#fff; background:var(--air); border-radius:5px; padding:2px 6px; letter-spacing:.03em; }
+  .chip.m1{ background:#A24B2C; } .chip.m2{ background:#8E2F39; } .chip.m3{ background:#3C7F86; } .chip.m4{ background:#4E7C5A; } .chip.m5{ background:#B8862F; }
+  .iv .mech{ font-size:.98rem; line-height:1.5; margin-bottom:7px; }
+  .iv .mech .vec{ color:var(--accent-deep); font-weight:600; }
+  .iv .onde{ font-size:.86rem; color:var(--ink-soft); margin-bottom:8px; }
+  .iv .onde b{ color:var(--ink); }
+  .iv .honest{ font-size:.85rem; color:#6a5a32; background:var(--warn-bg); border-left:3px solid var(--warn); border-radius:0 8px 8px 0; padding:8px 12px; margin:8px 0; line-height:1.5; }
+  .iv .labrow{ display:flex; flex-wrap:wrap; gap:7px; margin-top:9px; }
+  .lab{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:9px; padding:7px 11px; text-decoration:none; transition:all .16s ease; display:inline-flex; align-items:center; gap:6px; }
+  .lab:hover{ border-color:var(--accent); color:var(--accent-deep); transform:translateY(-1px); }
+  .lab .ln{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); }
+  .disclaimer{ margin-top:20px; font-size:.82rem; color:var(--ink-soft); line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; }
+  .disclaimer b{ color:var(--ink); }
+
+  footer{ text-align:center; margin-top:44px; color:var(--ink-soft); font-size:.82rem; }
+  @media (max-width:560px){ .card{ padding:26px 20px; } .stem{ font-size:1.18rem; } .iv{ padding:16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+    <div class="kicker">Respira · Módulo 7 · interativo</div>
+    <h1>A terapêutica,<br><em>as forças</em></h1>
+    <p class="sub">Nenhuma droga para decorar. Cada intervenção é uma força aplicada a um eixo que você já conhece — e o que muda é só a direção. Da física (1–5) à síndrome (6) à força que corrige (7). Para a Dani.</p>
+  </header>
+
+  <div class="segbar">
+    <button class="seg active" id="segTrail" onclick="setMode('trail')" aria-label="Modo trilha socrática">Trilha</button>
+    <button class="seg" id="segRoom" onclick="setMode('room')" aria-label="Sala da terapêutica">Sala da terapêutica</button>
+  </div>
+
+  <div class="meter" id="meter">
+    <div class="meter-top">
+      <span class="meter-block" id="blockLabel">Início</span>
+      <span class="meter-count" id="count">1 / 11</span>
+    </div>
+    <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
+  </div>
+
+  <div id="trailMode">
+    <div class="card intro" id="intro">
+      <p class="lead">Sétimo degrau: você decompôs a doença em eixos. Agora cada tratamento é a força que empurra um eixo de volta.</p>
+      <p>O remédio deixa de ser nome + dose e vira uma pergunta única: <strong>que eixo ele move, e para que lado?</strong> Broncodilatador baixa resistência; PEEP recruta; diurético devolve complacência; O₂ só serve onde há alvéolo aberto. Decorar vira deduzir.</p>
+      <ul>
+        <li>As seis famílias de força — uma por eixo dos módulos 1–5.</li>
+        <li>As honestidades de evidência: o que funciona, o que só parece funcionar, o que tem latência.</li>
+        <li>Cada força com link que reabre o lab no estado da doença — para você <em>aplicar a manobra</em>.</li>
+      </ul>
+      <div class="row" style="justify-content:center;">
+        <button class="btn big" onclick="start()">Vamos respirar →</button>
+      </div>
+    </div>
+    <div class="card hidden" id="quiz"></div>
+    <div class="card done hidden" id="final"></div>
+  </div>
+
+  <div id="roomMode" class="hidden">
+    <div class="card">
+      <div class="qtag">Sala da terapêutica · seis famílias de força</div>
+      <p class="room-lead">Cada intervenção aparece como um <strong>vetor sobre um eixo</strong> (com o módulo de origem), onde se aplica e a honestidade de evidência. Os links <strong>reabrem o laboratório no estado da doença</strong>, em nova aba — para você aplicar a força e ver o número responder.</p>
+      <div id="fams"></div>
+      <p class="disclaimer"><b>Doses detalhadas, contraindicações e efeitos adversos foram omitidos de propósito.</b> Isto mapeia o vetor dominante de cada força sobre um eixo fisiológico — não é prescrição nem protocolo. Conduta real exige contexto, monitorização, ajuste e referência atualizada. A intenção é ensinar a <i>raciocinar</i> a terapêutica, não a aplicá-la sem julgamento.</p>
+    </div>
+  </div>
+
+  <footer>Respira — material didático · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira · MVP 7 · a terapêutica</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  { block:"A ideia-mãe",
+    stem:"Qual é a forma mais útil de organizar TODA a terapêutica respiratória?",
+    opts:["uma lista de drogas e doses por doença","cada intervenção como uma força aplicada a um eixo conhecido — resistência, complacência, shunt, recrutamento, conteúdo, ácido-base","pela via de administração","pela ordem alfabética"],
+    answer:1,
+    good:"<strong>É a tese do módulo.</strong> Você não decora o que cada droga faz: pergunta <em>que eixo ela move e para que lado</em>. A física dos módulos 1–5 vira o sistema de coordenadas do tratamento.",
+    bad:"Decorar lista não escala. Organize pela <strong>física</strong>: cada força move um eixo (R, C, shunt, recrutamento, conteúdo, pH). Aí a terapêutica se deduz." },
+  { block:"Abrir o cano",
+    stem:"Broncodilatador β2 na crise obstrutiva: que eixo move, e o que acontece com o ar preso?",
+    opts:["aumenta a complacência","baixa a resistência → constante de tempo encurta → o auto-PEEP cai","recruta alvéolo colapsado","aumenta o conteúdo de O₂"],
+    answer:1,
+    good:"<strong>Módulo 1.</strong> Relaxa o músculo liso → <code>R↓</code> → <code>τ=R·C</code> encurta → a expiração termina → o ar aprisionado e o auto-PEEP despencam. No lab dá para ver acontecer.",
+    bad:"β2 abre o <strong>cano</strong> (R↓), não muda o balão (C). Com τ menor, a expiração acaba e o auto-PEEP cai." },
+  { block:"Abrir o cano",
+    stem:"O corticoide na crise asmática NÃO alivia em 2 minutos como o β2. Por quê?",
+    opts:["porque a dose foi baixa","porque não é broncodilatador — reduz a inflamação, com latência de horas; previne a recidiva","porque corticoide não funciona na asma","porque precisa ser inalado"],
+    answer:1,
+    good:"<strong>Eixo diferente, tempo diferente.</strong> O β2 mexe no tônus muscular (minutos); o corticoide desinflama a parede (horas). O erro clínico é esperar efeito imediato — ou suspender cedo demais.",
+    bad:"Corticoide não relaxa músculo: <strong>desinflama</strong>, e isso leva horas. É a força que evita a recaída, não a que abre o cano agora." },
+  { block:"O limite do oxigênio",
+    stem:"Shunt verdadeiro (alvéolo cheio): você dá O₂ a 100%. A PaO₂ sobe muito?",
+    opts:["sim, sempre resolve","quase nada — sangue que não passa por alvéolo aberto não vê o O₂; é a hipoxemia refratária","sobe se aumentar o fluxo","depende da hemoglobina"],
+    answer:1,
+    good:"<strong>O O₂ ensina seu próprio limite (Módulo 3).</strong> Onde há V/Q baixo, ajuda; no shunt puro, não. A solução não é mais O₂ — é reabrir o alvéolo. No lab, suba a FiO₂ no shunt e veja a PaO₂ teimar.",
+    bad:"O O₂ só age onde há alvéolo aberto para trocar. No <strong>shunt</strong>, subir a FiO₂ quase não move a PaO₂ — refratária." },
+  { block:"Recrutar",
+    stem:"O que a PEEP faz, em uma frase de física?",
+    opts:["dilata o brônquio","aplica pressão que escora o alvéolo aberto — faz mecanicamente o que o surfactante faz biologicamente","aumenta a hemoglobina","elimina CO₂ diretamente"],
+    answer:1,
+    good:"<strong>Módulo 5 fechando o ciclo.</strong> Surfactante baixa a tensão; PEEP aplica pressão. Dois caminhos para o mesmo alvéolo aberto. Por isso a PEEP é central na SDRA, onde o surfactante está inativado.",
+    bad:"PEEP é <strong>pressão que mantém aberto</strong> (recrutamento), não broncodilatação. É o substituto mecânico do surfactante." },
+  { block:"Recrutar",
+    stem:"Surfactante exógeno transforma o prematuro com doença de membrana hialina. E no adulto com SDRA?",
+    opts:["funciona igual","não muda o desfecho — o surfactante administrado é inativado e mal distribuído no pulmão inflamado","é proibido no adulto","só funciona com PEEP alta"],
+    answer:1,
+    good:"<strong>A evidência negativa é a lição.</strong> Mesmo eixo (tensão), contextos opostos: no prematuro falta surfactante (repor resolve); na SDRA ele existe mas está destruído e o pulmão heterogêneo não distribui o exógeno. Mecanismo certo, alvo errado.",
+    bad:"No prematuro repor surfactante resolve; no <strong>adulto com SDRA</strong> os ensaios são negativos — inativação e má distribuição. Reabrir é com PEEP/prona, não surfactante." },
+  { block:"Secar",
+    stem:"Diurético no edema agudo: ataca um eixo ou dois?",
+    opts:["um: só o líquido","dois: ao tirar líquido devolve a complacência (Mód 1) E desencharca o alvéolo, reduzindo o shunt (Mód 3)","um: só a oxigenação","nenhum, é só sintomático"],
+    answer:1,
+    good:"<strong>Uma força, dois eixos.</strong> O líquido endurecia o pulmão e inundava o alvéolo. Tirá-lo melhora trabalho (C↑) e troca (shunt↓) ao mesmo tempo. Por isso furosemida + pressão positiva somam.",
+    bad:"O líquido fazia duas coisas — pulmão duro e alvéolo inundado. Tirá-lo corrige <strong>complacência e shunt</strong> juntos." },
+  { block:"Tamponar",
+    stem:"Você dá bicarbonato numa acidose metabólica grave e a PaCO₂ sobe. Por quê?",
+    opts:["erro de coleta","o bicarbonato tampona H⁺ gerando CO₂ — que precisa ser eliminado pela ventilação; sem isso, vira acidose respiratória","o bicarbonato causa alcalose sempre","não tem relação"],
+    answer:1,
+    good:"<strong>Módulo 4, com armadilha.</strong> <code>HCO₃⁻ + H⁺ → H₂CO₃ → H₂O + CO₂</code>. Se o paciente não consegue soprar esse CO₂ extra, o pH pode até piorar. Por isso o bicarbonato é controverso e exige via aérea/ventilação garantidas.",
+    bad:"Bicarbonato vira <strong>CO₂</strong>. Sem ventilação para eliminá-lo, troca-se acidose metabólica por respiratória — corrige o número, não a causa." },
+  { block:"Casar V com Q",
+    stem:"Óxido nítrico inalado melhora a saturação na SDRA refratária. Isso muda a mortalidade?",
+    opts:["sim, salva vidas comprovadamente","não — melhora a oxigenação (vasodilata onde ventila, reduzindo o shunt), mas os ensaios não mostram ganho de sobrevida","piora sempre","só funciona em criança"],
+    answer:1,
+    good:"<strong>A distinção que mais engana: número ≠ desfecho.</strong> O iNO redistribui o fluxo para áreas ventiladas e a SpO₂ sobe — mas isso não se traduz em mortalidade. Serve como ponte/resgate, não como cura. Honestidade sobre o que a evidência sustenta.",
+    bad:"O iNO <strong>melhora a oxigenação</strong> (vasodilata onde há ventilação), mas não muda mortalidade. Subir a saturação não é o mesmo que salvar." },
+  { block:"Reposicionar",
+    stem:"Posição prona na SDRA grave: é uma droga? Por que funciona?",
+    opts:["é uma droga inalada","não é droga — redistribui ventilação e perfusão e recruta as regiões dorsais colapsadas; muda a mortalidade na SDRA grave","só melhora o conforto","não tem evidência"],
+    answer:1,
+    good:"<strong>A força mais barata e das mais potentes.</strong> Virar o paciente homogeneíza o V/Q e abre o dorsal colapsado — combinação de Módulo 3 e 5, sem nenhum fármaco. E, diferente do iNO, muda o desfecho na SDRA grave.",
+    bad:"Prona não é fármaco: é <strong>física de posição</strong> — recruta o dorsal e casa V/Q. E, ao contrário de muita droga, melhora a sobrevida na SDRA grave." },
+  { block:"Síntese",
+    stem:"Diante de qualquer paciente dispneico, qual é a pergunta terapêutica?",
+    opts:["qual antibiótico começar","que eixo está alterado, em que direção — e qual força o empurra de volta","qual o melhor exame de imagem","qual a dose máxima tolerada"],
+    answer:1,
+    good:"<strong>É o que você leva da escada inteira.</strong> Decompor a dispneia em eixos (1–5), reconhecer a síndrome (6) e escolher a força que corrige cada eixo (7). Mecanismo → diagnóstico → tratamento, o mesmo raciocínio subindo.",
+    bad:"A pergunta não é 'qual droga' — é <strong>qual eixo e qual força</strong>. O fármaco é consequência de identificar o vetor que falta." }
+];
+
+let idx=0, correct=0, answered=false;
+const el = id => document.getElementById(id);
+
+function start(){ el('intro').classList.add('hidden'); el('quiz').classList.remove('hidden'); el('meter').classList.add('on'); render(); }
+function render(){
+  answered=false; const q=QUESTIONS[idx];
+  el('blockLabel').textContent=q.block; el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;
+  el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;
+  const L=['A','B','C','D'];
+  el('quiz').innerHTML=`
+    <div class="qtag">${q.block} · questão ${idx+1}</div>
+    <div class="stem">${q.stem}</div>
+    <div class="opts" id="opts">
+      ${q.opts.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o}</span></button>`).join('')}
+    </div>
+    <div class="fb" id="fb"></div>
+    <div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;
+  el('quiz').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function choose(i){
+  if(answered) return; answered=true;
+  const q=QUESTIONS[idx], ok=(i===q.answer); if(ok) correct++;
+  document.querySelectorAll('#opts .opt').forEach((b,bi)=>{
+    b.disabled=true;
+    if(bi===q.answer) b.classList.add('correct'); else if(bi===i) b.classList.add('wrong'); else b.classList.add('dim');
+  });
+  const fb=el('fb'); fb.className='fb'+(ok?'':' bad');
+  fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;
+  void fb.offsetWidth; fb.classList.add('show'); el('row').classList.remove('hidden');
+}
+function next(){ idx++; (idx<QUESTIONS.length)?render():finish(); }
+function finish(){
+  el('quiz').classList.add('hidden'); el('fill').style.width='100%';
+  el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`; el('blockLabel').textContent='Completo';
+  const pct=Math.round((correct/QUESTIONS.length)*100); let nota;
+  if(pct===100) nota="Gabaritou — a terapêutica virou física aplicada, não lista.";
+  else if(pct>=73) nota="Domínio sólido. Cada força no seu eixo.";
+  else if(pct>=45) nota="Boa base. Vá à Sala e aplique cada força no lab da doença.";
+  else nota="O número não importa: cada erro veio com o mecanismo. Reabra os labs e aplique as forças.";
+  el('final').classList.remove('hidden');
+  el('final').innerHTML=`
+    <div class="kicker" style="color:var(--accent-deep)">Fim do Módulo 7</div>
+    <div class="score">${correct}/${QUESTIONS.length}</div>
+    <h2>O fármaco é consequência do eixo.</h2>
+    <p>${nota}</p>
+    <div class="synth">
+      <h3>O reflexo terapêutico que você leva:</h3>
+      <ol>
+        <li><strong>Cano apertado?</strong> (R↑) → abrir: β2, anticolinérgico, magnésio.</li>
+        <li><strong>Alvéolo fechado?</strong> (recrutamento) → PEEP, VNI, prona.</li>
+        <li><strong>Encharcado?</strong> (C↓ + shunt) → diurético, nitrato, pressão positiva.</li>
+        <li><strong>Shunt refratário?</strong> → reabrir, não mais O₂.</li>
+        <li><strong>Conteúdo baixo?</strong> (Mód 2) → corrigir Hb, tratar CO.</li>
+        <li><strong>pH no limite?</strong> → ventilar/tamponar com parcimônia.</li>
+      </ol>
+    </div>
+    <div class="row" style="justify-content:center; gap:12px;">
+      <button class="btn" onclick="setMode('room')">Ir para a Sala →</button>
+      <button class="btn ghost" onclick="again()">Rever do início</button>
+    </div>`;
+  el('final').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function again(){ idx=0; correct=0; answered=false; el('final').classList.add('hidden'); el('quiz').classList.remove('hidden'); render(); }
+
+const FAMILIES = [
+  { id:"cano", title:"Abrir o cano", axis:"eixo: resistência ↓ · Mód 1",
+    blurb:"Reduzir a resistência encurta a constante de tempo, a expiração termina e o ar aprisionado (auto-PEEP) cai.",
+    items:[
+      { nome:"β2-agonista (salbutamol)", chips:[1], mech:"Relaxa o músculo liso brônquico <span class='vec'>→ R↓ → auto-PEEP↓</span>.", onde:"<b>Asma, DPOC</b> — primeira linha na obstrução aguda.",
+        labs:[{n:"Baixe R e veja o ar preso cair", p:"Mecânica · asma", href:"mvp1-interativo.html#r=24&c=0.07&rr=28&m=sim"}] },
+      { nome:"Anticolinérgico (ipratrópio)", chips:[1], mech:"Bloqueia o tônus vagal <span class='vec'>→ R↓</span>, sinérgico ao β2.", onde:"<b>DPOC</b> &gt; asma; combina com o β2 na crise.",
+        labs:[{n:"Cano da DPOC", p:"Mecânica · DPOC", href:"mvp1-interativo.html#r=20&c=0.08&rr=24&m=sim"}] },
+      { nome:"Sulfato de magnésio", chips:[1], mech:"Relaxa a musculatura lisa <span class='vec'>→ R↓</span> como adjuvante.", onde:"<b>Asma grave/refratária</b> — resgate, não rotina.",
+        honest:"Evidência modesta; reservado à crise que não responde à primeira linha." },
+      { nome:"Adrenalina", chips:[1], mech:"α+β: broncodilata <span class='vec'>→ R↓</span> e reduz o edema de via aérea.", onde:"<b>Anafilaxia, asma quase-fatal.</b>",
+        honest:"Força de resgate. Fora da anafilaxia, reservada à crise extrema." },
+      { nome:"Metilxantina (aminofilina)", chips:[1], mech:"Broncodilatação fraca <span class='vec'>→ R↓</span> + estímulo respiratório.", onde:"Hoje marginal na obstrução.",
+        honest:"Janela tóxica estreita e evidência fraca — quase histórica; citada para você saber por que caiu em desuso." },
+      { nome:"Heliox", chips:[1], mech:"Gás menos denso reduz a turbulência <span class='vec'>→ resistência efetiva↓</span> (física de Reynolds).", onde:"Obstrução grave de via aérea como ponte.",
+        honest:"Não trata a doença: ganha tempo enquanto a terapia de fato age." },
+      { nome:"Corticoide (sistêmico/inalado)", chips:[1], mech:"<span class='vec'>Não</span> é broncodilatador: reduz a inflamação da parede <span class='vec'>→ R↓ em horas</span> e previne recidiva.", onde:"<b>Asma e DPOC exacerbadas</b>; controle crônico inalado.",
+        honest:"Latência de horas — o erro é esperar efeito imediato ou suspender cedo demais." }
+    ] },
+  { id:"recrutar", title:"Recrutar o alvéolo", axis:"eixo: Laplace / surfactante / PEEP · Mód 5",
+    blurb:"Manter abertas as unidades que querem colapsar — aplicando pressão ou baixando a tensão de superfície.",
+    items:[
+      { nome:"PEEP", chips:[5], mech:"Pressão que escora o alvéolo aberto <span class='vec'>→ recruta e mantém</span> — o que o surfactante faz biologicamente.", onde:"<b>SDRA, edema agudo.</b>",
+        labs:[{n:"Suba a PEEP até recrutar", p:"Laplace · SDRA", href:"mvp5-interativo.html#ra=60&rb=160&peep=0&surf=0&m=lab"}] },
+      { nome:"VNI / CPAP / BiPAP", chips:[5,1], mech:"PEEP sem tubo <span class='vec'>→ recruta</span>; o BiPAP ainda descansa o músculo (Mód 1).", onde:"<b>Edema agudo</b> (CPAP) e <b>DPOC exacerbada</b> (BiPAP).",
+        labs:[{n:"Recrutar sem intubar", p:"Laplace", href:"mvp5-interativo.html#ra=60&rb=160&peep=8&surf=0&m=lab"}] },
+      { nome:"Manobra de recrutamento + titulação de PEEP", chips:[5], mech:"Abre com pressão alta, mantém com menos <span class='vec'>→ histerese</span>.", onde:"SDRA com colapso recrutável.",
+        honest:"Histerese: reabrir custa mais que manter. Risco hemodinâmico e de barotrauma — não é manobra inócua." },
+      { nome:"Posição prona", chips:[5,3], mech:"Redistribui ventilação/perfusão e abre o dorsal colapsado <span class='vec'>→ recruta + casa V/Q</span>.", onde:"<b>SDRA grave.</b>",
+        honest:"Não é fármaco e muda a mortalidade na SDRA grave (PROSEVA). Das forças mais potentes e baratas.",
+        labs:[{n:"O dorsal que reabre", p:"Laplace · SDRA", href:"mvp5-interativo.html#ra=60&rb=160&peep=10&surf=0&m=lab"}] },
+      { nome:"Surfactante exógeno", chips:[5], mech:"Baixa a tensão de superfície <span class='vec'>→ Popen↓</span>.", onde:"<b>Prematuro</b> (doença de membrana hialina): transforma o quadro.",
+        honest:"No adulto com SDRA os ensaios são negativos — o surfactante está inativado e mal distribuído. Mecanismo certo, alvo errado.",
+        labs:[{n:"Ligue o surfactante: Popen despenca", p:"Laplace · neonato", href:"mvp5-interativo.html#ra=60&rb=140&peep=0&surf=0&m=lab"}] }
+    ] },
+  { id:"secar", title:"Secar e amolecer", axis:"eixo: líquido ↓ → complacência ↑ + shunt ↓ · Mód 1+3",
+    blurb:"Tirar o líquido que endurece o pulmão e inunda o alvéolo corrige dois eixos de uma vez.",
+    items:[
+      { nome:"Diurético (furosemida)", chips:[1,3], mech:"Tira volume <span class='vec'>→ C↑</span> e desencharca o alvéolo <span class='vec'>→ shunt↓</span>.", onde:"<b>Edema agudo de pulmão.</b>",
+        labs:[
+          {n:"Pulmão amolece", p:"Mecânica · edema", href:"mvp1-interativo.html#r=6&c=0.035&rr=26&m=sim"},
+          {n:"Shunt desencharcado", p:"V/Q · edema", href:"mvp3-interativo.html#s=25&d=35&f=60&c=1&m=lab"}
+        ] },
+      { nome:"Nitrato / vasodilatador", chips:[1,3], mech:"↓ pré e pós-carga <span class='vec'>→ ↓ pressão hidrostática</span> → menos transudação para o alvéolo.", onde:"<b>Edema cardiogênico</b> — alívio mais rápido que o diurético." },
+      { nome:"Balanço hídrico conservador", chips:[1], mech:"Menos líquido <span class='vec'>→ menos edema → C melhor</span>.", onde:"<b>SDRA</b> após estabilização hemodinâmica.",
+        honest:"Estratégia conservadora (FACTT) encurta dias de ventilação, mas não muda mortalidade." }
+    ] },
+  { id:"vq", title:"Casar V com Q", axis:"eixo: shunt / espaço morto · Mód 3",
+    blurb:"Levar ventilação e perfusão para o mesmo lugar — e reconhecer onde o O₂ não alcança.",
+    items:[
+      { nome:"Oxigênio suplementar", chips:[3], mech:"Enche de O₂ o alvéolo aberto <span class='vec'>→ corrige V/Q baixo</span>; <span class='vec'>inútil no shunt puro</span>.", onde:"Hipoxemia por V/Q baixo; a primeira coisa — e a que tem limite.",
+        honest:"No shunt verdadeiro a PaO₂ quase não sobe. O O₂ ensina o próprio teto.",
+        labs:[{n:"Suba a FiO₂ no shunt e veja a PaO₂ teimar", p:"V/Q · shunt", href:"mvp3-interativo.html#s=42&d=35&f=100&c=1&m=lab"}] },
+      { nome:"Cânula nasal de alto fluxo (HFNC)", chips:[3], mech:"Lava o espaço morto nasofaríngeo + leve PEEP + umidifica <span class='vec'>→ reinalação de CO₂↓</span>.", onde:"<b>Insuficiência hipoxêmica</b>; conforto e desmame de O₂.",
+        labs:[{n:"O espaço morto que se lava", p:"V/Q · espaço morto", href:"mvp3-interativo.html#s=8&d=60&f=40&c=1&m=lab"}] },
+      { nome:"Óxido nítrico inalado (iNO)", chips:[3], mech:"Vasodilata só onde há ventilação <span class='vec'>→ desvia fluxo do shunt → oxigenação↑</span>.", onde:"<b>SDRA refratária, hipertensão pulmonar</b> — ponte/resgate.",
+        honest:"Melhora a oxigenação, mas os ensaios não mostram ganho de sobrevida. Número ≠ desfecho." }
+    ] },
+  { id:"conteudo", title:"Encher de conteúdo", axis:"eixo: curva da Hb / entrega · Mód 2",
+    blurb:"A saturação pode estar ótima e a entrega no chão. O alvo aqui é o conteúdo, não o número do oxímetro.",
+    items:[
+      { nome:"Transfusão / corrigir anemia", chips:[2], mech:"+ Hb <span class='vec'>→ conteúdo arterial↑</span>, sem mexer na saturação.", onde:"Anemia com entrega de O₂ comprometida.",
+        labs:[{n:"Suba a Hb: conteúdo sobe, saturação não", p:"Curva · anemia", href:"mvp2-interativo.html#pao2=95&p50=26.5&hb=7&co=0&m=curve"}] },
+      { nome:"O₂ 100% / hiperbárica no CO", chips:[2], mech:"Desloca o monóxido da hemoglobina <span class='vec'>→ meia-vida do CO↓</span>; o oxímetro que mentia volta à verdade.", onde:"<b>Intoxicação por CO.</b>",
+        honest:"O oxímetro lê a carboxi-hemoglobina quase como oxigenada — a saturação 'boa' esconde o conteúdo no chão.",
+        labs:[{n:"Dê O₂ 100% e desloque o CO", p:"Curva · CO", href:"mvp2-interativo.html#pao2=100&p50=26.5&hb=15&co=30&m=curve"}] }
+    ] },
+  { id:"proteger", title:"Proteger, dar tempo, tamponar", axis:"eixo: estresse / auto-PEEP / pH / resgate · Mód 1+4+5",
+    blurb:"Quando não dá para corrigir a causa agora, protege-se o pulmão, ganha-se tempo e tampona-se com parcimônia.",
+    items:[
+      { nome:"Volume corrente baixo (6 mL/kg)", chips:[5], mech:"Menos estiramento (strain) <span class='vec'>→ menos lesão induzida pelo ventilador</span>.", onde:"<b>SDRA</b> — ventilação protetora.",
+        honest:"Muda a mortalidade (ARDSNet) ao custo de hipercapnia permissiva — aceita-se o CO₂ alto para poupar o pulmão." },
+      { nome:"Prolongar a expiração / baixar a FR", chips:[1], mech:"Dá tempo de esvaziar <span class='vec'>→ auto-PEEP↓</span>.", onde:"<b>Obstrução com aprisionamento</b> (asma, DPOC ventiladas).",
+        labs:[{n:"Baixe a FR e veja o auto-PEEP cair", p:"Mecânica · DPOC", href:"mvp1-interativo.html#r=20&c=0.08&rr=24&m=sim"}] },
+      { nome:"Bicarbonato de sódio", chips:[4], mech:"Tampona H⁺ <span class='vec'>→ pH↑</span>, mas gera CO₂ que precisa ser ventilado.", onde:"Acidose metabólica grave, situações selecionadas.",
+        honest:"Controverso: corrige o número, não a causa, e vira CO₂. Sem ventilação garantida, pode piorar o pH.",
+        labs:[{n:"A acidose que o rim tenta segurar", p:"Gasometria", href:"mvp4-interativo.html#ph=7.20&co2=30&hco3=12&na=140&cl=104&alb=4&m=bench"}] },
+      { nome:"ECMO", chips:[3,5], mech:"Troca gasosa extracorpórea <span class='vec'>→ bypassa o pulmão</span> para ele descansar.", onde:"<b>Hipoxemia/hipercapnia refratária</b> — último recurso.",
+        honest:"Centros especializados; resgate quando a ventilação protetora não basta, não terapia de rotina." }
+    ] }
+];
+
+function renderSala(){
+  el('fams').innerHTML = FAMILIES.map(f=>`
+    <div class="fam" id="fam-${f.id}">
+      <div class="fam-head"><h3>${f.title}</h3><span class="fam-axis">${f.axis}</span></div>
+      <div class="fam-blurb">${f.blurb}</div>
+      ${f.items.map(it=>`
+        <div class="iv">
+          <div class="iv-top">
+            <h4>${it.nome}</h4>
+            <span class="chips">${it.chips.map(c=>`<span class="chip m${c}">MÓD ${c}</span>`).join('')}</span>
+          </div>
+          <div class="mech">${it.mech}</div>
+          <div class="onde">${it.onde}</div>
+          ${it.honest?`<div class="honest">⚠ ${it.honest}</div>`:''}
+          ${it.labs?`<div class="labrow">${it.labs.map(l=>`<a class="lab" href="${l.href}" target="_blank" rel="noopener">↗ ${l.n} <span class="ln">${l.p}</span></a>`).join('')}</div>`:''}
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function setMode(m){
+  const trail=m==='trail';
+  el('segTrail').classList.toggle('active', trail);
+  el('segRoom').classList.toggle('active', !trail);
+  el('trailMode').classList.toggle('hidden', !trail);
+  el('roomMode').classList.toggle('hidden', trail);
+  if(trail){
+    const iniciada = !el('quiz').classList.contains('hidden') || !el('final').classList.contains('hidden');
+    el('meter').classList.toggle('on', iniciada);
+  } else { el('meter').classList.remove('on'); }
+  if(!trail) history.replaceState(null,'','#sala');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function openFromHash(){
+  const h=(location.hash||'').replace('#','');
+  if(!h) return;
+  if(h==='sala'){ setMode('room'); return; }
+  const f=FAMILIES.find(x=>x.id===h);
+  if(f){
+    setMode('room');
+    const node=el('fam-'+f.id);
+    if(node){ node.scrollIntoView({behavior:'smooth', block:'start'}); node.querySelector('.iv')?.classList.add('flash'); setTimeout(()=>node.querySelector('.iv')?.classList.remove('flash'),1700); }
+  }
+}
+
+renderSala();
+openFromHash();
+window.addEventListener('hashchange', openFromHash);
+</script>
+</body>
+</html>
