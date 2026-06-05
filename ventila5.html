@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventila · 05 · VCV por dentro</title>
+<meta name="description" content="Ventila, módulo 5: o contrato do VCV. Você fixa volume e fluxo; a pressão é a resposta do pulmão e o seu monitor. Padrão de fluxo, fome de fluxo, e o preço da garantia de volume — quando o pulmão piora, a pressão sobe sozinha.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --paper:#F4EFE4; --paper-deep:#EBE3D3; --ink:#16383B; --ink-soft:#4A6164; --accent:#C0603A; --accent-deep:#A24B2C; --air:#3C7F86; --tissue:#C97F66; --signal:#2E6E8E; --signal-deep:#235874; --correct:#4E7C5A; --correct-bg:#E4ECE0; --wrong:#B0503E; --wrong-bg:#F0E1DB; --warn:#B8862F; --warn-bg:#F2E9D2; --line:#D7CCB8; --shadow:rgba(22,56,59,.13); --mono:'JetBrains Mono', ui-monospace, monospace; }
+  *{ box-sizing:border-box; margin:0; padding:0; } html{ scroll-behavior:smooth; }
+  body{ font-family:'Hanken Grotesk', sans-serif; background:radial-gradient(1100px 600px at 80% -8%, rgba(46,110,142,.07), transparent 60%),radial-gradient(900px 700px at -6% 110%, rgba(192,96,58,.07), transparent 55%),var(--paper); color:var(--ink); line-height:1.6; min-height:100vh; padding:0 20px 80px; overflow-x:hidden; -webkit-font-smoothing:antialiased; position:relative; }
+  body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .wrap{ max-width:780px; margin:0 auto; position:relative; z-index:2; }
+  header{ padding:44px 0 12px; text-align:center; }
+  .backlink{ display:inline-block; margin-bottom:12px; font-size:.8rem; color:var(--signal-deep); text-decoration:none; letter-spacing:.04em; } .backlink:hover{ text-decoration:underline; }
+  .kicker{ font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--signal-deep); font-weight:600; margin-bottom:12px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 5.4vw, 2.9rem); line-height:1.05; letter-spacing:-.01em; margin-bottom:14px; } h1 em{ font-style:italic; color:var(--signal); }
+  .sub{ color:var(--ink-soft); font-size:1.02rem; max-width:600px; margin:0 auto; }
+  .nav{ display:flex; flex-wrap:wrap; gap:6px; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:5px; max-width:600px; margin:28px auto 6px; }
+  .nav button{ flex:1 1 auto; font-family:inherit; font-weight:600; font-size:.84rem; color:var(--ink-soft); background:transparent; border:none; padding:9px 10px; border-radius:9px; cursor:pointer; transition:all .18s ease; white-space:nowrap; }
+  .nav button.active{ background:var(--signal); color:#fff; box-shadow:0 6px 16px -8px var(--signal-deep); } .nav button:not(.active):hover{ color:var(--ink); }
+  .meter{ margin:18px 0 4px; display:none; } .meter.on{ display:block; }
+  .meter-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:.78rem; margin-bottom:8px; } .meter-block{ color:var(--signal-deep); font-weight:600; text-transform:uppercase; letter-spacing:.16em; } .meter-count{ color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .meter-track{ height:8px; background:var(--paper-deep); border-radius:99px; overflow:hidden; border:1px solid var(--line); } .meter-fill{ height:100%; width:0; background:linear-gradient(90deg, var(--signal), var(--air)); border-radius:99px; transition:width .6s cubic-bezier(.22,1,.36,1); }
+  .card{ background:rgba(255,253,248,.74); border:1px solid var(--line); border-radius:18px; padding:30px 30px 26px; box-shadow:0 14px 40px -22px var(--shadow); backdrop-filter:blur(2px); margin-top:16px; }
+  .pane{ display:none; } .pane.active{ display:block; }
+  .qtag{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--signal-deep); font-weight:600; margin-bottom:14px; }
+  .stem{ font-family:'Fraunces', serif; font-weight:400; font-size:1.28rem; line-height:1.4; margin-bottom:22px; }
+  .opts{ display:flex; flex-direction:column; gap:11px; }
+  .opt{ text-align:left; font-family:inherit; font-size:1rem; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:14px 17px; cursor:pointer; transition:all .18s ease; display:flex; gap:13px; align-items:flex-start; line-height:1.45; }
+  .opt .mark{ flex:0 0 auto; width:24px; height:24px; border-radius:7px; border:1.5px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:.82rem; color:var(--ink-soft); margin-top:1px; }
+  .opt:hover:not(:disabled){ border-color:var(--signal); transform:translateX(3px); } .opt:disabled{ cursor:default; }
+  .opt.correct{ border-color:var(--correct); background:var(--correct-bg); } .opt.correct .mark{ background:var(--correct); border-color:var(--correct); color:#fff; }
+  .opt.wrong{ border-color:var(--wrong); background:var(--wrong-bg); } .opt.wrong .mark{ background:var(--wrong); border-color:var(--wrong); color:#fff; } .opt.dim{ opacity:.5; }
+  .fb{ margin-top:20px; border-radius:13px; padding:18px 20px; border-left:4px solid var(--correct); background:var(--correct-bg); font-size:1rem; line-height:1.6; color:#2c4a35; display:none; } .fb.show{ display:block; } .fb.bad{ border-left-color:var(--wrong); background:var(--wrong-bg); color:#5e2c22; }
+  .fb-head{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:8px; }
+  .gab{ display:grid; gap:9px; margin-top:6px; } .gab .f{ background:rgba(255,255,255,.5); border-radius:9px; padding:9px 12px; } .gab .ft{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-deep); display:block; margin-bottom:3px; } .gab .f.trap .ft{ color:var(--wrong); } .gab .f.bed .ft{ color:var(--accent-deep); } .gab a{ color:var(--signal-deep); font-weight:600; }
+  .row{ margin-top:22px; display:flex; justify-content:flex-end; gap:12px; }
+  .btn{ font-family:inherit; font-weight:600; font-size:1rem; background:var(--signal); color:#fff; border:none; padding:12px 26px; border-radius:11px; cursor:pointer; transition:all .18s ease; box-shadow:0 8px 20px -10px var(--signal-deep); } .btn:hover{ background:var(--signal-deep); transform:translateY(-2px); }
+  .btn.ghost{ background:transparent; color:var(--signal-deep); box-shadow:none; border:1.5px solid var(--line); } .btn.acc{ background:var(--accent); box-shadow:0 8px 20px -10px var(--accent-deep); } .btn.acc:hover{ background:var(--accent-deep); }
+  .hidden{ display:none !important; }
+  .done{ text-align:center; } .done .score{ font-family:'Fraunces',serif; font-size:3rem; font-weight:500; color:var(--signal); line-height:1; margin:8px 0; } .done h2{ font-family:'Fraunces',serif; font-weight:500; font-size:1.5rem; margin-bottom:12px; }
+  .act{ border-left:3px solid var(--line); padding:4px 0 4px 18px; margin:0 0 20px; } .act .an{ font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-deep); margin-bottom:6px; } .act h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.18rem; margin-bottom:8px; } .act p{ font-size:1rem; margin-bottom:8px; } .act.trap{ border-left-color:var(--wrong); } .act.reassess{ border-left-color:var(--correct); }
+  .vitals{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; } .vital{ font-family:var(--mono); font-size:.78rem; background:var(--paper-deep); border:1px solid var(--line); border-radius:8px; padding:6px 10px; } .vital b{ color:var(--signal-deep); }
+  .case-lead{ font-family:'Fraunces',serif; font-style:italic; font-size:1.12rem; color:var(--signal-deep); margin-bottom:18px; }
+  .scope{ background:#13302e; border-radius:14px; padding:10px 8px 6px; } svg.plot{ display:block; width:100%; height:auto; }
+  .scenbar,.preset,.toggle{ display:flex; flex-wrap:wrap; gap:7px; margin:14px 0; }
+  .chip{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink-soft); background:var(--paper); border:1.5px solid var(--line); border-radius:10px; padding:9px 12px; cursor:pointer; transition:all .16s ease; } .chip:hover{ border-color:var(--signal); color:var(--ink); } .chip.active{ background:var(--signal); color:#fff; border-color:var(--signal); }
+  .narr{ font-size:.98rem; color:var(--ink); background:var(--paper-deep); border:1px solid var(--line); border-left:3px solid var(--signal); border-radius:10px; padding:12px 15px; margin-top:6px; min-height:48px; }
+  .maphint{ color:var(--ink-soft); font-size:.96rem; margin-bottom:14px; }
+  .legend{ display:flex; gap:14px; justify-content:center; margin-top:8px; font-size:.78rem; color:var(--ink-soft); flex-wrap:wrap; } .legend span{ display:inline-flex; align-items:center; gap:6px; } .swatch{ width:14px; height:3px; border-radius:2px; display:inline-block; }
+  .sliders{ display:grid; grid-template-columns:1fr 1fr; gap:13px 22px; margin:6px 0 14px; } @media(max-width:560px){ .sliders{ grid-template-columns:1fr; } }
+  .sl label{ display:flex; justify-content:space-between; font-size:.8rem; font-weight:600; color:var(--ink-soft); margin-bottom:4px; } .sl output{ font-family:var(--mono); color:var(--signal-deep); }
+  input[type=range]{ -webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:99px; background:var(--line); outline:none; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--signal); cursor:pointer; box-shadow:0 2px 6px -1px var(--signal-deep); }
+  input[type=range]::-moz-range-thumb{ width:18px; height:18px; border:none; border-radius:50%; background:var(--signal); cursor:pointer; }
+  .readouts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr)); gap:8px; margin-top:6px; }
+  .ro{ background:var(--paper-deep); border:1px solid var(--line); border-radius:10px; padding:8px 10px; } .ro .rk{ font-size:.6rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft); } .ro .rv{ font-family:var(--mono); font-size:1.02rem; font-weight:600; color:var(--ink); } .ro .rv small{ font-size:.68rem; color:var(--ink-soft); font-weight:400; }
+  .ro.warn{ background:var(--warn-bg); border-color:var(--warn); } .ro.warn .rv{ color:#7a5a16; } .ro.bad{ background:var(--wrong-bg); border-color:var(--wrong); } .ro.bad .rv{ color:var(--wrong); } .ro.good{ background:var(--correct-bg); border-color:var(--correct); } .ro.good .rv{ color:var(--correct); }
+  .banner{ margin-top:12px; border-radius:11px; padding:11px 14px; font-size:.95rem; display:none; } .banner.on{ display:block; } .banner.red{ background:var(--wrong-bg); border-left:4px solid var(--wrong); color:#5e2c22; } .banner.amber{ background:var(--warn-bg); border-left:4px solid var(--warn); color:#6b4f17; }
+  .verdict{ margin-top:12px; border-radius:12px; padding:13px 16px; font-size:1rem; border-left:4px solid var(--signal); background:#e6eef1; color:#1f4651; } .verdict b{ font-family:'Fraunces',serif; }
+  .case-chip{ display:inline-block; margin-left:8px; font-family:var(--mono); font-size:.64rem; color:#fff; background:var(--accent); border-radius:99px; padding:2px 9px; vertical-align:middle; }
+  .links{ margin-top:16px; } .links .lt{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; } .labrow{ display:flex; flex-wrap:wrap; gap:7px; }
+  .lab-l{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:9px; padding:7px 11px; text-decoration:none; transition:all .16s ease; display:inline-flex; align-items:center; gap:6px; } .lab-l:hover{ border-color:var(--accent); color:var(--accent-deep); transform:translateY(-1px); } .lab-l .ln{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); }
+  .lab-note{ font-size:.84rem; color:var(--ink-soft); margin-top:18px; line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; } .lab-note b{ color:var(--ink); }
+  footer{ text-align:center; margin-top:40px; color:var(--ink-soft); font-size:.82rem; }
+  @media (max-width:560px){ .card{ padding:24px 18px; } .stem{ font-size:1.16rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="backlink" href="ventila.html">← Ventila · todos os módulos</a>
+    <div class="kicker">Ventila · Módulo 05</div>
+    <h1>VCV <em>por dentro</em></h1>
+    <p class="sub">No volume controlado, você promete duas coisas — o volume e o fluxo — e aceita uma terceira: a pressão. A pressão não é um ajuste; é a resposta do pulmão e o seu instrumento de vigilância. Para a Dani.</p>
+  </header>
+
+  <nav class="nav">
+    <button class="active" data-pane="caso" onclick="go('caso')">Caso</button>
+    <button data-pane="trilha" onclick="go('trilha')">Trilha</button>
+    <button data-pane="contrato" onclick="go('contrato')">O contrato</button>
+    <button data-pane="lab" onclick="go('lab')">Laboratório</button>
+    <button data-pane="quiz" onclick="go('quiz')">Quiz</button>
+  </nav>
+
+  <div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel"></span><span class="meter-count" id="count"></span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+  <section class="pane active card" id="pane-caso">
+    <div class="qtag">Caso clínico · em cinco atos</div>
+    <p class="case-lead">"Este é o paciente." O volume está garantido — e é justamente esse o problema.</p>
+    <div class="act"><div class="an">Ato 1 · Entrada</div><h3>Por que está no ventilador</h3>
+      <p>Mulher, 60 anos, SDRA por pneumonia. Intubada, em VCV com <b>VC 450 mL</b> ("setado e protegido"), platô inicial 24, driving 16 — dentro do aceitável. A equipe ajusta os alarmes e segue para outros leitos.</p></div>
+    <div class="act"><div class="an">Ato 2 · Leitura</div><h3>Seis horas depois</h3>
+      <div class="vitals"><span class="vital">VC <b>450</b> (inalterado)</span><span class="vital">platô <b>24 → 32</b></span><span class="vital">driving <b>~27</b></span><span class="vital">pico <b>~40</b></span><span class="vital">SpO₂ <b>93%</b></span></div>
+      <p>O pulmão piorou — a complacência caiu. Como o <b>volume é garantido</b>, a máquina continuou entregando os mesmos 450 mL; quem subiu, sozinha, foi a <b>pressão</b>. O platô passou de 24 para 32 e a driving está em zona lesiva. Abra o <b>Laboratório</b> (com esta paciente) e veja.</p></div>
+    <div class="act"><div class="an">Ato 3 · Decisão</div><h3>O que parece lógico?</h3>
+      <p>O VC está no valor que você programou. Está tudo certo? O que você faz — e o que vinha sendo vigiado? Decida antes de revelar.</p>
+      <div style="margin-top:6px"><button class="btn ghost" id="revealBtn" onclick="revealCase()">Revelar Ato 4 e 5 →</button></div></div>
+    <div id="caseEnd" class="hidden">
+      <div class="act trap"><div class="an">Ato 4 · Pegadinha</div><h3>A decisão intuitiva que piora</h3>
+        <p>"O VC está setado, a paciente está protegida." Confiou-se na <b>garantia de volume</b> e ninguém vigiou o platô. Mas em VCV o volume garantido vira um <b>motor silencioso de barotrauma</b> quando o pulmão piora: a pressão sobe sem que nada "desligue". A driving de 27 mantida por horas culmina em pneumotórax. Pior ainda seria a outra reação reflexa — trocar para fluxo desacelerante "para baixar a pressão": isso reduz só o <b>pico</b>; o platô e a driving (o que o alvéolo vê) ficam idênticos.</p></div>
+      <div class="act reassess"><div class="an">Ato 5 · Reavaliação</div><h3>O que mudou após corrigir</h3>
+        <p>Reduziu-se o <b>VC para ~4 mL/kg</b>, aceitando hipercapnia permissiva; a driving caiu para a zona segura. Configurou-se um <b>alarme de pressão</b> e instituiu-se a vigilância do platô a cada piora. <b>Em VCV o volume é garantido — por isso a pressão é responsabilidade sua de vigiar.</b></p></div>
+      <div class="row" style="justify-content:center"><button class="btn" onclick="go('trilha')">Entender o contrato →</button></div>
+    </div>
+  </section>
+
+  <section class="pane card" id="pane-trilha">
+    <div id="trIntro"><div class="qtag">Trilha socrática</div><p class="stem" style="font-size:1.18rem">Seis perguntas para entender o contrato do VCV: o que você promete, o que o pulmão responde, e o que você precisa vigiar.</p><div class="row" style="justify-content:center"><button class="btn" onclick="trStart()">Vamos →</button></div></div>
+    <div id="trQuiz" class="hidden"></div><div id="trDone" class="hidden done"></div>
+  </section>
+
+  <section class="pane card" id="pane-contrato">
+    <div class="qtag">Ilustração dinâmica · o contrato do VCV</div>
+    <p class="maphint">Você entrega <b>o mesmo volume e o mesmo fluxo</b> a três pulmões diferentes. Veja: o fluxo e o volume são idênticos — mas cada pulmão responde com uma <b>pressão</b> própria. No VCV, a curva de pressão é a voz do paciente.</p>
+    <div class="toggle" id="patbar"></div>
+    <div class="scope"><svg class="plot" id="contractSvg" viewBox="0 0 520 372" role="img" aria-label="Mesmo volume e fluxo, três pressões"></svg></div>
+    <div class="legend"><span><i class="swatch" style="background:#7fe3da"></i> normal</span><span><i class="swatch" style="background:#E8A35C"></i> duro (↓complacência)</span><span><i class="swatch" style="background:#E8836A"></i> obstruído (↑resistência)</span></div>
+    <p class="narr" id="contractNarr"></p>
+  </section>
+
+  <section class="pane card" id="pane-lab">
+    <div class="qtag">Laboratório · o VCV por inteiro</div>
+    <p class="maphint">Padrão de fluxo, demanda do paciente e limite de pressão — tudo o que o VCV esconde. Carregado com a paciente do caso <span class="case-chip">SDRA · complacência baixa</span></p>
+    <div class="scope"><svg class="plot" id="labSvg" viewBox="0 0 520 372" role="img" aria-label="Curvas VCV interativas"></svg></div>
+    <div class="toggle" id="labpat"></div>
+    <div class="sliders">
+      <div class="sl"><label>Volume corrente <output id="o_VT"></output></label><input type="range" id="s_VT" min="250" max="600" step="10" value="450" oninput="labUpdate()"></div>
+      <div class="sl"><label>Fluxo (pico) <output id="o_flow"></output></label><input type="range" id="s_flow" min="30" max="90" step="5" value="50" oninput="labUpdate()"></div>
+      <div class="sl"><label>Frequência <output id="o_RR"></output></label><input type="range" id="s_RR" min="10" max="40" step="1" value="18" oninput="labUpdate()"></div>
+      <div class="sl"><label>PEEP <output id="o_PEEP"></output></label><input type="range" id="s_PEEP" min="0" max="18" step="1" value="8" oninput="labUpdate()"></div>
+      <div class="sl"><label>Resistência <output id="o_R"></output></label><input type="range" id="s_R" min="5" max="40" step="1" value="12" oninput="labUpdate()"></div>
+      <div class="sl"><label>Complacência <output id="o_C"></output></label><input type="range" id="s_C" min="15" max="80" step="5" value="20" oninput="labUpdate()"></div>
+      <div class="sl"><label>Pausa inspiratória <output id="o_pause"></output></label><input type="range" id="s_pause" min="0" max="0.5" step="0.1" value="0.3" oninput="labUpdate()"></div>
+      <div class="sl"><label>Demanda do paciente <output id="o_dem"></output></label><input type="range" id="s_dem" min="0" max="100" step="5" value="10" oninput="labUpdate()"></div>
+      <div class="sl"><label>Limite de pressão (Pmax) <output id="o_pmax"></output></label><input type="range" id="s_pmax" min="20" max="60" step="1" value="55" oninput="labUpdate()"></div>
+    </div>
+    <div class="readouts" id="readouts"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="banner red" id="bGuard"></div>
+    <div class="banner amber" id="bStarve"></div>
+    <div class="links"><div class="lt">Aprofundar o mecanismo (Respira / Ventila)</div><div class="labrow">
+      <a class="lab-l" href="mvp9-interativo.html#lab" target="_blank" rel="noopener">↗ Pico × platô na pausa <span class="ln">Respira · VM</span></a>
+      <a class="lab-l" href="mvp10-interativo.html#proteger" target="_blank" rel="noopener">↗ Driving e proteção <span class="ln">Respira · protetora</span></a>
+      <a class="lab-l" href="ventila4.html" rel="noopener">↗ Onde isso cai na curva (loops) <span class="ln">Ventila · curvas II</span></a>
+    </div></div>
+    <p class="lab-note"><b>Honestidade do modelo:</b> compartimento único, R e C constantes. O fluxo desacelerante é modelado como rampa linear até zero (área = VC). A <i>fome de fluxo</i> é um <b>esquema</b> — a curva de pressão é deformada para ilustrar o esforço do paciente puxando contra um fluxo fixo; o mecanismo completo (esforço, P<sub>mus</sub>) vem no Módulo 9. O <i>mechanical power</i> usa o pico, então a rampa desacelerante o subestima — o estresse elástico (platô/driving) é o que importa. Números são estimativas didáticas.</p>
+  </section>
+
+  <section class="pane card" id="pane-quiz">
+    <div id="qzIntro"><div class="qtag">Quiz · gabarito robusto</div><p class="stem" style="font-size:1.18rem">Cinco questões sobre o que o VCV garante — e o que ele cobra em troca.</p><div class="row" style="justify-content:center"><button class="btn acc" onclick="qzStart()">Começar →</button></div></div>
+    <div id="qzQuiz" class="hidden"></div><div id="qzDone" class="hidden done"></div>
+  </section>
+
+  <footer>Ventila — material didático de ventilação mecânica · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira · 05/12 · Para a Dani</footer>
+</div>
+
+<script>
+const el=id=>document.getElementById(id);
+function go(pane){ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.pane===pane));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id==='pane-'+pane));
+  const showMeter=(pane==='trilha'&&!el('trQuiz').classList.contains('hidden'))||(pane==='quiz'&&!el('qzQuiz').classList.contains('hidden'));
+  el('meter').classList.toggle('on',showMeter); active=pane; window.scrollTo({top:0,behavior:'smooth'}); }
+function revealCase(){ el('caseEnd').classList.remove('hidden'); el('revealBtn').classList.add('hidden'); el('caseEnd').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+function computeVCV2(p){
+  const VT=p.VT_mL/1000, Qp=p.flowPeak_Lmin/60, C=p.C_mL/1000, R=p.R, PEEP=p.PEEP, RR=p.RR, Tp=p.pause_s||0, Pmax=(p.Pmax!=null?p.Pmax:999);
+  let Ti, flowAt, volAt;
+  if(p.pattern==='decel'){ Ti=2*VT/Qp; flowAt=t=>Qp*Math.max(0,1-t/Ti); volAt=t=>{const x=Math.min(Math.max(t,0),Ti);return Qp*x*(1-x/(2*Ti));}; }
+  else { Ti=VT/Qp; flowAt=t=>(t<Ti?Qp:0); volAt=t=>Math.min(Math.max(Qp*t,0),VT); }
+  const Ttot=60/RR, tau=R*C; let Te=Ttot-Ti-Tp; if(Te<0.05)Te=0.05;
+  const Pof=t=>R*flowAt(t)+volAt(t)/C+PEEP;
+  let Ppeak=0; for(let t=0;t<=Ti+1e-9;t+=Ti/200){ const P=Pof(t); if(P>Ppeak)Ppeak=P; }
+  const Pplat=VT/C+PEEP, dPel=VT/C, res=Ppeak-Pplat;
+  let area=0,N=300; for(let i=0;i<N;i++){ const t=Ttot*i/N; let P; if(t<Ti)P=Pof(t); else if(t<Ti+Tp)P=Pplat; else P=PEEP; area+=P*(Ttot/N); } const Pmean=area/Ttot;
+  let deliveredVT=VT, guaranteed=true, capT=null; if(Ppeak>Pmax){ for(let t=0;t<=Ti;t+=Ti/400){ if(Pof(t)>=Pmax){ deliveredVT=volAt(t); capT=t; guaranteed=false; break; } } }
+  const MP=0.098*RR*VT*(Ppeak-0.5*dPel);
+  return {VT,Qp,C,R,PEEP,RR,Tp,Pmax,Ttot,Ti,Te,tau,Ppeak,Pplat,dPel,res,Pmean,deliveredVT,guaranteed,capT,MP,pattern:p.pattern,_flowAt:flowAt,_volAt:volAt,_Pof:Pof};
+}
+function starveIndex(p){ const Qreq=35+0.65*(p.demand||0); return Math.max(0,(Qreq-p.flowPeak_Lmin)/60); }
+function sampleVCV2(m,p){ const N=260, pts=[]; const {Ti,Tp,Ttot,tau,PEEP,C,deliveredVT,guaranteed,Pmax,capT}=m;
+  const starve=starveIndex(p); const scoopA=Math.min(14, starve*60*0.16);
+  for(let i=0;i<=N;i++){ const t=Ttot*i/N; let F,V,P;
+    if(t<Ti){ if(!guaranteed && capT!=null && t>=capT){ F=0; V=deliveredVT; P=Pmax; } else { F=m._flowAt(t); V=m._volAt(t); P=m._Pof(t); }
+      P-=scoopA*Math.sin(Math.PI*Math.min(t,Ti)/Ti); }
+    else if(t<Ti+Tp){ F=0; V=deliveredVT; P=deliveredVT/C+PEEP; }
+    else { const te=t-Ti-Tp; V=deliveredVT*Math.exp(-te/tau); F=-(deliveredVT/tau)*Math.exp(-te/tau); P=PEEP; }
+    pts.push({t,F,V,P}); }
+  return {pts,starve,scoopA};
+}
+const XL=46, XR=512, BANDS=[{key:'P',y0:14,y1:118,lab:'Pressão',unit:'cmH₂O',col:'#E8A35C'},{key:'F',y0:134,y1:238,lab:'Fluxo',unit:'L/s',col:'#5fd0c6',zero:true},{key:'V',y0:254,y1:358,lab:'Volume',unit:'L',col:'#9DC3E6'}];
+function plotScalars(svgId, pts, mk){
+  const svg=el(svgId); if(!el(svgId+'-P')){ svg.innerHTML=BANDS.map(b=>`<g id="${svgId}-${b.key}"></g>`).join('')+`<line id="${svgId}-ph" x1="${XL}" y1="10" x2="${XL}" y2="362" stroke="#f4efe4" stroke-width="1.5" opacity="0.55"/>`; }
+  const Ttot=mk.Ttot, Fmin=Math.min(...pts.map(o=>o.F)), Fmax=Math.max(...pts.map(o=>o.F)), Pmx=Math.max(...pts.map(o=>o.P)), Vmx=Math.max(...pts.map(o=>o.V));
+  const ranges={ P:[0,Math.max(Pmx,mk.PEEP+5)*1.08], F:[Math.min(Fmin*1.12,-0.05),Math.max(Fmax*1.12,0.05)], V:[0,Math.max(Vmx,mk.VTset)*1.12] };
+  BANDS.forEach(b=>{ const g=el(svgId+'-'+b.key); const [lo,hi]=ranges[b.key]; const x=t=>XL+(XR-XL)*(t/Ttot), y=v=>b.y1-(b.y1-b.y0)*((v-lo)/(hi-lo||1));
+    let s=`<rect x="${XL}" y="${b.y0}" width="${XR-XL}" height="${b.y1-b.y0}" fill="#0e2624" stroke="#2a4d49" rx="4"/>`;
+    s+=`<text x="${XL-6}" y="${b.y0+12}" fill="#9fc0bb" font-size="10" text-anchor="end" font-family="'Hanken Grotesk'">${b.lab}</text><text x="${XL-6}" y="${b.y1-3}" fill="#5f817c" font-size="8" text-anchor="end" font-family="'JetBrains Mono'">${b.unit}</text>`;
+    if(b.zero){ const yz=y(0); s+=`<line x1="${XL}" y1="${yz}" x2="${XR}" y2="${yz}" stroke="#6f9b95" stroke-width="1" stroke-dasharray="3 3"/>`; }
+    if(b.key==='P'){ const yp=y(mk.PEEP); s+=`<line x1="${XL}" y1="${yp}" x2="${XR}" y2="${yp}" stroke="#7a6a40" stroke-width="1" stroke-dasharray="2 4"/><text x="${XR}" y="${yp-3}" fill="#b89b5e" font-size="8" text-anchor="end" font-family="'JetBrains Mono'">PEEP</text>`;
+      if(mk.guaranteed===false){ const ym=y(mk.Pmax); s+=`<line x1="${XL}" y1="${ym}" x2="${XR}" y2="${ym}" stroke="#E8836A" stroke-width="1.2" stroke-dasharray="4 3"/><text x="${XR}" y="${ym-3}" fill="#E8a99c" font-size="8" text-anchor="end" font-family="'JetBrains Mono'">Pmax</text>`; }
+      if(mk.starve>0.001){ s+=`<text x="${(XL+XR)/2}" y="${b.y0+14}" fill="#E8b889" font-size="9" text-anchor="middle" font-family="'Hanken Grotesk'">curva "sugada" — fome de fluxo</text>`; } }
+    if(b.key==='V'){ const yt=y(mk.VTset); s+=`<line x1="${XL}" y1="${yt}" x2="${XR}" y2="${yt}" stroke="#5f7f97" stroke-width="1" stroke-dasharray="2 4"/><text x="${XR}" y="${yt-3}" fill="#9DC3E6" font-size="8" text-anchor="end" font-family="'JetBrains Mono'">VC setado</text>`;
+      if(mk.guaranteed===false){ s+=`<text x="${(XL+XR)/2}" y="${b.y1-6}" fill="#E8a99c" font-size="9" text-anchor="middle" font-family="'Hanken Grotesk'">VC entregue &lt; setado</text>`; } }
+    const poly=pts.map(o=>`${x(o.t).toFixed(1)},${y(o[b.key]).toFixed(1)}`).join(' ');
+    s+=`<polyline points="${poly}" fill="none" stroke="${b.col}" stroke-width="2.2" stroke-linejoin="round"/>`;
+    if(b.key==='P'){ const pk=pts.reduce((a,o)=>o.P>a.P?o:a,pts[0]); s+=`<circle cx="${x(pk.t)}" cy="${y(pk.P)}" r="3" fill="#E8836A"/><text x="${x(pk.t)+5}" y="${y(pk.P)+3}" fill="#E8a99c" font-size="9" font-family="'JetBrains Mono'">pico ${pk.P.toFixed(0)}</text>`;
+      if(mk.Tp>0){ const xp=x(mk.Ti+mk.Tp*0.6); s+=`<circle cx="${xp}" cy="${y(mk.Pplat)}" r="3" fill="#5fd0c6"/><text x="${xp+5}" y="${y(mk.Pplat)-3}" fill="#8fd8d0" font-size="9" font-family="'JetBrains Mono'">platô ${mk.Pplat.toFixed(0)}</text>`; } }
+    g.innerHTML=s; });
+  svg._Ttot=Ttot;
+}
+function setPh(svgId,t){ const ph=el(svgId+'-ph'); if(!ph||!el(svgId)._Ttot)return; const xx=XL+(XR-XL)*((t%el(svgId)._Ttot)/el(svgId)._Ttot); ph.setAttribute('x1',xx); ph.setAttribute('x2',xx); }
+const LUNGS5={ normal:{R:8,C:50,col:'#7fe3da'}, duro:{R:8,C:20,col:'#E8A35C'}, obstruido:{R:28,C:50,col:'#E8836A'} };
+let pattern='square';
+function drawContract(){
+  const base={VT_mL:450,flowPeak_Lmin:50,RR:16,PEEP:5,pause_s:0.3,pattern};
+  const svg=el('contractSvg'); const ms=Object.fromEntries(Object.entries(LUNGS5).map(([k,L])=>[k,computeVCV2({...base,R:L.R,C_mL:L.C})]));
+  const ref=ms.normal; const pts=sampleVCV2(ref,{demand:0}).pts; const Ttot=ref.Ttot;
+  const Pmx=Math.max(...Object.values(ms).map(m=>m.Ppeak));
+  const rangeP=[0,Pmx*1.08], rangeF=[Math.min(-0.05,Math.min(...pts.map(o=>o.F))*1.12),Math.max(...pts.map(o=>o.F))*1.12], rangeV=[0,ref.VT*1.12];
+  let g='';
+  const yIn=(b,range,v)=>b.y1-(b.y1-b.y0)*((v-range[0])/(range[1]-range[0]||1)); const x=t=>XL+(XR-XL)*(t/Ttot);
+  const bP=BANDS[0]; g+=`<rect x="${XL}" y="${bP.y0}" width="${XR-XL}" height="${bP.y1-bP.y0}" fill="#0e2624" stroke="#2a4d49" rx="4"/><text x="${XL-6}" y="${bP.y0+12}" fill="#9fc0bb" font-size="10" text-anchor="end">Pressão</text><text x="${XR}" y="${bP.y0+12}" fill="#9fc0bb" font-size="9" text-anchor="end" font-family="'Hanken Grotesk'">3 respostas</text>`;
+  Object.entries(LUNGS5).forEach(([k,L])=>{ const pp=sampleVCV2(ms[k],{demand:0}).pts; const poly=pp.map(o=>`${x(o.t).toFixed(1)},${yIn(bP,rangeP,o.P).toFixed(1)}`).join(' '); g+=`<polyline points="${poly}" fill="none" stroke="${L.col}" stroke-width="2.2"/>`;
+    g+=`<text x="${x(ms[k].Ti)+3}" y="${yIn(bP,rangeP,ms[k].Ppeak)}" fill="${L.col}" font-size="8" font-family="'JetBrains Mono'">${ms[k].Ppeak.toFixed(0)}</text>`; });
+  const bF=BANDS[1]; const yzF=yIn(bF,rangeF,0); g+=`<rect x="${XL}" y="${bF.y0}" width="${XR-XL}" height="${bF.y1-bF.y0}" fill="#0e2624" stroke="#2a4d49" rx="4"/><text x="${XL-6}" y="${bF.y0+12}" fill="#9fc0bb" font-size="10" text-anchor="end">Fluxo</text><line x1="${XL}" y1="${yzF}" x2="${XR}" y2="${yzF}" stroke="#6f9b95" stroke-dasharray="3 3"/><text x="${XR}" y="${bF.y0+12}" fill="#9fc0bb" font-size="9" text-anchor="end">idêntico</text>`;
+  g+=`<polyline points="${pts.map(o=>`${x(o.t).toFixed(1)},${yIn(bF,rangeF,o.F).toFixed(1)}`).join(' ')}" fill="none" stroke="#cfe3df" stroke-width="2.2"/>`;
+  const bV=BANDS[2]; g+=`<rect x="${XL}" y="${bV.y0}" width="${XR-XL}" height="${bV.y1-bV.y0}" fill="#0e2624" stroke="#2a4d49" rx="4"/><text x="${XL-6}" y="${bV.y0+12}" fill="#9fc0bb" font-size="10" text-anchor="end">Volume</text><text x="${XR}" y="${bV.y0+12}" fill="#9fc0bb" font-size="9" text-anchor="end">idêntico</text>`;
+  g+=`<polyline points="${pts.map(o=>`${x(o.t).toFixed(1)},${yIn(bV,rangeV,o.V).toFixed(1)}`).join(' ')}" fill="none" stroke="#cfe3df" stroke-width="2.2"/>`;
+  g+=`<line id="contractSvg-ph" x1="${XL}" y1="10" x2="${XL}" y2="362" stroke="#f4efe4" stroke-width="1.5" opacity="0.5"/>`;
+  svg.innerHTML=g; svg._Ttot=Ttot;
+  el('contractNarr').innerHTML = pattern==='square'
+    ? 'Fluxo quadrado: o mesmo volume e o mesmo fluxo nos três. O pulmão <b>normal</b> responde com pico baixo; o <b>duro</b> sobe o pico por via elástica (platô alto); o <b>obstruído</b> sobe o pico por via resistiva (platô normal). No VCV, a pressão denuncia o pulmão.'
+    : 'Fluxo desacelerante: o pico cai nos três (o atrito não coincide mais com o volume máximo) e a pressão média sobe. Mas o que o alvéolo vê — o platô — não mudou. Trocar o padrão embeleza o pico, não protege o alvéolo.';
+}
+function setPattern(p){ pattern=p; document.querySelectorAll('#patbar .chip').forEach(c=>c.classList.toggle('active',c.dataset.p===p)); drawContract(); t0=null; }
+function buildPatbar(){ el('patbar').innerHTML=[['square','fluxo quadrado'],['decel','fluxo desacelerante']].map(([id,n])=>`<button class="chip" data-p="${id}" onclick="setPattern('${id}')">${n}</button>`).join(''); }
+let labPattern='square';
+function buildLabpat(){ el('labpat').innerHTML=[['square','fluxo quadrado'],['decel','fluxo desacelerante']].map(([id,n])=>`<button class="chip" data-p="${id}" onclick="setLabPattern('${id}')">${n}</button>`).join(''); }
+function setLabPattern(p){ labPattern=p; document.querySelectorAll('#labpat .chip').forEach(c=>c.classList.toggle('active',c.dataset.p===p)); labUpdate(); }
+function readLab(){ return {pattern:labPattern, VT_mL:+el('s_VT').value, flowPeak_Lmin:+el('s_flow').value, RR:+el('s_RR').value, PEEP:+el('s_PEEP').value, R:+el('s_R').value, C_mL:+el('s_C').value, pause_s:+el('s_pause').value, demand:+el('s_dem').value, Pmax:(+el('s_pmax').value>=58?999:+el('s_pmax').value)}; }
+function labUpdate(){ const p=readLab();
+  el('o_VT').textContent=p.VT_mL+' mL'; el('o_flow').textContent=p.flowPeak_Lmin+' L/min'; el('o_RR').textContent=p.RR+' /min'; el('o_PEEP').textContent=p.PEEP+' cmH₂O'; el('o_R').textContent=p.R; el('o_C').textContent=p.C_mL+' mL/cmH₂O'; el('o_pause').textContent=p.pause_s.toFixed(1)+' s'; el('o_dem').textContent=p.demand; el('o_pmax').textContent=(p.Pmax>900?'desligado':p.Pmax+' cmH₂O');
+  const m=computeVCV2(p); const sm=sampleVCV2(m,p);
+  plotScalars('labSvg', sm.pts, {Ttot:m.Ttot,PEEP:m.PEEP,Pplat:m.Pplat,Ti:m.Ti,Tp:m.Tp,VTset:m.VT,guaranteed:m.guaranteed,Pmax:m.Pmax,starve:sm.starve}); t0=null;
+  const drivHi=m.dPel>15, drivBad=m.dPel>18;
+  const RO=[ ['pico',m.Ppeak.toFixed(0),'cmH₂O',''], ['platô',m.Pplat.toFixed(0),'cmH₂O',drivHi?'warn':''], ['driving',m.dPel.toFixed(0),'cmH₂O',drivBad?'bad':(drivHi?'warn':'good')],
+    ['pico−platô',m.res.toFixed(0),'cmH₂O',''], ['Ti',m.Ti.toFixed(2),'s',''], ['P média',m.Pmean.toFixed(1),'cmH₂O',''],
+    ['VC entregue',(m.deliveredVT*1000).toFixed(0),'mL',m.guaranteed?'':'bad'], ['M. power',m.MP.toFixed(0),'J/min',m.MP>17?'warn':''] ];
+  el('readouts').innerHTML=RO.map(([k,v,u,c])=>`<div class="ro ${c}"><div class="rk">${k}</div><div class="rv">${v} <small>${u}</small></div></div>`).join('');
+  el('verdict').innerHTML=`<b>O contrato.</b> Você fixou VC <b>${m.VT*1000|0} mL</b> e fluxo <b>${p.flowPeak_Lmin} L/min</b> (${labPattern==='decel'?'desacelerante':'quadrado'}). O pulmão respondeu: pico <b>${m.Ppeak.toFixed(0)}</b>, platô <b>${m.Pplat.toFixed(0)}</b>, driving <b>${m.dPel.toFixed(0)}</b>.`
+    + (labPattern==='decel'?' <span style="color:var(--signal-deep)">A rampa baixou o pico e subiu a pressão média — o platô/driving (o que o alvéolo vê) não mudaram.</span>':'')
+    + (drivHi?' <span style="color:var(--wrong)">A driving está em zona lesiva — em VCV, reduzir o VC é o que protege o alvéolo (mudar o padrão de fluxo, não).</span>':'');
+  const bg=el('bGuard'); if(!m.guaranteed){ bg.className='banner red on'; bg.innerHTML=`<b>Volume NÃO garantido.</b> A pressão atingiu o limite (Pmax ${p.Pmax}); a máquina cortou o fluxo e entregou só <b>${(m.deliveredVT*1000).toFixed(0)} mL</b> dos ${m.VT*1000|0} programados. O VCV garante volume <i>até</i> o limite de pressão.`; } else { bg.className='banner red'; bg.innerHTML=''; }
+  const bs=el('bStarve'); if(sm.starve>0.001){ bs.className='banner amber on'; bs.innerHTML=`<b>Fome de fluxo (esquema).</b> A demanda do paciente exige mais fluxo do que os ${p.flowPeak_Lmin} L/min ofertados — a curva de pressão é "sugada". Aumente o fluxo, considere a rampa desacelerante ou reavalie o modo <i>antes</i> de sedar. Mecanismo completo no Módulo 9.`; } else { bs.className='banner amber'; bs.innerHTML=''; }
+}
+let active='caso', t0=null; const reduce=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function tick(ts){ if(t0===null)t0=ts; const dt=(ts-t0)/1000*0.6; if(active==='contrato') setPh('contractSvg',dt); else if(active==='lab') setPh('labSvg',dt); requestAnimationFrame(tick); }
+const TRILHA=[
+  { block:'O que você fixa', stem:'No VCV, o que VOCÊ programa diretamente?', opts:['A pressão de pico','O volume corrente e o fluxo (além de FR e PEEP) — a máquina garante o volume','A complacência','A SpO₂'], answer:1, good:'Você promete <b>volume e fluxo</b>. A máquina entrega esse volume custe o que custar em pressão. Pressão não é um botão aqui — é o que sobra.', bad:'Você fixa <b>volume e fluxo</b> (e FR/PEEP). A pressão não é programada: ela resulta.' },
+  { block:'Quem faz a pressão', stem:'A pressão de pico em VCV é determinada por…', opts:['Pelo seu ajuste de pressão','Pelo pulmão (R e C) respondendo ao volume/fluxo que você impôs — é consequência e monitor','Pela FiO₂','Pelo alarme'], answer:1, good:'A pressão é a <b>resposta</b> do sistema respiratório (R, C) ao volume e fluxo impostos. Ela é o seu instrumento de vigilância — não um alvo que você gira.', bad:'É o <b>pulmão</b> que faz a pressão, respondendo ao que você impôs. A pressão é consequência e monitor, não ajuste.' },
+  { block:'A garantia tem preço', stem:'O pulmão enrijece e o VC continua o mesmo. O que acontece com a pressão?', opts:['Cai','Sobe sozinha (platô/driving aumentam) — silenciosamente, porque o volume é garantido','Fica igual','O ventilador reduz o VC'], answer:1, good:'O volume é garantido, então a piora vira <b>pressão</b>: o mesmo VC num pulmão mais duro exige mais pressão → platô e driving sobem. Nada "desliga" — você precisa vigiar e alarmar.', bad:'A pressão <b>sobe sozinha</b>. Como o VC é garantido, a piora do pulmão aparece como aumento de platô/driving — sem aviso, se você não vigiar.' },
+  { block:'O padrão de fluxo', stem:'Trocar fluxo quadrado por desacelerante baixa o pico. Isso protege o alvéolo?', opts:['Sim, sempre','Não necessariamente: baixa o PICO (resistivo) e sobe a pressão média; o platô/driving (o que o alvéolo vê) não mudam','Sim, dobra a complacência','Não muda o pico'], answer:1, good:'A rampa redistribui o fluxo: <b>pico menor, pressão média maior</b>. Mas o platô — a pressão elástica que distende o alvéolo — é o mesmo. Embeleza o número, não protege o pulmão.', bad:'Baixa o <b>pico</b>, não o platô/driving. O alvéolo continua vendo a mesma pressão elástica; só o VC menor protege de verdade.' },
+  { block:'A curva sugada', stem:'O paciente "briga" e a curva de pressão fica côncava ("sugada") na inspiração. O que pode ser?', opts:['Excesso de PEEP','Fome de fluxo: a demanda do paciente excede o fluxo ofertado; ele puxa contra um fluxo fixo','Auto-PEEP','Vazamento'], answer:1, good:'Fluxo fixo + demanda alta = o paciente <b>puxa</b> e afunda a curva de pressão. Antes de sedar, ofereça mais fluxo (ou rampa desacelerante), ou reconsidere o modo. Sedar trata o sintoma.', bad:'É <b>fome de fluxo</b>: a demanda supera o fluxo ofertado e a curva é sugada. Aumentar fluxo/ajustar o modo vem antes de sedar.' },
+  { block:'Síntese', stem:'Resuma o contrato do VCV.', opts:['A máquina decide tudo','Você promete volume; a pressão é a resposta do pulmão e o seu monitor — e a pausa é a régua que separa resistivo de elástico','O modo controla a pressão','Volume e pressão são garantidos juntos'], answer:1, good:'<b>VCV:</b> volume garantido, pressão como consequência e vigilância. Quando o pulmão muda, a pressão muda — e a pausa (pico−platô resistivo; platô elástico) diz onde. Garantir volume é transferir a responsabilidade da pressão para você.', bad:'Você garante o <b>volume</b>; a <b>pressão</b> é a resposta e o monitor. A pausa separa resistivo (pico−platô) de elástico (platô). Volume e pressão nunca são garantidos ao mesmo tempo.' }
+];
+const QUIZ=[
+  { block:'O caso', stem:'SDRA em VCV, VC 450 fixo. Em 6 h o platô foi de 24→32 e a driving a ~27. Conduta?', opts:['Confiar no VC garantido e manter — o volume está no alvo','Reconhecer que o volume garantido elevou platô/driving: reduzir o VC (≈4 mL/kg), aceitar hipercapnia, alarmar a pressão e vigiar o platô','Aumentar o fluxo inspiratório','Trocar para fluxo desacelerante para baixar a pressão'], answer:1, fb:{ mechanism:'VCV garante volume; se a complacência cai, o mesmo VC exige mais pressão → platô e driving sobem sem nada se "desligar".', whyRight:'O alvéolo vê o platô/driving; reduzir o VC é o que baixa o estresse. Em VCV, a pressão é responsabilidade sua — alarme e vigilância são parte do modo.', trap:'"VC setado = protegido" transforma a garantia de volume num motor silencioso de barotrauma quando o pulmão piora. E trocar para desacelerante só baixaria o pico — a driving (27) ficaria igual.', bedside:'Mire platô ≤30 e driving <15: reduza o VC, ajuste PEEP, configure alarme de pressão e reavalie a cada piora.', bridge:{t:'Driving, platô e proteção', href:'mvp10-interativo.html#proteger'} } },
+  { block:'O padrão de fluxo', stem:'Você troca fluxo quadrado por desacelerante no mesmo paciente. O que muda?', opts:['Pico, platô e driving caem juntos','O pico cai e a pressão média sobe; platô e driving ficam iguais','Só o volume corrente','A complacência melhora'], answer:1, fb:{ mechanism:'A rampa coloca o fluxo alto (custo resistivo) no início, quando o volume é baixo; os dois custos não somam no mesmo instante, então o pico cai. A pressão média sobe (fluxo front-loaded).', whyRight:'O platô = VC/C + PEEP independe do padrão de fluxo: o alvéolo vê o mesmo. O padrão muda a estética do pico, não o estresse elástico.', trap:'Festejar o pico menor como "mais protetor" — a driving, que prediz VILI, não mudou.', bedside:'Use o padrão para conforto/distribuição e pico, mas julgue proteção pelo platô/driving. Não troque o padrão para "resolver" uma driving alta.', bridge:{t:'O que o alvéolo realmente vê', href:'mvp9-interativo.html#lab'} } },
+  { block:'O primeiro gesto', stem:'Pico alto em VCV. Qual o primeiro gesto diagnóstico?', opts:['Aumentar a sedação','A pausa inspiratória: separa o resistivo (pico−platô) do elástico (platô)','Aumentar a FiO₂','Trocar o ventilador'], answer:1, fb:{ mechanism:'Com fluxo controlado e conhecido, a pausa zera o fluxo e revela o platô; pico−platô = R·fluxo. O VCV é o modo ideal para medir mecânica.', whyRight:'A pausa diz se o pico subiu por resistência (caminho) ou por complacência (alvéolo) — decisões opostas.', trap:'Reagir ao número do pico sem decompor — pode-se sedar/baixar VC por um problema que era só resistivo.', bedside:'Faça a pausa de rotina ao ver pico alto. Pico↑/platô normal → resistivo; pico↑/platô↑ → elástico.', bridge:{t:'Decompor pico e platô', href:'mvp9-interativo.html#lab'} } },
+  { block:'A curva sugada', stem:'Paciente com drive alto em VCV: curva de pressão côncava, parece agitado. Antes de sedar, o que avaliar?', opts:['Nada — sedar logo','Fome de fluxo: a demanda excede o fluxo ofertado; ofereça mais fluxo / rampa desacelerante / reavalie o modo','Reduzir a FiO₂','Desligar o PEEP'], answer:1, fb:{ mechanism:'Com fluxo fixo abaixo da demanda, o esforço do paciente "puxa" a pressão para baixo (concavidade) — dissincronia de fluxo, não "briga" gratuita.', whyRight:'Corrigir a oferta de fluxo (ou mudar para um modo que siga a demanda) trata a causa; sedar apenas mascara um problema mecânico de ajuste.', trap:'Ler agitação como necessidade de sedação e aprofundá-la, perpetuando a dissincronia e seus riscos.', bedside:'Suba o fluxo, experimente rampa desacelerante, cheque trigger/sensibilidade; sedação é último recurso, não o primeiro.', bridge:{t:'Quando o paciente luta com a máquina', href:'ventila9.html'} } },
+  { block:'VCV × PCV', stem:'Em uma frase, a diferença essencial entre VCV e PCV.', opts:['São idênticos','VCV garante o volume (a pressão varia); PCV garante a pressão (o volume varia)','PCV é sempre melhor','VCV não tem PEEP'], answer:1, fb:{ mechanism:'Cada modo fixa uma variável e deixa a outra livre: o que é garantido nunca avisa; o que varia é onde mora o perigo silencioso.', whyRight:'VCV: volume estável, pressão sobe se o pulmão piora (vigie a pressão). PCV: pressão estável, volume cai se o pulmão piora (vigie o volume).', trap:'Achar que um modo é universalmente "mais seguro" — cada um troca uma garantia por uma vigilância.', bedside:'Escolha o modo sabendo qual variável você terá de vigiar — e configure o alarme da variável livre.', bridge:{t:'O espelho: PCV por dentro', href:'ventila6.html'} } }
+];
+function makeEngine(cfg){ let i=0,correct=0,answered=false;
+  function start(){ el(cfg.intro).classList.add('hidden'); el(cfg.quiz).classList.remove('hidden'); el('meter').classList.add('on'); render(); }
+  function render(){ answered=false; const q=cfg.data[i],L=['A','B','C','D'];
+    el('blockLabel').textContent=q.block; el('count').textContent=`${i+1} / ${cfg.data.length}`; el('fill').style.width=`${(i/cfg.data.length)*100}%`;
+    el(cfg.quiz).innerHTML=`<div class="qtag">${q.block} · ${i+1}/${cfg.data.length}</div><div class="stem">${q.stem}</div><div class="opts" id="${cfg.key}_opts">${q.opts.map((o,k)=>`<button class="opt" onclick="${cfg.key}_choose(${k})"><span class="mark">${L[k]}</span><span>${o}</span></button>`).join('')}</div><div class="fb" id="${cfg.key}_fb"></div><div class="row hidden" id="${cfg.key}_row"><button class="btn" onclick="${cfg.key}_next()">${i===cfg.data.length-1?'Concluir →':'Próxima →'}</button></div>`;
+    el(cfg.quiz).scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  function choose(k){ if(answered)return; answered=true; const q=cfg.data[i],ok=(k===q.answer); if(ok)correct++;
+    document.querySelectorAll('#'+cfg.key+'_opts .opt').forEach((b,bi)=>{ b.disabled=true; if(bi===q.answer)b.classList.add('correct'); else if(bi===k)b.classList.add('wrong'); else b.classList.add('dim'); });
+    const fb=el(cfg.key+'_fb'); fb.className='fb show'+(ok?'':' bad'); fb.innerHTML=cfg.render(q,ok); el(cfg.key+'_row').classList.remove('hidden'); }
+  function next(){ i++; (i<cfg.data.length)?render():finish(); }
+  function finish(){ el(cfg.quiz).classList.add('hidden'); el('fill').style.width='100%'; el(cfg.done).classList.remove('hidden'); el(cfg.done).innerHTML=cfg.finish(correct,cfg.data.length); el(cfg.done).scrollIntoView({behavior:'smooth',block:'start'}); }
+  return {start,choose,next,reset(){ i=0;correct=0;answered=false; el(cfg.done).classList.add('hidden'); el(cfg.quiz).classList.remove('hidden'); render(); }};
+}
+const trEngine=makeEngine({ key:'tr',data:TRILHA,intro:'trIntro',quiz:'trQuiz',done:'trDone', render:(q,ok)=>`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`, finish:(c,n)=>`<div class="kicker" style="color:var(--signal-deep)">Trilha completa</div><div class="score">${c}/${n}</div><h2>Volume é promessa; pressão é consequência.</h2><p style="color:var(--ink-soft)">Veja o contrato em ação em <b>O contrato</b> e mexa em tudo no <b>Laboratório</b>.</p><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="go('contrato')">Ver o contrato →</button><button class="btn ghost" onclick="tr_reset()">Rever</button></div>` });
+function tr_choose(k){trEngine.choose(k);} function tr_next(){trEngine.next();} function tr_reset(){trEngine.reset();} function trStart(){trEngine.start();}
+const qzEngine=makeEngine({ key:'qz',data:QUIZ,intro:'qzIntro',quiz:'qzQuiz',done:'qzDone', render:(q,ok)=>{ const f=q.fb; const br=f.bridge.href.startsWith('#')||f.bridge.href.startsWith('ventila')?`${f.bridge.t} <a href="${f.bridge.href}">→</a>`:`<a href="${f.bridge.href}" target="_blank" rel="noopener">${f.bridge.t} ↗</a>`; return `<div class="fb-head">${ok?'✦ Correta.':'↺ Não é essa — entenda por quê.'}</div><div class="gab"><div class="f"><span class="ft">Mecanismo</span>${f.mechanism}</div><div class="f"><span class="ft">Por que a correta</span>${f.whyRight}</div><div class="f trap"><span class="ft">A armadilha</span>${f.trap}</div><div class="f bed"><span class="ft">À beira do leito</span>${f.bedside}</div><div class="f"><span class="ft">Ponte</span>${br}</div></div>`; }, finish:(c,n)=>`<div class="kicker" style="color:var(--accent-deep)">Quiz completo · fim do Módulo 5</div><div class="score" style="color:var(--accent)">${c}/${n}</div><h2>O que é garantido nunca avisa.</h2><p style="color:var(--ink-soft)">Próximo: <b>Ventila 6</b> — o espelho. No PCV a pressão é a promessa; o volume é que cai sem alarme.</p><div class="row" style="justify-content:center;gap:12px"><button class="btn ghost" onclick="qz_reset()">Rever</button><button class="btn" onclick="go('lab')">Voltar ao laboratório</button></div>` });
+function qz_choose(k){qzEngine.choose(k);} function qz_next(){qzEngine.next();} function qz_reset(){qzEngine.reset();} function qzStart(){qzEngine.start();}
+buildPatbar(); buildLabpat(); setPattern('square'); setLabPattern('square'); labUpdate();
+if(!reduce && window.requestAnimationFrame){ requestAnimationFrame(tick); } else { setPh('contractSvg',0); setPh('labSvg',0); }
+</script>
+</body>
+</html>
