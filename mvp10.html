@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respira · Ventilação Protetora e Desmame (Módulo 10 · interativo)</title>
+<meta name="description" content="Módulo 10, o ápice da série: ventilar sem ferir (volume corrente por peso predito, platô, driving pressure e mechanical power — a energia entregue ao pulmão) e parar de ventilar (balanço carga-capacidade, RSBI, teste de respiração espontânea e os três modos de falha: bomba, pulmão e coração).">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-deep:#EBE3D3; --ink:#16383B; --ink-soft:#4A6164;
+    --accent:#C0603A; --accent-deep:#A24B2C; --air:#3C7F86; --tissue:#C97F66;
+    --correct:#4E7C5A; --correct-bg:#E4ECE0; --wrong:#B0503E; --wrong-bg:#F0E1DB;
+    --warn:#B8862F; --warn-bg:#F2E9D2; --line:#D7CCB8; --shadow:rgba(22,56,59,.13);
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Hanken Grotesk', sans-serif;
+    background:radial-gradient(1100px 600px at 80% -8%, rgba(192,96,58,.07), transparent 60%),radial-gradient(900px 700px at -6% 110%, rgba(60,127,134,.08), transparent 55%),var(--paper);
+    color:var(--ink); line-height:1.6; min-height:100vh; padding:0 20px 80px; overflow-x:hidden; -webkit-font-smoothing:antialiased; position:relative; }
+  body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .wrap{ max-width:780px; margin:0 auto; position:relative; z-index:2; }
+
+  header{ padding:46px 0 16px; text-align:center; }
+  .backlink{ display:inline-block; margin-bottom:12px; font-size:.8rem; color:var(--accent-deep); text-decoration:none; letter-spacing:.04em; }
+  .backlink:hover{ text-decoration:underline; }
+  .kicker{ font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:12px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 5.4vw, 2.9rem); line-height:1.05; letter-spacing:-.01em; margin-bottom:14px; }
+  h1 em{ font-style:italic; color:var(--accent); }
+  .sub{ color:var(--ink-soft); font-size:1.02rem; max-width:600px; margin:0 auto; }
+
+  .segbar{ display:flex; gap:6px; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:5px; max-width:460px; margin:30px auto 6px; }
+  .seg{ flex:1; font-family:inherit; font-weight:600; font-size:.9rem; color:var(--ink-soft); background:transparent; border:none; padding:10px 8px; border-radius:9px; cursor:pointer; transition:all .18s ease; }
+  .seg.active{ background:var(--accent); color:#fff; box-shadow:0 6px 16px -8px var(--accent-deep); }
+  .seg:not(.active):hover{ color:var(--ink); }
+
+  .meter{ margin:22px 0 8px; display:none; } .meter.on{ display:block; }
+  .meter-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:.78rem; letter-spacing:.04em; margin-bottom:8px; }
+  .meter-block{ color:var(--accent-deep); font-weight:600; text-transform:uppercase; letter-spacing:.18em; }
+  .meter-count{ color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .meter-track{ height:8px; background:var(--paper-deep); border-radius:99px; overflow:hidden; border:1px solid var(--line); }
+  .meter-fill{ height:100%; width:0; background:linear-gradient(90deg, var(--air), var(--tissue)); border-radius:99px; transition:width .6s cubic-bezier(.22,1,.36,1); }
+
+  .card{ background:rgba(255,253,248,.72); border:1px solid var(--line); border-radius:18px; padding:34px 34px 30px; box-shadow:0 14px 40px -22px var(--shadow); backdrop-filter:blur(2px); }
+  .intro p{ color:var(--ink-soft); margin-bottom:16px; font-size:1.04rem; } .intro .lead{ color:var(--ink); font-size:1.1rem; }
+  .intro ul{ list-style:none; margin:18px 0 26px; }
+  .intro li{ padding:7px 0 7px 26px; position:relative; color:var(--ink-soft); }
+  .intro li::before{ content:""; position:absolute; left:0; top:14px; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+
+  .qtag{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-deep); font-weight:600; margin-bottom:14px; }
+  .stem{ font-family:'Fraunces', serif; font-weight:400; font-size:1.32rem; line-height:1.4; margin-bottom:24px; letter-spacing:-.005em; }
+  .stem code,.fb code,.synth code,.lab-note code,.eqn code{ font-family:var(--mono); font-size:.9em; background:rgba(0,0,0,.05); padding:1px 5px; border-radius:5px; }
+  .opts{ display:flex; flex-direction:column; gap:11px; }
+  .opt{ text-align:left; font-family:inherit; font-size:1rem; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:15px 18px; cursor:pointer; transition:all .18s ease; display:flex; gap:13px; align-items:flex-start; line-height:1.45; }
+  .opt .mark{ flex:0 0 auto; width:24px; height:24px; border-radius:7px; border:1.5px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:.82rem; color:var(--ink-soft); margin-top:1px; }
+  .opt:hover:not(:disabled){ border-color:var(--accent); transform:translateX(3px); } .opt:disabled{ cursor:default; }
+  .opt.correct{ border-color:var(--correct); background:var(--correct-bg); } .opt.correct .mark{ background:var(--correct); border-color:var(--correct); color:#fff; }
+  .opt.wrong{ border-color:var(--wrong); background:var(--wrong-bg); } .opt.wrong .mark{ background:var(--wrong); border-color:var(--wrong); color:#fff; }
+  .opt.dim{ opacity:.5; }
+  .fb{ margin-top:22px; border-radius:13px; padding:20px 22px; border-left:4px solid var(--correct); background:var(--correct-bg); font-size:1rem; line-height:1.62; color:#2c4a35; opacity:0; transform:translateY(10px); max-height:0; overflow:hidden; transition:opacity .45s ease, transform .45s ease; }
+  .fb.show{ opacity:1; transform:translateY(0); max-height:none; } .fb.bad{ border-left-color:var(--wrong); background:var(--wrong-bg); color:#5e2c22; }
+  .fb-head{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:8px; display:flex; align-items:center; gap:9px; }
+
+  .row{ margin-top:24px; display:flex; justify-content:flex-end; gap:12px; }
+  .btn{ font-family:inherit; font-weight:600; font-size:1rem; background:var(--accent); color:#fff; border:none; padding:13px 28px; border-radius:11px; cursor:pointer; transition:all .18s ease; box-shadow:0 8px 20px -10px var(--accent-deep); }
+  .btn:hover{ background:var(--accent-deep); transform:translateY(-2px); }
+  .btn.ghost{ background:transparent; color:var(--accent-deep); box-shadow:none; border:1.5px solid var(--line); }
+  .btn.big{ padding:15px 34px; font-size:1.05rem; }
+  .hidden{ display:none !important; }
+  .done{ text-align:center; } .done .score{ font-family:'Fraunces',serif; font-size:3.4rem; font-weight:500; color:var(--accent); line-height:1; margin:10px 0; }
+  .done h2{ font-family:'Fraunces',serif; font-weight:500; font-size:1.7rem; margin-bottom:14px; } .done p{ color:var(--ink-soft); margin-bottom:14px; }
+  .synth{ text-align:left; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:22px 24px; margin:22px 0; }
+  .synth h3{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:12px; } .synth ol{ margin-left:18px; } .synth li{ margin-bottom:8px; color:var(--ink); }
+
+  /* ===== LAB ===== */
+  .submode{ display:flex; gap:6px; background:var(--paper-deep); border:1px solid var(--line); border-radius:11px; padding:4px; max-width:360px; margin:0 0 18px; }
+  .smbtn{ flex:1; font-family:inherit; font-weight:600; font-size:.88rem; color:var(--ink-soft); background:transparent; border:none; padding:9px; border-radius:8px; cursor:pointer; }
+  .smbtn.active{ background:var(--air); color:#fff; }
+  .eqn{ text-align:center; font-family:var(--mono); font-size:.94rem; color:var(--ink); background:var(--paper-deep); border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:18px; line-height:1.7; }
+  .eqn b{ color:var(--accent-deep); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:8px 22px; }
+  @media (max-width:560px){ .grid2{ grid-template-columns:1fr; } }
+  .ctrl{ margin:8px 0; } .ctrl label{ display:flex; justify-content:space-between; font-size:.85rem; font-weight:600; margin-bottom:6px; }
+  .ctrl label .val{ font-family:var(--mono); color:var(--accent-deep); }
+  .ctrl .sec{ font-weight:400; color:var(--ink-soft); font-size:.76rem; margin-top:3px; }
+  input[type=range]{ width:100%; height:7px; -webkit-appearance:none; appearance:none; background:var(--paper-deep); border-radius:99px; outline:none; border:1px solid var(--line); }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--accent); cursor:pointer; box-shadow:0 2px 8px -2px var(--accent-deep); }
+  input[type=range]::-moz-range-thumb{ width:20px; height:20px; border:none; border-radius:50%; background:var(--accent); cursor:pointer; }
+  .seg2{ display:flex; gap:6px; margin-top:4px; } .seg2 button{ flex:1; font-family:inherit; font-size:.8rem; font-weight:600; color:var(--ink-soft); background:var(--paper); border:1.5px solid var(--line); border-radius:8px; padding:7px; cursor:pointer; }
+  .seg2 button.active{ background:var(--air); color:#fff; border-color:var(--air); }
+
+  .reads{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:20px 0; }
+  @media (max-width:560px){ .reads{ grid-template-columns:repeat(2,1fr); } }
+  .read{ background:var(--paper-deep); border:1px solid var(--line); border-radius:12px; padding:12px 14px; text-align:center; }
+  .read .k{ font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px; }
+  .read .v{ font-family:'Fraunces',serif; font-size:1.55rem; font-weight:500; color:var(--ink); line-height:1; }
+  .read .u{ font-size:.64rem; color:var(--ink-soft); font-family:var(--mono); margin-top:2px; }
+  .read.good{ border-color:#bcd3b4; } .read.good .v{ color:var(--correct); }
+  .read.warn{ border-color:#e3d09a; } .read.warn .v{ color:var(--warn); }
+  .read.bad{ border-color:#e0b8ad; } .read.bad .v{ color:var(--wrong); }
+
+  .verdict{ background:var(--paper-deep); border-left:4px solid var(--air); border-radius:0 12px 12px 0; padding:16px 18px; font-size:1rem; line-height:1.55; margin:14px 0; }
+  .verdict.warn{ border-left-color:var(--warn); background:var(--warn-bg); } .verdict.bad{ border-left-color:var(--wrong); background:var(--wrong-bg); } .verdict.good{ border-left-color:var(--correct); background:var(--correct-bg); }
+  .verdict .vh{ font-family:'Fraunces',serif; font-weight:600; margin-bottom:5px; }
+  .links{ margin-top:14px; } .links .lt{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; }
+  .labrow{ display:flex; flex-wrap:wrap; gap:7px; }
+  .lab-l{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:9px; padding:7px 11px; text-decoration:none; transition:all .16s ease; display:inline-flex; align-items:center; gap:6px; }
+  .lab-l:hover{ border-color:var(--accent); color:var(--accent-deep); transform:translateY(-1px); } .lab-l .ln{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); }
+  .lab-note{ font-size:.84rem; color:var(--ink-soft); margin-top:16px; line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; } .lab-note b{ color:var(--ink); }
+
+  footer{ text-align:center; margin-top:44px; color:var(--ink-soft); font-size:.82rem; }
+  @media (max-width:560px){ .card{ padding:26px 20px; } .stem{ font-size:1.18rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+    <div class="kicker">Respira · Módulo 10 · interativo</div>
+    <h1>Ventilação protetora<br><em>e desmame</em></h1>
+    <p class="sub">O último degrau, e o que fecha o círculo: ventilar sem ferir o pulmão — e depois saber a hora e o modo de soltá-lo. Da driving pressure à energia que lesa; da força do diafragma ao primeiro respiro livre. Para a Dani.</p>
+  </header>
+
+  <div class="segbar">
+    <button class="seg active" id="segTrail" onclick="setMode('trail')" aria-label="Modo trilha socrática">Trilha</button>
+    <button class="seg" id="segLab" onclick="setMode('lab')" aria-label="Laboratório">Laboratório</button>
+  </div>
+
+  <div class="meter" id="meter">
+    <div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 13</span></div>
+    <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
+  </div>
+
+  <!-- ===== TRILHA ===== -->
+  <div id="trailMode">
+    <div class="card intro" id="intro">
+      <p class="lead">Décimo degrau: você lê o ventilador como uma equação. Agora as duas perguntas que encerram a terapia intensiva — como não ferir, e como soltar.</p>
+      <p>O ventilador salva e <em>fere</em>. A lesão induzida (VILI) tem quatro golpes — estiramento, pressão, abre-e-fecha cíclico e a inflamação que disso nasce — e todos se condensam num número: a <strong>energia que você entrega ao pulmão por minuto</strong>. Proteger é minimizá-la. E desmamar é o problema inverso: o pulmão melhorou o bastante para a balança entre a <strong>carga</strong> e a <strong>capacidade</strong> dos músculos pender para a liberdade?</p>
+      <ul>
+        <li>O volume corrente se ajusta pela <em>altura</em>, não pelo peso — e por quê.</li>
+        <li>Mechanical power: o número que unifica volu, baro e atelectrauma.</li>
+        <li>RSBI, o teste de respiração espontânea e os três modos de falhar: bomba, pulmão, coração.</li>
+      </ul>
+      <div class="row" style="justify-content:center;"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+    </div>
+    <div class="card hidden" id="quiz"></div>
+    <div class="card done hidden" id="final"></div>
+  </div>
+
+  <!-- ===== LABORATÓRIO ===== -->
+  <div id="labMode" class="hidden">
+    <div class="card">
+      <div class="submode">
+        <button class="smbtn active" id="smP" onclick="setSub('protect')">Proteger</button>
+        <button class="smbtn" id="smW" onclick="setSub('wean')">Desmamar</button>
+      </div>
+
+      <!-- PROTEGER -->
+      <div id="subProtect">
+        <div class="qtag">Proteger · a energia que você entrega ao pulmão</div>
+        <div class="eqn">potência = <b>0,098 · FR · VC · (P<sub>pico</sub> − ½·driving)</b><br><span style="font-size:.8rem;color:var(--ink-soft)">soma o trabalho elástico, o resistivo e o PEEP — por minuto</span></div>
+        <div class="grid2">
+          <div id="pCtrlsVent"></div>
+          <div id="pCtrlsPt"></div>
+        </div>
+        <div class="reads" id="pReads"></div>
+        <div id="pVerdict"></div>
+        <div class="links" id="pLinks"></div>
+      </div>
+
+      <!-- DESMAMAR -->
+      <div id="subWean" class="hidden">
+        <div class="qtag">Desmamar · a balança carga × capacidade</div>
+        <div class="eqn">RSBI = <b>FR / VC(L)</b> · &gt;105 prevê falha<br><span style="font-size:.8rem;color:var(--ink-soft)">o pulmão pesado e o músculo fraco empurram para rápido e superficial</span></div>
+        <div class="grid2">
+          <div id="wCtrlsLoad"></div>
+          <div id="wCtrlsCap"></div>
+        </div>
+        <div class="reads" id="wReads"></div>
+        <div id="wVerdict"></div>
+        <div class="links" id="wLinks"></div>
+      </div>
+
+      <p class="lab-note"><b>Estimativas didáticas, compartimento único.</b> A mechanical power usa a equação simplificada (Gattinoni) válida em volume-controlado; o limiar lesivo (~17 J/min) é associação populacional, não corte individual. A PaCO₂ vem de um modelo de ventilação alveolar com espaço morto fixo. No desmame, RSBI e o índice tensão-tempo (TTI) são preditores imperfeitos — o teste de respiração espontânea, com o paciente, decide. O objetivo é tornar visíveis os mecanismos, não substituir o julgamento à beira do leito.</p>
+    </div>
+  </div>
+
+  <footer>Respira — material didático · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira · MVP 10 · ventilação protetora e desmame</footer>
+</div>
+
+<script>
+/* ============================================================
+   MÓDULO 10 — VENTILAÇÃO PROTETORA E DESMAME (capstone)
+   Proteger: VT/kg(peso predito), platô, driving, mechanical power,
+   hipercapnia permissiva via ventilação alveolar.
+   Desmamar: balanço carga–capacidade → padrão espontâneo, RSBI, TTI,
+   teste de respiração espontânea e modos de falha (bomba/pulmão/coração).
+   Offline, sem storage.
+   ============================================================ */
+const QUESTIONS = [
+  { block:"O dano de quem cura",
+    stem:"O próprio ventilador pode lesar o pulmão (VILI). Por quais mecanismos, em essência?",
+    opts:["só por infecção","estiramento excessivo (volutrauma), pressão (barotrauma), abrir-e-fechar cíclico de alvéolos (atelectrauma) e a inflamação que tudo isso dispara (biotrauma)","só por oxigênio","apenas por tempo de uso"],
+    answer:1,
+    good:"<strong>Os quatro golpes.</strong> Esticar demais, pressurizar demais, deixar unidades colapsando e reabrindo a cada ciclo — e a cascata inflamatória que nasce daí e vaza para o corpo todo. Proteger é atacar os quatro: VC pequeno, platô baixo, PEEP que evita o colapso cíclico.",
+    bad:"Não é infecção nem só O₂: é <strong>volutrauma</strong> (estiramento), <strong>barotrauma</strong> (pressão), <strong>atelectrauma</strong> (abre-fecha) e <strong>biotrauma</strong> (inflamação). O ventilador mal ajustado é uma agressão mecânica." },
+  { block:"O volume pela altura",
+    stem:"O volume corrente protetor (≈6 mL/kg) calcula-se sobre qual peso?",
+    opts:["o peso atual da balança","o peso predito pela ALTURA (e sexo) — porque o tamanho do pulmão acompanha a altura, não a obesidade","o peso ideal estético","o peso de admissão"],
+    answer:1,
+    good:"<strong>Detalhe que separa o protetor do lesivo.</strong> O pulmão de um obeso de 1,70 m tem o tamanho do pulmão de qualquer um de 1,70 m. Usar o peso real entrega volumes enormes para um pulmão normal — volutrauma garantido. Por isso o VC vai pelo peso predito (altura). No lab, mude a altura e veja o mL/kg mudar.",
+    bad:"Não é o peso da balança: é o <strong>peso predito pela altura</strong>. O pulmão escala com a altura, não com a gordura — calcular pelo peso real superdistende um pulmão de tamanho normal." },
+  { block:"As balizas",
+    stem:"Na ventilação protetora, qual trio de tetos você persegue?",
+    opts:["FiO₂ 100%, PEEP 0, VC alto","platô ≤ 30, driving pressure < 15 e volume corrente baixo (≈4–8 mL/kg)","frequência mínima e fluxo máximo","saturação 100% a qualquer custo"],
+    answer:1,
+    good:"<strong>As balizas que viraram alvo.</strong> Platô ≤30 (limita a pressão sobre o alvéolo), driving <15 (limita o estiramento do baby lung) e VC baixo. A driving, herdada do Módulo 9, é a que melhor prediz desfecho.",
+    bad:"Os tetos são <strong>platô ≤30, driving <15 e VC baixo</strong>. FiO₂ e PEEP servem à oxigenação; a proteção mora nessas três pressões/volume." },
+  { block:"A energia que lesa",
+    stem:"A mechanical power reúne VC, driving, fluxo, PEEP e frequência num só número. O que ela mede?",
+    opts:["a saturação","a energia entregue ao pulmão por minuto — a 'dose' mecânica que produz VILI","o débito cardíaco","a temperatura do gás"],
+    answer:1,
+    good:"<strong>O unificador.</strong> Volu, baro e atelectrauma são facetas de uma coisa: energia depositada no tecido por unidade de tempo. Você pode baixar o VC e, ainda assim, ter potência alta se compensar com frequência e fluxo. É a 'dose' que importa — alvo abaixo de ~17 J/min.",
+    bad:"É a <strong>energia por minuto</strong> entregue ao pulmão — a dose mecânica do VILI. Por isso baixar só o VC pode não bastar: frequência e fluxo também carregam energia." },
+  { block:"A energia que lesa",
+    stem:"Você baixa o VC para proteger, mas sobe muito a frequência para manter a ventilação. A mechanical power...",
+    opts:["sempre cai","pode não cair — a frequência também entrega energia; a proteção é multidimensional, não um único botão","zera","não muda nunca"],
+    answer:1,
+    good:"<strong>Não existe almoço grátis.</strong> Cada respiração deposita energia; multiplicar a frequência multiplica a dose. Proteger de verdade às vezes exige aceitar menos ventilação (hipercapnia permissiva) em vez de só trocar volume por frequência. No lab, veja a potência teimar quando você sobe a FR.",
+    bad:"Cuidado: subir a frequência <strong>adiciona</strong> energia. A potência pode até subir. Proteção não é mexer num botão só — é o conjunto VC + FR + fluxo + pressões." },
+  { block:"Hipercapnia permissiva",
+    stem:"Para manter o pulmão protegido, às vezes deixamos a PaCO₂ subir e o pH cair até ~7,20. Por quê se aceita?",
+    opts:["porque CO₂ alto é bom","porque a prioridade é não lesar o pulmão — tolerar a acidose respiratória (dentro de um piso) custa menos que ventilar de forma agressiva","porque o rim corrige na hora","porque a PaCO₂ não importa"],
+    answer:1,
+    good:"<strong>Hipercapnia permissiva.</strong> Entre ferir o pulmão e tolerar um pH de 7,20, escolhe-se o pulmão. É a troca explícita do Módulo 4 reaparecendo: aceita-se a acidose respiratória como preço da proteção, respeitando um piso. No lab: baixe o VC e veja a PaCO₂ subir.",
+    bad:"Não é que CO₂ alto seja bom: é que <strong>proteger o pulmão vale mais</strong> que normalizar a PaCO₂. Tolera-se a acidose (até ~pH 7,20) para não ventilar de forma lesiva." },
+  { block:"O PEEP certo",
+    stem:"PEEP de menos e PEEP de mais — cada um causa um dano diferente. Quais?",
+    opts:["ambos só atrapalham a saturação","de menos: colapso cíclico (atelectrauma); de mais: hiperdistensão (sobe driving e espaço morto, comprime o coração)","de menos causa pneumotórax; de mais nada","não faz diferença"],
+    answer:1,
+    good:"<strong>O PEEP é uma janela, não um quanto-mais-melhor.</strong> Baixo demais deixa o alvéolo abrir e fechar (atelectrauma — Módulo 5); alto demais distende o que já estava aberto, eleva a driving e o espaço morto e afunda o débito. Procura-se o ponto de melhor complacência.",
+    bad:"PEEP baixo → <strong>colapso cíclico</strong> (atelectrauma); PEEP alto → <strong>hiperdistensão</strong> (driving e espaço morto sobem, coração afunda). Há um ótimo, não um máximo." },
+  { block:"Pronto para soltar?",
+    stem:"Antes de pensar em desmame, o que precisa estar resolvido?",
+    opts:["nada, basta o paciente acordar","a CAUSA da insuficiência melhorando, oxigenação adequada com pouco suporte, hemodinâmica estável e sedação leve o suficiente para o paciente participar","só a febre","apenas o tempo de 14 dias"],
+    answer:1,
+    good:"<strong>Desmame começa por elegibilidade.</strong> Não se testa quem ainda está doente: a causa precisa estar cedendo, a troca aceitável com FiO₂/PEEP baixos, a hemodinâmica estável e a sedação aliviada. Só então o teste faz sentido.",
+    bad:"Não é tempo nem despertar isolado: a <strong>causa</strong> melhorando, oxigenação com pouco suporte, hemodinâmica estável e sedação leve. Pré-requisitos antes de qualquer teste." },
+  { block:"O teste",
+    stem:"O teste de respiração espontânea (TRE) consiste em...",
+    opts:["extubar e ver o que acontece","reduzir o suporte ao mínimo (tubo-T ou pressão de suporte baixa) por ~30 min e observar se o paciente sustenta a própria respiração","aumentar a sedação","desligar o O₂"],
+    answer:1,
+    good:"<strong>Um ensaio antes da decisão.</strong> Tira-se quase todo o suporte e observa-se por ~30 min: padrão, conforto, troca, hemodinâmica. É o pulmão e os músculos fazendo um teste de esforço antes de você apostar a extubação neles.",
+    bad:"Não é extubar às cegas: é <strong>reduzir o suporte ao mínimo por ~30 min</strong> e ver se o paciente sustenta. Um teste de esforço da bomba respiratória." },
+  { block:"O número do desmame",
+    stem:"O índice de respiração rápida e superficial (RSBI = frequência / volume corrente em litros). Por que > 105 prevê falha?",
+    opts:["é um número arbitrário","porque o músculo sobrecarregado foge do trabalho elástico respirando rápido e raso — muita frequência, pouco volume; isso eleva o espaço morto e antecede a fadiga","porque mede o coração","porque mede a febre"],
+    answer:1,
+    good:"<strong>Rápido e superficial é a assinatura da fadiga iminente.</strong> Quando a carga supera a capacidade, o paciente corta o volume (menos trabalho por ciclo) e acelera — f/VT dispara. Acima de ~105 a ventilação alveolar despenca (mais espaço morto) e a falha se aproxima. No lab, enfraqueça o músculo ou enrijeça o pulmão e veja o RSBI subir.",
+    bad:"Não é arbitrário: rápido e raso (f alta, VC baixo) é como o <strong>músculo sobrecarregado</strong> economiza — e isso prediz fadiga. f/VT > 105 sinaliza carga &gt; capacidade." },
+  { block:"Os três modos de falhar",
+    stem:"Um paciente passa no RSBI mas falha o desmame. Além da bomba (músculo) e do pulmão (carga), qual o terceiro culpado clássico?",
+    opts:["o fígado","o CORAÇÃO — ao retirar a pressão positiva, aumentam o retorno venoso e a pós-carga do VE; um coração limítrofe entra em edema (edema de desmame)","o rim","o intestino"],
+    answer:1,
+    good:"<strong>O coração de desmame.</strong> A pressão positiva 'ajudava' o VE (reduzia pré e pós-carga — lembra do CPAP no edema?). Tirá-la desmascara a insuficiência: edema pulmonar que faz o paciente falhar mesmo com músculo e RSBI bons. Três culpados: bomba, pulmão, coração.",
+    bad:"É o <strong>coração</strong>: sem a pressão positiva sobem retorno venoso e pós-carga, e um VE limítrofe vira edema de desmame. Bomba, pulmão e coração — sempre os três." },
+  { block:"Extubar",
+    stem:"Passou no TRE. Antes de extubar, uma última checagem importante é...",
+    opts:["a cor da urina","a proteção da via aérea: nível de consciência, tosse eficaz, pouca secreção — e o teste de escape do balonete (cuff leak) se houver risco de edema de via aérea","a glicemia","o peso"],
+    answer:1,
+    good:"<strong>Passar no TRE ≠ proteger a via aérea.</strong> O tubo não é só ventilação: é via aérea pérvia e protegida. Consciência, tosse, manejo de secreções e, se houver risco (intubação difícil/traumática, prolongada), o cuff leak para antecipar estridor pós-extubação.",
+    bad:"Falta a <strong>via aérea</strong>: consciência, tosse, secreções e o teste de escape do balonete. Sustentar a respiração não garante proteger a via aérea após o tubo sair." },
+  { block:"Síntese",
+    stem:"Em uma frase, o que o Módulo 10 (e a série) ensina sobre a ventilação?",
+    opts:["decorar parâmetros e fórmulas","que ventilar é equilibrar dois danos — não ferir o pulmão (minimizar a energia entregue) e não atrasar a liberdade (testar quando carga<capacidade) — sempre raciocinando pelo mecanismo","confiar no aparelho","subir o PEEP até saturar"],
+    answer:1,
+    good:"<strong>O fecho da escada inteira.</strong> Da física do ar (1) à síndrome (6), à força (7), ao suporte (8), à equação do ventilador (9) e agora ao equilíbrio entre proteger e soltar (10). Nenhum passo foi decoreba: cada conduta nasceu de um mecanismo. É assim que se respira — pensando.",
+    bad:"Não é decorar: é <strong>equilibrar dois danos</strong> — não ferir (mínima energia) e não prender além do necessário (soltar quando carga<capacidade) — sempre pelo mecanismo. O fio de toda a série." }
+];
+
+let idx=0, correct=0, answered=false;
+const el = id => document.getElementById(id);
+
+function start(){ el('intro').classList.add('hidden'); el('quiz').classList.remove('hidden'); el('meter').classList.add('on'); render(); }
+function render(){
+  answered=false; const q=QUESTIONS[idx];
+  el('blockLabel').textContent=q.block; el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;
+  el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;
+  const L=['A','B','C','D'];
+  el('quiz').innerHTML=`
+    <div class="qtag">${q.block} · questão ${idx+1}</div>
+    <div class="stem">${q.stem}</div>
+    <div class="opts" id="opts">${q.opts.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o}</span></button>`).join('')}</div>
+    <div class="fb" id="fb"></div>
+    <div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;
+  el('quiz').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function choose(i){
+  if(answered) return; answered=true;
+  const q=QUESTIONS[idx], ok=(i===q.answer); if(ok) correct++;
+  document.querySelectorAll('#opts .opt').forEach((b,bi)=>{ b.disabled=true;
+    if(bi===q.answer) b.classList.add('correct'); else if(bi===i) b.classList.add('wrong'); else b.classList.add('dim'); });
+  const fb=el('fb'); fb.className='fb'+(ok?'':' bad');
+  fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;
+  void fb.offsetWidth; fb.classList.add('show'); el('row').classList.remove('hidden');
+}
+function next(){ idx++; (idx<QUESTIONS.length)?render():finish(); }
+function finish(){
+  el('quiz').classList.add('hidden'); el('fill').style.width='100%';
+  el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`; el('blockLabel').textContent='Completo';
+  const pct=Math.round((correct/QUESTIONS.length)*100); let nota;
+  if(pct===100) nota="Gabaritou — e fechou a escada inteira. Da molécula de ar ao primeiro respiro livre.";
+  else if(pct>=77) nota="Domínio sólido. Proteger e soltar viraram raciocínio, não receita.";
+  else if(pct>=46) nota="Boa base. Vá ao laboratório: minimize a energia e teste a balança do desmame.";
+  else nota="O número não importa: cada erro veio com o mecanismo. Abra o lab e brinque com a potência e o RSBI.";
+  el('final').classList.remove('hidden');
+  el('final').innerHTML=`
+    <div class="kicker" style="color:var(--accent-deep)">Fim do Módulo 10 · fim da escada</div>
+    <div class="score">${correct}/${QUESTIONS.length}</div>
+    <h2>Ventilar é equilibrar dois danos.</h2>
+    <p>${nota}</p>
+    <div class="synth">
+      <h3>O que você leva da escada inteira:</h3>
+      <ol>
+        <li><strong>1–5</strong> — a física: cano, balão, V/Q, gasometria, alvéolo.</li>
+        <li><strong>6</strong> — a síndrome como soma de eixos.</li>
+        <li><strong>7</strong> — a terapêutica como força sobre um eixo.</li>
+        <li><strong>8–9</strong> — o suporte e a equação do ventilador.</li>
+        <li><strong>10</strong> — proteger (mínima energia) e soltar (carga &lt; capacidade).</li>
+      </ol>
+    </div>
+    <p style="font-size:.95rem;">Nenhum passo foi decoreba. Cada conduta nasceu de um mecanismo. <strong>É assim que se respira — pensando.</strong></p>
+    <div class="row" style="justify-content:center; gap:12px;">
+      <button class="btn" onclick="setMode('lab')">Ir ao laboratório →</button>
+      <button class="btn ghost" onclick="again()">Rever do início</button>
+    </div>`;
+  el('final').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function again(){ idx=0; correct=0; answered=false; el('final').classList.add('hidden'); el('quiz').classList.remove('hidden'); render(); }
+
+/* ============================================================
+   LABORATÓRIO
+   ============================================================ */
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+let sub='protect';
+let P = { VT:480, RR:16, flow:60, PEEP:10, R:12, C:30, sex:'M', h:170 };
+let Wn = { C:30, R:12, VEd:10, Pimax:55, heart:'ok' };
+
+/* ---- PROTEGER ---- */
+function pbw(sex,h){ return (sex==='M'?50:45.5)+0.91*(h-152.4); }
+function protect(){
+  const PB=pbw(P.sex,P.h), VTkg=P.VT/PB, cL=P.C/1000, fLs=P.flow/60;
+  const dPel=P.VT/P.C, Pplat=P.PEEP+dPel, dPres=P.R*fLs, Ppeak=Pplat+dPres;
+  const MP=0.098*P.RR*(P.VT/1000)*(Ppeak-0.5*dPel);
+  const VE=P.VT*P.RR/1000, Vd=2.2*PB, VA=Math.max((P.VT-Vd)*P.RR/1000,0.1);
+  const PaCO2=clamp(172.6/VA,20,140), pH=7.40-0.008*(PaCO2-40);
+  return {PB:Math.round(PB),VTkg,Pplat,dP:dPel,Ppeak,MP,VE,PaCO2,pH};
+}
+/* ---- DESMAMAR ---- */
+function wean(){
+  const duty=0.4, meanflow=(Wn.VEd/duty)/60, Pres=Wn.R*meanflow, VTcomf=450;
+  const effort=VT=>(VT/Wn.C+Pres)/Wn.Pimax;
+  let VT = effort(VTcomf)<=0.4 ? VTcomf : clamp(Wn.C*(0.4*Wn.Pimax-Pres),150,VTcomf);
+  const RR=clamp(Wn.VEd/(VT/1000),8,45), RSBI=RR/(VT/1000), TTI=((VT/Wn.C+Pres)/Wn.Pimax)*duty;
+  return {VT,RR,RSBI,TTI};
+}
+
+const LINKS={
+  driving:[{n:'Recrutar para baixar a driving',p:'Laplace',href:'mvp5-interativo.html#ra=60&rb=160&peep=10&surf=0&m=lab'},{n:'Voltar à equação do ventilador',p:'VM',href:'mvp9-interativo.html#lab'}],
+  permissive:[{n:'A acidose respiratória que se tolera',p:'Gasometria',href:'mvp4-interativo.html#ph=7.20&co2=65&hco3=24&na=140&cl=105&alb=4&m=bench'}],
+  power:[{n:'Auto-PEEP: dê tempo de expirar',p:'Mecânica',href:'mvp1-interativo.html#r=20&c=0.08&rr=24&m=sim'}],
+  load:[{n:'O balão duro da carga',p:'Mecânica',href:'mvp1-interativo.html#r=3&c=0.025&rr=20&m=sim'}],
+  heart:[{n:'O shunt do edema de desmame',p:'V/Q',href:'mvp3-interativo.html#s=25&d=35&f=60&c=1&m=lab'}],
+  rsbi:[{n:'Espaço morto: o raso que não ventila',p:'V/Q',href:'mvp3-interativo.html#s=8&d=60&f=40&c=1&m=lab'}]
+};
+
+function srow(id,label,unit,min,max,step,val,sec){
+  return `<div class="ctrl"><label>${label} <span class="val"><span id="lbl_${id}">${val}</span>${unit}</span></label>
+    <input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}" oninput="onCtl('${id}')" aria-label="${label}">${sec?`<div class="sec">${sec}</div>`:''}</div>`;
+}
+function rcell(k,val,unit,cls){ return `<div class="read ${cls||''}"><div class="k">${k}</div><div class="v">${val}</div><div class="u">${unit||''}</div></div>`; }
+
+function renderProtectCtrls(){
+  el('pCtrlsVent').innerHTML =
+      srow('VT','Volume corrente',' mL',240,640,10,P.VT)
+    + srow('RR','Frequência',' /min',8,40,1,P.RR)
+    + srow('flow','Fluxo inspiratório',' L/min',30,90,5,P.flow)
+    + srow('PEEP','PEEP',' cmH₂O',0,20,1,P.PEEP);
+  el('pCtrlsPt').innerHTML =
+      srow('R','Resistência','',5,40,1,P.R,'cmH₂O/(L/s)')
+    + srow('C','Complacência','',15,70,1,P.C,'mL/cmH₂O')
+    + srow('h','Altura',' cm',150,195,1,P.h,'define o peso predito → mL/kg')
+    + `<div class="ctrl"><label>Sexo</label><div class="seg2"><button id="sexM" class="${P.sex==='M'?'active':''}" onclick="setSex('M')">masculino</button><button id="sexF" class="${P.sex==='F'?'active':''}" onclick="setSex('F')">feminino</button></div></div>`;
+}
+function renderWeanCtrls(){
+  el('wCtrlsLoad').innerHTML =
+      srow('wC','Complacência (pulmão)','',15,70,1,Wn.C,'mL/cmH₂O — menor = mais carga')
+    + srow('wR','Resistência (vias aéreas)','',5,40,1,Wn.R,'cmH₂O/(L/s)')
+    + srow('wVEd','Demanda ventilatória',' L/min',5,18,0.5,Wn.VEd,'sepse/acidose elevam');
+  el('wCtrlsCap').innerHTML =
+      srow('wPimax','Força muscular (Pimax)',' cmH₂O',20,100,5,Wn.Pimax,'diafragma; menor = mais fraco')
+    + `<div class="ctrl"><label>Reserva cardíaca</label><div class="seg2"><button id="hOk" class="${Wn.heart==='ok'?'active':''}" onclick="setHeart('ok')">preservada</button><button id="hBad" class="${Wn.heart==='bad'?'active':''}" onclick="setHeart('bad')">limítrofe</button></div><div class="sec">tirar a pressão positiva pode desmascarar o VE</div></div>`;
+}
+function onCtl(id){ const v=+el(id).value; const l=el('lbl_'+id); if(l) l.textContent=v;
+  if(id in P) P[id]=v;
+  if(id==='wC') Wn.C=v; if(id==='wR') Wn.R=v; if(id==='wVEd') Wn.VEd=v; if(id==='wPimax') Wn.Pimax=v;
+  update(); }
+function setSex(s){ P.sex=s; el('sexM').classList.toggle('active',s==='M'); el('sexF').classList.toggle('active',s==='F'); update(); }
+function setHeart(h){ Wn.heart=h; el('hOk').classList.toggle('active',h==='ok'); el('hBad').classList.toggle('active',h==='bad'); update(); }
+
+function updateProtect(){
+  const m=protect();
+  const vtCls=m.VTkg<=8?'good':(m.VTkg<=10?'warn':'bad');
+  const ppCls=m.Pplat<=30?'good':'bad';
+  const dpCls=m.dP<15?'good':(m.dP<18?'warn':'bad');
+  const mpCls=m.MP<17?'good':(m.MP<=25?'warn':'bad');
+  const phCls=m.pH>=7.30?'good':(m.pH>=7.20?'warn':'bad');
+  el('pReads').innerHTML = [
+    rcell('VC / peso predito', m.VTkg.toFixed(1), 'mL/kg · '+m.PB+' kg', vtCls),
+    rcell('Platô', m.Pplat.toFixed(0), 'cmH₂O · ≤30', ppCls),
+    rcell('Driving ΔP', m.dP.toFixed(0), 'cmH₂O · <15', dpCls),
+    rcell('Mechanical power', m.MP.toFixed(1), 'J/min · <17', mpCls),
+    rcell('Ventilação', m.VE.toFixed(1), 'L/min'),
+    rcell('PaCO₂ / pH', m.PaCO2.toFixed(0)+' · '+m.pH.toFixed(2), 'mmHg', phCls)
+  ].join('');
+  let vC='good', vH='Pulmão protegido', vT='', links=[];
+  const fails=[];
+  if(m.VTkg>8) fails.push('VC alto ('+m.VTkg.toFixed(1)+' mL/kg) — desça ao redor de 6');
+  if(m.Pplat>30){ fails.push('platô >30 — reduza VC ou recrute para ganhar complacência'); links=links.concat(LINKS.driving); }
+  if(m.dP>=15){ fails.push('driving ≥15 — o estiramento do baby lung está alto'); links=links.concat(LINKS.driving); }
+  if(m.MP>=17) fails.push('potência ≥17 J/min — a dose de energia lesa; veja se a frequência/fluxo não estão carregando a conta');
+  if(m.pH<7.20){ fails.push('pH <7,20 — a hipercapnia permissiva passou do piso; suba um pouco VC/FR'); links=links.concat(LINKS.permissive); }
+  if(fails.length){
+    vC = (m.Pplat>30||m.dP>=18||m.MP>25||m.pH<7.20)?'bad':'warn';
+    vH = 'Ajuste a proteção';
+    vT = fails.join('. ') + '.';
+    if(m.MP>=17 && m.dP<15) { vT += ' Note: aqui a driving está ok, mas a potência subiu pela frequência/fluxo — proteção é multidimensional.'; if(!links.length) links=LINKS.power; }
+  } else {
+    vT = 'VC '+m.VTkg.toFixed(1)+' mL/kg, platô '+m.Pplat.toFixed(0)+', driving '+m.dP.toFixed(0)+', potência '+m.MP.toFixed(1)+' J/min — todas as balizas dentro do alvo, com PaCO₂ '+m.PaCO2.toFixed(0)+' (pH '+m.pH.toFixed(2)+'). Mínima energia, máximo respeito ao pulmão.';
+  }
+  // hipercapnia permissiva (informativo) quando pH 7.20–7.30
+  if(m.pH>=7.20 && m.pH<7.30 && !fails.some(f=>f.includes('pH'))){ vT += ' A acidose leve (pH '+m.pH.toFixed(2)+') é hipercapnia permissiva aceitável — o preço justo da proteção.'; }
+  el('pVerdict').innerHTML = `<div class="verdict ${vC}"><div class="vh">${vH}</div>${vT}</div>`;
+  el('pLinks').innerHTML = links.length?`<div class="lt">Leva ao laboratório do mecanismo</div><div class="labrow">${links.map(l=>`<a class="lab-l" href="${l.href}" target="_blank" rel="noopener">↗ ${l.n} <span class="ln">${l.p}</span></a>`).join('')}</div>`:'';
+}
+
+function updateWean(){
+  const m=wean();
+  const rsbiCls=m.RSBI<105?'good':'bad';
+  const ttiCls=m.TTI<0.15?'good':(m.TTI<0.18?'warn':'bad');
+  el('wReads').innerHTML = [
+    rcell('VC espontâneo', m.VT.toFixed(0), 'mL · que ele adota'),
+    rcell('Frequência', m.RR.toFixed(0), '/min'),
+    rcell('RSBI (f/VC)', m.RSBI.toFixed(0), '<105 passa', rsbiCls),
+    rcell('TTI (fadiga)', m.TTI.toFixed(2), '<0,15 sustentável', ttiCls),
+    rcell('Carga/capacidade', ((m.VT/Wn.C)/Wn.Pimax).toFixed(2), 'fração da força'),
+    rcell('Reserva cardíaca', Wn.heart==='ok'?'ok':'limítrofe', '', Wn.heart==='ok'?'good':'warn')
+  ].join('');
+  const loadHigh = Wn.C<30 || Wn.R>16;
+  const weak = Wn.Pimax<45;
+  let vC,vH,vT,links=[];
+  if(m.RSBI>=105){
+    vC='bad'; vH='Provável falha — rápido e superficial';
+    let mech = (weak&&loadHigh)?'carga alta (pulmão/parede rígidos) somada a músculo fraco':(weak?'bomba: fraqueza da musculatura respiratória/diafragma':(loadHigh?'carga: pulmão/parede impõem trabalho demais':'padrão rápido e superficial'));
+    vT = 'RSBI '+m.RSBI.toFixed(0)+' (>105) e TTI '+m.TTI.toFixed(2)+': o músculo foge do trabalho elástico respirando raso. Mecanismo dominante — '+mech+'. Volte a apoiar, trate a causa (recrute o pulmão, fortaleça/descanse o diafragma na medida certa).';
+    links = weak?LINKS.load:LINKS.load; links=links.concat(LINKS.rsbi);
+  } else if(m.TTI>=0.15){
+    vC='warn'; vH='Passa o RSBI, mas no limite da fadiga';
+    vT = 'RSBI '+m.RSBI.toFixed(0)+' (ok), porém TTI '+m.TTI.toFixed(2)+' ≥0,15: o esforço por respiração está alto e a endurance é frágil — pode sustentar 30 min e fatigar depois. Vigie de perto; o RSBI sozinho engana.';
+    links = LINKS.load;
+  } else {
+    vC='good'; vH='Balança a favor da liberdade';
+    vT = 'RSBI '+m.RSBI.toFixed(0)+', TTI '+m.TTI.toFixed(2)+': carga abaixo da capacidade, padrão sustentável. Candidato a teste de respiração espontânea — depois cheque a via aérea (consciência, tosse, secreção, cuff leak) antes de extubar.';
+  }
+  if(Wn.heart==='bad'){
+    vC = (vC==='good')?'warn':vC;
+    vT += ' Reserva cardíaca limítrofe: tirar a pressão positiva eleva retorno venoso e pós-carga — pode desmascarar o VE e gerar edema de desmame MESMO com RSBI bom. Vigie a hemodinâmica no teste.';
+    links = links.concat(LINKS.heart);
+  }
+  el('wVerdict').innerHTML = `<div class="verdict ${vC}"><div class="vh">${vH}</div>${vT}</div>`;
+  el('wLinks').innerHTML = links.length?`<div class="lt">Leva ao laboratório do mecanismo</div><div class="labrow">${links.map(l=>`<a class="lab-l" href="${l.href}" target="_blank" rel="noopener">↗ ${l.n} <span class="ln">${l.p}</span></a>`).join('')}</div>`:'';
+}
+function update(){ if(sub==='protect') updateProtect(); else updateWean(); }
+
+function setSub(s){ sub=s; el('smP').classList.toggle('active',s==='protect'); el('smW').classList.toggle('active',s==='wean');
+  el('subProtect').classList.toggle('hidden',s!=='protect'); el('subWean').classList.toggle('hidden',s!=='wean'); update(); }
+
+/* ---------- MODO ---------- */
+function setMode(mode){
+  const trail=mode==='trail';
+  el('segTrail').classList.toggle('active', trail);
+  el('segLab').classList.toggle('active', !trail);
+  el('trailMode').classList.toggle('hidden', !trail);
+  el('labMode').classList.toggle('hidden', trail);
+  if(trail){ const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden'); el('meter').classList.toggle('on',ini); }
+  else { el('meter').classList.remove('on'); if(!el('pReads').innerHTML) update(); history.replaceState(null,'','#lab'); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function openFromHash(){ const h=(location.hash||'').replace('#',''); if(h==='lab'||h==='proteger'||h==='desmamar'){ setMode('lab'); if(h==='desmamar') setSub('wean'); } }
+
+/* ---------- INIT ---------- */
+renderProtectCtrls(); renderWeanCtrls();
+openFromHash();
+window.addEventListener('hashchange', openFromHash);
+</script>
+</body>
+</html>
