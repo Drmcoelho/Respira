@@ -1,14 +1,15 @@
 # AGENTS.md — Respira / Ventila
 
-Este arquivo orienta agentes, assistentes, Codex e colaboradores automatizados que venham a trabalhar neste repositório. O projeto tem uma tese pedagógica, uma identidade visual, uma arquitetura didática e critérios psicométricos definidos. Não trate os arquivos como HTML solto.
+Este arquivo orienta agentes, assistentes, Codex e colaboradores automatizados que venham a trabalhar neste repositório.
+
+O projeto tem tese pedagógica, identidade visual, arquitetura didática e critérios de qualidade próprios. Não trate os arquivos como HTML solto e não aplique reflexos genéricos de engenharia quando eles contradisserem a finalidade do material.
 
 ## 1. Missão do projeto
 
-O repositório hospeda a série **Respira** e deverá hospedar a continuação **Ventila**.
+O repositório hospeda duas séries integradas:
 
-**Respira** é a Parte A: fisiologia respiratória, oxigenação, relação V/Q, gasometria, síndromes, terapêutica, suporte não invasivo e fundamentos de ventilação mecânica.
-
-**Ventila** será a Parte B: ventilação mecânica aprofundada, em progressão socrática, visual, interativa e clinicamente aplicada.
+- **Respira** — Parte A: fisiologia respiratória, oxigenação, relação V/Q, gasometria, síndromes, terapêutica, suporte não invasivo e fundamentos de ventilação mecânica.
+- **Ventila** — Parte B: ventilação mecânica aprofundada, visual, interativa, socrática e clinicamente aplicada.
 
 Tese editorial do Ventila:
 
@@ -16,348 +17,239 @@ Tese editorial do Ventila:
 
 Essa tese deve orientar perguntas, casos, pegadinhas, laboratórios, animações e feedbacks.
 
-## 2. Estado atual do Respira
+## 2. Decisão arquitetural atual — single-file como fonte canônica
 
-A série Respira está publicada com 10 módulos:
+A decisão atual do projeto é explícita:
 
-1. `mvp1-interativo.html` — Como o ar entra e sai.
-2. `mvp2-interativo.html` — Saturar não é respirar bem.
-3. `mvp3-interativo.html` — Onde o ar e o sangue se encontram.
-4. `mvp4-interativo.html` — A gasometria como narrativa.
-5. `mvp5-interativo.html` — A arquitetura que respira.
-6. `mvp6-interativo.html` — As grandes síndromes.
-7. `mvp7-interativo.html` — A terapêutica: as forças.
+> **Cada módulo publicado deve ser um HTML autocontido, capaz de abrir diretamente no navegador e funcionar sem build, sem servidor, sem fetch, sem backend e sem toolchain.**
+
+Isso não é improviso. É uma escolha de robustez.
+
+O projeto é um conjunto de instrumentos didáticos portáteis, não um SaaS. A propriedade central é:
+
+```txt
+abrir o .html → funcionar
+```
+
+Portanto:
+
+- não introduza build obrigatório;
+- não exija bundler;
+- não transforme o deploy em pipeline;
+- não separe CSS/JS se isso fizer o módulo publicado depender de etapa externa;
+- não substitua HTML autocontido por arquitetura “limpa” que quebre autonomia;
+- não faça DRY prematuro se a duplicação ainda não é dor real;
+- aceite duplicação quando ela compra antifragilidade;
+- mantenha navegação relativa e compatibilidade offline.
+
+A regra de decisão é:
+
+```txt
+runtime robusto + módulo fechado + baixa frequência de edição compartilhada → não refatorar
+```
+
+Build, extração de JSON, loader, núcleo compartilhado ou pipeline só são aceitáveis se forem auxiliares, lossless e não substituírem o HTML publicado como artefato canônico.
+
+## 3. Regra absoluta de alteração: nunca reduzir
+
+Regra operacional:
+
+> **Nunca reduzir. Só corrigir, ampliar, restaurar ou refinar sem perda.**
+
+Não compacte módulo robusto. Não remova caso clínico. Não apague feedback longo. Não substitua fisiologia específica por abstração genérica. Não corte nuances para “limpar” o arquivo. Não transforme uma ferramenta didática rica em apostila minimalista.
+
+Quando precisar corrigir:
+
+1. preserve o conteúdo existente;
+2. identifique a falha real;
+3. corrija localmente;
+4. acrescente se necessário;
+5. teste;
+6. não reescreva por vaidade arquitetural.
+
+## 4. Estado atual do Respira
+
+Respira possui 10 módulos principais:
+
+1. `mvp1-interativo.html` — Como o ar entra e sai: via aérea, gradiente, diafragma, resistência, complacência, congestão, constante de tempo e auto-PEEP.
+2. `mvp2-interativo.html` — Saturar não é respirar bem: oxigenação, ventilação, curva O₂-Hb, monóxido, anemia e entrega.
+3. `mvp3-interativo.html` — Onde o ar e o sangue se encontram: V/Q, shunt, espaço morto, resposta ao oxigênio, PEEP e recrutamento.
+4. `mvp4-interativo.html` — Gasometria como narrativa: pH, pCO₂, HCO₃⁻, compensação, Winter, ânion-gap e bancada guiada.
+5. `mvp5-interativo.html` — Arquitetura que respira: Laplace, surfactante, colapso, recrutamento, PEEP.
+6. `mvp6-interativo.html` — Grandes síndromes respiratórias.
+7. `mvp7-interativo.html` — Terapêutica como forças sobre eixos fisiológicos.
 8. `mvp8-interativo.html` — Oxigênio e suporte não invasivo.
-9. `mvp9-interativo.html` — Ventilação mecânica: fundamentos.
+9. `mvp9-interativo.html` — Ventilação mecânica: equação do movimento, VCV/PCV, ondas, pausa, auto-PEEP.
 10. `mvp10-interativo.html` — Ventilação protetora e desmame.
 
 O índice principal é `index.html`.
 
-Há uma camada de refinamento psicométrico em `respira-quiz-refiner.js`. Ela surgiu para corrigir um viés identificado nos módulos posteriores: a resposta correta tendia a ser reconhecível por ser morfologicamente maior. A decisão pedagógica foi transferir a robustez para o feedback, não para a alternativa.
+Wrappers canônicos em `/modules/` podem existir para navegação e nomenclatura, mas os arquivos legados continuam válidos.
 
-## 3. Regra editorial central: nada genérico
+## 5. Estado atual do Ventila
 
-Evite soluções genéricas. Em especial:
+Ventila está organizado por `ventila.html` e módulos de raiz `ventila0.html` a `ventila15.html`.
 
-- Não aumente alternativas com frases neutras apenas para nivelar tamanho.
-- Não use distratores absurdos ou obviamente inferiores.
-- Não escreva feedback reaproveitável entre módulos.
-- Não publique versões compactas quando a solicitação for robustez.
-- Não separe laboratório e caso clínico como peças independentes quando o caso deve alimentar o laboratório.
+A matriz atual é:
 
-O padrão correto:
+| Nº | Arquivo | Tese / função |
+|---:|---|---|
+| 00 | `ventila0.html` | Gramática da máquina: modos, variável controlada, variável livre, tempo, fluxo, contrato causal |
+| 01 | `ventila1.html` | Por que este paciente está no ventilador? A causa do tubo vem antes do modo |
+| 02 | `ventila2.html` | Máquina, circuito, tubo e paciente: onde está o defeito? |
+| 03 | `ventila3.html` | Curvas I: pressão, fluxo e volume como semiologia em tempo real |
+| 04 | `ventila4.html` | Curvas II: loops P-V e F-V, valor isolado versus relação entre variáveis |
+| 05 | `ventila5.html` | VCV: volume é promessa, pressão é consequência |
+| 06 | `ventila6.html` | PCV: pressão por tempo, volume como consequência |
+| 07 | `ventila7.html` | Híbridos/adaptativos/PRVC: controlador não é médico |
+| 08 | `ventila8.html` | PSV, CPAP, SIMV e trabalho respiratório |
+| 09 | `ventila9.html` | Assincronias: drive neural versus entrega mecânica |
+| 10 | `ventila10.html` | Sedação e BNM: esforço entre P-SILI e atrofia diafragmática |
+| 11 | `ventila11.html` | Fenótipos → plano: “intubado” não é diagnóstico |
+| 12 | `ventila12.html` | Desmame/extubação/falha: respirar e proteger são portões diferentes |
+| 13 | `ventila13.html` | Traqueostomia como plataforma de desmame + Mega Revisão Parte 1 |
+| 14 | `ventila14.html` | Aplicação integrada: pulmão na tela + Mega Revisão Parte 2 |
+| 15 | `ventila15.html` | Tutor visual PSV · VCV · PCV: consolidação dos modos e inversão causal |
 
-- Alternativas curtas, específicas e plausíveis.
-- Gabarito longo, causal, memorável e específico.
-- Laboratório visual que demonstra o mecanismo.
-- Caso clínico que força decisão.
+Não rebaixar a série para 12 módulos. Ventila agora tem 0–15.
 
-## 4. Contrato psicométrico das questões
+## 6. Cinco blocos obrigatórios por módulo Ventila
+
+Cada módulo Ventila deve preservar, quando aplicável, cinco blocos estruturais:
+
+1. **Caso clínico evolutivo** — em cinco atos, com pegadinha real.
+2. **Trilha socrática conceitual** — perguntas graduais que constroem o mecanismo.
+3. **Ilustração dinâmica em movimento** — animação-mãe específica do módulo.
+4. **Laboratório / instrumento interativo** — controles, presets e readouts manipuláveis.
+5. **Quiz socrático** — alternativas enxutas, plausíveis e feedback robusto.
+
+A ordem visual pode variar conforme o módulo, mas a função didática deve estar presente. Alguns módulos especiais, como Ventila 15, podem expandir o padrão com múltiplos tutores, desde que não removam a progressão socrática nem a camada visual/interativa.
+
+## 7. Caso clínico em cinco atos
+
+O caso não é vinheta decorativa. Ele é o campo de prova do mecanismo.
+
+Estrutura preferencial:
+
+1. **Entrada** — por que o paciente chegou ao ventilador?
+2. **Leitura** — dados clínicos, parâmetros, gasometria, curvas, exame e contexto.
+3. **Decisão** — qual ajuste ou conduta parece lógica?
+4. **Pegadinha** — qual decisão intuitiva pioraria o cenário?
+5. **Reavaliação** — o que muda ao aplicar a leitura correta?
+
+O caso deve alimentar o laboratório ou, no mínimo, dialogar explicitamente com ele. Evite caso solto seguido de ferramenta genérica.
+
+## 8. Contrato psicométrico das questões
 
 Cada questão deve ter quatro alternativas curtas e plausíveis. A resposta correta não deve ser identificável por tamanho, posição, complexidade gramatical ou quantidade de detalhes.
 
-A distribuição da resposta correta deve ser balanceada entre A/B/C/D ao longo do módulo.
-
 Distrator bom é hipótese errada por confusão de mecanismo. Distrator ruim é alternativa obviamente falsa.
 
-### Feedback obrigatório em Ventila
+A robustez deve ir para o feedback, não para uma alternativa correta longa demais.
 
-Novas questões do Ventila devem usar feedback estruturado:
+Feedback robusto deve, quando possível, cobrir cinco campos:
 
-```js
-{
-  block: "Pico alto",
-  stem: "Em VCV, o pico subiu e o platô ficou normal. Qual termo da equação mudou?",
-  opts: ["resistência", "complacência", "PEEP", "volume alveolar"],
-  answer: 0,
-  feedback: {
-    mechanism: "A pausa zera fluxo; se o platô não sobe, o componente elástico não mudou.",
-    whyRight: "A diferença pico-platô representa o componente resistivo.",
-    trap: "Complacência ruim também aumenta pressão, mas elevaria o platô.",
-    bedside: "Procure problema de via aérea, tubo, circuito ou resistência antes de tratar como pulmão rígido.",
-    bridge: [
-      { label: "Laboratório interno", href: "ventila5.html#lab-pausa" },
-      { label: "Mecânica do Respira", href: "mvp1-interativo.html#r=20&c=0.08&rr=24&m=sim" }
-    ]
-  }
-}
-```
+1. **Mecanismo** — fisiologia ou mecânica causal.
+2. **Por que a correta** — qual variável resolve o problema.
+3. **A armadilha** — por que a opção sedutora engana.
+4. **À beira do leito** — implicação prática.
+5. **Ponte** — link para outro módulo Ventila ou fundamento Respira.
 
-Campos obrigatórios:
+O bridge deve apontar para dentro do Ventila e/ou para Respira quando o fundamento já existir.
 
-1. `mechanism` — mecanismo fisiológico ou mecânico.
-2. `whyRight` — por que a correta resolve o mecanismo.
-3. `trap` — por que a alternativa sedutora engana.
-4. `bedside` — implicação prática à beira-leito.
-5. `bridge` — ponte para laboratório interno e/ou módulo Respira.
+## 9. Gramática visual obrigatória
 
-O `bridge` deve apontar tanto para dentro do Ventila quanto para fora, quando o fundamento já existir no Respira.
+Ventila não deve virar apostila de modos. O aluno precisa ver o mecanismo mexer.
 
-## 5. Cinco blocos obrigatórios por módulo Ventila
+Gramática por módulo:
 
-Cada módulo Ventila deve conter cinco blocos obrigatórios:
-
-1. **Trilha socrática conceitual** — perguntas graduais que constroem o mecanismo.
-2. **Ilustração dinâmica em movimento** — animação-mãe específica do módulo.
-3. **Laboratório interativo** — controles e readouts manipuláveis.
-4. **Caso clínico evolutivo** — caso obrigatório, integrado ao laboratório.
-5. **Quiz socrático** — alternativas enxutas e feedback robusto.
-
-O caso clínico não é vinheta decorativa. Ele deve alimentar o estado inicial do laboratório e reaparecer na decisão final.
-
-O caso deve seguir cinco atos:
-
-1. Entrada — por que o paciente chegou ao ventilador?
-2. Leitura — dados clínicos, parâmetros, gasometria, curvas e exame.
-3. Decisão — qual ajuste ou conduta parece lógica?
-4. Pegadinha — qual decisão intuitiva pioraria o cenário?
-5. Reavaliação — o que mudou depois da intervenção?
-
-## 6. Schema consolidado de módulo Ventila
-
-Use este contrato de dados como referência:
-
-```js
-const MODULE = {
-  id: "ventila3",
-  title: "Curvas I: pressão, fluxo e volume",
-  thesis: "Curvas são semiologia: pressão mostra custo, fluxo mostra tempo, volume mostra entrega e retorno.",
-
-  patient: {
-    entrada: {
-      summary: "Paciente obstrutivo intubado por exaustão, agora piora após aumento de frequência.",
-      whyVentilated: "bomba + obstrução + fadiga",
-      phenotype: "bomba"
-    },
-    vent: { mode: "VCV", VT: 450, RR: 28, flow: 50, PEEP: 5, FiO2: 40 },
-    gaso: { pH: 7.25, PaCO2: 68, HCO3: 30, PaO2: 78 },
-    curvas: {
-      pressure: "pico alto progressivo",
-      flow: "fluxo expiratório não zera",
-      volume: "aprisionamento progressivo"
-    },
-    exame: {
-      ausculta: "sibilos difusos",
-      hemodinamica: "hipotensão após hiperinsuflação dinâmica"
-    }
-  },
-
-  trail: [],
-
-  visual: {
-    engine: "waves",
-    params: { animated: true, playhead: true, showPressure: true, showFlow: true, showVolume: true }
-  },
-
-  lab: {
-    tier: 2,
-    coupledTo: "patient",
-    controls: ["RR", "flow", "R", "C", "PEEP", "VT"],
-    readouts: ["Ppeak", "Pplat", "autoPEEP", "Te", "flowEndExp", "VE"],
-    presets: ["normal", "obstrutivo", "restritivo", "tubo dobrado", "vazamento"]
-  },
-
-  quiz: [],
-
-  reassess: {
-    afterCorrectAction: "Reduzir frequência e alongar tempo expiratório reduz aprisionamento.",
-    afterTrapAction: "Aumentar frequência piora aprisionamento e hemodinâmica."
-  }
-};
-```
-
-O objeto `patient` deve ser o preset inicial do laboratório. Não duplique estado clínico em estruturas independentes.
-
-## 7. Arquitetura Ventila em 12 módulos
-
-Ventila terá 12 módulos. Não force 10 por simetria com Respira.
-
-### Ventila 1 — Por que este paciente está no ventilador?
-
-Pergunta-mãe: qual falha levou ao tubo?
-
-Eixos: comando, via aérea, bomba muscular, pulmão, troca gasosa, proteção e procedimento.
-
-Ilustração: mapa animado de falhas do sistema respiratório.
-
-Caso: paciente intubado por rebaixamento/proteção, com pulmão inicialmente preservado. Pegadinha: tratar como se fosse falência pulmonar primária.
-
-### Ventila 2 — Máquina, circuito, tubo e paciente
-
-Pergunta-mãe: onde está o defeito — máquina, circuito, tubo, via aérea ou pulmão?
-
-Ilustração: fluxo no circuito com sensores, tubo, cuff, pulmão e válvula expiratória.
-
-Caso: alarme de pressão alta com platô normal. Pegadinha: confundir problema resistivo/circuito com pulmão rígido.
-
-### Ventila 3 — Curvas I: pressão, fluxo e volume
-
-Golden module inicial. Deve ser o primeiro módulo Ventila construído.
-
-Pergunta-mãe: que pergunta cada curva responde?
-
-- Pressão: quanto custou empurrar o ar?
-- Fluxo: o ar entrou e saiu no tempo certo?
-- Volume: o que entrou voltou?
-
-Ilustração: ondas P/F/V em tempo real, com playhead.
-
-Caso: paciente obstrutivo com fluxo expiratório que não zera, aprisionamento e piora hemodinâmica após aumento de frequência. Pegadinha: aumentar frequência para “lavar CO2”.
-
-### Ventila 4 — Curvas II: loops P-V e F-V
-
-Pergunta-mãe: o que a relação entre variáveis revela que o valor isolado esconde?
-
-Ilustração: loops P-V e F-V desenhados ciclo a ciclo.
-
-Caso: melhora de saturação após aumento de PEEP, mas loop sugere hiperdistensão e a hemodinâmica piora. Pegadinha: achar que saturação melhor sempre significa ventilação melhor.
-
-### Ventila 5 — VCV profundamente
-
-Pergunta-mãe: se o volume é promessa, o que a pressão denuncia?
-
-Ilustração: volume-alvo sendo entregue e pressão surgindo como consequência.
-
-Caso: pico alto, platô seguro e sinais de resistência aumentada. Pegadinha: reduzir volume por medo de pressão de pico sem olhar platô.
-
-### Ventila 6 — PCV profundamente
-
-Pergunta-mãe: se a pressão é promessa, o que o volume denuncia?
-
-Ilustração: pressão fixa insuflando pulmão; volume varia conforme resistência, complacência e tempo.
-
-Caso: pressão igual, volume corrente cai e CO2 sobe após piora de complacência. Pegadinha: achar que está tudo seguro porque pressão não aumentou.
-
-### Ventila 7 — Modos híbridos, adaptativos e PRVC
-
-Pergunta-mãe: o modo adaptativo entendeu a doença ou só reagiu ao que mediu?
-
-Ilustração: controlador ajustando pressão para perseguir volume-alvo.
-
-Caso: esforço do paciente interfere na leitura do algoritmo. Pegadinha: confiar que o modo “inteligente” substitui raciocínio.
-
-### Ventila 8 — PSV, CPAP, SIMV e trabalho respiratório
-
-Pergunta-mãe: quanto do trabalho é do paciente e quanto é da máquina?
-
-Ilustração: diafragma e ventilador dividindo trabalho.
-
-Caso: paciente parece confortável em suporte alto, mas falha quando o suporte é reduzido. Pegadinha: interpretar conforto sob assistência alta como recuperação muscular.
-
-### Ventila 9 — Assincronias paciente-ventilador
-
-Pergunta-mãe: quem queria respirar, quando queria começar e quando queria parar?
-
-Ilustração: drive neural, esforço muscular e entrega mecânica sobrepostos.
-
-Caso: drive alto, duplo disparo e empilhamento de volume. Pegadinha: apenas aumentar sedação sem corrigir causa mecânica/metabólica da assincronia.
-
-### Ventila 10 — Sedação, analgesia e bloqueio neuromuscular
-
-Pergunta-mãe: estou tratando sofrimento, drive, sincronia ou mascarando erro mecânico?
-
-Ilustração: fármacos movendo drive, consciência, dor, hemodinâmica e sincronia.
-
-Caso: necessidade de controle profundo para estratégia ventilatória específica. Pegadinha: confundir bloqueio motor com sedação/analgesia.
-
-Observação obrigatória: bloqueio motor não seda nem analgesia. O módulo deve tratar esse ponto com rigor ético e técnico.
-
-### Ventila 11 — Fenótipos de intubação e plano ventilatório
-
-Pergunta-mãe: “intubado” é diagnóstico ou consequência de diagnósticos diferentes?
-
-Ilustração: árvore de plano ventilatório por motivo do tubo.
-
-Caso: três pacientes com tubo e oximetria parecida, mas motivos diferentes para ventilação. Pegadinha: tratar todos como categoria homogênea.
-
-### Ventila 12 — Desmame, extubação e falha pós-extubação
-
-Pergunta-mãe: o paciente consegue respirar e proteger a via aérea sem a máquina?
-
-Ilustração: balança carga × capacidade, com via aérea/proteção como trava separada.
-
-Caso: paciente passa teste respiratório, mas falha por proteção de via aérea. Pegadinha: “passou no teste, pode extubar”.
-
-## 8. Gramática visual obrigatória
-
-Cada módulo deve ter uma animação-mãe:
-
-- Ventila 1: mapa de falhas.
-- Ventila 2: fluxo no circuito e tubo.
-- Ventila 3: ondas pressão/fluxo/volume em tempo real.
+- Ventila 0: contrato dos modos, variável controlada/livre, tempo de ciclo e área do fluxo.
+- Ventila 1: mapa de falhas que levam ao tubo.
+- Ventila 2: circuito, sensores, tubo, cuff, paciente e defeitos pré-alveolares.
+- Ventila 3: ondas pressão/fluxo/volume com playhead.
 - Ventila 4: loops P-V e F-V.
 - Ventila 5: volume garantido e pressão consequente.
-- Ventila 6: pressão garantida e volume consequente.
+- Ventila 6: pressão por tempo e volume consequente.
 - Ventila 7: algoritmo adaptativo perseguindo alvo.
 - Ventila 8: divisão de trabalho paciente × máquina.
-- Ventila 9: drive neural versus entrega mecânica.
-- Ventila 10: fármacos movendo drive, consciência e hemodinâmica.
-- Ventila 11: plano por fenótipo de intubação.
-- Ventila 12: balança carga × capacidade.
+- Ventila 9: drive neural, esforço muscular e entrega mecânica.
+- Ventila 10: drive, esforço, sedação, BNM, P-SILI e atrofia.
+- Ventila 11: classificador fenotípico e plano ventilatório.
+- Ventila 12: SBT, RSBI, proteção de via aérea e falha cardíaca do desmame.
+- Ventila 13: trabalho resistivo do tubo, traqueostomia e decanulação.
+- Ventila 14: campo alveolar recrutável/não recrutável, shunt, hiperdistensão, auto-PEEP.
+- Ventila 15: tutor visual comparativo PSV/VCV/PCV, curvas, pulmão esquemático e tutores de leitura.
 
-## 9. Exigência de engenharia: motor visual em tempo real
+## 10. Motores e validação
 
-Ventila não deve virar 12 animações artesanais independentes. Crie um toolkit compartilhado:
+Mantenha fórmulas em funções puras, com unidades claras.
 
-- `ventila-core.css` — tema, cards, botões, feedback, layout.
-- `ventila-core.js` — boot do módulo, trilha, feedback estruturado, navegação, deep-links.
-- `ventila-visuals.js` — motor de cena em tempo real.
-- `ventila-labs.js` — modelos, integradores, presets e readouts.
+Motores já usados no projeto incluem:
 
-Requisitos mínimos do `ventila-visuals.js`:
+- equação do movimento: `Paw = R·fluxo + V/C + PEEP`;
+- VCV com fluxo constante e pausa;
+- PCV/PSV com fluxo decelerante;
+- constante de tempo `τ = R·C`;
+- auto-PEEP por expiração incompleta;
+- estimativas de driving, mechanical power, RSBI, shunt, recrutamento, hiperdistensão e trabalho resistivo;
+- Tier-2 com RK4 quando há esforço do paciente e `Pmus(t)`.
 
-- `requestAnimationFrame` para playhead e animações contínuas.
-- SVG ou Canvas com API estável.
-- Capacidade de desenhar ondas P/F/V sincronizadas.
-- Capacidade de desenhar loops ciclo a ciclo.
-- Separação entre estado fisiológico e camada visual.
-- Play/pause/reset.
-- Readouts derivados do mesmo estado usado para desenhar.
+Antes de publicar ou alterar um motor:
 
-Para módulos com esforço do paciente, planeje suporte a integrador numérico, incluindo RK4 quando necessário. Não implemente modelos complexos antes da hora, mas mantenha a arquitetura pronta para `Pmus(t)`, drive neural e interação paciente-máquina.
+1. validar sintaxe;
+2. conferir unidades;
+3. testar presets extremos;
+4. comparar com forma fechada quando houver;
+5. checar invariantes;
+6. declarar limitações na caixa de honestidade.
 
-## 10. Ordem de construção
+## 11. Regras de arquivo
 
-Não comece pelo índice. Não comece por todos os módulos.
+Respira:
 
-Construa primeiro o **Ventila 3** como golden module.
+- `index.html`
+- `mvp1-interativo.html` a `mvp10-interativo.html`
+- aliases/wrappers em `/modules/` quando existirem
+- arquivos auxiliares em `assets/` e `data/` quando já estiverem presentes
 
-Ordem recomendada:
+Ventila:
 
-1. `ventila-core.css`
-2. `ventila-core.js`
-3. `ventila-visuals.js`
-4. `ventila-labs.js`
-5. `ventila3.html` completo nos cinco blocos obrigatórios
-6. Revisão do golden module
-7. Ventila 5 — VCV
-8. Ventila 6 — PCV
-9. Ventila 9 — Assincronias
-10. Demais módulos
-11. `ventila.html` ou integração no `index.html`
+- `ventila.html` — índice da Parte B
+- `ventila0.html` a `ventila15.html` — módulos publicados canônicos
 
-## 11. Critérios de qualidade
+Não mover Ventila para `/modules/` se isso criar dependência ou confusão. Aliases estáticos podem ser aceitos futuramente, mas não substituem os arquivos de raiz.
 
-Antes de publicar ou atualizar um módulo, verifique:
+## 12. Regras de alteração
 
-- A tese do módulo está explícita?
-- O caso clínico existe e alimenta o laboratório?
-- A animação-mãe é específica do módulo?
-- O laboratório manipula o mecanismo central?
-- As alternativas são curtas e plausíveis?
-- A correta não é previsível por tamanho ou posição?
-- O feedback tem `mechanism`, `whyRight`, `trap`, `bedside` e `bridge`?
-- O bridge aponta para Ventila e, quando útil, para Respira?
-- Existe pegadinha clínica real?
-- Há disclaimer quando o modelo é simplificado?
-- O módulo preserva a identidade visual do projeto?
-- O módulo funciona sem backend obrigatório?
+Proibido:
 
-## 12. Estilo
+- reduzir conteúdo sem pedido explícito e sem justificativa;
+- apagar blocos didáticos ricos;
+- transformar módulo interativo em texto estático;
+- substituir mecanismo por protocolo;
+- remover deep-links Respira↔Ventila;
+- quebrar rotas públicas antigas;
+- introduzir build obrigatório;
+- criar dependência externa além das fontes Google já usadas;
+- usar `localStorage`/`sessionStorage` sem decisão explícita;
+- omitir disclaimer de modelo simplificado;
+- prometer que estimativa didática é dado de paciente real.
+
+Obrigatório:
+
+- manter PT-BR;
+- manter identidade visual;
+- manter rodapé autoral e dedicatória quando presentes;
+- testar clique básico de abas/trilhas/quizzes;
+- preservar `prefers-reduced-motion` quando houver animação contínua;
+- manter `aria-label`/semântica razoável em controles novos;
+- checar links relativos.
+
+## 13. Estilo
 
 Use português brasileiro.
 
-O tom deve ser socrático, direto, sofisticado e clínico. Evite tom catedrático. O aluno deve sentir que está sendo conduzido por perguntas e contradições produtivas.
+Tom: socrático, direto, sofisticado e clínico. Evite tom catedrático.
 
 Prefira perguntas como:
 
@@ -366,6 +258,7 @@ Prefira perguntas como:
 - “Quem iniciou o ciclo: paciente ou máquina?”
 - “A sedação tratou sofrimento, drive ou só calou a curva?”
 - “O paciente falhou a bomba, o pulmão, a via aérea ou o coração?”
+- “Neste modo, fluxo é causa ou consequência?”
 
 Evite:
 
@@ -374,62 +267,31 @@ Evite:
 - “Sempre faça...” sem contexto.
 - “Nunca faça...” sem mecanismo.
 
-## 13. Segurança e honestidade
+## 14. Segurança e honestidade
 
 Este projeto é material didático. Não deve se apresentar como prescrição individual, protocolo institucional ou substituto de julgamento clínico.
 
-Quando abordar fármacos, mantenha foco em mecanismo, indicação, risco e monitorização. Evite transformar o conteúdo em tabela prescritiva isolada.
+Quando usar limiares como driving pressure, mechanical power, RSBI, TTI, P/F, PEEP, auto-PEEP ou trabalho resistivo, deixe claro quando são heurísticas, aproximações didáticas, associações populacionais ou preditores imperfeitos.
 
-Quando usar limiares como driving pressure, mechanical power, RSBI ou TTI, deixe claro quando são heurísticas, associações populacionais ou preditores imperfeitos.
+Quando usar modelos de compartimento único, declare que o pulmão real é heterogêneo.
 
-Quando usar modelos de compartimento único, declare a limitação: pulmão real é heterogêneo.
+Quando abordar fármacos, mantenha foco em mecanismo, indicação, risco e monitorização. Não transformar em tabela prescritiva isolada.
 
-## 14. Convenções de arquivo
+## 15. Definição de sucesso
 
-Respira existente:
+Um módulo está pronto quando:
 
-- `index.html`
-- `mvp1-interativo.html` a `mvp10-interativo.html`
-- `mvpX.html` quando houver arquivo base
-- `respira-quiz-refiner.js`
+1. abre diretamente como HTML;
+2. roda sem build;
+3. preserva sua tese;
+4. tem caso/visual/lab/trilha/quiz ou expansão equivalente;
+5. possui pegadinha clínica real;
+6. usa mecanismo, não protocolo decorado;
+7. tem feedback robusto;
+8. possui caixa de honestidade;
+9. mantém links internos;
+10. não reduz conteúdo preexistente.
 
-Ventila novo:
+Definição do projeto:
 
-- `ventila.html` — índice da Parte B, se criado.
-- `ventila1.html` a `ventila12.html`
-- `ventila-core.css`
-- `ventila-core.js`
-- `ventila-visuals.js`
-- `ventila-labs.js`
-
-Evite repetir CSS/JS em todos os módulos do Ventila. Respira nasceu artesanal; Ventila deve nascer modular.
-
-## 15. Regras de alteração
-
-- Não compacte módulo robusto sem pedido explícito.
-- Não substitua conteúdo clínico específico por abstração genérica.
-- Não remova deep-links para Respira sem motivo.
-- Não altere o índice sem confirmar que os arquivos apontados existem.
-- Não quebre rotas públicas antigas.
-- Se usar alias/loader, documente a razão.
-
-## 16. Definição de sucesso do Ventila 3
-
-Ventila 3 estará pronto quando entregar:
-
-1. Caso clínico inicial acoplado ao laboratório.
-2. Ondas P/F/V animadas com playhead em tempo real.
-3. Manipulação de R, C, RR, VT, fluxo, PEEP e vazamento/aprisionamento.
-4. Readouts de pico, platô, auto-PEEP, tempo expiratório, fluxo no fim da expiração e ventilação minuto.
-5. Pelo menos 10 questões com alternativas curtas e feedback de cinco campos.
-6. Pelo menos três pegadinhas: aumentar frequência para reduzir CO2, confundir pico com platô, ignorar fluxo expiratório que não zera.
-7. Bridges para Respira 1, Respira 4 e Respira 9 quando pertinente.
-8. Disclaimer do modelo simplificado.
-
-Se Ventila 3 ficar de pé nesse padrão, os outros módulos devem seguir o mesmo contrato.
-
-## 17. Frase-guia
-
-Respira ensinou a respirar pensando.
-
-Ventila deve ensinar a usar a máquina sem apagar o mecanismo que ela está substituindo.
+> Respira ensinou a respirar pensando. Ventila deve ensinar a usar a máquina sem apagar o mecanismo que ela está substituindo.
