@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventila 16 · Tutor Adaptativo</title>
+<meta name="description" content="Ventila 16: capstone adaptativo single-file/offline. Diagnostica falhas de raciocínio em fisiologia respiratória e ventilação mecânica usando BKT de sessão, grafo de pré-requisitos e remediação dirigida.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="canonical" href="https://drmcoelho.github.io/Respira/ventila16.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--signal:#2E6E8E;--signal-deep:#235874;--correct:#4E7C5A;--warn:#B85A42;--line:#D7CCB8;--card:rgba(255,253,248,.78);--shadow:rgba(22,56,59,.13);--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(46,110,142,.08),transparent 60%),radial-gradient(900px 700px at -5% 110%,rgba(192,96,58,.07),transparent 55%),var(--paper);color:var(--ink);line-height:1.6;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:1120px;margin:0 auto;position:relative;z-index:2}header{padding:56px 0 26px;text-align:center}.machine{width:74px;height:74px;margin:0 auto 24px;border-radius:22px;background:linear-gradient(135deg,var(--signal),var(--signal-deep));position:relative;box-shadow:0 16px 42px -24px var(--signal-deep);animation:pulse 5.2s ease-in-out infinite}.machine:before{content:'';position:absolute;inset:16px;border:2px solid rgba(255,255,255,.72);border-radius:14px}.machine:after{content:'';position:absolute;left:23px;right:23px;bottom:13px;height:5px;border-radius:99px;background:rgba(255,255,255,.72)}@keyframes pulse{0%,100%{transform:scale(.94)}45%{transform:scale(1.03)}}
+.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--signal-deep);font-weight:700;margin-bottom:14px}h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.35rem,6.5vw,3.6rem);line-height:1.04;letter-spacing:-.01em;margin-bottom:16px}h1 em{font-style:italic;color:var(--signal)}.sub{color:var(--ink-soft);font-size:1.06rem;max-width:730px;margin:0 auto}.topnav{margin:28px 0 8px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.topnav a,.topnav button{text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer}.topnav a:hover,.topnav button:hover{border-color:var(--signal)}
+.hero{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 30px;margin:28px 0 20px;box-shadow:0 14px 40px -24px var(--shadow)}.hero p{color:var(--ink-soft)}.hero strong{color:var(--ink)}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px}@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 14px 40px -28px var(--shadow)}.panel h2{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--signal-deep);font-weight:800;margin-bottom:12px}.mini{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}.question{font-family:'Fraunces',serif;font-size:1.55rem;line-height:1.22;margin:8px 0 18px;color:var(--ink)}.qmeta{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 12px}.pill{font-size:.72rem;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--paper-deep);color:var(--ink-soft);font-weight:700}.pill.hot{background:rgba(46,110,142,.12);border-color:rgba(46,110,142,.35);color:var(--signal-deep)}.pill.warn{background:rgba(184,90,66,.10);border-color:rgba(184,90,66,.35);color:var(--accent-deep)}.options{display:grid;gap:9px}.opt{text-align:left;border:1px solid var(--line);background:rgba(255,253,248,.82);border-radius:14px;padding:13px 15px;color:var(--ink);font:inherit;cursor:pointer;transition:.16s}.opt:hover:not(:disabled){transform:translateX(2px);border-color:var(--signal)}.opt:disabled{cursor:default}.opt.correct{background:rgba(78,124,90,.12);border-color:rgba(78,124,90,.55)}.opt.wrong{background:rgba(184,90,66,.10);border-color:rgba(184,90,66,.55)}.key{font-family:var(--mono);font-weight:800;color:var(--signal-deep);margin-right:8px}.feedback{display:none;margin-top:16px;border-left:4px solid var(--signal);padding:10px 14px;background:rgba(46,110,142,.07);border-radius:0 12px 12px 0;color:var(--ink-soft)}.feedback.show{display:block}.feedback b{color:var(--ink)}.navrow{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:18px;flex-wrap:wrap}.btn{border:1px solid var(--signal);background:var(--signal);color:#fff;border-radius:12px;padding:10px 15px;font-weight:800;cursor:pointer}.btn.secondary{background:transparent;color:var(--signal-deep)}.btn:disabled{opacity:.42;cursor:default}
+.meters{display:grid;gap:12px}.meterrow{display:grid;grid-template-columns:150px 1fr 52px;gap:10px;align-items:center}.meterrow span:first-child{font-size:.85rem;color:var(--ink-soft)}.bar{height:12px;border-radius:999px;background:var(--paper-deep);border:1px solid var(--line);overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--signal),var(--correct));transition:width .25s}.pct{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}.diagnosis{margin-top:14px;background:rgba(192,96,58,.08);border:1px solid rgba(192,96,58,.24);border-radius:16px;padding:16px}.diagnosis h3{font-size:.94rem;margin-bottom:6px;color:var(--accent-deep)}.diagnosis p{font-size:.94rem;color:var(--ink-soft)}.diagnosis strong{color:var(--ink)}.score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.score .box{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}.score b{font-family:'Fraunces',serif;font-size:1.45rem;color:var(--signal)}.score small{display:block;color:var(--ink-soft)}
+.canvaswrap{position:relative}canvas{width:100%;height:260px;display:block;background:rgba(255,253,248,.62);border:1px solid var(--line);border-radius:16px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:.82rem;color:var(--ink-soft)}.sw{width:10px;height:10px;display:inline-block;border-radius:50%;margin-right:4px}.sw.p{background:#C0603A}.sw.q{background:#2E6E8E}.sw.v{background:#4E7C5A}.remed{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}@media(max-width:900px){.remed{grid-template-columns:1fr}}.remed .card{border:1px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,253,248,.68)}.remed h4{font-size:.88rem;color:var(--ink);margin-bottom:5px}.remed p{font-size:.84rem;color:var(--ink-soft)}.foot{text-align:center;margin-top:34px;color:var(--ink-soft);font-size:.86rem;line-height:1.8}.free{display:inline-block;margin-top:6px;padding:5px 14px;border-radius:99px;background:var(--signal);color:#fff;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="machine" aria-hidden="true"></div>
+  <div class="kicker">Ventila 16 · Capstone adaptativo</div>
+  <h1>O exame que revela<br><em>onde o raciocínio quebrou</em></h1>
+  <p class="sub">Módulo final single-file/offline. Ele não guarda histórico, não usa backend e não cria perfil: apenas diagnostica, nesta sessão, qual pré-requisito está frágil quando você erra ventilação.</p>
+  <div class="topnav"><a href="ventila.html">← Índice Ventila</a><button onclick="restart()">Reiniciar sessão</button></div>
+</header>
+
+<section class="hero">
+<p><strong>Respira ensinou a fisiologia. Ventila ensinou a máquina. Este módulo testa a costura.</strong> A cada resposta, um BKT de sessão estima domínio por conceito; quando há erro, o diagnóstico não culpa só o tema aparente. Ele procura o pré-requisito mais fraco: tempo, fluxo, resistência, complacência, τ, auto-PEEP, trabalho ou contrato do modo.</p>
+</section>
+
+<div class="grid">
+  <section class="panel">
+    <h2>1 · Tutor adaptativo</h2>
+    <div class="mini" id="progress"></div>
+    <div class="qmeta" id="qmeta"></div>
+    <div class="question" id="qtext"></div>
+    <div class="options" id="opts"></div>
+    <div class="feedback" id="fb"></div>
+    <div class="navrow">
+      <button class="btn secondary" onclick="prevQ()" id="prevBtn">Anterior</button>
+      <button class="btn" onclick="nextQ()" id="nextBtn">Próxima</button>
+    </div>
+  </section>
+
+  <aside class="panel">
+    <h2>2 · Domínio estimado da sessão</h2>
+    <div class="score">
+      <div class="box"><b id="seen">0</b><small>respondidas</small></div>
+      <div class="box"><b id="hit">0</b><small>acertos</small></div>
+      <div class="box"><b id="weak">—</b><small>mais frágil</small></div>
+    </div>
+    <div class="meters" id="meters"></div>
+    <div class="diagnosis" id="dx"><h3>Diagnóstico</h3><p>Responda algumas questões. O primeiro erro útil aparecerá aqui como uma hipótese de remediação.</p></div>
+  </aside>
+</div>
+
+<div class="grid">
+  <section class="panel">
+    <h2>3 · Curvas de apoio</h2>
+    <div class="canvaswrap"><canvas id="wave" width="900" height="310"></canvas></div>
+    <div class="legend"><span><i class="sw p"></i>pressão</span><span><i class="sw q"></i>fluxo</span><span><i class="sw v"></i>volume</span></div>
+  </section>
+  <section class="panel">
+    <h2>4 · Remediação dirigida</h2>
+    <p class="mini">O mapa abaixo é gerado pelo conceito mais fraco. Ele aponta de volta para os módulos que precisam ser revistos antes de insistir no erro de superfície.</p>
+    <div class="remed" id="remed"></div>
+  </section>
+</div>
+
+<div class="foot">Ventila 16 — Tutor Adaptativo · BKT de sessão, sem persistência e sem backend<br>Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br><span class="free">Livre para usar, compartilhar e ensinar</span></div>
+</div>
+
+<script>
+const DATA = {"questions":[{"id":"q_time_01","source":"Respira fundacional","level":"L1","concepts":["time"],"hooks":[["time","computes_total_cycle_time_from_rate"]],"stem":"Com FR = 20/min, qual o tempo total de cada ciclo respiratório?","options":{"A":"2,0 s","B":"3,0 s","C":"4,0 s","D":"0,5 s"},"answer":"B","feedback":"Ttot = 60/FR = 60/20 = 3,0 s.","remediation":""},{"id":"q_time_02","source":"Respira fundacional","level":"L2","concepts":["time"],"hooks":[["time","derives_expiratory_time_from_ttot_and_ti"]],"stem":"FR = 15/min e Ti = 1,0 s. Qual o tempo expiratório?","options":{"A":"1,0 s","B":"2,0 s","C":"3,0 s","D":"4,0 s"},"answer":"C","feedback":"Ttot = 60/15 = 4,0 s; Te = Ttot - Ti = 4,0 - 1,0 = 3,0 s.","remediation":""},{"id":"q_time_03","source":"Respira fundacional","level":"L2","concepts":["time"],"hooks":[["time","recognizes_ie_as_derived_not_free"]],"stem":"I:E é melhor entendida como:","options":{"A":"Um parâmetro independente que se ajusta sozinho","B":"Uma razão derivada de Ti e Te","C":"Sempre fixa em 1:2","D":"Uma medida de pressão"},"answer":"B","feedback":"I:E = Ti:Te; deriva da repartição de Ttot, não é livre.","remediation":""},{"id":"q_vol_01","source":"Respira fundacional","level":"L1","concepts":["volume"],"hooks":[["volume","distinguishes_set_vt_from_measured_vte"]],"stem":"Em um modo volumétrico, o VT ajustado e o VTe medido:","options":{"A":"São sempre idênticos","B":"Podem diferir (ex.: vazamento)","C":"Não têm relação","D":"São medidos em cmH2O"},"answer":"B","feedback":"VT ajustado é o alvo; VTe medido pode diferir por vazamento, complacência do circuito, etc.","remediation":""},{"id":"q_vol_02","source":"Respira fundacional","level":"L2","concepts":["volume","time"],"hooks":[["volume","computes_minute_ventilation_from_vt_and_rate"]],"stem":"VT = 400 mL e FR = 15/min. Qual o volume minuto?","options":{"A":"4,0 L/min","B":"6,0 L/min","C":"2,7 L/min","D":"60 L/min"},"answer":"B","feedback":"VE = VT × FR = 0,4 × 15 = 6,0 L/min.","remediation":""},{"id":"q_res_01","source":"Respira fundacional","level":"L1","concepts":["resistance","compliance"],"hooks":[["resistance","distinguishes_resistance_from_compliance"]],"stem":"Pressão de pico alta com platô relativamente preservado sugere predomínio de:","options":{"A":"Baixa complacência","B":"Componente resistivo aumentado","C":"PEEP alta","D":"FiO2 alta"},"answer":"B","feedback":"Gap pico-platô reflete componente resistivo; platô reflete o elástico.","remediation":""},{"id":"q_comp_01","source":"Respira fundacional","level":"L2","concepts":["compliance","volume","pressure"],"hooks":[["compliance","predicts_lower_vt_from_lower_compliance_in_pressure_mode"]],"stem":"Em modo pressórico com pressão fixa, se a complacência cai, o volume entregue tende a:","options":{"A":"Aumentar","B":"Diminuir","C":"Não mudar","D":"Zerar"},"answer":"B","feedback":"Mesma pressão sobre sistema mais rígido entrega menos volume.","remediation":""},{"id":"q_elas_01","source":"Respira fundacional","level":"L1","concepts":["elastance","compliance"],"hooks":[["elastance","states_elastance_as_inverse_of_compliance"]],"stem":"Elastância é:","options":{"A":"Igual à resistência","B":"O inverso da complacência","C":"Igual à PEEP","D":"Um volume"},"answer":"B","feedback":"E = 1/C.","remediation":""},{"id":"q_tau_01","source":"Respira fundacional","level":"L2","concepts":["time_constant","resistance","compliance"],"hooks":[["time_constant","computes_or_explains_time_constant_as_resistance_times_compliance"]],"stem":"A constante de tempo do sistema respiratório é dada por:","options":{"A":"R + C","B":"R / C","C":"R × C","D":"C / R"},"answer":"C","feedback":"τ = R × C.","remediation":""},{"id":"q_flow_01","source":"Respira fundacional","level":"L3","concepts":["flow","time_constant"],"hooks":[["flow","identifies_failure_of_expiratory_flow_to_return_to_zero"]],"stem":"Na curva fluxo-tempo, o fluxo expiratório não retorna ao zero antes do próximo ciclo. Isso sugere:","options":{"A":"Oxigenação adequada","B":"Aprisionamento aéreo / auto-PEEP","C":"FiO2 baixa","D":"Sensor descalibrado"},"answer":"B","feedback":"Esvaziamento incompleto: ar aprisionado, risco de auto-PEEP.","remediation":""},{"id":"q_tau_02","source":"Respira fundacional","level":"L4","concepts":["time_constant","resistance"],"hooks":[["time_constant","predicts_need_for_longer_expiratory_time_in_obstruction"],["resistance","links_obstruction_to_prolonged_expiratory_flow"]],"stem":"Em DPOC com resistência aumentada, a estratégia temporal prioritária é:","options":{"A":"Reduzir o tempo expiratório","B":"Garantir tempo expiratório suficiente","C":"Aumentar muito a FR","D":"Ignorar a expiração"},"answer":"B","feedback":"τ aumentada exige mais Te para esvaziar e evitar aprisionamento.","remediation":""},{"id":"q_rate_trap_01","source":"Respira fundacional","level":"L4","concepts":["time","time_constant"],"hooks":[["resistance","predicts_auto_peep_risk_from_high_resistance"]],"stem":"Aumentar a FR em paciente obstrutivo, sem outros ajustes, tende a:","options":{"A":"Aumentar o tempo expiratório","B":"Reduzir o tempo expiratório e aumentar risco de aprisionamento","C":"Eliminar auto-PEEP","D":"Não alterar o ciclo"},"answer":"B","feedback":"FR maior encurta Ttot; se Te fica curto frente à τ, aumenta aprisionamento.","remediation":""},{"id":"psv_n1","source":"Ventila · PSV","level":"L0","concepts":["volume","pressure"],"hooks":[["volume","generic"],["pressure","generic"]],"stem":"Em PSV, qual variável o operador ajusta para aumentar a ajuda inspiratória?","options":{"A":"VT","B":"PS","C":"MVe","D":"VTe"},"answer":"B","feedback":"Ajusta-se a pressão de suporte; o volume é consequência.","remediation":""},{"id":"psv_n2","source":"Ventila · PSV","level":"L2","concepts":["compliance","volume","pressure"],"hooks":[["compliance","generic"],["volume","generic"],["pressure","generic"]],"stem":"PS constante e complacência piora. O VTe tende a:","options":{"A":"Aumentar","B":"Diminuir","C":"Ficar igual","D":"Sumir"},"answer":"B","feedback":"Mesma pressão sobre sistema mais rígido entrega menos volume.","remediation":""},{"id":"psv_n3","source":"Ventila · PSV","level":"L3","concepts":["flow","time_constant"],"hooks":[["flow","generic"],["time_constant","generic"]],"stem":"Na curva fluxo-tempo, a expiração não retorna ao zero antes do próximo ciclo. Sugere:","options":{"A":"Volume adequado","B":"Auto-PEEP / aprisionamento","C":"FiO2 alta","D":"Sensor descalibrado"},"answer":"B","feedback":"Esvaziamento incompleto: aprisionamento, risco de auto-PEEP.","remediation":""},{"id":"psv_n4","source":"Ventila · PSV","level":"L4","concepts":["resistance","time_constant"],"hooks":[["resistance","generic"],["time_constant","generic"]],"stem":"Paciente em PSV com DPOC faz esforço inefetivo. Antes de aumentar PS, pense em:","options":{"A":"Auto-PEEP como carga de gatilho","B":"Aumentar FR sempre","C":"Reduzir tempo expiratório","D":"Trocar FiO2 por ar ambiente"},"answer":"A","feedback":"Auto-PEEP aumenta o limiar efetivo para disparar; pode haver esforço sem fluxo detectado.","remediation":""},{"id":"psv_n5","source":"Ventila · PSV","level":"L5","concepts":["time_constant","flow","pressure"],"hooks":[["time_constant","generic"],["flow","generic"],["pressure","generic"]],"stem":"Por que o fluxo em PSV é decelerante?","options":{"A":"Porque o ventilador fixa fluxo quadrado","B":"Porque o gradiente entre pressão aplicada e pressão alveolar cai conforme o volume entra","C":"Porque o volume é fixo","D":"Porque a PEEP some"},"answer":"B","feedback":"Pressão aplicada fica; pressão alveolar sobe; gradiente cai; fluxo desacelera.","remediation":""},{"id":"cap_vcv_01","source":"Ventila integrado","level":"L4","concepts":["resistance","pressure","flow","pressure_time_waveform"],"hooks":[["resistance","links_obstruction_to_peak_plateau_gap"],["pressure","distinguishes_resistive_from_elastic_pressure"]],"stem":"Em VCV, Ppico subiu muito, mas Pplatô ficou relativamente estável. Qual é a primeira leitura mecânica?","options":{"A":"Piora predominante de complacência","B":"Aumento predominante de resistência/fluxo resistivo","C":"Shunt intrapulmonar puro","D":"Alcalose metabólica"},"answer":"B","feedback":"Em VCV, Ppico − Pplatô representa componente resistivo. Platô relativamente preservado afasta piora elástica dominante."},{"id":"cap_pcv_01","source":"Ventila integrado","level":"L4","concepts":["compliance","volume","pressure"],"hooks":[["compliance","predicts_lower_vt_from_lower_compliance_in_pressure_mode"]],"stem":"Em PCV com ΔP e Ti fixos, o paciente faz SDRA e a complacência cai. O que deve acontecer com o VT?","options":{"A":"Aumenta","B":"Cai","C":"Fica obrigatoriamente igual","D":"Vira Pplatô"},"answer":"B","feedback":"Em modo pressórico, pressão e tempo são impostos. Volume é consequência da mecânica; se C cai, VT cai."},{"id":"cap_autopeep_01","source":"Ventila integrado","level":"L5","concepts":["auto_peep","time_constant","resistance","flow_time_waveform"],"hooks":[["flow","identifies_failure_of_expiratory_flow_to_return_to_zero"],["time_constant","predicts_need_for_longer_expiratory_time_in_obstruction"]],"stem":"DPOC, FR alta, fluxo expiratório não retorna ao zero antes do próximo ciclo. Qual ajuste trata a raiz do problema?","options":{"A":"Aumentar ainda mais a FR","B":"Dar mais tempo expiratório e reduzir aprisionamento","C":"Aumentar FiO₂ como solução principal","D":"Ignorar porque o VTe saiu adequado"},"answer":"B","feedback":"O problema é temporal: τ prolongada e Te insuficiente. A raiz é esvaziamento incompleto, não simplesmente oxigênio."},{"id":"cap_drive_01","source":"Ventila integrado","level":"L5","concepts":["pressure","flow","time","work_of_breathing"],"hooks":[["flow","recognizes_patient_ventilator_mismatch"]],"stem":"Em PSV puro, o paciente perde drive e não dispara. O que o ventilador garante sozinho?","options":{"A":"Ventilação minuto mandatória plena","B":"Nada além de estar disponível para assistir ciclos disparados","C":"VT fixo por segurança","D":"FR fixa obrigatória"},"answer":"B","feedback":"PSV depende de disparo do paciente. Sem drive/trigger, o modo não garante ventilação mandatória."},{"id":"cap_async_01","source":"Ventila integrado","level":"L5","concepts":["auto_peep","pressure","flow","time"],"hooks":[["auto_peep","links_intrinsic_peep_to_trigger_load"]],"stem":"Paciente obstrutivo faz esforço visível, mas não dispara o ventilador. Qual hipótese mecânica é central?","options":{"A":"Auto-PEEP como carga de gatilho","B":"Excesso de FiO₂","C":"Complacência ótima","D":"Hemoglobina baixa"},"answer":"A","feedback":"O esforço primeiro precisa vencer a PEEP intrínseca antes de gerar fluxo no sensor. Isso explica esforço inefetivo."},{"id":"cap_wean_01","source":"Ventila integrado","level":"L5","concepts":["work_of_breathing","compliance","resistance","time_constant"],"hooks":[["work_of_breathing","integrates_load_and_capacity"]],"stem":"No desmame, a pergunta mais útil não é “qual modo é bonito?”, mas:","options":{"A":"Carga mecânica × capacidade do paciente","B":"A cor do circuito","C":"Apenas o número da SpO₂","D":"Apenas a marca do ventilador"},"answer":"A","feedback":"Desmame é devolver trabalho. A decisão depende da carga imposta pela mecânica e da capacidade neuromuscular/metabólica do paciente."}],"graph":{"graph_id":"respiratory_anatomophysiology_core_graph_v1","nodes":["pressure","flow","volume","time","resistance","compliance","elastance","time_constant","minute_ventilation","alveolar_ventilation","auto_peep","work_of_breathing","flow_time_waveform","pressure_time_waveform","volume_time_waveform","respiratory_cycle","ie_ratio"],"edges":[{"from":"pressure","to":"flow","relation":"drives_when_gradient_exists"},{"from":"resistance","to":"flow","relation":"opposes"},{"from":"flow","to":"volume","relation":"integrates_over_time_into"},{"from":"time","to":"respiratory_cycle","relation":"structures"},{"from":"time","to":"ie_ratio","relation":"defines_through_ti_and_te"},{"from":"compliance","to":"volume","relation":"modulates_volume_for_given_pressure"},{"from":"compliance","to":"elastance","relation":"inverse_of"},{"from":"resistance","to":"time_constant","relation":"contributes_to"},{"from":"compliance","to":"time_constant","relation":"contributes_to"},{"from":"time_constant","to":"auto_peep","relation":"explains_risk_of"},{"from":"flow","to":"flow_time_waveform","relation":"is_visualized_as"},{"from":"pressure","to":"pressure_time_waveform","relation":"is_visualized_as"},{"from":"volume","to":"volume_time_waveform","relation":"is_visualized_as"}]},"labels":{"time":"Tempo e ciclo respiratório","volume":"Volume","flow":"Fluxo","pressure":"Pressão","resistance":"Resistência","compliance":"Complacência","elastance":"Elastância","time_constant":"Constante de tempo τ","minute_ventilation":"Volume minuto","alveolar_ventilation":"Ventilação alveolar","auto_peep":"Auto-PEEP/aprisionamento","work_of_breathing":"Trabalho respiratório","flow_time_waveform":"Curva fluxo-tempo","pressure_time_waveform":"Curva pressão-tempo","volume_time_waveform":"Curva volume-tempo","respiratory_cycle":"Ciclo respiratório","ie_ratio":"Relação I:E"},"remediation":{"time":{"module":"Ventila 00 / Respira 01","why":"rever tempo total, Ti, Te e I:E como consequência, não como magia."},"volume":{"module":"Ventila 00 / Ventila 05","why":"rever VT ajustado, VTe medido e volume como integral de fluxo no tempo."},"flow":{"module":"Ventila 03 / Ventila 15","why":"rever fluxo como causa em VCV e consequência nos modos pressóricos."},"pressure":{"module":"Ventila 00 / Ventila 15","why":"rever pressão como gerador de gradiente e como variável resultante em VCV."},"resistance":{"module":"Respira 01 / Ventila 05","why":"rever R como oposição ao fluxo e componente Ppico−Pplatô."},"compliance":{"module":"Respira 01 / Ventila 06","why":"rever C como volume por pressão e o efeito de pulmão rígido."},"elastance":{"module":"Respira 01","why":"rever elastância como inverso da complacência."},"time_constant":{"module":"Respira 01 / Ventila 03","why":"rever τ = R×C, esvaziamento lento e risco de aprisionamento."},"auto_peep":{"module":"Ventila 03 / Ventila 09","why":"rever fluxo expiratório que não zera, carga de gatilho e esforço inefetivo."},"work_of_breathing":{"module":"Ventila 08 / Ventila 12","why":"rever carga × capacidade, drive, suporte e devolução do trabalho."},"flow_time_waveform":{"module":"Ventila 03","why":"rever leitura da curva fluxo-tempo e retorno à linha de base."},"pressure_time_waveform":{"module":"Ventila 03 / Ventila 05","why":"rever concavidade, pico, platô e componente resistivo."},"volume_time_waveform":{"module":"Ventila 03","why":"rever volume acumulado e esvaziamento."},"respiratory_cycle":{"module":"Ventila 00","why":"rever organização do ciclo."},"ie_ratio":{"module":"Ventila 00","why":"rever I:E como razão derivada."}}};
+const PARAMS = {p_l0:.20,p_t:.15,p_s:.10,p_g:.20};
+let idx=0, answered={}, p={}, stats={seen:0,hit:0}, lastWeak=null;
+const concepts=[...new Set(DATA.graph.nodes.concat(DATA.questions.flatMap(q=>q.concepts)))];
+concepts.forEach(c=>p[c]=PARAMS.p_l0);
+
+function posterior(pl, correct){
+  const P=PARAMS;
+  let num, den;
+  if(correct){ num=pl*(1-P.p_s); den=pl*(1-P.p_s)+(1-pl)*P.p_g; }
+  else{ num=pl*P.p_s; den=pl*P.p_s+(1-pl)*(1-P.p_g); }
+  return den>0?num/den:pl;
+}
+function update(pl, correct){ const post=posterior(pl,correct); return post+(1-post)*PARAMS.p_t; }
+function prereqsOf(concept){ return DATA.graph.edges.filter(e=>e.to===concept).map(e=>e.from); }
+function weakestPrereq(concept){
+  const preds=prereqsOf(concept).filter(c=>p[c]!==undefined);
+  const weak=preds.filter(c=>p[c]<.80).sort((a,b)=>p[a]-p[b]);
+  return weak[0]||concept;
+}
+function label(c){ return DATA.labels[c]||c; }
+function rem(c){ return DATA.remediation[c]||{module:'Ventila 16',why:'rever o conceito de superfície e seus pré-requisitos imediatos.'}; }
+
+function current(){ return DATA.questions[idx]; }
+function render(){
+  const q=current();
+  document.getElementById('progress').textContent=`Questão ${idx+1} de ${DATA.questions.length} · ${q.source} · ${q.level}`;
+  document.getElementById('qtext').textContent=q.stem;
+  document.getElementById('qmeta').innerHTML=q.concepts.map(c=>`<span class="pill hot">${label(c)}</span>`).join('');
+  const opts=document.getElementById('opts'); opts.innerHTML='';
+  Object.entries(q.options).forEach(([k,v])=>{
+    const b=document.createElement('button'); b.className='opt'; b.innerHTML=`<span class="key">${k}</span>${v}`;
+    b.onclick=()=>answer(k);
+    if(answered[q.id]){ b.disabled=true; if(k===q.answer)b.classList.add('correct'); if(k===answered[q.id].choice && k!==q.answer)b.classList.add('wrong'); }
+    opts.appendChild(b);
+  });
+  const fb=document.getElementById('fb');
+  if(answered[q.id]){
+    const a=answered[q.id], w=a.weak;
+    fb.className='feedback show';
+    fb.innerHTML=`<b>${a.correct?'Certo.':'Erro útil.'}</b> ${q.feedback}<br><br><b>Leitura adaptativa:</b> ${a.correct?'este item reforçou ': 'o gargalo provável não é só o item de superfície; revise '}<b>${label(w)}</b>.`;
+  } else { fb.className='feedback'; fb.innerHTML=''; }
+  document.getElementById('prevBtn').disabled=idx===0;
+  document.getElementById('nextBtn').textContent=idx===DATA.questions.length-1?'Fechar':'Próxima';
+  drawWave(q);
+  renderMeters(); renderRemediation();
+}
+function answer(choice){
+  const q=current(); if(answered[q.id]) return;
+  const correct=choice===q.answer;
+  q.concepts.forEach(c=>p[c]=update(p[c]??PARAMS.p_l0, correct));
+  stats.seen++; if(correct) stats.hit++;
+  let weakConcept=q.concepts.map(c=>weakestPrereq(c)).sort((a,b)=>p[a]-p[b])[0] || q.concepts[0];
+  if(!correct) lastWeak=weakConcept;
+  answered[q.id]={choice,correct,weak:weakConcept};
+  render();
+}
+function nextQ(){ if(idx<DATA.questions.length-1){ idx++; render(); } else { idx=0; render(); window.scrollTo({top:0,behavior:'smooth'}); } }
+function prevQ(){ if(idx>0){ idx--; render(); } }
+function restart(){ idx=0; answered={}; p={}; concepts.forEach(c=>p[c]=PARAMS.p_l0); stats={seen:0,hit:0}; lastWeak=null; render(); }
+function renderMeters(){
+  document.getElementById('seen').textContent=stats.seen;
+  document.getElementById('hit').textContent=stats.hit;
+  const sorted=Object.keys(p).sort((a,b)=>p[a]-p[b]).slice(0,8);
+  document.getElementById('weak').textContent=sorted[0]?Math.round(p[sorted[0]]*100)+'%':'—';
+  document.getElementById('meters').innerHTML=sorted.map(c=>`<div class="meterrow"><span>${label(c)}</span><div class="bar"><i style="width:${Math.round(p[c]*100)}%"></i></div><span class="pct">${Math.round(p[c]*100)}%</span></div>`).join('');
+  const dx=document.getElementById('dx');
+  if(lastWeak){
+    const r=rem(lastWeak);
+    dx.innerHTML=`<h3>Diagnóstico ativo</h3><p>Primeiro gargalo provável: <strong>${label(lastWeak)}</strong>.<br>Remediação: <strong>${r.module}</strong> — ${r.why}</p>`;
+  }
+}
+function renderRemediation(){
+  const keys=(lastWeak?[lastWeak,...prereqsOf(lastWeak)]:Object.keys(p).sort((a,b)=>p[a]-p[b]).slice(0,3)).slice(0,3);
+  document.getElementById('remed').innerHTML=keys.map(c=>{const r=rem(c); return `<div class="card"><h4>${label(c)}</h4><p><b>${r.module}</b><br>${r.why}</p></div>`}).join('');
+}
+
+function waveScenario(q){
+  const s=q.concepts.join('|')+'|'+q.id;
+  if(s.includes('auto_peep')||s.includes('time_constant')||s.includes('resistance')) return 'obstructive';
+  if(s.includes('compliance')||s.includes('pcv')) return 'pressure';
+  if(s.includes('volume')||s.includes('vcv')) return 'volume';
+  if(s.includes('drive')||s.includes('work')) return 'effort';
+  return 'normal';
+}
+function drawWave(q){
+  const c=document.getElementById('wave'), ctx=c.getContext('2d'), W=c.width,H=c.height;
+  ctx.clearRect(0,0,W,H); ctx.fillStyle='rgba(255,253,248,.88)'; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(22,56,59,.10)'; ctx.lineWidth=1; for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();} for(let y=0;y<H;y+=52){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  const mode=waveScenario(q), T=4, dt=.02, pts=[];
+  for(let t=0;t<=T;t+=dt){
+    let phase=(t%2), insp=phase<.8, tau=mode==='obstructive'?1.35:.55;
+    let flow,vol,paw;
+    if(mode==='volume'){ flow=insp?.7:-.55*Math.exp(-(phase-.8)/tau); vol=insp?phase/.8*.5:.5*Math.exp(-(phase-.8)/tau); paw=insp?10+18*phase/.8:12*Math.exp(-(phase-.8)/tau)+5; }
+    else { flow=insp?.8*Math.exp(-phase/tau):-.55*Math.exp(-(phase-.8)/tau); vol=insp?.55*(1-Math.exp(-phase/tau)):.55*(1-Math.exp(-.8/tau))*Math.exp(-(phase-.8)/tau); paw=insp?20:5+12*Math.exp(-(phase-.8)/.08); }
+    if(mode==='obstructive'&&!insp) flow=-.28*Math.exp(-(phase-.8)/2.0)-.08;
+    if(mode==='effort'){ paw-= insp?4*Math.sin(Math.PI*phase/.8):0; flow+=insp?.15:0; }
+    pts.push({t,flow,vol,paw});
+  }
+  function path(vals,color,y0,scale){
+    ctx.strokeStyle=color; ctx.lineWidth=3; ctx.beginPath();
+    vals.forEach((v,i)=>{const x=i/(vals.length-1)*W; const y=y0-v*scale; if(i===0)ctx.moveTo(x,y); else ctx.lineTo(x,y);});
+    ctx.stroke();
+  }
+  path(pts.map(p=>p.paw),'#C0603A',95,2.6); path(pts.map(p=>p.flow),'#2E6E8E',175,46); path(pts.map(p=>p.vol),'#4E7C5A',270,135);
+  ctx.fillStyle='#4A6164'; ctx.font='13px Hanken Grotesk'; ctx.fillText(mode==='obstructive'?'Obstrutivo: expiração lenta e fluxo não zera':mode==='pressure'?'Modo pressórico: pressão imposta, volume consequente':mode==='volume'?'Modo volumétrico: fluxo/VT impostos, pressão consequente':mode==='effort'?'Interação: esforço do paciente deforma a entrega':'Curvas de apoio do conceito atual',18,24);
+}
+render();
+</script>
+</body>
+</html>
