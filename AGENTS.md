@@ -88,7 +88,7 @@ Wrappers canônicos em `/modules/` podem existir para navegação e nomenclatura
 
 ## 5. Estado atual do Ventila
 
-Ventila está organizado por `ventila.html` e módulos de raiz `ventila0.html` a `ventila15.html`.
+Ventila está organizado por `ventila.html` e módulos de raiz `ventila0.html` a `ventila26.html`.
 
 A matriz atual é:
 
@@ -110,8 +110,19 @@ A matriz atual é:
 | 13 | `ventila13.html` | Traqueostomia como plataforma de desmame + Mega Revisão Parte 1 |
 | 14 | `ventila14.html` | Aplicação integrada: pulmão na tela + Mega Revisão Parte 2 |
 | 15 | `ventila15.html` | Tutor visual PSV · VCV · PCV: consolidação dos modos e inversão causal |
+| 16 | `ventila16.html` | Tutor adaptativo de sessão: BKT, grafo de pré-requisitos e remediação dirigida |
+| 17 | `ventila17.html` | SDRA — recrutabilidade antes da PEEP: PEEP só compra pulmão quando recrutamento supera hiperdistensão e custo hemodinâmico. |
+| 18 | `ventila18.html` | Obstrutivo grave — dar tempo para sair: Resistência, constante de tempo, auto-PEEP e hipercapnia permissiva sem perseguir números com FR lesiva. |
+| 19 | `ventila19.html` | Coração-pulmão — o VD no ventilador: Retorno venoso, resistência vascular pulmonar e septo: a pressão positiva vista pelo ventrículo direito. |
+| 20 | `ventila20.html` | Neuroventilação — CO₂ também é hemodinâmica: PaCO₂, fluxo cerebral, PIC e o preço isquêmico da hiperventilação mantida. |
+| 21 | `ventila21.html` | Prona e resgate — redistribuir antes de escalar: Posição como terapia da heterogeneidade: V/Q, estresse regional e resposta que vai além da SpO₂. |
+| 22 | `ventila22.html` | APRV — abrir sem aprisionar: Phigh/Plow não bastam: T-high, T-low e terminação do fluxo governam recrutamento e ventilação. |
+| 23 | `ventila23.html` | ECMO e ECCO₂R — quando a máquina compra proteção: Fluxo, sweep, referência precoce e ultraprotação: suporte extracorpóreo como ponte, não cura. |
+| 24 | `ventila24.html` | Obesidade, gestação e abdome — a parede pesa: Complacência do sistema não é complacência pulmonar: parede e abdome mudam a leitura das pressões. |
+| 25 | `ventila25.html` | Pediatria e neonatologia — pulmão pequeno, tempo curto: Tubo estreito, vazamento, volume garantido e a física específica do recém-nascido e da criança. |
+| 26 | `ventila26.html` | Fora da UTI — transporte e contingência: Oxigênio, bateria, circuito, fixação e plano B: robustez operacional faz parte da ventilação. |
 
-Não rebaixar a série para 12 módulos. Ventila agora tem 0–15.
+Não rebaixar a série para 12 módulos. Ventila agora tem 0–26.
 
 ## 6. Cinco blocos obrigatórios por módulo Ventila
 
@@ -215,7 +226,7 @@ Respira:
 Ventila:
 
 - `ventila.html` — índice da Parte B
-- `ventila0.html` a `ventila15.html` — módulos publicados canônicos
+- `ventila0.html` a `ventila26.html` — módulos publicados canônicos
 
 Não mover Ventila para `/modules/` se isso criar dependência ou confusão. Aliases estáticos podem ser aceitos futuramente, mas não substituem os arquivos de raiz.
 
