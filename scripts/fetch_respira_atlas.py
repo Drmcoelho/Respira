@@ -71,9 +71,7 @@ def source_page(filename: str) -> str:
 
 
 def fetch_url(url: str) -> str:
-    if url.lower().endswith(".svg"):
-        return url
-    return "https://i0.wp.com/" + url.removeprefix("https://")
+    return url
 
 
 def signature_ok(path: pathlib.Path) -> bool:
