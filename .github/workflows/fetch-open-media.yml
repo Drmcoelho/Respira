@@ -10,18 +10,46 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: fetch-ventila-open-media
+  cancel-in-progress: true
+
 jobs:
-  fetch-and-commit:
+  fetch-one:
+    strategy:
+      fail-fast: false
+      matrix:
+        index: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+      - name: Download and validate one original
+        run: python3 scripts/fetch_open_media.py --index "${{ matrix.index }}"
+      - name: Upload validated original
+        uses: actions/upload-artifact@v4
+        with:
+          name: ventila-media-${{ matrix.index }}
+          path: assets/ventila17-26/media/*
+          if-no-files-found: error
+          retention-days: 1
+
+  assemble-and-commit:
+    needs: fetch-one
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
-      - name: Download and validate originals
-        run: python3 scripts/fetch_open_media.py
-
+      - name: Download all validated originals
+        uses: actions/download-artifact@v4
+        with:
+          pattern: ventila-media-*
+          path: assets/ventila17-26/media
+          merge-multiple: true
+      - name: Validate complete set and create manifest
+        run: python3 scripts/fetch_open_media.py --manifest-only
       - name: Commit downloaded media
         run: |
           git config user.name "github-actions[bot]"
