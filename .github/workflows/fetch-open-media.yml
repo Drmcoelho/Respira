@@ -1,0 +1,34 @@
+name: Fetch Ventila open media
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/fetch-open-media.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download and validate originals
+        run: python3 scripts/fetch_open_media.py
+
+      - name: Commit downloaded media
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/ventila17-26/media
+          if git diff --cached --quiet; then
+            echo "Media already current."
+            exit 0
+          fi
+          git commit -m "assets: archive open-source media for Ventila 17-26"
+          git push
