@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import pathlib
@@ -81,31 +82,52 @@ def download(url: str, target: pathlib.Path) -> None:
     raise RuntimeError(f"failed to fetch {url}: {last_error}")
 
 
-def main() -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
+def write_manifest() -> None:
     manifest = []
-    for index, (local_name, source_name) in enumerate(FILES):
+    for local_name, source_name in FILES:
         target = OUT / local_name
-        url = commons_url(source_name)
-        if index:
-            time.sleep(12)
-        download(url, target)
+        if not target.exists() or not signature_ok(target):
+            raise RuntimeError(f"missing or invalid downloaded file: {target}")
         raw = target.read_bytes()
         manifest.append(
             {
                 "file": local_name,
                 "source_filename": source_name,
-                "source_url": url,
+                "source_url": commons_url(source_name),
                 "bytes": len(raw),
                 "sha256": hashlib.sha256(raw).hexdigest(),
             }
         )
-        print(f"{local_name}: {len(raw):,} bytes")
-
     (OUT / "MANIFEST.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--index", type=int)
+    parser.add_argument("--manifest-only", action="store_true")
+    args = parser.parse_args()
+    OUT.mkdir(parents=True, exist_ok=True)
+
+    if args.manifest_only:
+        write_manifest()
+        return
+    if args.index is None:
+        print("No --index supplied; nothing to download.")
+        return
+    if not 0 <= args.index < len(FILES):
+        raise SystemExit(f"index must be between 0 and {len(FILES) - 1}")
+
+    for index, (local_name, source_name) in enumerate(FILES):
+        if index != args.index:
+            continue
+        target = OUT / local_name
+        url = commons_url(source_name)
+        download(url, target)
+        raw = target.read_bytes()
+        print(f"{local_name}: {len(raw):,} bytes")
 
 
 if __name__ == "__main__":
