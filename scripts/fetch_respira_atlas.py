@@ -19,7 +19,7 @@ ITEMS = [
     ("r01-airway-tree.svg", "Lungs diagram detailed.svg", "Respira 01", "Arvore respiratoria e escala anatomica", "CC BY 2.5", "Siga traqueia, bronquios e bronquiolos ate a regiao alveolar; a queda progressiva do calibre individual contrasta com o aumento da area transversal total.", "Nao converter anatomia em resistencia linear: calibre, fluxo, volume pulmonar e distribuicao em paralelo interagem.", "Abre resistencia, complacencia, constante de tempo e heterogeneidade regional."),
     ("r01-flow-volume-loop.svg", "Flow-volume-loop.svg", "Respira 01", "Loop fluxo-volume", "CC BY-SA 3.0", "Leia o ramo expiratorio, o pico de fluxo e a concavidade; compare a forma, nao apenas valores isolados.", "Um loop esquematico nao diagnostica sozinho obstrucao nem substitui qualidade tecnica da espirometria.", "Conecta mecanica espontanea a limitacao de fluxo e aprisionamento."),
     ("r02-oxyhemoglobin.svg", "Oxygen-Haemoglobin dissociation curves.svg", "Respira 02", "Curva de dissociacao oxigenio-hemoglobina", "Licenca livre indicada na pagina-fonte", "Separe o plato, onde grande variacao de PaO2 pouco muda saturacao, da porcao ingreme, onde pequenas quedas custam muito conteudo ligado a Hb.", "Saturacao nao e conteudo arterial: anemia grave pode manter SpO2 com CaO2 baixo.", "Prepara P50, efeito Bohr, CaO2 e entrega sistemica de oxigenio."),
-    ("r02-pulse-oximeter.jpg", "Pulse oximeter.jpg", "Respira 02", "Oximetria no mundo real", "Licenca livre indicada na pagina-fonte", "Observe sensor, local de medida e contexto perfusional; o numero depende de sinal pulsatil e nao mede ventilacao.", "Nao tratar SpO2 como gasometria, PaO2, PaCO2 ou prova de perfusao adequada.", "Ancora dis-hemoglobinas, baixa perfusao, movimento e limites da oximetria."),
+    ("r02-pulse-oximeter.jpg", "Pulse oximeter.JPG", "Respira 02", "Oximetria no mundo real", "CC BY-SA 3.0", "Observe sensor, local de medida e contexto perfusional; o numero depende de sinal pulsatil e nao mede ventilacao.", "Nao tratar SpO2 como gasometria, PaO2, PaCO2 ou prova de perfusao adequada.", "Ancora dis-hemoglobinas, baixa perfusao, movimento e limites da oximetria."),
     ("r03-vq-mismatch.jpg", "Missmatch V-P Szintigrahie der Lunge bei Lungenembolie 58M - NM - 001.jpg", "Respira 03", "Mismatch ventilacao-perfusao", "Licenca livre indicada na pagina-fonte", "Compare distribuicao ventilatoria e perfusional e procure territorio ventilado que perdeu perfusao.", "A imagem demonstra um mecanismo regional; nao representa toda hipoxemia nem quantifica automaticamente gravidade hemodinamica.", "Diferencia V/Q baixo, shunt e espaco morto."),
     ("r03-vq-paired.jpg", "Gamma Camera Scan of Ventilation and Perfusion of Lungs.jpg", "Respira 03", "Ventilacao e perfusao lado a lado", "Licenca livre indicada na pagina-fonte", "Leia os dois mapas como pares: cada unidade alveolar precisa receber gas e sangue para trocar eficientemente.", "Imagem pequena e historica nao deve ser usada para decisao diagnostica contemporanea isolada.", "Transforma V/Q em geografia pulmonar visivel."),
     ("r04-davenport.jpg", "Davenport fig 5.jpg", "Respira 04", "Diagrama de Davenport", "Licenca livre indicada na pagina-fonte", "Localize pH, bicarbonato e linhas de PaCO2 antes de seguir o deslocamento respiratorio ou metabolico.", "Nao decorar quadrantes sem verificar cronologia, compensacao esperada e disturbios mistos.", "Organiza Henderson-Hasselbalch como mapa, nao como lista."),
@@ -71,9 +71,7 @@ def source_page(filename: str) -> str:
 
 
 def fetch_url(url: str) -> str:
-    if url.lower().endswith(".svg"):
-        return url
-    return "https://i0.wp.com/" + url.removeprefix("https://")
+    return url
 
 
 def signature_ok(path: pathlib.Path) -> bool:
