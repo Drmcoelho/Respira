@@ -5,6 +5,7 @@ import hashlib
 import json
 import pathlib
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -58,26 +59,36 @@ def download(url: str, target: pathlib.Path) -> None:
         },
     )
     last_error = None
-    for attempt in range(4):
+    for attempt in range(6):
         try:
             with urllib.request.urlopen(request, timeout=90) as response:
                 target.write_bytes(response.read())
             if not signature_ok(target):
                 raise ValueError(f"unexpected signature for {target.name}")
             return
+        except urllib.error.HTTPError as exc:
+            last_error = exc
+            target.unlink(missing_ok=True)
+            if exc.code == 429:
+                retry_after = int(exc.headers.get("Retry-After", "60"))
+                time.sleep(max(65, retry_after + 5))
+            else:
+                time.sleep(min(60, 4 * (2 ** attempt)))
         except Exception as exc:  # network retries are intentional here
             last_error = exc
             target.unlink(missing_ok=True)
-            time.sleep(2 ** attempt)
+            time.sleep(min(60, 4 * (2 ** attempt)))
     raise RuntimeError(f"failed to fetch {url}: {last_error}")
 
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = []
-    for local_name, source_name in FILES:
+    for index, (local_name, source_name) in enumerate(FILES):
         target = OUT / local_name
         url = commons_url(source_name)
+        if index:
+            time.sleep(12)
         download(url, target)
         raw = target.read_bytes()
         manifest.append(
