@@ -16,7 +16,7 @@ OUT = ROOT / "assets" / "ventila17-26" / "media"
 FILES = [
     ("ventila17-ardsgradation.jpg", "Ardsgradation.jpg"),
     ("ventila18-medical-ventilator.jpg", "Medical ventilator 001.jpg"),
-    ("ventila19-right-heart-embolus.ogv", "Right-Heart-Transvalvular-Embolus-with-High-Risk-Pulmonary-Embolism-in-a-Recently-Hospitalized-481357.f1.ogv"),
+    ("ventila19-right-heart-embolus-preview.jpg", "Right-Heart-Transvalvular-Embolus-with-High-Risk-Pulmonary-Embolism-in-a-Recently-Hospitalized-481357.f1.ogv"),
     ("ventila20-icp-monitor.jpg", "JASDF Intracranial pressure monitoring system at Komaki Air Base February 23, 2014.jpg"),
     ("ventila21-prone-team.jpg", "Navy Medical Team Supports Louisiana Hospital.jpg"),
     ("ventila22-aprv-graph.png", "Airway pressure release ventilation graph.png"),
@@ -26,10 +26,16 @@ FILES = [
     ("ventila25-neonate-eit.jpeg", "Neonate with electrical impedance tomography electrodes.jpeg"),
     ("ventila26-medumat.jpg", "Medumat plus Absaugeinheit.jpg"),
     ("reserve-transport-ltv1000.JPG", "Intensivrespirator LTV 1000.JPG"),
-    ("reserve-right-heart-tte.ogv", "Echocardiographic-diagnosis-management-and-monitoring-of-pulmonary-embolism-with-right-heart-1476-7120-8-18-S2.ogv"),
-    ("reserve-icp-waveform.ogv", "Simultaneous-monitoring-of-static-and-dynamic-intracranial-pressure-parameters-from-two-separate-1475-925X-11-66-S3.ogv"),
+    ("reserve-right-heart-tte-preview.jpg", "Echocardiographic-diagnosis-management-and-monitoring-of-pulmonary-embolism-with-right-heart-1476-7120-8-18-S2.ogv"),
+    ("reserve-icp-waveform-preview.jpg", "Simultaneous-monitoring-of-static-and-dynamic-intracranial-pressure-parameters-from-two-separate-1475-925X-11-66-S3.ogv"),
     ("reserve-neonate-eit-study.png", "EIT ventilation study of infants Heinrich 2006.png"),
 ]
+
+PREVIEW_URLS = {
+    "Right-Heart-Transvalvular-Embolus-with-High-Risk-Pulmonary-Embolism-in-a-Recently-Hospitalized-481357.f1.ogv": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Right-Heart-Transvalvular-Embolus-with-High-Risk-Pulmonary-Embolism-in-a-Recently-Hospitalized-481357.f1.ogv/500px--Right-Heart-Transvalvular-Embolus-with-High-Risk-Pulmonary-Embolism-in-a-Recently-Hospitalized-481357.f1.ogv.jpg",
+    "Echocardiographic-diagnosis-management-and-monitoring-of-pulmonary-embolism-with-right-heart-1476-7120-8-18-S2.ogv": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Echocardiographic-diagnosis-management-and-monitoring-of-pulmonary-embolism-with-right-heart-1476-7120-8-18-S2.ogv/500px--Echocardiographic-diagnosis-management-and-monitoring-of-pulmonary-embolism-with-right-heart-1476-7120-8-18-S2.ogv.jpg",
+    "Simultaneous-monitoring-of-static-and-dynamic-intracranial-pressure-parameters-from-two-separate-1475-925X-11-66-S3.ogv": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Simultaneous-monitoring-of-static-and-dynamic-intracranial-pressure-parameters-from-two-separate-1475-925X-11-66-S3.ogv/960px--Simultaneous-monitoring-of-static-and-dynamic-intracranial-pressure-parameters-from-two-separate-1475-925X-11-66-S3.ogv.jpg",
+}
 
 
 def commons_url(filename: str) -> str:
@@ -39,10 +45,9 @@ def commons_url(filename: str) -> str:
     return f"https://upload.wikimedia.org/wikipedia/commons/{digest[0]}/{digest[:2]}/{quoted}"
 
 
-def fetch_url(source_url: str, target: pathlib.Path) -> str:
-    if target.suffix.lower() == ".ogv":
-        return source_url
-    return "https://i0.wp.com/" + source_url.removeprefix("https://")
+def fetch_url(source_url: str, target: pathlib.Path, source_name: str) -> str:
+    archived_url = PREVIEW_URLS.get(source_name, source_url)
+    return "https://i0.wp.com/" + archived_url.removeprefix("https://")
 
 
 def signature_ok(path: pathlib.Path) -> bool:
@@ -100,6 +105,7 @@ def write_manifest() -> None:
                 "file": local_name,
                 "source_filename": source_name,
                 "source_url": commons_url(source_name),
+                "archived_url": PREVIEW_URLS.get(source_name, commons_url(source_name)),
                 "bytes": len(raw),
                 "sha256": hashlib.sha256(raw).hexdigest(),
             }
@@ -131,7 +137,7 @@ def main() -> None:
             continue
         target = OUT / local_name
         url = commons_url(source_name)
-        download(fetch_url(url, target), target)
+        download(fetch_url(url, target, source_name), target)
         raw = target.read_bytes()
         print(f"{local_name}: {len(raw):,} bytes")
 
