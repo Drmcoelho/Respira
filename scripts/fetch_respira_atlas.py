@@ -128,10 +128,19 @@ def write_docs() -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--index", type=int)
+    parser.add_argument("--all", action="store_true")
     parser.add_argument("--manifest-only", action="store_true")
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     if args.manifest_only:
+        write_docs()
+        return
+    if args.all:
+        for index, (local, source, *_) in enumerate(ITEMS):
+            target = OUT / local
+            download(fetch_url(commons_url(source)), target)
+            print(f"[{index + 1}/{len(ITEMS)}] {local}: {target.stat().st_size:,} bytes")
+            time.sleep(2)
         write_docs()
         return
     if args.index is None or not 0 <= args.index < len(ITEMS):
