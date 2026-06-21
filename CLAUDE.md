@@ -10,7 +10,7 @@
 2. **HTML single-file é fonte canônica publicada.** Cada módulo deve abrir sozinho no navegador.
 3. **Não introduzir build obrigatório.** Sem bundler, sem pipeline, sem etapa que alguém possa esquecer de rodar.
 4. **Não transformar autonomia em DRY prematuro.** Duplicação em módulo fechado é custo latente, não defeito ativo.
-5. **Ventila agora vai até 15.** Não voltar para a matriz antiga de 12 módulos.
+5. **Ventila agora vai até 26.** Não voltar para a matriz antiga de 12 módulos.
 6. **Sempre preservar links antigos.** Não quebrar `mvp*`, `ventilaN.html`, `ventila.html` ou deep-links Respira↔Ventila.
 7. **Mecanismo antes de protocolo.** Curva, pulmão, tubo, drive e decisão clínica precisam conversar.
 8. **Material didático, não prescrição.** Toda estimativa clínica precisa de caixa de honestidade quando aplicável.
@@ -318,7 +318,7 @@ Manter vivos:
 
 - `index.html`
 - `ventila.html`
-- `ventila0.html` a `ventila15.html`
+- `ventila0.html` a `ventila26.html`
 - `mvp1-interativo.html` a `mvp10-interativo.html`
 - aliases/wrappers existentes em `/modules/`
 
@@ -377,7 +377,7 @@ Quando o fenômeno real depender de heterogeneidade pulmonar, esforço, parede t
 ### Do projeto
 
 - Respira 10 módulos vivos;
-- Ventila 0–15 vivos;
+- Ventila 0–26 vivos;
 - `ventila.html` atualizado;
 - links Respira↔Ventila preservados;
 - nenhuma redução de módulos robustos;
