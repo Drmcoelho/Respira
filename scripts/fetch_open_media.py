@@ -39,6 +39,12 @@ def commons_url(filename: str) -> str:
     return f"https://upload.wikimedia.org/wikipedia/commons/{digest[0]}/{digest[:2]}/{quoted}"
 
 
+def fetch_url(source_url: str, target: pathlib.Path) -> str:
+    if target.suffix.lower() == ".ogv":
+        return source_url
+    return "https://i0.wp.com/" + source_url.removeprefix("https://")
+
+
 def signature_ok(path: pathlib.Path) -> bool:
     head = path.read_bytes()[:16]
     suffix = path.suffix.lower()
@@ -125,7 +131,7 @@ def main() -> None:
             continue
         target = OUT / local_name
         url = commons_url(source_name)
-        download(url, target)
+        download(fetch_url(url, target), target)
         raw = target.read_bytes()
         print(f"{local_name}: {len(raw):,} bytes")
 
