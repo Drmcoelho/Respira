@@ -3,9 +3,9 @@ name: Import Respira atlas wave 2
 on:
   pull_request:
     branches:
-      - main
+      - codex/respira-atlas-importer-base
     paths:
-      - .github/workflows/import-respira-atlas-wave2.yml
+      - wave2-trigger.txt
 
 permissions:
   contents: read
