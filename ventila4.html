@@ -85,6 +85,16 @@
   .lab-note{ font-size:.84rem; color:var(--ink-soft); margin-top:18px; line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; } .lab-note b{ color:var(--ink); }
   footer{ text-align:center; margin-top:40px; color:var(--ink-soft); font-size:.82rem; }
   @media (max-width:560px){ .card{ padding:24px 18px; } .stem{ font-size:1.16rem; } }
+
+/* media viva · atlas aberto Respira/Ventila */
+.media-atlas{margin:18px 0 24px;display:grid;gap:16px}
+.media-viva{margin:0;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2));border:1px solid var(--line,#ccd6d6);border-radius:8px;overflow:hidden}
+.media-viva img{display:block;width:100%;max-height:680px;object-fit:contain;height:auto;border-radius:6px;background:#fff}
+.media-viva figcaption{margin-top:9px;color:var(--ink-soft,var(--soft,#526568));font-size:.88rem;line-height:1.55}
+.media-viva figcaption b{color:var(--accent,var(--sig,#a24b2c))}
+.media-viva .media-credit{display:block;margin-top:6px;font-size:.76rem;opacity:.88}
+.media-viva .media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+
 </style>
 </head>
 <body>
@@ -95,6 +105,9 @@
     <h1>Curvas II —<br>os <em>loops</em></h1>
     <p class="sub">As mesmas variáveis, cruzadas. O loop pressão-volume mostra onde, na curva do pulmão, você está ventilando: no joelho que recruta, na rampa que protege, ou no bico de pato que hiperdistende. Para a Dani.</p>
   </header>
+<!-- respira-open-atlas:begin -->
+<section class="media-atlas" aria-label="Atlas visual de Ventila 04"><figure class="media-viva" data-media="v04-static-pv.jpg"><img src="assets/respira-ventila-atlas/media/v04-static-pv.jpg" alt="Curva pressao-volume estatica. Localize inflexoes, complacencia e regiao de hiperdistensao; leia a curva como comportamento do sistema." loading="lazy" decoding="async"><figcaption><b>Ventila 04 · Curva pressao-volume estatica.</b> Localize inflexoes, complacencia e regiao de hiperdistensao; leia a curva como comportamento do sistema. <b>Limite:</b> Pontos de inflexao nao fornecem PEEP universal nem provam recrutabilidade individual. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Airway_pressure_release_ventilation_static_pressure-volume_figure_2007.jpg" target="_blank" rel="license noopener">Airway pressure release ventilation static pressure-volume figure 2007.jpg</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
+<!-- respira-open-atlas:end -->
 
   <nav class="nav">
     <button class="active" data-pane="caso" onclick="go('caso')">Caso</button>

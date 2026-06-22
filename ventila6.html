@@ -68,6 +68,16 @@
   .lab-note{ font-size:.84rem; color:var(--ink-soft); margin-top:18px; line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; } .lab-note b{ color:var(--ink); }
   footer{ text-align:center; margin-top:40px; color:var(--ink-soft); font-size:.82rem; }
   @media (max-width:560px){ .card{ padding:24px 18px; } .stem{ font-size:1.16rem; } }
+
+/* media viva · atlas aberto Respira/Ventila */
+.media-atlas{margin:18px 0 24px;display:grid;gap:16px}
+.media-viva{margin:0;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2));border:1px solid var(--line,#ccd6d6);border-radius:8px;overflow:hidden}
+.media-viva img{display:block;width:100%;max-height:680px;object-fit:contain;height:auto;border-radius:6px;background:#fff}
+.media-viva figcaption{margin-top:9px;color:var(--ink-soft,var(--soft,#526568));font-size:.88rem;line-height:1.55}
+.media-viva figcaption b{color:var(--accent,var(--sig,#a24b2c))}
+.media-viva .media-credit{display:block;margin-top:6px;font-size:.76rem;opacity:.88}
+.media-viva .media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+
 </style>
 </head>
 <body>
@@ -78,6 +88,9 @@
     <h1>PCV <em>por dentro</em></h1>
     <p class="sub">O espelho do VCV. Agora você promete a pressão — e aceita o volume que vier. O volume preenche por uma exponencial governada por τ = R·C, e cai sem avisar quando o pulmão piora. O que é garantido nunca soa o alarme. Para a Dani.</p>
   </header>
+<!-- respira-open-atlas:begin -->
+<section class="media-atlas" aria-label="Atlas visual de Ventila 06"><figure class="media-viva" data-media="v06-biology-ventilation.gif"><img src="assets/respira-ventila-atlas/media/v06-biology-ventilation.gif" alt="Pressao positiva e insuflacao. Acompanhe pressao aplicada, expansao e troca; em PCV, tempo e gradiente determinam o volume entregue." loading="lazy" decoding="async"><figcaption><b>Ventila 06 · Pressao positiva e insuflacao.</b> Acompanhe pressao aplicada, expansao e troca; em PCV, tempo e gradiente determinam o volume entregue. <b>Limite:</b> Animacao simplifica parede toracica, esforco e heterogeneidade regional. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Biology_of_ventilation.gif" target="_blank" rel="license noopener">Biology of ventilation.gif</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
+<!-- respira-open-atlas:end -->
 
   <nav class="nav">
     <button class="active" data-pane="caso" onclick="go('caso')">Caso</button>
