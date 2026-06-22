@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Atlas de Pranchas</title>
+<meta name="description" content="Atlas visual da série Respira: as pranchas dos módulos 1 a 5, cada uma com detalhamento por painel e questões interativas para fixar o raciocínio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · Atlas de Pranchas">
+<meta property="og:description" content="As pranchas dos módulos 1 a 5, com detalhamento por painel e questões interativas.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/atlas.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · Atlas de Pranchas">
+<meta name="twitter:description" content="As pranchas dos módulos 1 a 5, com detalhamento por painel e questões interativas.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto}
+header{padding:46px 0 12px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}
+.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.1rem,6vw,3.1rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}
+h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.jump{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:26px 0 8px}
+.jump a{font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper-deep);border:1px solid var(--line);border-radius:99px;padding:7px 14px;text-decoration:none;transition:all .16s ease}
+.jump a:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}
+.figsec{margin:40px 0;scroll-margin-top:18px}
+.figsec>.mod-tag{font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;background:var(--accent);border-radius:6px;padding:3px 9px;letter-spacing:.06em}
+.figsec h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;letter-spacing:-.005em;margin:12px 0 4px}
+.figsec .essence{color:var(--ink-soft);font-size:1rem;margin-bottom:18px}
+figure{margin:0 0 22px}
+figure a{display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 14px 40px -24px var(--shadow);background:#fff}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:8px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+figcaption a{color:var(--accent-deep);font-weight:600;text-decoration:none}
+figcaption a:hover{text-decoration:underline}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:26px 28px;box-shadow:0 14px 40px -28px var(--shadow);margin-bottom:18px}
+.card h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.12rem;margin-bottom:6px}
+.card .lead{color:var(--ink-soft);font-size:.95rem;margin-bottom:16px}
+.painel{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line)}
+.painel:first-of-type{border-top:none}
+.painel .pn{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--paper-deep);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:.82rem;color:var(--accent-deep);margin-top:1px}
+.painel b{display:block;font-size:1rem;margin-bottom:2px}
+.painel p{color:var(--ink-soft);font-size:.95rem;line-height:1.5}
+.painel code{font-family:var(--mono);font-size:.86em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.quizhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.quizhead .qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600}
+.score{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);background:var(--paper-deep);border:1px solid var(--line);border-radius:99px;padding:4px 11px}
+.q{margin-bottom:18px}
+.q:last-child{margin-bottom:0}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.1rem;line-height:1.4;margin-bottom:12px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{text-align:left;font-family:inherit;font-size:.98rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:11px;padding:12px 15px;cursor:pointer;transition:all .16s ease;display:flex;gap:11px;align-items:flex-start;line-height:1.4}
+.opt .mark{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.78rem;color:var(--ink-soft)}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(2px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}
+.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}
+.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default}
+.fb{margin-top:12px;border-radius:11px;padding:13px 16px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:.96rem;line-height:1.55;color:#2c4a35;display:none}
+.fb.show{display:block}
+.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb b{font-weight:700}
+footer{text-align:center;margin-top:50px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}
+footer .credit{font-family:var(--mono);font-size:.72rem}
+@media(max-width:560px){.card{padding:22px 18px}.figsec h2{font-size:1.4rem}.stem{font-size:1.02rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Atlas de pranchas</div>
+  <h1>As pranchas <em>da série</em></h1>
+  <p class="sub">Cada módulo condensado em uma figura. Aqui elas vêm com detalhamento painel a painel e questões para transformar o cartaz em raciocínio. Toque numa prancha para abri-la em tamanho cheio.</p>
+  <nav class="jump" aria-label="Ir para a prancha">
+    <a href="#modulo-1">01 · Mecânica</a>
+    <a href="#modulo-2">02 · Oxigenação</a>
+    <a href="#modulo-3">03 · V/Q</a>
+    <a href="#modulo-4">04 · Gasometria</a>
+    <a href="#modulo-5">05 · Arquitetura</a>
+  </nav>
+</header>
+<main id="figuras"></main>
+<footer>
+  Respira — Atlas de pranchas · material didático<br>
+  <span class="credit">Figuras: Hexápode Project</span> · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira
+</footer>
+</div>
+<script>
+const FIGURAS=[
+{
+  id:'modulo-1', mod:'Módulo 01', titulo:'Como o ar entra e sai', href:'mvp1-interativo.html',
+  img:'assets/figuras/modulo-01.png',
+  alt:'Prancha do Módulo 1: vias aéreas, diafragma e caixa torácica; gradiente de pressão atmosférica, pleural e alveolar; resistência versus complacência; inspiração versus expiração; e o modelo RC com a constante de tempo tau igual a R vezes C.',
+  essence:'A mecânica da respiração: mover o ar é uma questão de pressão, cano e balão.',
+  detalhe:[
+    {n:'1',t:'Via aérea, diafragma e caixa torácica',d:'Via aérea superior (cavidade nasal, faringe, laringe) e inferior (traqueia, brônquios, bronquíolos, alvéolos). A caixa torácica protege e move; o diafragma é o principal músculo: ao contrair, desce e aumenta o volume.'},
+    {n:'2',t:'Gradiente de pressão',d:'O ar vai de maior para menor pressão. <code>Patm</code> é a referência (0 cmH₂O); <code>Ppl</code> é negativa (~ −5) e mantém os pulmões expandidos; <code>Palv</code> oscila ao redor da atmosférica (−1 a +1).'},
+    {n:'3',t:'Resistência × Complacência',d:'<code>R</code> = oposição ao fluxo nas vias aéreas (quanto flui para um dado gradiente). <code>C</code> = facilidade de distender (quanto volume para uma dada variação de pressão).'},
+    {n:'4',t:'Inspiração × Expiração',d:'Inspiração: diafragma desce, costelas sobem, volume ↑, Palv ↓, ar entra. Expiração: diafragma sobe, costelas descem, volume ↓, Palv ↑, ar sai.'},
+    {n:'5',t:'Conceito do simulador',d:'O sistema é um modelo RC com <code>τ = R × C</code>. τ determina quão rápido o volume atinge o novo equilíbrio: R maior → encher/esvaziar mais lento; C maior → respostas mais rápidas à pressão.'}
+  ],
+  quiz:[
+    {stem:'Por que a pressão pleural negativa (~ −5 cmH₂O) é importante?',choices:[['Mantém os pulmões expandidos',1],['Empurra o ar para fora',0],['Fecha os alvéolos',0],['Aumenta a resistência da via aérea',0]],
+      good:'<b>Mantém o pulmão aberto.</b> A Ppl negativa contrabalança a retração elástica do pulmão.',
+      bad:'A Ppl negativa é o que segura o pulmão expandido contra sua tendência a colapsar.'},
+    {stem:'Na inspiração normal, o diafragma:',choices:[['Contrai e desce, aumentando o volume torácico',1],['Relaxa e sobe',0],['Permanece imóvel',0],['Reduz o volume torácico',0]],
+      good:'<b>Contrai e desce.</b> Isso aumenta o volume, reduz a Palv e o ar entra.',
+      bad:'A inspiração é ativa: o diafragma contrai e desce para puxar o ar.'},
+    {stem:'Em τ = R × C, uma resistência muito alta:',choices:[['Torna encher e esvaziar mais lentos',1],['Acelera o esvaziamento',0],['Não afeta o tempo',0],['Zera a complacência',0]],
+      good:'<b>τ maior.</b> R alto alonga a constante de tempo — base do aprisionamento aéreo.',
+      bad:'R alto aumenta τ: o pulmão custa a esvaziar.'},
+    {stem:'Resistência e complacência descrevem, respectivamente:',choices:[['Oposição ao fluxo e facilidade de distensão',1],['Volume e frequência',0],['Pressão e pH',0],['Difusão e perfusão',0]],
+      good:'<b>Cano e balão.</b> R é oposição ao fluxo; C é facilidade de distender.',
+      bad:'R é problema de cano (fluxo); C é problema de balão (distensão).'}
+  ]
+},
+{
+  id:'modulo-2', mod:'Módulo 02', titulo:'Saturar não é respirar bem', href:'mvp2-interativo.html',
+  img:'assets/figuras/modulo-02.png',
+  alt:'Prancha do Módulo 2: oxigenação versus ventilação; curva de dissociação da oxi-hemoglobina com platô e porção íngreme; conteúdo arterial de oxigênio CaO2; limitações do oxímetro; e um caso de mesma SpO2 com hemoglobinas diferentes.',
+  essence:'Oxigenar e ventilar são processos distintos — e a SpO₂ não conta a história toda.',
+  detalhe:[
+    {n:'1',t:'Oxigenação × Ventilação',d:'Ventilação = mover ar para dentro e fora (mecânica e drive). Oxigenação = transferir O₂ ao sangue e entregá-lo aos tecidos (troca, perfusão, hemoglobina). Ventilar ≠ oxigenar.'},
+    {n:'2',t:'Curva da oxi-hemoglobina',d:'Saturação × <code>PO₂</code>. No <b>platô</b> (PO₂ > 60) grandes variações de PO₂ mudam pouco a saturação. Na <b>porção íngreme</b> (20–60) pequenas quedas liberam muito O₂ aos tecidos.'},
+    {n:'3',t:'Conteúdo arterial (CaO₂)',d:'<code>CaO₂ = 1,34 × Hb × SaO₂ + 0,003 × PaO₂</code>. A maior parte do O₂ viaja ligada à Hb (~98,5%); o dissolvido no plasma é mínimo (~1,5%).'},
+    {n:'4',t:'Limitações do oxímetro',d:'A SpO₂ estima a saturação periférica, mas <b>não mostra</b> PaO₂, CaO₂ nem débito cardíaco/oferta sistêmica. É útil, mas cega para ventilação (CO₂) e perfusão.'},
+    {n:'5',t:'Mesma SpO₂, Hb diferente',d:'Anêmico (Hb 7) e normal (Hb 15) ambos com SpO₂ 98% têm CaO₂ muito diferentes (~9,4 vs ~20,1 mL/dL). Mesma saturação, capacidade de transporte distinta.'}
+  ],
+  quiz:[
+    {stem:'Por que a curva O₂-Hb tem um platô acima de PO₂ 60?',choices:[['Grandes quedas de PO₂ mudam pouco a saturação',1],['A Hb perde toda a função',0],['A saturação cai a zero',0],['O CO₂ vira O₂',0]],
+      good:'<b>Platô protetor.</b> A SaO₂ resiste a variações de PaO₂ — por isso a SpO₂ pode enganar.',
+      bad:'Acima de 60 mmHg, a saturação quase não muda mesmo com queda de PaO₂.'},
+    {stem:'Dois pacientes com SpO₂ 98%, Hb 7 vs 15. O que difere?',choices:[['O conteúdo arterial de O₂ (CaO₂)',1],['A saturação',0],['O pH',0],['A frequência respiratória',0]],
+      good:'<b>O CaO₂.</b> Hb baixa transporta menos O₂, mesmo com saturação idêntica.',
+      bad:'Mesma SpO₂ não garante mesmo conteúdo: a Hb muda o CaO₂.'},
+    {stem:'O oxímetro de pulso NÃO informa diretamente:',choices:[['A PaO₂ e o débito cardíaco',1],['A saturação periférica',0],['A frequência de pulso',0],['A curva pletismográfica',0]],
+      good:'<b>PaO₂ e perfusão.</b> SpO₂ estima saturação; não mede PaO₂, CaO₂ nem oferta sistêmica.',
+      bad:'A SpO₂ é só saturação — PaO₂ e débito cardíaco ficam de fora.'},
+    {stem:'Uma boa SpO₂ garante boa respiração?',choices:[['Não — oxigenar e ventilar são eixos distintos',1],['Sim, sempre',0],['Sim, se a Hb for normal',0],['Só a SpO₂ importa',0]],
+      good:'<b>Eixos distintos.</b> Pode haver SpO₂ boa com CO₂ alto (ventilação ruim).',
+      bad:'A SpO₂ não vê o CO₂: ventilação e oxigenação são coisas diferentes.'}
+  ]
+},
+{
+  id:'modulo-3', mod:'Módulo 03', titulo:'Onde o ar e o sangue se encontram', href:'mvp3-interativo.html',
+  img:'assets/figuras/modulo-03.png',
+  alt:'Prancha do Módulo 3: unidade alvéolo-capilar normal; relação V/Q normal, shunt (V/Q baixo) e espaço morto (V/Q alto); o espectro V/Q; hipoxemia por V/Q e resposta ao oxigênio; e o gradiente alvéolo-arterial com refratariedade ao oxigênio.',
+  essence:'A troca depende do encontro entre ventilação e perfusão — e o O₂ revela o mecanismo.',
+  detalhe:[
+    {n:'1',t:'Alvéolo-capilar normal',d:'Membrana fina + surfactante. Alvéolo com <code>PAO₂ 100</code> / <code>PACO₂ 40</code>; sangue venoso (PvO₂ 40) sai arterializado (PaO₂ 95–100, PaCO₂ 40). Difusão eficiente.'},
+    {n:'2',t:'Normal, shunt e espaço morto',d:'V/Q ideal ≈ 0,8. <b>Shunt</b> (V/Q baixo): perfusão presente, ventilação ausente → sangue sem ar (pneumonia, atelectasia, edema). <b>Espaço morto</b> (V/Q alto): ventilação presente, perfusão ausente → ar sem sangue (embolia).'},
+    {n:'3',t:'Espectro V/Q',d:'De ausência de ventilação (shunt, V/Q → 0) a ausência de perfusão (espaço morto, V/Q → ∞), com o normal (0,8) no meio.'},
+    {n:'4',t:'Hipoxemia e resposta ao O₂',d:'Baixo V/Q (efeito shunt): resposta ao O₂ limitada (↑FiO₂ → pequeno ganho de PaO₂). Alto V/Q: resposta melhor. A resposta ao O₂ ajuda a reconhecer o mecanismo.'},
+    {n:'5',t:'Gradiente A–a e refratariedade',d:'<code>A–a = PAO₂ − PaO₂</code> (normal 5–15 em ar ambiente). Aumentado = defeito de troca. PaO₂ que não sobe com FiO₂ 100% sugere shunt. Integre gasometria, clínica e imagem.'}
+  ],
+  quiz:[
+    {stem:'V/Q baixo (efeito shunt) corresponde a:',choices:[['Perfusão preservada e ventilação reduzida',1],['Ventilação preservada e perfusão ausente',0],['Ambas ausentes',0],['Ambas aumentadas',0]],
+      good:'<b>Sangue sem ar.</b> Perfusão passa por unidade mal ventilada — hipoxemia pouco responsiva ao O₂.',
+      bad:'Shunt = V baixo com Q preservado: sangue passa sem oxigenar.'},
+    {stem:'A embolia pulmonar cria classicamente:',choices:[['Espaço morto (V/Q alto)',1],['Shunt verdadeiro',0],['V/Q ideal',0],['Baixa complacência pura',0]],
+      good:'<b>Ar sem sangue.</b> O coágulo bloqueia a perfusão; o alvéolo ventilado não troca.',
+      bad:'A TEP bloqueia sangue, não ar — isso é espaço morto.'},
+    {stem:'PaO₂ que quase não sobe com FiO₂ 100% sugere:',choices:[['Shunt importante',1],['Espaço morto puro',0],['Hiperventilação',0],['Curva deslocada à direita',0]],
+      good:'<b>Refratariedade.</b> É a assinatura do shunt (consolidação difusa, SDRA).',
+      bad:'O O₂ não corrige unidade fechada — refratariedade aponta shunt.'},
+    {stem:'Um gradiente A–a aumentado indica:',choices:[['Alteração de troca gasosa (V/Q, difusão, shunt)',1],['Hipoventilação pura',0],['Sempre normalidade',0],['Erro de coleta',0]],
+      good:'<b>Defeito de troca.</b> Hipoventilação pura mantém A–a normal; A–a alto aponta problema na troca.',
+      bad:'O A–a separa hipoventilação (A–a normal) de problemas de troca (A–a alto).'}
+  ]
+},
+{
+  id:'modulo-4', mod:'Módulo 04', titulo:'A gasometria como narrativa', href:'mvp4-interativo.html',
+  img:'assets/figuras/modulo-04.png',
+  alt:'Prancha do Módulo 4: ordem de leitura da gasometria (pH, PaCO2, HCO3); acidose e alcalose respiratórias; acidose e alcalose metabólicas; compensação esperada com a fórmula de Winter; e ânion gap com delta-delta.',
+  essence:'Três números contam uma história coerente — basta lê-los na ordem certa.',
+  detalhe:[
+    {n:'1',t:'Ordem de leitura',d:'<code>pH</code> define o distúrbio (acidemia < 7,35 / alcalemia > 7,45). <code>PaCO₂</code> é o componente respiratório; <code>HCO₃⁻</code> o metabólico. Mudam na mesma direção do pH → metabólico; em direção oposta → respiratório.'},
+    {n:'2',t:'Distúrbios respiratórios',d:'Acidose respiratória = ↑PaCO₂ (hipoventilação): DPOC, depressão do SNC, obstrução. Alcalose respiratória = ↓PaCO₂ (hiperventilação): ansiedade/dor/febre, hipóxia/altitude, gravidez.'},
+    {n:'3',t:'Distúrbios metabólicos',d:'Acidose metabólica = ↓HCO₃⁻ (ganho de ácido ou perda de base): lactato, cetose, IRA, diarreia, toxinas. Alcalose metabólica = ↑HCO₃⁻: vômitos/SNG, diuréticos, hiperaldosteronismo, carga alcalina.'},
+    {n:'4',t:'Compensação esperada',d:'Acidose metabólica (Winter): <code>PaCO₂ esperada = 1,5 × HCO₃⁻ + 8 ± 2</code>. Se a PaCO₂ medida foge do esperado, há distúrbio respiratório associado (acima → acidose; abaixo → alcalose).'},
+    {n:'5',t:'Ânion gap e delta-delta',d:'<code>AG = Na⁺ − (Cl⁻ + HCO₃⁻)</code> (referência 8–12). AG alto = ácido adicionado; AG normal = HCO₃⁻ perdido. <code>ΔAG/ΔHCO₃⁻</code> revela distúrbios mistos sobrepostos.'}
+  ],
+  quiz:[
+    {stem:'A primeira leitura da gasometria é:',choices:[['O pH (acidemia ou alcalemia)',1],['O ânion-gap',0],['A PaO₂',0],['O sódio',0]],
+      good:'<b>Comece pelo pH.</b> Ele define o lado; depois PaCO₂ (pulmão) e HCO₃⁻ (rim).',
+      bad:'O pH primeiro: ele orienta toda a narrativa.'},
+    {stem:'pH baixo com HCO₃⁻ baixo é, primariamente:',choices:[['Acidose metabólica',1],['Acidose respiratória',0],['Alcalose metabólica',0],['Alcalose respiratória',0]],
+      good:'<b>Metabólica.</b> O HCO₃⁻ acompanha o pH; a PaCO₂ baixa é compensação.',
+      bad:'HCO₃⁻ baixo puxando o pH para baixo = acidose metabólica.'},
+    {stem:'A fórmula de Winter serve para:',choices:[['Prever a PaCO₂ esperada na acidose metabólica',1],['Calcular o ânion-gap',0],['Medir a PaO₂',0],['Estimar a hemoglobina',0]],
+      good:'<b>Checar a compensação.</b> PaCO₂ esperada = 1,5×HCO₃⁻ + 8 ± 2.',
+      bad:'Winter verifica se a compensação respiratória é adequada.'},
+    {stem:'Um ânion-gap elevado aponta para:',choices:[['Ácido adicionado (lactato, cetoácidos, toxinas)',1],['Perda de bicarbonato',0],['Alcalose pura',0],['Sempre normalidade',0]],
+      good:'<b>Ácido novo.</b> AG alto = ácido adicionado; AG normal = HCO₃⁻ perdido (ex.: diarreia).',
+      bad:'AG alto = ácido adicionado; AG normal = bicarbonato perdido.'}
+  ]
+},
+{
+  id:'modulo-5', mod:'Módulo 05', titulo:'A arquitetura que respira', href:'mvp5-interativo.html',
+  img:'assets/figuras/modulo-05.png',
+  alt:'Prancha do Módulo 5: do pulmão ao ácino ao saco alveolar; o alvéolo em detalhe com pneumócitos tipo I e II, surfactante, macrófago e capilar; a barreira alvéolo-capilar e o caminho dos gases; a pleura e a pressão negativa; e a lei de Laplace com o papel do surfactante.',
+  essence:'A forma serve à função: parede fina, surfactante e pressão pleural mantêm a troca.',
+  detalhe:[
+    {n:'1',t:'Do pulmão ao saco alveolar',d:'Pulmão (milhões de unidades) → ácino (unidade funcional distal, sem cartilagem) → saco alveolar (conjunto de alvéolos que faz a troca).'},
+    {n:'2',t:'O alvéolo em detalhe',d:'<b>Pneumócito tipo I</b>: célula finíssima, ~95% da superfície, faz a difusão. <b>Tipo II</b>: produz surfactante e regenera o epitélio. <b>Macrófago</b>: defesa local. <b>Capilar</b>: acompanha o alvéolo.'},
+    {n:'3',t:'Barreira e caminho dos gases',d:'Surfactante → epitélio (tipo I) → membrana basal → endotélio → plasma → hemácia. O₂ difunde alvéolo→sangue e CO₂ sangue→alvéolo; a distância curta (~0,2–0,6 µm) torna a troca rápida.'},
+    {n:'4',t:'Pleura e pressão negativa',d:'Pleura parietal e visceral com espaço pleural (líquido + pressão ~ −5 cmH₂O). O pulmão puxa para dentro, a parede para fora: o equilíbrio cria a pressão negativa que mantém o alvéolo aberto.'},
+    {n:'5',t:'Lei de Laplace e surfactante',d:'<code>P = 2T/r</code>. Sem surfactante, alvéolos pequenos (r pequeno) têm pressão maior e esvaziam nos grandes → atelectasia. O surfactante reduz a tensão sobretudo nos pequenos, estabilizando-os.'}
+  ],
+  quiz:[
+    {stem:'O pneumócito tipo I é responsável por:',choices:[['A difusão gasosa (célula fina, ~95% da superfície)',1],['Produzir surfactante',0],['Fagocitar partículas',0],['Gerar muco',0]],
+      good:'<b>Difusão.</b> O tipo I é pavimentoso e finíssimo — a superfície de troca.',
+      bad:'Difusão é trabalho do tipo I; o surfactante é do tipo II.'},
+    {stem:'O surfactante, produzido pelo pneumócito tipo II:',choices:[['Reduz a tensão superficial e estabiliza o alvéolo',1],['Aumenta a tensão superficial',0],['Fecha o alvéolo',0],['Espessa a barreira de difusão',0]],
+      good:'<b>Reduz a tensão.</b> Menos tensão → menos colapso (Laplace) e menor trabalho.',
+      bad:'O surfactante baixa a tensão e mantém os alvéolos pequenos abertos.'},
+    {stem:'Por P = 2T/r, sem surfactante:',choices:[['Alvéolos menores têm pressão maior e tendem a colapsar',1],['Alvéolos maiores colapsam primeiro',0],['A pressão não depende do raio',0],['Todos ficam estáveis',0]],
+      good:'<b>P ∝ 1/r.</b> O raio pequeno gera pressão alta e esvazia no maior — atelectasia.',
+      bad:'Sem surfactante, o alvéolo pequeno (r menor) colapsa por ter maior pressão.'},
+    {stem:'A pressão pleural negativa mantém o pulmão aberto porque:',choices:[['Equilibra a retração do pulmão contra a parede torácica',1],['Enche o alvéolo de líquido',0],['Aumenta a tensão superficial',0],['Fecha a via aérea',0]],
+      good:'<b>Equilíbrio de forças.</b> Pulmão para dentro, parede para fora → Ppl negativa mantém a expansão.',
+      bad:'É o equilíbrio pulmão × parede que cria a Ppl negativa e mantém o pulmão aberto.'}
+  ]
+}
+];
+
+const L=['A','B','C','D'];
+const shuf=a=>{const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+const QS={};      // chave fig|qi -> opções embaralhadas
+const DONE={};    // chave fig -> nº respondidas
+const HITS={};    // chave fig -> nº corretas
+
+function render(){
+  document.getElementById('figuras').innerHTML=FIGURAS.map(f=>{
+    DONE[f.id]=0;HITS[f.id]=0;
+    const paineis=f.detalhe.map(d=>`<div class="painel"><span class="pn">${d.n}</span><div><b>${d.t}</b><p>${d.d}</p></div></div>`).join('');
+    const qs=f.quiz.map((q,qi)=>{
+      const opts=shuf(q.choices.map(c=>({t:c[0],ok:!!c[1]})));
+      QS[f.id+'|'+qi]=opts;
+      const botoes=opts.map((o,oi)=>`<button class="opt" onclick="choose('${f.id}',${qi},${oi})"><span class="mark">${L[oi]}</span><span>${o.t}</span></button>`).join('');
+      return `<div class="q"><div class="stem">${qi+1}. ${q.stem}</div><div class="opts" id="opts-${f.id}-${qi}">${botoes}</div><div class="fb" id="fb-${f.id}-${qi}"></div></div>`;
+    }).join('');
+    return `<section class="figsec" id="${f.id}">
+      <span class="mod-tag">${f.mod}</span>
+      <h2>${f.titulo}</h2>
+      <p class="essence">${f.essence}</p>
+      <figure>
+        <a href="${f.img}" target="_blank" rel="noopener"><img src="${f.img}" alt="${f.alt}" width="1448" height="1086" loading="lazy" decoding="async"></a>
+        <figcaption><span>Figura do ${f.mod} · Hexápode Project</span><a href="${f.img}" target="_blank" rel="noopener">abrir em tamanho cheio ↗</a></figcaption>
+      </figure>
+      <div class="card">
+        <h3>Detalhamento</h3>
+        <p class="lead">Os painéis da prancha, um a um.</p>
+        ${paineis}
+      </div>
+      <div class="card">
+        <div class="quizhead"><span class="qtag">Questões sobre a prancha</span><span class="score" id="score-${f.id}">0 / ${f.quiz.length}</span></div>
+        ${qs}
+        <p style="margin-top:8px"><a class="backlink" href="${f.href}">abrir o ${f.mod} interativo →</a></p>
+      </div>
+    </section>`;
+  }).join('');
+}
+
+function choose(figId,qi,oi){
+  const key=figId+'|'+qi;
+  const opts=QS[key];
+  if(!opts || opts._done) return;
+  opts._done=true;
+  const fig=FIGURAS.find(f=>f.id===figId);
+  const q=fig.quiz[qi];
+  const ok=opts[oi].ok;
+  document.querySelectorAll('#opts-'+figId+'-'+qi+' .opt').forEach((b,bi)=>{
+    b.disabled=true;
+    if(opts[bi].ok) b.classList.add('correct');
+    else if(bi===oi) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+  const fb=document.getElementById('fb-'+figId+'-'+qi);
+  fb.className='fb'+(ok?'':' bad');
+  fb.innerHTML=(ok?'✦ Isso. ':'↺ Quase. ')+(ok?q.good:q.bad);
+  fb.classList.add('show');
+  DONE[figId]++; if(ok) HITS[figId]++;
+  document.getElementById('score-'+figId).textContent=HITS[figId]+' / '+fig.quiz.length;
+}
+
+render();
+</script>
+</body>
+</html>
