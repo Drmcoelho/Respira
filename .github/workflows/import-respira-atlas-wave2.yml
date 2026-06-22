@@ -1,0 +1,64 @@
+name: Import Respira atlas wave 2
+
+on:
+  push:
+    branches:
+      - codex/respira-atlas-second-wave
+    paths:
+      - .github/workflows/import-respira-atlas-wave2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/respira-atlas-second-wave
+          fetch-depth: 0
+      - name: Download curated open media
+        shell: bash
+        run: |
+          set -euo pipefail
+          dest="assets/respira-ventila-atlas/media"
+          mkdir -p "$dest"
+          while IFS='|' read -r out url; do
+            echo "Downloading $out"
+            curl --fail --location --retry 4 --retry-delay 2 \
+              --user-agent "RespiraOpenAtlas/2.0 (educational archive)" \
+              "$url" --output "$dest/$out"
+            test -s "$dest/$out"
+            file "$dest/$out"
+          done <<'MEDIA'
+r07-spacer.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Respiratory%20Spacer.png?width=1400
+r07-inflamed-airway.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Blausen%200620%20Lungs%20NormalvsInflamedAirway.png?width=1400
+r09-ventilator.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Mechanical%20ventilator.jpg?width=1400
+r09-pressure-time.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Pressure%20time%20waveform.png?width=1400
+r10-ards.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/ARDS.png?width=1400
+r10-icu-therapist.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Respiratory%20therapist.jpg?width=1400
+v07-prvc.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Pressure%20regulated%20volume%20control%20graphic.jpg?width=1400
+v07-ventilator-classification.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Mechanical%20Ventilators.png?width=1400
+v09-flow-time.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Ventilatorwaveformsflowtime.jpg?width=1400
+v09-ventilator-pressures.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Ventilator%20pressures%20labeled.png?width=1400
+v11-copd.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/COPD.JPG?width=1400
+v11-pulmonary-oedema.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Pulmonary%20oedema.jpg?width=1400
+v12-endotracheal-tube.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Endotracheal%20Tube.png?width=1400
+v12-ventilator-circuit.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Circuito%20para%20Ventilacion%20Mecanica.jpg?width=1400
+v14-b-lines.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/B%20lines%20on%20a%20lung%20ultrasound%20of%20a%20patient%20with%20fibrosis.jpg?width=1400
+v14-seashore.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Sea%20shore%20sign%20on%20a%20lung%20ultrasound.jpg?width=1400
+v15-ventilator-schematic.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Ventilators.jpg?width=1400
+v15-openlung-cycle.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/Open%20source%20ventilator-OpenLung-02-mechanics%20resp%20cycling.png?width=1400
+v16-respiratory-therapy.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Respiratory%20therapy.jpg?width=1400
+v16-pvp1-ventilator.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/PVP-1%20Prototype%20Ventilator.jpg?width=1400
+MEDIA
+      - name: Commit imported assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/respira-ventila-atlas/media/
+          git commit -m "assets: download Respira atlas second wave"
+          git push origin HEAD:codex/respira-atlas-second-wave
