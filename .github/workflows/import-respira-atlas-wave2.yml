@@ -1,28 +1,25 @@
 name: Import Respira atlas wave 2
 
 on:
-  push:
+  pull_request:
     branches:
-      - codex/respira-atlas-second-wave
+      - main
     paths:
       - .github/workflows/import-respira-atlas-wave2.yml
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   download:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: codex/respira-atlas-second-wave
-          fetch-depth: 0
       - name: Download curated open media
         shell: bash
         run: |
           set -euo pipefail
-          dest="assets/respira-ventila-atlas/media"
+          dest="respira-atlas-wave2"
           mkdir -p "$dest"
           while IFS='|' read -r out url; do
             echo "Downloading $out"
@@ -53,12 +50,9 @@ v15-openlung-cycle.png|https://commons.wikimedia.org/wiki/Special:Redirect/file/
 v16-respiratory-therapy.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/Respiratory%20therapy.jpg?width=1400
 v16-pvp1-ventilator.jpg|https://commons.wikimedia.org/wiki/Special:Redirect/file/PVP-1%20Prototype%20Ventilator.jpg?width=1400
 MEDIA
-      - name: Commit imported assets
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/respira-ventila-atlas/media/
-          git commit -m "assets: download Respira atlas second wave"
-          git push origin HEAD:codex/respira-atlas-second-wave
+      - uses: actions/upload-artifact@v4
+        with:
+          name: respira-atlas-wave2
+          path: respira-atlas-wave2/
+          if-no-files-found: error
+          retention-days: 3
