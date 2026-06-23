@@ -1,0 +1,107 @@
+{
+  "project": "Respira",
+  "version": "canonical-file-map-v1",
+  "generated_at": "2026-06-06",
+  "policy": {
+    "canonical_pattern": "modules/respira-NN-slug.html",
+    "legacy_policy": "Arquivos mvp* permanecem como camada legada para não quebrar links já compartilhados.",
+    "pdf_export_note": "Geradores de PDF devem preferir esta lista canônica e, enquanto a extração para JSON de questões não estiver concluída, ler legacy_path como fonte das QUESTIONS."
+  },
+  "modules": [
+    {
+      "id": "respira-01",
+      "number": 1,
+      "title": "Como o ar entra e sai",
+      "slug": "mecanica",
+      "phase": "Fase I · Os fundamentos",
+      "canonical_path": "modules/respira-01-mecanica.html",
+      "legacy_path": "mvp1-interativo.html"
+    },
+    {
+      "id": "respira-02",
+      "number": 2,
+      "title": "Saturar não é respirar bem",
+      "slug": "oxigenacao",
+      "phase": "Fase I · Os fundamentos",
+      "canonical_path": "modules/respira-02-oxigenacao.html",
+      "legacy_path": "mvp2-interativo.html"
+    },
+    {
+      "id": "respira-03",
+      "number": 3,
+      "title": "Onde o ar e o sangue se encontram",
+      "slug": "vq-shunt-espaco-morto",
+      "phase": "Fase I · Os fundamentos",
+      "canonical_path": "modules/respira-03-vq-shunt-espaco-morto.html",
+      "legacy_path": "mvp3-interativo.html"
+    },
+    {
+      "id": "respira-04",
+      "number": 4,
+      "title": "A gasometria como narrativa",
+      "slug": "gasometria",
+      "phase": "Fase I · Os fundamentos",
+      "canonical_path": "modules/respira-04-gasometria.html",
+      "legacy_path": "mvp4-interativo.html"
+    },
+    {
+      "id": "respira-05",
+      "number": 5,
+      "title": "A arquitetura que respira",
+      "slug": "arquitetura-pulmonar",
+      "phase": "Fase II · Estrutura e doença",
+      "canonical_path": "modules/respira-05-arquitetura-pulmonar.html",
+      "legacy_path": "mvp5-interativo.html"
+    },
+    {
+      "id": "respira-06",
+      "number": 6,
+      "title": "As grandes síndromes",
+      "slug": "sindromes",
+      "phase": "Fase II · Estrutura e doença",
+      "canonical_path": "modules/respira-06-sindromes.html",
+      "legacy_path": "mvp6-interativo.html",
+      "base_path": "mvp6.html"
+    },
+    {
+      "id": "respira-07",
+      "number": 7,
+      "title": "A terapêutica — as forças",
+      "slug": "terapeutica",
+      "phase": "Fase III · A terapêutica",
+      "canonical_path": "modules/respira-07-terapeutica.html",
+      "legacy_path": "mvp7-interativo.html",
+      "base_path": "mvp7.html"
+    },
+    {
+      "id": "respira-08",
+      "number": 8,
+      "title": "Oxigênio e suporte não invasivo",
+      "slug": "oxigenio-suporte-nao-invasivo",
+      "phase": "Fase IV · A escalada de suporte",
+      "canonical_path": "modules/respira-08-oxigenio-suporte-nao-invasivo.html",
+      "legacy_path": "mvp8-interativo.html",
+      "base_path": "mvp8.html"
+    },
+    {
+      "id": "respira-09",
+      "number": 9,
+      "title": "Ventilação mecânica — os fundamentos",
+      "slug": "ventilacao-mecanica-fundamentos",
+      "phase": "Fase IV · A escalada de suporte",
+      "canonical_path": "modules/respira-09-ventilacao-mecanica-fundamentos.html",
+      "legacy_path": "mvp9-interativo.html",
+      "base_path": "mvp9.html"
+    },
+    {
+      "id": "respira-10",
+      "number": 10,
+      "title": "Ventilação protetora e desmame",
+      "slug": "ventilacao-protetora-desmame",
+      "phase": "Fase IV · A escalada de suporte",
+      "canonical_path": "modules/respira-10-ventilacao-protetora-desmame.html",
+      "legacy_path": "mvp10-interativo.html",
+      "base_path": "mvp10.html"
+    }
+  ]
+}

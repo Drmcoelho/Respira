@@ -185,6 +185,19 @@
     .readouts{ grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); }
     .ro .v{ font-size:1.05rem; }
   }
+
+/* media viva · atlas aberto Respira/Ventila */
+.media-atlas{margin:18px 0 24px;display:grid;gap:16px}
+.media-viva{margin:0;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2));border:1px solid var(--line,#ccd6d6);border-radius:8px;overflow:hidden}
+.media-viva img{display:block;width:100%;max-height:680px;object-fit:contain;height:auto;border-radius:6px;background:#fff}
+.media-viva figcaption{margin-top:9px;color:var(--ink-soft,var(--soft,#526568));font-size:.88rem;line-height:1.55}
+.media-viva figcaption b{color:var(--accent,var(--sig,#a24b2c))}
+.media-viva .media-credit{display:block;margin-top:6px;font-size:.76rem;opacity:.88}
+.media-viva .media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.media-sensitive{border:1px solid var(--line,#ccd6d6);border-radius:8px;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2))}
+.media-sensitive summary{cursor:pointer;font-weight:800;color:var(--accent,var(--sig,#a24b2c))}
+.media-sensitive .media-viva{margin-top:10px}
+
 </style>
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style>
 </head>
@@ -204,6 +217,11 @@
     <h1>Onde o ar e o sangue<br><em>se encontram</em></h1>
     <p class="sub">Entenda shunt e espaço morto — e depois faça o teste do oxigênio com o dedo: veja a PaO₂ subir no V/Q baixo e <strong>recusar-se a subir</strong> no shunt. Para a Dani.</p>
   </header>
+<!-- respira-open-atlas:begin -->
+<section class="media-atlas" aria-label="Atlas visual de Respira 03"><figure class="media-viva" data-media="r03-vq-mismatch.jpg"><img src="assets/respira-ventila-atlas/media/r03-vq-mismatch.jpg" alt="Mismatch ventilacao-perfusao. Compare distribuicao ventilatoria e perfusional e procure territorio ventilado que perdeu perfusao." loading="lazy" decoding="async"><figcaption><b>Respira 03 · Mismatch ventilacao-perfusao.</b> Compare distribuicao ventilatoria e perfusional e procure territorio ventilado que perdeu perfusao. <b>Limite:</b> A imagem demonstra um mecanismo regional; nao representa toda hipoxemia nem quantifica automaticamente gravidade hemodinamica. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Missmatch_V-P_Szintigrahie_der_Lunge_bei_Lungenembolie_58M_-_NM_-_001.jpg" target="_blank" rel="license noopener">Missmatch V-P Szintigrahie der Lunge bei Lungenembolie 58M - NM - 001.jpg</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure>
+<figure class="media-viva" data-media="r03-vq-paired.jpg"><img src="assets/respira-ventila-atlas/media/r03-vq-paired.jpg" alt="Ventilacao e perfusao lado a lado. Leia os dois mapas como pares: cada unidade alveolar precisa receber gas e sangue para trocar eficientemente." loading="lazy" decoding="async"><figcaption><b>Respira 03 · Ventilacao e perfusao lado a lado.</b> Leia os dois mapas como pares: cada unidade alveolar precisa receber gas e sangue para trocar eficientemente. <b>Limite:</b> Imagem pequena e historica nao deve ser usada para decisao diagnostica contemporanea isolada. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Gamma_Camera_Scan_of_Ventilation_and_Perfusion_of_Lungs.jpg" target="_blank" rel="license noopener">Gamma Camera Scan of Ventilation and Perfusion of Lungs.jpg</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
+<!-- respira-open-atlas:end -->
+
 
   <div class="segbar">
     <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>

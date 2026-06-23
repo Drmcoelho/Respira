@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventila · 15 · Tutor Visual — PSV · VCV · PCV</title>
+<style>
+  :root{
+    --bg:#0b1015; --bg2:#0e151c; --panel:#121b24; --panel-edge:#1d2a36;
+    --ink:#dfe9f0; --ink-dim:#8aa0b2; --ink-faint:#5d7384;
+    --press:#f5b32c; --flow:#37d6c3; --volume:#7fe3a3;
+    --tissue:#e07a8c; --tissue-strain:#ff5a52;
+    --drive:#8fd0ff; --warn:#ff5a52; --ok:#37d6c3;
+    --grid:#16222c;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:radial-gradient(1200px 600px at 70% -10%, #13202b 0%, var(--bg) 55%) fixed;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  body{padding:18px;max-width:1200px;margin:0 auto}
+  .backlink{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--ink-faint);text-decoration:none;margin-bottom:8px}
+  .backlink:hover{color:var(--drive)}
+  header{margin-bottom:14px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--drive);margin-bottom:4px}
+  .titlerow{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  header h1{font-size:18px;font-weight:600;letter-spacing:.3px;margin:0}
+  header h1 .tag{font-family:var(--mono);font-weight:700;color:var(--press)}
+  .thesis{margin-top:8px;font-size:13.5px;color:var(--ink-dim);line-height:1.5}
+  .thesis b{color:var(--ink)} .thesis .drv{color:var(--drive);font-weight:600} .thesis .res{color:var(--press);font-weight:600}
+  .modebar{display:flex;align-items:center;gap:14px;margin-top:12px;flex-wrap:wrap}
+  .seg{display:inline-flex;background:#0b1218;border:1px solid var(--panel-edge);border-radius:10px;padding:3px;gap:3px}
+  .seg button{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.5px;color:var(--ink-dim);background:transparent;border:none;border-radius:7px;padding:7px 18px;cursor:pointer;transition:all .15s}
+  .seg button.active{color:#06121a;background:var(--drive);box-shadow:0 0 12px rgba(143,208,255,.35)}
+  .modehint{font-size:12px;color:var(--ink-faint);font-family:var(--mono)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .formulas{background:linear-gradient(180deg,#0e1820,#0b1218);border:1px solid var(--panel-edge);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+  .formulas-head{display:flex;align-items:baseline;gap:12px;margin-bottom:11px;flex-wrap:wrap}
+  .formulas-title{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--volume)}
+  .formulas-sub{font-size:11.5px;color:var(--ink-faint);font-family:var(--mono)}
+  .formula-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media (max-width:900px){.formula-grid{grid-template-columns:1fr}}
+  .fcard{background:#0b1218;border:1px solid var(--panel-edge);border-radius:9px;padding:10px 12px;border-left:3px solid var(--volume)}
+  .fcard.analogy{border-left-color:var(--drive)}
+  .feq{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:600;margin-bottom:5px}
+  .feq i{color:var(--flow);font-style:italic}
+  .fnote{font-size:11.5px;line-height:1.5;color:var(--ink-dim)} .fnote b{color:var(--ink)}
+  .analogy-modes{margin-top:8px;padding-top:8px;border-top:1px dashed var(--panel-edge);display:flex;flex-direction:column;gap:3px;font-size:11px;line-height:1.4}
+  .am-psv{color:var(--drive)} .am-pcv{color:var(--volume)} .am-vcv{color:var(--press)}
+  .panel{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--panel-edge);border-radius:12px;padding:16px 16px 14px;box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 8px 24px rgba(0,0,0,.35)}
+  .panel h2{margin:0 0 12px;font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-dim);font-weight:600;display:flex;align-items:center;gap:8px}
+  .panel h2 .dot{width:7px;height:7px;border-radius:50%;background:var(--drive);box-shadow:0 0 8px var(--drive)}
+  h2.lung .dot{background:var(--tissue);box-shadow:0 0 8px var(--tissue)}
+  h2.plots .dot{background:var(--flow);box-shadow:0 0 8px var(--flow)}
+  h2.tutor .dot{background:var(--volume);box-shadow:0 0 8px var(--volume)}
+  .ctl{margin:0 0 15px}
+  .ctl .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .ctl label{font-size:13px;font-weight:600}
+  .ctl .who{font-size:10px;font-family:var(--mono);letter-spacing:.5px;padding:1px 6px;border-radius:5px;border:1px solid var(--panel-edge);margin-left:7px;color:var(--ink-faint);text-transform:uppercase;vertical-align:middle}
+  .ctl .who.vent{color:var(--drive);border-color:#27435a} .ctl .who.pat{color:var(--tissue);border-color:#5a2b34} .ctl .who.rate{color:var(--volume);border-color:#2e5a40}
+  .ctl .val{font-family:var(--mono);font-size:15px} .ctl .val small{color:var(--ink-faint);font-size:11px}
+  input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:3px;background:#22323f;outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--drive);cursor:pointer;border:3px solid #0b1015;box-shadow:0 0 0 1px #27435a,0 0 10px rgba(143,208,255,.5)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--drive);cursor:pointer;border:3px solid #0b1015}
+  input.patient[type=range]::-webkit-slider-thumb{background:var(--tissue);box-shadow:0 0 0 1px #5a2b34,0 0 10px rgba(224,122,140,.5)}
+  input.patient[type=range]::-moz-range-thumb{background:var(--tissue)}
+  input.rate[type=range]::-webkit-slider-thumb{background:var(--volume);box-shadow:0 0 0 1px #2e5a40,0 0 10px rgba(127,227,163,.5)}
+  input.rate[type=range]::-moz-range-thumb{background:var(--volume)}
+  .hidden{display:none !important}
+  #readouts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:4px}
+  .ro{background:#0b1218;border:1px solid var(--panel-edge);border-radius:8px;padding:8px 10px;position:relative}
+  .ro .k{font-size:9.5px;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-faint)}
+  .ro .v{font-family:var(--mono);font-size:18px;margin-top:2px;color:var(--ink)} .ro .v small{font-size:11px;color:var(--ink-faint)}
+  .ro .badge{position:absolute;top:7px;right:8px;font-family:var(--mono);font-size:8px;letter-spacing:.6px;padding:1px 5px;border-radius:4px;text-transform:uppercase}
+  .ro .badge.res{color:var(--press);border:1px solid rgba(245,179,44,.4);background:rgba(245,179,44,.08)}
+  .ro .badge.drv{color:var(--drive);border:1px solid rgba(143,208,255,.4);background:rgba(143,208,255,.08)}
+  .ro.res .v{color:var(--press)} .ro.span2{grid-column:span 2} .ro.span3{grid-column:span 3}
+  .ro.flag{display:flex;align-items:center;gap:10px}
+  .pill{font-family:var(--mono);font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px;letter-spacing:.5px}
+  .pill.no{color:var(--ok);background:rgba(55,214,195,.12);border:1px solid rgba(55,214,195,.3)}
+  .pill.yes{color:var(--warn);background:rgba(255,90,82,.14);border:1px solid rgba(255,90,82,.4);animation:blink 1.1s steps(2,end) infinite}
+  @keyframes blink{50%{opacity:.45}}
+  .invalid{grid-column:span 3;background:rgba(255,90,82,.1);border:1px solid rgba(255,90,82,.4);border-radius:8px;padding:8px 11px;font-size:12px;color:#ffc9c5;font-family:var(--mono)}
+  .xray{grid-column:span 3;background:#0b1218;border:1px solid var(--panel-edge);border-left:3px solid var(--press);border-radius:8px;padding:10px 12px;margin-top:2px}
+  .xray-h{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-faint);margin-bottom:8px}
+  .xray-row{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:12px;padding:3px 0;line-height:1.3}
+  .xray-row.floor{opacity:.75}
+  .xr-lbl{flex:0 0 auto;color:var(--ink);display:flex;align-items:center;gap:6px;min-width:120px}
+  .xr-eq{flex:1 1 auto;color:var(--ink-dim)} .xr-val{flex:0 0 auto;color:var(--press);font-weight:700}
+  .sw{width:9px;height:9px;border-radius:2px;display:inline-block}
+  .sw.warn{background:var(--warn)} .sw.vol{background:var(--volume)} .sw.peep{background:#3f5664}
+  .xray-sum{margin-top:8px;padding-top:8px;border-top:1px dashed var(--panel-edge);font-family:var(--mono);font-size:12px;color:var(--ink-dim)} .xray-sum b{color:var(--press)}
+  .xray-warn{margin-top:8px;font-family:var(--mono);font-size:11.5px;line-height:1.4;color:#ffd9a0;background:rgba(245,179,44,.08);border:1px dashed rgba(245,179,44,.4);border-radius:6px;padding:6px 9px} .xray-warn b{color:var(--warn)}
+  .legend{margin-top:14px;font-size:11.5px;color:var(--ink-dim);line-height:1.6;border-top:1px dashed var(--panel-edge);padding-top:11px} .legend b{color:var(--ink)}
+  .legend .c-drv{color:var(--drive)} .legend .c-pat{color:var(--tissue)} .legend .c-res{color:var(--press)} .legend .c-rate{color:var(--volume)}
+  .plotwrap{position:relative}
+  canvas{width:100%;display:block;border-radius:8px;background:#080d12;border:1px solid var(--panel-edge)}
+  .plotwrap + .plotwrap{margin-top:10px}
+  .axlabel{position:absolute;top:6px;left:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.4px}
+  .axlabel.p{color:var(--press)} .axlabel.q{color:var(--flow)} .axlabel.v{color:var(--volume)}
+  .axrole{position:absolute;top:6px;right:10px;font-family:var(--mono);font-size:9px;letter-spacing:.6px;text-transform:uppercase;padding:1px 5px;border-radius:4px}
+  .axrole.res{color:var(--press);border:1px solid rgba(245,179,44,.35)}
+  .axrole.drv{color:var(--drive);border:1px solid rgba(143,208,255,.35)}
+  .axrole.cycle{color:var(--flow);border:1px solid rgba(55,214,195,.4)}
+  .lungbox{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:230px}
+  svg{display:block;max-width:100%}
+  .phase-tag{margin-top:8px;font-family:var(--mono);font-size:12.5px;letter-spacing:1px;color:var(--ink-dim)}
+  .phase-tag b.insp{color:var(--press)} .phase-tag b.exp{color:var(--flow)} .phase-tag b.pause{color:var(--ink)}
+  .qmeta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:6px;letter-spacing:.5px}
+  .q{font-size:14.5px;line-height:1.5;margin:0 0 12px}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opt{text-align:left;font-size:13.5px;color:var(--ink);background:#0b1218;border:1px solid var(--panel-edge);border-radius:9px;padding:11px 13px;cursor:pointer;transition:border-color .15s,background .15s;font-family:var(--sans)}
+  .opt:hover:not(:disabled){border-color:#2f4658;background:#0e161d}
+  .opt:disabled{cursor:default}
+  .opt.correct{border-color:var(--ok);background:rgba(55,214,195,.1);color:#bdf3ea}
+  .opt.wrong{border-color:var(--warn);background:rgba(255,90,82,.1);color:#ffc9c5}
+  .opt .key{font-family:var(--mono);color:var(--ink-faint);margin-right:8px}
+  .fb{margin-top:13px;font-size:13px;line-height:1.55;color:var(--ink-dim);border-left:2px solid var(--ok);padding:4px 0 4px 12px;display:none}
+  .fb.show{display:block}
+  .fb .hint{display:block;margin-top:6px;color:var(--drive);font-family:var(--mono);font-size:12px}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+  .nav .count{font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+  .btn{font-size:13px;font-weight:600;color:#06121a;background:var(--drive);border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:var(--sans)}
+  .btn:disabled{opacity:.35;cursor:default}
+  .btn.ghost{background:transparent;color:var(--ink-dim);border:1px solid var(--panel-edge)}
+  .clinic{margin-top:16px} .clinic-head{margin-bottom:14px}
+  .clinic-title{font-size:16px;font-weight:600;letter-spacing:.3px;margin:0;color:var(--ink)} .clinic-title span{color:var(--drive);font-weight:600}
+  .clinic-sub{display:block;margin-top:5px;font-size:12.5px;color:var(--ink-faint);font-family:var(--mono)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.cards{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--panel-edge);border-radius:12px;padding:15px 15px 14px;box-shadow:0 8px 24px rgba(0,0,0,.3);border-top:3px solid var(--ink-faint)}
+  .card.psv{border-top-color:var(--drive)} .card.vcv{border-top-color:var(--press)} .card.pcv{border-top-color:var(--volume);opacity:.92}
+  .card-tag{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;color:var(--ink)}
+  .card.psv .card-tag{color:var(--drive)} .card.vcv .card-tag{color:var(--press)} .card.pcv .card-tag{color:var(--volume)}
+  .card-name{font-size:12px;color:var(--ink-dim);margin:2px 0 9px;letter-spacing:.3px}
+  .card p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin:0 0 10px} .card p b{color:var(--ink)}
+  .card-warn{font-size:11.5px;line-height:1.45;color:#ffd9a0;background:rgba(245,179,44,.07);border:1px dashed rgba(245,179,44,.35);border-radius:6px;padding:6px 9px} .card-warn b{color:var(--warn)}
+  .clinic-tutor{margin-top:14px}
+  .formula-tutor h2.formulas-q .dot{background:var(--volume);box-shadow:0 0 8px var(--volume)}
+  .pheno-head{margin-top:18px;margin-bottom:12px}
+  .pheno-title{font-size:14px;font-weight:600;margin:0;color:var(--ink);letter-spacing:.3px}
+  .pheno-sub{display:block;margin-top:4px;font-size:12px;color:var(--ink-faint);font-family:var(--mono)}
+  .phenos{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.phenos{grid-template-columns:1fr}}
+  .pheno{background:#0b1218;border:1px solid var(--panel-edge);border-radius:11px;padding:14px;border-left:3px solid var(--ink-faint)}
+  .pheno.obstr{border-left-color:var(--flow)} .pheno.restr{border-left-color:var(--tissue)} .pheno.mista{border-left-color:var(--press)}
+  .pheno-tag{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.6px;color:var(--ink)}
+  .pheno.obstr .pheno-tag{color:var(--flow)} .pheno.restr .pheno-tag{color:var(--tissue)} .pheno.mista .pheno-tag{color:var(--press)}
+  .pheno-mech{font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);margin:6px 0 9px;padding-bottom:8px;border-bottom:1px dashed var(--panel-edge)} .pheno-mech b{color:var(--ink)}
+  .pheno p{font-size:12.5px;line-height:1.55;color:var(--ink-dim);margin:0 0 9px} .pheno p b{color:var(--ink)} .pheno p i{color:var(--ink-dim);font-style:italic}
+  .pheno-try{font-size:11px;line-height:1.4;color:var(--drive);font-family:var(--mono)} .pheno-try b{color:var(--ink)}
+  .clinic-disclaimer{margin-top:14px;font-size:12px;line-height:1.5;color:var(--ink-faint);background:#0b1218;border:1px solid var(--panel-edge);border-left:3px solid var(--drive);border-radius:8px;padding:11px 14px} .clinic-disclaimer b{color:var(--ink-dim)}
+  .flowroles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.flowroles{grid-template-columns:1fr}}
+  .flowrole{background:#0b1218;border:1px solid var(--panel-edge);border-radius:11px;padding:14px}
+  .fr-mode{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;display:inline-block;padding:2px 9px;border-radius:6px;margin-bottom:8px}
+  .fr-mode.psv-c{color:var(--drive);background:rgba(143,208,255,.1);border:1px solid rgba(143,208,255,.3)}
+  .fr-mode.vcv-c{color:var(--press);background:rgba(245,179,44,.1);border:1px solid rgba(245,179,44,.3)}
+  .fr-mode.pcv-c{color:var(--volume);background:rgba(127,227,163,.1);border:1px solid rgba(127,227,163,.3)}
+  .fr-role{font-size:13px;color:var(--ink);margin-bottom:8px} .fr-role b{color:var(--ink)}
+  .flowrole p{font-size:12.5px;line-height:1.55;color:var(--ink-dim);margin:0} .flowrole p b{color:var(--ink)}
+  .flow-insight{margin-top:13px;font-size:13px;line-height:1.6;color:var(--ink-dim);background:#0b1218;border:1px solid var(--panel-edge);border-left:3px solid var(--flow);border-radius:8px;padding:12px 14px}
+  .flow-insight b{color:var(--ink)} .flow-insight i{color:var(--flow);font-style:italic}
+  .flow-insight.law{border-left-color:var(--volume)} .flow-insight.decel{border-left-color:var(--flow)}
+  .decel-chain{margin:8px 0;font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--flow);background:rgba(55,214,195,.06);border:1px dashed rgba(55,214,195,.3);border-radius:6px;padding:8px 10px}
+  .flow-insight.nope{border-left-color:var(--warn)}
+  .nope-row{font-size:12px;line-height:1.5;color:var(--ink-dim);margin-top:5px;padding-left:10px;border-left:2px solid rgba(255,90,82,.3)} .nope-row b{color:var(--ink)}
+  .biophys{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:900px){.biophys{grid-template-columns:1fr}}
+  .bcard{background:#0b1218;border:1px solid var(--panel-edge);border-radius:10px;padding:13px;border-left:3px solid var(--tissue)} .bcard.alert{border-left-color:var(--warn)}
+  .bcard-h{font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.4px;color:var(--tissue);margin-bottom:7px} .bcard.alert .bcard-h{color:var(--warn)}
+  .bcard p{font-size:12.5px;line-height:1.55;color:var(--ink-dim);margin:0} .bcard p b{color:var(--ink)} .bcard p i{font-style:italic;color:var(--ink-dim)}
+  .dose-reason{background:#0b1218;border:1px solid var(--panel-edge);border-radius:11px;padding:15px}
+  .dose-reason>p{font-size:13px;line-height:1.55;color:var(--ink-dim);margin:0 0 11px} .dose-reason>p b{color:var(--ink)}
+  .dose-row{font-size:12.5px;line-height:1.6;color:var(--ink-dim);margin:0 0 10px;padding-left:12px;border-left:2px solid var(--panel-edge)} .dose-row b{color:var(--ink)} .dose-row i{color:var(--ink-dim);font-style:italic}
+  .dose-k{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--drive);margin-right:6px}
+  .dose-insight{margin-top:11px;font-size:12.5px;line-height:1.55;color:var(--drive);background:rgba(143,208,255,.06);border:1px dashed rgba(143,208,255,.35);border-radius:7px;padding:9px 11px} .dose-insight b{color:var(--ink)}
+  .dose-warn{margin-top:11px;font-size:11.5px;line-height:1.5;color:#ffd9a0;background:rgba(245,179,44,.07);border:1px dashed rgba(245,179,44,.4);border-radius:7px;padding:9px 11px} .dose-warn b{color:var(--warn)}
+  .synth-table{background:#0b1218;border:1px solid var(--panel-edge);border-radius:11px;padding:6px 6px 0;overflow-x:auto}
+  .synth-table table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:560px}
+  .synth-table th{text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-faint);padding:10px 11px;border-bottom:1px solid var(--panel-edge);font-weight:600}
+  .synth-table td{padding:11px;color:var(--ink-dim);line-height:1.4;border-bottom:1px solid rgba(29,42,54,.5);vertical-align:top} .synth-table td b{font-family:var(--mono);letter-spacing:.5px}
+  .synth-table tr:last-child td{border-bottom:none}
+  .row-psv td:first-child b{color:var(--drive)} .row-vcv td:first-child b{color:var(--press)} .row-pcv td:first-child b{color:var(--volume)}
+  .synth-note{font-size:11px;line-height:1.5;color:var(--ink-faint);padding:10px 11px 12px;font-style:italic}
+  .disclaimer{margin-top:16px;font-size:12px;line-height:1.5;color:var(--ink-faint);background:#0b1218;border:1px solid var(--panel-edge);border-left:3px solid var(--warn);border-radius:8px;padding:11px 14px} .disclaimer b{color:var(--ink-dim)}
+  /* ===== Tutor gráfico (Ventila 15) ===== */
+  .gwrap{display:grid;grid-template-columns:1fr;gap:12px}
+  .gcanvas-wrap{position:relative}
+  canvas.gq{height:200px}
+  .gcap{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:6px;letter-spacing:.4px;text-align:center}
+  .bridges{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media (max-width:900px){.bridges{grid-template-columns:1fr}}
+  .bridge{display:block;text-decoration:none;background:#0b1218;border:1px solid var(--panel-edge);border-left:3px solid var(--drive);border-radius:9px;padding:11px 13px;color:var(--ink-dim);font-size:12.5px;line-height:1.4}
+  .bridge:hover{border-color:#2f4658} .bridge b{color:var(--ink);display:block;font-size:13px;margin-bottom:2px}
+  .bridge .bn{font-family:var(--mono);font-size:10px;color:var(--drive);letter-spacing:.5px}
+  footer{margin-top:22px;text-align:center;font-family:var(--mono);font-size:11px;color:var(--ink-faint);line-height:1.7}
+  footer .dani{color:var(--tissue)}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="backlink" href="ventila.html">← Ventila · todos os módulos</a>
+  <div class="kicker">Ventila · Módulo 15 · consolidação dos modos</div>
+  <div class="titlerow">
+    <h1>Tutor visual — <span class="tag">PSV · VCV · PCV</span> · a inversão causal</h1>
+    <span class="modehint">mesmo paciente (C, R, FR) · troque o modo e compare</span>
+  </div>
+  <div class="thesis" id="thesis"></div>
+  <div class="modebar">
+    <div class="seg" role="tablist">
+      <button id="mPSV" class="active" onclick="setMode('PSV')">PSV</button>
+      <button id="mVCV" onclick="setMode('VCV')">VCV</button>
+      <button id="mPCV" onclick="setMode('PCV')">PCV</button>
+    </div>
+    <span class="modehint" id="modeflip">Em PSV o ventilador impõe pressão.</span>
+  </div>
+</header>
+
+<section class="formulas" aria-label="invariantes">
+  <div class="formulas-head">
+    <span class="formulas-title">Fórmulas que nunca mudam</span>
+    <span class="formulas-sub">a régua mental — vale em PSV, VCV e PCV</span>
+  </div>
+  <div class="formula-grid">
+    <div class="fcard"><div class="feq">Fluxo = Volume / Tempo</div>
+      <div class="fnote">fluxo é uma <b>razão</b> (velocidade do ar), não um denominador. O denominador é o <b>tempo</b>. Atenção: aumentar o tempo só reduz o fluxo <b>quando o volume é fixo</b> — não vale em modo pressórico, onde o fluxo decai pela curva.</div></div>
+    <div class="fcard"><div class="feq">Volume = Fluxo × Tempo</div>
+      <div class="fnote">se o fluxo fosse constante, volume = base × altura.</div></div>
+    <div class="fcard"><div class="feq">Volume = área <i>temporal</i> sob a curva fluxo×tempo</div>
+      <div class="fnote">soma dos pedacinhos de fluxo ao longo do tempo. <b>Não</b> é área anatômica do brônquio.</div></div>
+    <div class="fcard"><div class="feq">Paw = PEEP + V/C + R × V̇</div>
+      <div class="fnote"><b>Paw</b> = pressão de via aérea no modelo · <b>V/C</b> = pressão elástica · <b>R×V̇</b> = pressão resistiva.</div></div>
+    <div class="fcard"><div class="feq">τ = R × C</div>
+      <div class="fnote">o relógio do pulmão. R↑ ou C↑ alongam enchimento/esvaziamento.</div></div>
+    <div class="fcard analogy"><div class="feq">A analogia única</div>
+      <div class="fnote"><b>torneira</b> = pressão · <b>canudo estreito</b> = resistência · <b>balão</b> = complacência · <b>velocidade da água</b> = fluxo · <b>água acumulada</b> = volume · <b>tempo de torneira aberta</b> = Ti.
+      <div class="analogy-modes">
+        <span><b class="am-psv">PSV</b> você define a força da torneira; o paciente abre e fecha.</span>
+        <span><b class="am-pcv">PCV</b> você define a força da torneira e o tempo aberta.</span>
+        <span><b class="am-vcv">VCV</b> você define quanta água e a velocidade; a pressão aparece.</span>
+      </div></div></div>
+  </div>
+</section>
+
+<div class="grid">
+  <section class="panel">
+    <h2><span class="dot"></span><span id="ventTitle">Ventilador em PSV</span></h2>
+    <div class="ctl" id="ctl-ps">
+      <div class="row"><label>Pressão de suporte (PS)<span class="who vent">ajuste</span></label><span class="val"><span id="psv">12</span> <small>cmH₂O</small></span></div>
+      <input id="ps" type="range" min="5" max="25" step="1" value="12">
+    </div>
+    <div class="ctl hidden" id="ctl-vt">
+      <div class="row"><label>Volume corrente (VT)<span class="who vent">ajuste</span></label><span class="val"><span id="vtv">450</span> <small>mL</small></span></div>
+      <input id="vt" type="range" min="300" max="700" step="10" value="450">
+    </div>
+    <div class="ctl hidden" id="ctl-pinsp">
+      <div class="row"><label>Pressão inspiratória acima da PEEP (ΔP)<span class="who vent">ajuste</span></label><span class="val"><span id="pinspv">15</span> <small>cmH₂O</small></span></div>
+      <input id="pinsp" type="range" min="5" max="30" step="1" value="15">
+    </div>
+    <div class="ctl hidden" id="ctl-ti">
+      <div class="row"><label>Tempo inspiratório (Ti)<span class="who vent">ajuste</span></label><span class="val"><span id="tiv">1.0</span> <small>s</small></span></div>
+      <input id="ti" type="range" min="0.4" max="2.0" step="0.1" value="1.0">
+    </div>
+    <div class="ctl">
+      <div class="row"><label>Complacência (C)<span class="who pat">paciente</span></label><span class="val"><span id="cv">50</span> <small>mL/cmH₂O</small></span></div>
+      <input id="c" class="patient" type="range" min="20" max="80" step="1" value="50">
+    </div>
+    <div class="ctl">
+      <div class="row"><label>Resistência (R)<span class="who pat">paciente</span></label><span class="val"><span id="rv">10</span> <small>cmH₂O/(L/s)</small></span></div>
+      <input id="r" class="patient" type="range" min="5" max="25" step="1" value="10">
+    </div>
+    <div class="ctl">
+      <div class="row"><label>Frequência (FR)<span class="who rate">ritmo</span></label><span class="val"><span id="frv">15</span> <small>irpm → ciclo <span id="tcyc">4.0</span>s</small></span></div>
+      <input id="fr" class="rate" type="range" min="8" max="30" step="1" value="15">
+    </div>
+    <div id="readouts"></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section class="panel">
+    <h2 class="lung"><span class="dot"></span>Pulmão esquemático</h2>
+    <div class="lungbox">
+      <svg id="lung" viewBox="0 0 260 240" width="240" height="220" aria-label="pulmão animado">
+        <g stroke="#3a4d5c" stroke-width="6" fill="none" stroke-linecap="round">
+          <path d="M130 14 L130 74"/><path d="M130 74 L98 100"/><path d="M130 74 L162 100"/>
+        </g>
+        <g id="lungGroup">
+          <path id="lungL" d="M120 88 C 92 84,64 100,56 138 C 50 172,60 208,86 218 C 104 224,120 210,122 184 C 124 146,124 114,120 88 Z"/>
+          <path id="lungR" d="M140 88 C 168 84,196 100,204 138 C 210 172,200 208,174 218 C 156 224,140 210,138 184 C 136 146,136 114,140 88 Z"/>
+        </g>
+      </svg>
+      <div class="phase-tag" id="phase">— <b class="insp">INSPIRAÇÃO</b></div>
+    </div>
+    <div class="legend" id="lungnote"></div>
+  </section>
+
+  <section class="panel">
+    <h2 class="plots"><span class="dot"></span>Curvas sintéticas</h2>
+    <div class="plotwrap"><canvas id="cvP" height="120"></canvas><div class="axlabel p">Pressão (cmH₂O)</div><div class="axrole" id="roleP"></div></div>
+    <div class="plotwrap"><canvas id="cvQ" height="120"></canvas><div class="axlabel q">Fluxo (L/s)</div><div class="axrole" id="roleQ"></div></div>
+    <div class="plotwrap"><canvas id="cvV" height="120"></canvas><div class="axlabel v">Volume (mL)</div><div class="axrole" id="roleV"></div></div>
+  </section>
+
+  <section class="panel">
+    <h2 class="tutor"><span class="dot"></span>Tutor socrático</h2>
+    <div class="qmeta" id="qmeta"></div>
+    <p class="q" id="qtext"></p>
+    <div class="opts" id="opts"></div>
+    <div class="fb" id="fb"></div>
+    <div class="nav"><span class="count" id="qcount"></span><div><button class="btn ghost" id="prev">Anterior</button><button class="btn" id="next">Próxima</button></div></div>
+  </section>
+</div>
+
+<section class="clinic">
+  <div class="clinic-head">
+    <h2 class="clinic-title">Do monitor ao leito · <span>quando uso cada modo?</span></h2>
+    <span class="clinic-sub">a pergunta não é só "o que o modo faz", mas "em quem faz sentido"</span>
+  </div>
+  <div class="cards">
+    <div class="card psv"><div class="card-tag">PSV</div><div class="card-name">suporte parcial</div>
+      <p>Faz sentido quando o paciente <b>tem drive</b> e participa: desmame, respiração espontânea assistida, redução gradual de suporte. O ventilador oferece pressão de suporte aos ciclos <b>disparados pelo paciente</b>.</p>
+      <div class="card-warn">⚠ PSV puro não garante ventilação se o paciente não disparar.</div></div>
+    <div class="card vcv"><div class="card-tag">VCV</div><div class="card-name">VT definido · ventilação minuto mais previsível</div>
+      <p>Faz sentido quando quero <b>definir VT e fluxo</b> e observar a pressão necessária. Útil quando preciso de <b>ciclos mandatórios com VT definido</b>.</p>
+      <div class="card-warn">⚠ Se a resistência sobe ou a complacência cai, a <b>pressão</b> sobe.</div></div>
+    <div class="card pcv"><div class="card-tag">PCV</div><div class="card-name">pressão por tempo</div>
+      <p>No painel, você ajusta <b>ΔP e Ti</b>: o ventilador mantém pressão por um tempo definido, e o <b>VT resulta</b> da mecânica.</p>
+      <div class="card-warn">⚠ Se a complacência piora ou a resistência aumenta, o <b>VT pode cair</b>.</div></div>
+  </div>
+
+  <div class="pheno-head"><h3 class="pheno-title">Biomecânica → fenótipo</h3><span class="pheno-sub">os mesmos sliders C e R já reproduzem os três padrões — experimente no painel acima</span></div>
+  <div class="phenos">
+    <div class="pheno obstr"><div class="pheno-tag">Obstrutiva</div><div class="pheno-mech">R ↑ · C normal ou ↑ &nbsp;→&nbsp; τ = R·C <b>longo</b></div>
+      <p>Asma, DPOC. O ar entra, mas <b>demora a sair</b>: a expiração não zera antes do próximo ciclo → aprisionamento / auto-PEEP. O problema dominante costuma ser <b>tempo expiratório</b>, não simplesmente aumentar pressão.</p>
+      <div class="pheno-try">↳ no painel: suba <b>R</b> (e a FR) e veja o fluxo expiratório não voltar à base.</div></div>
+    <div class="pheno restr"><div class="pheno-tag">Restritiva</div><div class="pheno-mech">C ↓ · R normal &nbsp;→&nbsp; enchimento rápido, porém <b>alto custo pressórico</b></div>
+      <p>SDRA, fibrose, parede rígida. Para o mesmo esforço, <b>menos volume entra</b> (PSV) ou <b>mais pressão é necessária</b> (VCV → Pplatô sobe). O problema dominante é <b>complacência</b>.</p>
+      <div class="pheno-try">↳ no painel: baixe <b>C</b> e veja VTe cair (PSV) ou Pplatô subir (VCV).</div></div>
+    <div class="pheno mista"><div class="pheno-tag">Mista</div><div class="pheno-mech">R ↑ <b>e</b> C ↓ &nbsp;→&nbsp; τ pode enganar</div>
+      <p>Combinações reais (ex.: DPOC + congestão). <b>R↑ alonga τ; C↓ encurta τ</b> — o valor final pode parecer moderado mesmo com dois problemas graves coexistindo. Precisa olhar Ppico <i>e</i> Pplatô separados.</p>
+      <div class="pheno-try">↳ no painel: suba R e baixe C juntos; em VCV, veja resistiva <b>e</b> elástica grandes.</div></div>
+  </div>
+
+  <div class="pheno-head"><h3 class="pheno-title">E o fluxo? · por que ele aparece e some conforme o modo</h3><span class="pheno-sub">a mesma variável muda de papel — às vezes consequência, às vezes ajuste</span></div>
+  <div class="flowroles">
+    <div class="flowrole"><div class="fr-mode psv-c">PSV</div><div class="fr-role">fluxo = <b>resultante</b></div><p>O pico é ΔP/R e decai sozinho (decelerante). Você não ajusta fluxo nem tempo — o paciente cicla quando o fluxo cai a ~25% do pico. Por isso o fluxo era "invisível": ninguém o decide.</p></div>
+    <div class="flowrole"><div class="fr-mode vcv-c">VCV</div><div class="fr-role">fluxo = <b>ajuste imposto</b></div><p>Aqui o fluxo vira knob: você o impõe (onda quadrada, constante). É o que torna a pressão resultante e permite ler Ppico−Pplatô. O fluxo deixou de ser sombra e virou causa.</p></div>
+    <div class="flowrole"><div class="fr-mode pcv-c">PCV</div><div class="fr-role">fluxo = <b>resultante, mas o tempo é ajuste</b></div><p>O fluxo volta a ser decelerante (como PSV), mas agora <b>você</b> define o Ti que o limita. O fluxo não é ajustado direto — o tempo que o contém, sim. É o meio-termo causal.</p></div>
+  </div>
+  <div class="flow-insight"><b>O fio que costura os três modos:</b> "ajustar o fluxo" e "ajustar o tempo" são duas faces da mesma moeda — fluxo é volume por tempo. Em VCV você fixa o fluxo (e o VT define o Ti); em PCV você fixa o Ti (e o fluxo resulta da mecânica); em PSV nenhum dos dois é seu — são do paciente e da constante τ. Quando perguntam "qual fluxo ajustar?", a resposta honesta é: <i>depende de qual variável o modo deixou na sua mão</i>.
+    <div class="flow-causal"><span class="fc-q" style="display:block;color:var(--ink);font-weight:600;margin:11px 0 6px">A pergunta-bússola: neste modo, o fluxo é causa (eu imponho) ou efeito (resulta)?</span>
+      <div class="fc-row" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);margin-top:3px"><b style="color:var(--press)">VCV</b> fluxo = <b style="color:var(--press)">causa</b> imposta → Ti é efeito</div>
+      <div class="fc-row" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);margin-top:3px"><b style="color:var(--volume)">PCV</b> Ti = <b style="color:var(--press)">causa</b> imposta → fluxo é efeito</div>
+      <div class="fc-row" style="font-family:var(--mono);font-size:11.5px;color:var(--ink-dim);margin-top:3px"><b style="color:var(--drive)">PSV</b> nem fluxo nem Ti são seus → ambos são <b style="color:var(--flow)">efeito</b> (paciente + τ)</div>
+    </div>
+  </div>
+  <div class="flow-insight law"><b>Lei comum:</b> o volume é a <b>área temporal sob a curva de fluxo</b> (no gráfico fluxo × tempo). Em VCV, o ventilador impõe fluxo para entregar o VT. Em PCV, a pressão gera fluxo durante o Ti e o VT é a área acumulada. Em PSV, a pressão de suporte gera fluxo, mas o paciente dispara e cicla. Em todo modo pressórico a ordem é <i>pressão → fluxo → volume</i> — isso descreve a inspiração no modelo monocompartimental; não significa que o volume não retroalimente: ele retroalimenta a pressão alveolar, e é justamente por isso que o fluxo desacelera.</div>
+  <div class="flow-insight decel"><b>Por que o fluxo desacelera (modo pressórico)?</b> A pressão aplicada é mantida, mas a pressão alveolar <b>sobe</b> conforme o volume entra. O gradiente entre as duas vai caindo — e <b>menor gradiente = menor fluxo</b>. A cadeia completa:
+    <div class="decel-chain">pressão aplicada mantida → gradiente inicial alto → fluxo alto → volume entra → pressão alveolar sobe → gradiente cai → fluxo desacelera</div>
+    É por isso que a curva de fluxo é decelerante em PSV e PCV — não por área ou tempo, mas por <b>gradiente decrescente</b>.</div>
+  <div class="flow-insight nope"><b>Não confundir:</b>
+    <div class="nope-row">PSV não mantém fluxo; mantém <b>pressão</b> (o fluxo decai e cicla a ~25% do pico).</div>
+    <div class="nope-row">PCV não programa VT; programa <b>pressão e tempo</b> — o VT resulta.</div>
+    <div class="nope-row">VCV, neste tutor, não deixa o fluxo variar livre; o fluxo é <b>imposto</b> (simplificação para revelar Ppico−Pplatô).</div>
+    <div class="nope-row">I:E não empurra ar; apenas <b>descreve</b> a divisão do ciclo. Mais Ti enche mais por dar mais tempo sob pressão, não por "aumentar o I:E".</div></div>
+
+  <div class="pheno-head"><h3 class="pheno-title">Biofísica · quando a clínica tenta invadir a fórmula</h3><span class="pheno-sub">conceitos reais de via aérea — postos no eixo certo, separados da mecânica da curva</span></div>
+  <div class="biophys">
+    <div class="bcard"><div class="bcard-h">Calibre menor</div><p>Reduzir o calibre <b>aumenta a resistência</b> — e muito: <b>R ∝ 1/r⁴</b>, então uma pequena redução de raio pode aumentar enormemente a resistência. Na via aérea, isso gera turbulência, sibilo e mais trabalho. No ventilador, R↑ aparece como maior <b>pressão resistiva</b> em VCV e <b>esvaziamento mais lento</b> nos modos pressóricos.</p></div>
+    <div class="bcard"><div class="bcard-h">Sibilo</div><p>Sibilo <b>não</b> é "mais fluxo total" — é som de fluxo <b>turbulento</b> em via estreitada. Pode haver sibilo com fluxo total <i>reduzido</i>, porque a velocidade local e a turbulência aumentam no segmento estreito.</p></div>
+    <div class="bcard"><div class="bcard-h">Fluxo local ≠ fluxo total</div><p>O fluxo medido no ventilador é o <b>volume por tempo</b> atravessando o circuito. A <b>velocidade local</b> numa via estreita pode subir mesmo quando o fluxo total do sistema cai. São objetos diferentes.</p></div>
+    <div class="bcard alert"><div class="bcard-h">Área anatômica ≠ área sob a curva</div><p>Área do tubo/brônquio é <b>geométrica</b> (secção transversal). Área sob a curva de fluxo é <b>integral temporal</b> (volume). Mesma palavra, eixos diferentes — não troque um pelo outro.</p></div>
+  </div>
+
+  <div class="pheno-head"><h3 class="pheno-title">"Quanto pra criança? Quanto pro gordão?" · por que a dose escala</h3><span class="pheno-sub">o mecanismo de por que o número muda — não um número de receita</span></div>
+  <div class="dose-reason">
+    <p>A pergunta certa não é "qual o número", e sim <b>por que o número escala com o paciente</b>. No modelo, isso aparece sem nenhuma tabela de dose:</p>
+    <div class="dose-row"><span class="dose-k">volume</span> escala com o <b>tamanho do pulmão</b>, e tamanho do pulmão aparece como <b>complacência (C)</b>. Pulmão pequeno (criança) = C menor: o mesmo VT absoluto gera <b>Pplatô maior</b> (VT/C). Por isso 500 mL é rotina num adulto e perigoso numa criança — não porque o número é mágico, mas porque o <i>mesmo volume é grande demais para um C pequeno</i>.</div>
+    <div class="dose-row"><span class="dose-k">pressão</span> num paciente grande/obeso pode precisar ser <b>maior só para vencer a parede</b> — mas o que distende o pulmão é a pressão <i>transpulmonar</i>, não a de via aérea. Um paciente obeso pode tolerar ΔP de via aérea maior porque parte dela é gasta na parede, não no alvéolo. O modelo não separa isso, mas o raciocínio é: <i>nem toda pressão aplicada chega ao alvéolo</i>.</div>
+    <div class="dose-insight">No painel: baixe <b>C</b> (simula pulmão menor/mais rígido) e veja, em VCV, o Pplatô subir para o mesmo VT — ou, em PCV, o VT cair para a mesma ΔP. O artefato mostra <b>por que</b> a dose precisa escalar; ele não diz qual dose usar.</div>
+    <div class="dose-warn">⚠ Este bloco ensina o <b>mecanismo</b> do escalonamento. Não fornece doses, fórmulas de peso predito, nem alvos terapêuticos. Dose real é decisão clínica com peso predito, metas de proteção pulmonar e contexto — fora do escopo deste modelo.</div>
+  </div>
+
+  <div class="pheno-head"><h3 class="pheno-title">Síntese · quem dispara, quem cicla, o que se controla</h3><span class="pheno-sub">a tabela que faltava — agora honesta, porque os três modos existem no painel</span></div>
+  <div class="synth-table">
+    <table><thead><tr><th>Modo</th><th>Quem dispara</th><th>Quem cicla</th><th>Variável controlada</th><th>Variável resultante</th></tr></thead>
+      <tbody>
+        <tr class="row-psv"><td><b>PSV</b></td><td>paciente</td><td>fluxo (~25% do pico)</td><td>pressão de suporte</td><td>VT, Ti, fluxo</td></tr>
+        <tr class="row-vcv"><td><b>VCV</b></td><td>ventilador (no modelo, mandatário)</td><td>volume / tempo (pelo fluxo ajustado)</td><td>VT e fluxo</td><td>pressão (Ppico, Pplatô)</td></tr>
+        <tr class="row-pcv"><td><b>PCV</b></td><td>ventilador (no modelo, mandatário)</td><td>tempo (Ti ajustado)</td><td>pressão inspiratória e Ti</td><td>VT e fluxo</td></tr>
+      </tbody></table>
+    <div class="synth-note">A tabela é simplificada para o modelo didático. Ventiladores reais permitem variações de trigger, ciclos de backup, modos assisto-controlados e configurações híbridas (ex.: PSV pode ser disparado pelo paciente dentro de modos mandatários).</div>
+  </div>
+
+  <div class="panel clinic-tutor">
+    <h2 class="tutor"><span class="dot"></span>Tutor clínico · raciocínio de indicação</h2>
+    <div class="qmeta" id="cqmeta"></div><p class="q" id="cqtext"></p><div class="opts" id="copts"></div><div class="fb" id="cfb"></div>
+    <div class="nav"><span class="count" id="cqcount"></span><div><button class="btn ghost" id="cprev">Anterior</button><button class="btn" id="cnext">Próxima</button></div></div>
+  </div>
+
+  <div class="panel clinic-tutor formula-tutor">
+    <h2 class="tutor formulas-q"><span class="dot"></span>Tutor de fórmulas e biofísica · invariantes</h2>
+    <div class="qmeta" id="fqmeta"></div><p class="q" id="fqtext"></p><div class="opts" id="fopts"></div><div class="fb" id="ffb"></div>
+    <div class="nav"><span class="count" id="fqcount"></span><div><button class="btn ghost" id="fprev">Anterior</button><button class="btn" id="fnext">Próxima</button></div></div>
+  </div>
+
+  <div class="panel clinic-tutor" id="graphTutor">
+    <h2 class="tutor plots"><span class="dot"></span>Tutor gráfico · ler a curva (12 questões dinâmicas)</h2>
+    <div class="qmeta" id="gqmeta"></div>
+    <div class="gwrap"><div class="gcanvas-wrap"><canvas id="gqCanvas" height="200" class="gq"></canvas><div class="gcap" id="gqCap"></div></div></div>
+    <p class="q" id="gqtext" style="margin-top:12px"></p>
+    <div class="opts" id="gopts"></div><div class="fb" id="gfb"></div>
+    <div class="nav"><span class="count" id="gqcount"></span><div><button class="btn ghost" id="gprev">Anterior</button><button class="btn" id="gnext">Próxima</button></div></div>
+  </div>
+
+  <div class="clinic-disclaimer"><b>Camada clínica simplificada para raciocínio didático.</b> Não é protocolo clínico, diretriz, nem substitui julgamento à beira do leito. Indicação real depende de contexto, paciente e equipe.</div>
+</section>
+
+<div class="pheno-head"><h3 class="pheno-title">Os fios da série</h3><span class="pheno-sub">este módulo consolida os modos — volte às peças que o sustentam</span></div>
+<div class="bridges">
+  <a class="bridge" href="ventila5.html"><b>VCV · volume é promessa</b><span class="bn">Ventila · 5</span></a>
+  <a class="bridge" href="ventila6.html"><b>PCV · pressão por tempo, τ=R·C</b><span class="bn">Ventila · 6</span></a>
+  <a class="bridge" href="ventila8.html"><b>Espontâneos · PSV/CPAP/SIMV</b><span class="bn">Ventila · 8</span></a>
+  <a class="bridge" href="ventila3.html"><b>Curvas · pico, platô, decomposição</b><span class="bn">Ventila · 3</span></a>
+  <a class="bridge" href="mvp1-interativo.html#m=sim" target="_blank" rel="noopener"><b>Mecânica · R, C, τ, auto-PEEP</b><span class="bn">Respira · 1</span></a>
+  <a class="bridge" href="ventila14.html"><b>O pulmão na tela · recrutamento</b><span class="bn">Ventila · 14</span></a>
+</div>
+
+<div class="disclaimer">
+  <b>Modelo visual simplificado para ensino de relações mecânicas (monocompartimental).</b>
+  Não é simulação fisiológica de alta fidelidade nem dados de paciente real. Não usar para decisão clínica.
+  Em VCV assume-se fluxo inspiratório constante imposto e pausa inspiratória fixa para revelar Ppico × Pplatô. Em PSV e PCV assume-se modelo pressórico monocompartimental com fluxo decelerante; em PCV, o Ti é ajustado pelo operador.
+  <br><br><b>Nota de honestidade do modelo:</b> a tese "em PSV a R quase não altera o VTe" é verdadeira <i>neste modelo</i>: ao ciclar a 25% do pico de fluxo, Ti = τ·ln4 e VTe = 0,75·PS·C — o τ cancela e o VTe fica independente de R. Na PSV real há dependência de R via rise time, vazamento, esforço e limiar de ciclagem; aqui isola-se a relação pressão→volume de propósito.
+</div>
+
+<footer>
+  Ventila · 15 de 15 · consolidação dos modos · material livre de fisiologia e ventilação · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dani">Para a Dani.</span>
+</footer>
+
+<script>
+"use strict";
+const PEEP=5, FLOW_VCV=1.0, PAUSE_VCV=0.30, RISE=0.08;
+function cycle(FR){ return 60/FR; }
+function computePSV({PS,C_ml,R,FR}){
+  const C=C_ml/1000, tau=R*C, T=cycle(FR);
+  const cycleFraction=0.25;
+  const Ti=-tau*Math.log(cycleFraction);
+  const Te=T-Ti;
+  const valid=Ti<T;
+  const effectiveTi=Math.min(T,Ti);
+  const VTeTarget=PS*C*(1-Math.exp(-Ti/tau));
+  const VTe=PS*C*(1-Math.exp(-effectiveTi/tau));
+  const peakFlow=PS/R;
+  const trapping=valid&&(Te<3*tau);
+  const Vresid=trapping?VTe*Math.exp(-Te/tau):0;
+  const autoPeepP=trapping?Vresid/C:0;
+  return {mode:'PSV',C,R,T,tau,Ti,effectiveTi,Te,pause:0,valid,VTe,VTeTarget,peakFlow,trapping,autoPeepP,PS};
+}
+function computeVCV({VT_ml,C_ml,R,FR}){
+  const C=C_ml/1000, VT=VT_ml/1000, tau=R*C, T=cycle(FR);
+  const flow=FLOW_VCV;
+  const Ti=VT/flow;
+  const pause=PAUSE_VCV;
+  const Te=T-Ti-pause;
+  const valid=(Ti+pause)<T;
+  const Pelastic=VT/C, Presistive=R*flow, Pplateau=PEEP+Pelastic, Ppeak=Pplateau+Presistive;
+  const trapping=valid&&(Te<3*tau);
+  const Vresid=trapping?VT*Math.exp(-Te/tau):0;
+  const autoPeepP=trapping?Vresid/C:0;
+  return {mode:'VCV',C,R,T,tau,Ti,Te,pause,valid,flow,VT,Ppeak,Pplateau,Pelastic,Presistive,trapping,autoPeepP};
+}
+function computePCV({Pinsp,Ti_set,C_ml,R,FR}){
+  const C=C_ml/1000, tau=R*C, T=cycle(FR);
+  const Ti=Ti_set, Te=T-Ti, valid=Ti<T, effectiveTi=Math.min(T,Ti);
+  const VT=Pinsp*C*(1-Math.exp(-effectiveTi/tau));
+  const VTTarget=Pinsp*C*(1-Math.exp(-Ti/tau));
+  const VTfull=Pinsp*C, peakFlow=Pinsp/R;
+  const trapping=valid&&(Te<3*tau);
+  const Vresid=trapping?VT*Math.exp(-Te/tau):0;
+  const autoPeepP=trapping?Vresid/C:0;
+  const fillFrac=1-Math.exp(-effectiveTi/tau);
+  return {mode:'PCV',C,R,T,tau,Ti,effectiveTi,Te,pause:0,valid,Pinsp,VT,VTTarget,VTfull,peakFlow,fillFrac,trapping,autoPeepP};
+}
+function flowAt(t,m){
+  if(m.mode==='PSV'){const ti=m.effectiveTi;if(t<=ti)return m.peakFlow*Math.exp(-t/m.tau);return -(m.VTe/m.tau)*Math.exp(-(t-ti)/m.tau);}
+  else if(m.mode==='PCV'){const ti=m.effectiveTi;if(t<=ti)return m.peakFlow*Math.exp(-t/m.tau);return -(m.VT/m.tau)*Math.exp(-(t-ti)/m.tau);}
+  else {if(t<=m.Ti)return m.flow;if(t<=m.Ti+m.pause)return 0;return -(m.VT/m.tau)*Math.exp(-(t-m.Ti-m.pause)/m.tau);}
+}
+function pressureAt(t,m){
+  if(m.mode==='PSV'){const ti=m.effectiveTi;if(t<=ti)return PEEP+m.PS*Math.min(1,t/RISE);return PEEP+m.autoPeepP+(m.PS-m.autoPeepP)*Math.exp(-(t-ti)/RISE);}
+  else if(m.mode==='PCV'){const ti=m.effectiveTi;if(t<=ti)return PEEP+m.Pinsp*Math.min(1,t/RISE);return PEEP+m.autoPeepP+(m.Pinsp-m.autoPeepP)*Math.exp(-(t-ti)/RISE);}
+  else {if(t<=m.Ti)return PEEP+m.Presistive+(m.flow*t)/m.C;if(t<=m.Ti+m.pause)return m.Pplateau;const dt=t-m.Ti-m.pause;return PEEP+m.autoPeepP+(m.Pplateau-PEEP-m.autoPeepP)*Math.exp(-dt/m.tau);}
+}
+function volumeAt(t,m){
+  if(m.mode==='PSV'){const ti=m.effectiveTi;if(t<=ti)return m.PS*m.C*(1-Math.exp(-t/m.tau));return m.VTe*Math.exp(-(t-ti)/m.tau);}
+  else if(m.mode==='PCV'){const ti=m.effectiveTi;if(t<=ti)return m.Pinsp*m.C*(1-Math.exp(-t/m.tau));return m.VT*Math.exp(-(t-ti)/m.tau);}
+  else {if(t<=m.Ti)return m.flow*t;if(t<=m.Ti+m.pause)return m.VT;return m.VT*Math.exp(-(t-m.Ti-m.pause)/m.tau);}
+}
+function deliveredVol(m){ return m.mode==='VCV'?m.VT:(m.mode==='PCV'?m.VT:m.VTe); }
+function inspEnd(m){ return (m.mode==='PSV'||m.mode==='PCV')?m.effectiveTi:m.Ti; }
+
+let mode='PSV', model=null;
+const el=id=>document.getElementById(id);
+function readControls(){
+  const C_ml=+el('c').value, R=+el('r').value, FR=+el('fr').value;
+  el('cv').textContent=C_ml; el('rv').textContent=R; el('frv').textContent=FR; el('tcyc').textContent=cycle(FR).toFixed(1);
+  if(mode==='PSV'){const PS=+el('ps').value;el('psv').textContent=PS;model=computePSV({PS,C_ml,R,FR});}
+  else if(mode==='PCV'){const Pinsp=+el('pinsp').value,Ti_set=+el('ti').value;el('pinspv').textContent=Pinsp;el('tiv').textContent=Ti_set.toFixed(1);model=computePCV({Pinsp,Ti_set,C_ml,R,FR});}
+  else {const VT_ml=+el('vt').value;el('vtv').textContent=VT_ml;model=computeVCV({VT_ml,C_ml,R,FR});}
+  renderReadouts(); renderLegend(); renderRoles(); buildSamples();
+}
+function setMode(next){
+  if(next===mode)return; mode=next;
+  el('mPSV').classList.toggle('active',mode==='PSV');el('mVCV').classList.toggle('active',mode==='VCV');el('mPCV').classList.toggle('active',mode==='PCV');
+  el('ctl-ps').classList.toggle('hidden',mode!=='PSV');el('ctl-vt').classList.toggle('hidden',mode!=='VCV');el('ctl-pinsp').classList.toggle('hidden',mode!=='PCV');el('ctl-ti').classList.toggle('hidden',mode!=='PCV');
+  el('ventTitle').textContent='Ventilador em '+mode;
+  el('modeflip').textContent=mode==='PSV'?'Em PSV o ventilador impõe pressão (paciente dispara/cicla).':mode==='VCV'?'Em VCV o ventilador impõe volume e fluxo.':'Em PCV o ventilador impõe pressão por um tempo (Ti) definido.';
+  renderThesis(); qi=0; readControls(); renderQuestion();
+}
+function renderThesis(){
+  el('thesis').innerHTML=mode==='PSV'
+    ?'Você ajusta <span class="drv">PRESSÃO</span> (PS) → o <span class="res">volume é consequência</span>. Neste modelo, R quase não altera o VTe; ela molda o tempo (τ=R·C) e o risco de aprisionamento.'
+    :mode==='VCV'
+    ?'Você ajusta <span class="drv">VOLUME</span> (VT) e o ventilador impõe o fluxo → a <span class="res">pressão é consequência</span>. Ela aparece <b>empilhada</b>: <span class="res">PEEP é o piso · VT/C a camada elástica · R×fluxo a camada resistiva</span>.'
+    :'Você ajusta <span class="drv">PRESSÃO</span> (ΔP) <b>e</b> <span class="drv">TEMPO</span> (Ti) → o <span class="res">volume é consequência</span>. Igual ao PSV na curva de fluxo (decelerante), mas aqui <b>você</b> define o Ti — não o paciente.';
+}
+function ro(k,v,unit,opts={}){
+  const cls=['ro'];if(opts.res)cls.push('res');if(opts.span)cls.push('span'+opts.span);
+  const badge=opts.badge?`<span class="badge ${opts.badge}">${opts.badge==='res'?'resultante':'ajuste'}</span>`:'';
+  return `<div class="${cls.join(' ')}">${badge}<div class="k">${k}</div><div class="v">${v}<small>${unit?(' '+unit):''}</small></div></div>`;
+}
+function renderReadouts(){
+  const m=model, box=el('readouts');let h='';
+  if(!m.valid){const fixHint=m.mode==='PSV'?'Reduza FR, R ou C.':m.mode==='PCV'?'Reduza FR ou Ti.':'Reduza FR ou VT.';h+=`<div class="invalid">⚠ Tempo inspiratório (${(m.Ti+m.pause).toFixed(2)}s) ≥ ciclo (${m.T.toFixed(2)}s). A respiração não cabe. ${fixHint}</div>`;}
+  if(m.mode==='PSV'){
+    if(m.valid)h+=ro('VTe resultante',Math.round(m.VTe*1000),'mL',{res:true,badge:'res'});
+    else h+=ro('VTe parcial no ciclo',Math.round(m.VTe*1000)+' / alvo '+Math.round(m.VTeTarget*1000),'mL',{res:true,badge:'res'});
+    h+=ro('τ = R·C',m.tau.toFixed(2),'s');h+=ro('Pico fluxo insp',m.peakFlow.toFixed(2),'L/s');
+    h+=ro('Ti / Te',m.Ti.toFixed(2)+' / '+(m.valid?m.Te.toFixed(2):'—'),'s',{span:2});
+    h+=ro('Heurística',m.valid?('Te '+(m.trapping?'<':'≥')+' 3τ'):'não avaliada','');
+  } else if(m.mode==='PCV'){
+    if(m.valid)h+=ro('VT resultante',Math.round(m.VT*1000),'mL',{res:true,badge:'res'});
+    else h+=ro('VT parcial no ciclo',Math.round(m.VT*1000)+' / alvo '+Math.round(m.VTTarget*1000),'mL',{res:true,badge:'res'});
+    h+=ro('ΔP ajustada',m.Pinsp.toFixed(0),'cmH₂O',{badge:'drv'});h+=ro('τ = R·C',m.tau.toFixed(2),'s');
+    h+=ro('Ti ajustado / Te',m.Ti.toFixed(1)+' / '+(m.valid?m.Te.toFixed(1):'—'),'s',{span:2});
+    h+=ro('Enchimento no Ti',Math.round(m.fillFrac*100),'%',{res:true});
+    h+=ro('Heurística',m.valid?('Te '+(m.trapping?'<':'≥')+' 3τ'):'não avaliada','');
+  } else {
+    h+=ro('Ppico',m.Ppeak.toFixed(1),'cmH₂O',{res:true,badge:'res'});h+=ro('Pplatô',m.Pplateau.toFixed(1),'cmH₂O',{res:true,badge:'res'});
+    h+=ro('τ = R·C',m.tau.toFixed(2),'s');
+    h+=ro('Resistiva (Ppico−Pplatô = R·V̇)',m.Presistive.toFixed(1),'cmH₂O',{res:true});
+    h+=ro('Elástica (Pplatô−PEEP = VT/C)',m.Pelastic.toFixed(1),'cmH₂O',{res:true});
+    h+=ro('Ti / Te',m.Ti.toFixed(2)+' / '+(m.valid&&m.Te>0?m.Te.toFixed(2):'—'),'s');
+    if(m.valid){
+      h+=`<div class="xray span3"><div class="xray-h">Raio-X da pressão · a curva está empilhada em camadas</div>
+        <div class="xray-row"><span class="xr-lbl"><span class="sw warn"></span>Ppico − Pplatô</span><span class="xr-eq">= pressão resistiva = R × V̇</span><span class="xr-val">${m.Presistive.toFixed(1)}</span></div>
+        <div class="xray-row"><span class="xr-lbl"><span class="sw vol"></span>Pplatô − PEEP</span><span class="xr-eq">= pressão elástica = VT / C</span><span class="xr-val">${m.Pelastic.toFixed(1)}</span></div>
+        <div class="xray-row floor"><span class="xr-lbl"><span class="sw peep"></span>PEEP</span><span class="xr-eq">= piso (fixo)</span><span class="xr-val">${PEEP.toFixed(1)}</span></div>
+        <div class="xray-warn">PEEP é o piso fixo — <b>não</b> é a queda Ppico→Pplatô</div>
+        <div class="xray-sum">Ppico = PEEP + elástica + resistiva = <b>${m.Ppeak.toFixed(1)} cmH₂O</b></div></div>`;
+    }
+  }
+  const flagPill=!m.valid?`<span class="pill" style="color:var(--ink-faint);border:1px solid var(--panel-edge);background:#0b1218">—</span>`:`<span class="pill ${m.trapping?'yes':'no'}">${m.trapping?'SIM':'NÃO'}</span>`;
+  const flagVal=m.valid?`${m.autoPeepP.toFixed(1)} <small>cmH₂O</small>`:'não avaliado';
+  h+=`<div class="ro flag span3"><div class="k" style="font-size:11px">Risco visual de aprisionamento</div>${flagPill}<div class="v" style="color:var(--ink-dim)">${flagVal}</div></div>`;
+  box.innerHTML=h;
+}
+function renderLegend(){
+  el('legend').innerHTML=mode==='PSV'
+    ?`<span class="c-drv">●</span> <b>Ajuste:</b> <span class="c-drv">PS</span> &nbsp;|&nbsp; <span class="c-pat">●</span> <b>Paciente:</b> <span class="c-pat">C, R</span> &nbsp;|&nbsp; <span class="c-rate">●</span> <b>Ritmo:</b> <span class="c-rate">FR</span> &nbsp;|&nbsp; <span class="c-res">●</span> <b>Resultante:</b> <span class="c-res">VTe e curvas</span> &nbsp;·&nbsp; PEEP 5 fixo`
+    :mode==='PCV'
+    ?`<span class="c-drv">●</span> <b>Ajuste:</b> <span class="c-drv">ΔP e Ti</span> &nbsp;|&nbsp; <span class="c-pat">●</span> <b>Paciente:</b> <span class="c-pat">C, R</span> &nbsp;|&nbsp; <span class="c-rate">●</span> <b>Ritmo:</b> <span class="c-rate">FR</span> &nbsp;|&nbsp; <span class="c-res">●</span> <b>Resultante:</b> <span class="c-res">VT e fluxo</span> &nbsp;·&nbsp; PEEP 5 fixo`
+    :`<span class="c-drv">●</span> <b>Ajuste:</b> <span class="c-drv">VT</span> (+ fluxo ${FLOW_VCV} L/s imposto) &nbsp;|&nbsp; <span class="c-pat">●</span> <b>Paciente:</b> <span class="c-pat">C, R</span> &nbsp;|&nbsp; <span class="c-rate">●</span> <b>Ritmo:</b> <span class="c-rate">FR</span> &nbsp;|&nbsp; <span class="c-res">●</span> <b>Resultante:</b> <span class="c-res">Ppico, Pplatô</span> &nbsp;·&nbsp; pausa ${PAUSE_VCV}s · PEEP 5 fixo`;
+  el('lungnote').innerHTML=mode==='PSV'?'Pulmão infla por <b>fluxo decelerante</b> (assinatura do alvo pressórico).':mode==='PCV'?'Pulmão infla por <b>fluxo decelerante</b> — igual ao PSV. A diferença é o ciclo: aqui o Ti é <b>ajustado</b>, não derivado do paciente.':'Pulmão infla por <b>fluxo constante</b> (rampa linear de volume); a pausa segura o volume e revela o platô.';
+}
+function renderRoles(){
+  const set=(id,role)=>{const e=el(id);e.className='axrole '+role;e.textContent=role==='res'?'resultante':role==='cycle'?'resultante / cicla':'ajuste';};
+  if(mode==='PSV'){set('roleP','drv');set('roleQ','cycle');set('roleV','res');}
+  else if(mode==='PCV'){set('roleP','drv');set('roleQ','res');set('roleV','res');}
+  else {set('roleP','res');set('roleQ','drv');set('roleV','drv');}
+}
+const N=280; let samples=[], scale={};
+function buildSamples(){
+  samples=[];let maxP=PEEP,maxQ=0.5,maxV=0.1;
+  for(let i=0;i<=N;i++){const t=(i/N)*model.T;const P=pressureAt(t,model),Q=flowAt(t,model),V=volumeAt(t,model);samples.push({t,P,Q,V});if(P>maxP)maxP=P;if(Math.abs(Q)>maxQ)maxQ=Math.abs(Q);if(V>maxV)maxV=V;}
+  const ceilTo=(x,step)=>Math.ceil(x/step)*step;
+  scale={pMax:Math.max(30,ceilTo(maxP+3,5)),qMax:ceilTo(maxQ*1.12,0.5),vMax:Math.max(0.2,ceilTo(maxV*1.12,0.1))};
+}
+const cvCache=new WeakMap();
+function ensureCanvas(cv){
+  const dpr=window.devicePixelRatio||1,cssW=cv.clientWidth,cssH=cv.clientHeight;let c=cvCache.get(cv);
+  if(!c||c.cssW!==cssW||c.cssH!==cssH||c.dpr!==dpr){cv.width=cssW*dpr;cv.height=cssH*dpr;const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);c={ctx,w:cssW,h:cssH,cssW,cssH,dpr};cvCache.set(cv,c);}
+  return c;
+}
+const PAD={l:34,r:10,t:12,b:16};
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+function drawVArrow(ctx,x,yTop,yBot,color,label){
+  const head=4;ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(x,yTop);ctx.lineTo(x,yBot);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x,yTop);ctx.lineTo(x-head,yTop+head);ctx.lineTo(x+head,yTop+head);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(x,yBot);ctx.lineTo(x-head,yBot-head);ctx.lineTo(x+head,yBot-head);ctx.closePath();ctx.fill();
+  const ym=(yTop+yBot)/2;ctx.font='9.5px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText(label,x+7,ym+3);
+}
+function drawPlot(cv,channel,phase){
+  const {ctx,w,h}=ensureCanvas(cv),m=model;
+  const x0=PAD.l,x1=w-PAD.r,y0=PAD.t,y1=h-PAD.b;const tx=t=>x0+(t/m.T)*(x1-x0);
+  let vmin,vmax,zero,color;
+  if(channel==='P'){vmin=0;vmax=scale.pMax;zero=PEEP;color=getCSS('--press');}
+  else if(channel==='Q'){vmax=scale.qMax;vmin=-vmax;zero=0;color=getCSS('--flow');}
+  else {vmin=0;vmax=scale.vMax;zero=0;color=getCSS('--volume');}
+  const vy=v=>y1-((v-vmin)/(vmax-vmin))*(y1-y0);
+  ctx.fillStyle='#080d12';ctx.fillRect(0,0,w,h);
+  const ti=inspEnd(m);
+  ctx.fillStyle='rgba(245,179,44,.05)';ctx.fillRect(tx(0),y0,tx(Math.min(ti,m.T))-tx(0),y1-y0);
+  if(m.pause>0){ctx.fillStyle='rgba(223,233,240,.05)';ctx.fillRect(tx(ti),y0,tx(Math.min(ti+m.pause,m.T))-tx(ti),y1-y0);}
+  ctx.strokeStyle=getCSS('--grid');ctx.lineWidth=1;ctx.font='10px ui-monospace,monospace';ctx.fillStyle='#3f5664';ctx.textAlign='center';
+  for(let s=0;s<=Math.ceil(m.T);s++){const X=tx(s);if(X>x1)break;ctx.beginPath();ctx.moveTo(X,y0);ctx.lineTo(X,y1);ctx.stroke();ctx.fillText(s+'s',X,h-4);}
+  ctx.strokeStyle=channel==='P'?'rgba(245,179,44,.35)':'rgba(255,255,255,.2)';
+  ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(x0,vy(zero));ctx.lineTo(x1,vy(zero));ctx.stroke();
+  ctx.setLineDash([]);ctx.textAlign='left';ctx.fillStyle=channel==='P'?'rgba(245,179,44,.6)':'#3f5664';ctx.fillText(channel==='P'?'PEEP = piso':'0',x0+2,vy(zero)-3);
+  if(channel==='P'&&m.mode==='VCV'&&m.valid){
+    const mark=(P,lbl)=>{const Y=vy(P);ctx.strokeStyle='rgba(245,179,44,.25)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(x0,Y);ctx.lineTo(x1,Y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(245,179,44,.7)';ctx.textAlign='right';ctx.fillText(lbl,x1-2,Y-3);ctx.textAlign='left';};
+    mark(m.Ppeak,'Ppico');mark(m.Pplateau,'Pplatô');
+    const ax=tx(m.Ti+m.pause*0.45);const yP=vy(m.Ppeak),yPl=vy(m.Pplateau),yPe=vy(PEEP);
+    drawVArrow(ctx,ax,yP,yPl,getCSS('--warn'),'resistiva = R×V̇ = '+m.Presistive.toFixed(1));
+    drawVArrow(ctx,ax+0,yPl,yPe,getCSS('--volume'),'elástica = VT/C = '+m.Pelastic.toFixed(1));
+  }
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.lineJoin='round';ctx.shadowColor=color;ctx.shadowBlur=6;ctx.beginPath();
+  samples.forEach((s,i)=>{const X=tx(s.t),Y=vy(channel==='P'?s.P:channel==='Q'?s.Q:s.V);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);});
+  ctx.stroke();ctx.shadowBlur=0;
+  if(channel==='Q'&&m.trapping){const Xe=tx(m.T),Ye=vy(flowAt(m.T-1e-4,m));ctx.fillStyle=getCSS('--warn');ctx.beginPath();ctx.arc(Xe,Ye,3.5,0,7);ctx.fill();ctx.font='10px ui-monospace,monospace';ctx.textAlign='right';ctx.fillText('não zera',Xe-6,Ye-6);ctx.textAlign='left';}
+  if(phase<=m.T){const Xp=tx(phase);ctx.strokeStyle='rgba(223,233,240,.5)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(Xp,y0);ctx.lineTo(Xp,y1);ctx.stroke();const Yp=vy(channel==='P'?pressureAt(phase,m):channel==='Q'?flowAt(phase,m):volumeAt(phase,m));ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(Xp,Yp,3,0,7);ctx.fill();}
+}
+const lungGroup=el('lungGroup'), lobes=[el('lungL'),el('lungR')];
+function drawLung(phase){
+  const m=model,V=volumeAt(phase,m),ref=Math.max(deliveredVol(m),0.3);
+  const frac=Math.min(1,V/ref),s=0.60+0.55*frac,cx=130,cy=86;
+  lungGroup.setAttribute('transform',`translate(${cx} ${cy}) scale(${s.toFixed(3)}) translate(${-cx} ${-cy})`);
+  const fill=m.trapping?mix(getCSS('--tissue'),getCSS('--tissue-strain'),0.5):getCSS('--tissue');
+  lobes.forEach(l=>{l.setAttribute('fill',fill);l.setAttribute('fill-opacity',(0.3+0.45*frac).toFixed(2));l.setAttribute('stroke',fill);l.setAttribute('stroke-width','2.5');});
+  let lbl;const ti=inspEnd(m);
+  if(phase<=ti)lbl='↑ <b class="insp">INSPIRAÇÃO</b>';
+  else if(phase<=ti+m.pause)lbl='⏸ <b class="pause">PAUSA</b> · platô';
+  else lbl=m.trapping?'↓ <b class="exp">EXPIRAÇÃO</b> · resíduo aprisionado':'↓ <b class="exp">EXPIRAÇÃO</b>';
+  el('phase').innerHTML=lbl;
+}
+function mix(a,b,t){const pa=hex(a),pb=hex(b);return '#'+pa.map((x,i)=>Math.round(x+(pb[i]-x)*t).toString(16).padStart(2,'0')).join('');}
+function hex(h){h=h.replace('#','');return[0,2,4].map(i=>parseInt(h.substr(i,2),16));}
+let phase=0,last=null;
+function loop(ts){
+  if(last==null)last=ts;const dt=Math.min(0.05,(ts-last)/1000);last=ts;phase=(phase+dt)%model.T;
+  drawPlot(el('cvP'),'P',phase);drawPlot(el('cvQ'),'Q',phase);drawPlot(el('cvV'),'V',phase);drawLung(phase);
+  requestAnimationFrame(loop);
+}
+const BANK={
+  PSV:[
+    {q:"Quando você aumentou PS, o que aumentou diretamente?",o:["O volume garantido","A pressão de suporte","A complacência do paciente","A FiO₂"],a:1,fb:"Em PSV você aumentou a assistência pressórica. O volume subiu como <em>consequência</em>, não como promessa.",hint:"Arraste PS e veja VTe (resultante) acompanhar."},
+    {q:"A PS ficou igual, mas o volume caiu. Explicação mecânica mais provável neste modelo?",o:["Maior FiO₂","Menor temperatura","Menor complacência","Menor hemoglobina"],a:2,fb:"Neste modelo com ciclagem a 25% do pico de fluxo, VTe ≈ 0,75 × PS × C. Mesma pressão, menos complacência → menos volume.",hint:"Fixe PS e reduza C — o VTe cai proporcionalmente."},
+    {q:"A expiração não voltou à linha de base antes do próximo ciclo. O que isso sugere?",o:["Volume corrente adequado","FiO₂ excessiva","Complacência perfeita","Esvaziamento incompleto / risco de aprisionamento"],a:3,fb:"Te &lt; 3τ neste modelo sugere esvaziamento incompleto e risco visual de aprisionamento. Não é medida clínica de auto-PEEP.",hint:"Suba R, C e FR e observe o fluxo expiratório não zerar."},
+    {q:"Em PSV, qual variável é CONSEQUÊNCIA — e não um ajuste?",o:["O volume corrente","A pressão de suporte","A PEEP","A sensibilidade de disparo"],a:0,fb:"Você fixa pressão; o volume é o que <em>sai</em> disso. Núcleo do modo.",hint:"Rótulos: PS = ajuste · VTe = resultante."},
+    {q:"O fluxo inspiratório começa alto e cai ao longo da inspiração. Por quê?",o:["O ventilador reduz a PS ativamente","A FiO₂ cai","O alvéolo enche e o gradiente entre pressão aplicada e alveolar cai","A FR aumenta"],a:2,fb:"Fluxo decelerante é a assinatura do alvo pressórico: à medida que a pressão alveolar sobe, V̇ cai.",hint:"Observe a curva de fluxo: pico no início, depois decai."},
+    {q:"PSV e PCV podem ter fluxo decelerante parecido. Então por que não são o mesmo modo?",o:["Porque ambos são pressóricos, mas em PSV o paciente dispara/cicla; em PCV o ventilador define o Ti","Porque PSV controla volume e PCV controla fluxo","Porque PCV não depende de pressão","Porque PSV mantém fluxo constante"],a:0,fb:"A semelhança vem da física pressórica: pressão aplicada contra R/C gera fluxo decelerante. A diferença está no comando do ciclo: em PSV o paciente dispara e cicla por queda de fluxo; em PCV o ventilador mantém a pressão por um Ti ajustado.",hint:"Parecido na forma de fluxo; diferente em quem termina a inspiração."}
+  ],
+  VCV:[
+    {q:"Você passou do mesmo paciente de PSV para VCV. O que o ventilador passou a FIXAR?",o:["A pressão de pico","O volume corrente (VT) e o fluxo","A complacência","A resistência"],a:1,fb:"Em VCV o ajuste é volume/fluxo. A pressão deixa de ser imposta e passa a ser resultante.",hint:"Compare os rótulos do painel ao alternar PSV/VCV."},
+    {q:"Em VCV você aumentou R (mesmo paciente). O que mudou visivelmente na curva de pressão?",o:["Nada — pressão é fixa em VCV","O volume caiu","A pressão de pico subiu; o platô praticamente não","A FiO₂ subiu"],a:2,fb:"Ppico = VT/C + R·fluxo + PEEP. Mais R → maior componente resistiva → Ppico sobe, mas Pplatô (= VT/C + PEEP) não.",hint:"Mexa só em R e observe Ppico afastar-se de Pplatô."},
+    {q:"A diferença Ppico − Pplatô representa o quê?",o:["A pressão elástica","A PEEP intrínseca","A pressão resistiva (R × fluxo)","O volume corrente"],a:2,fb:"Com fluxo zerado na pausa, o componente resistivo R·V̇ desaparece. A queda Ppico→Pplatô é exatamente R × fluxo.",hint:"Veja o readout 'Resistiva' e a queda vertical no fim da inspiração."},
+    {q:"Na pausa inspiratória, o fluxo vira zero. O que DESAPARECE da pressão?",o:["O componente resistivo","A PEEP","O volume corrente","A complacência"],a:0,fb:"Pressão resistiva = R × fluxo. Se o fluxo zera na pausa, esse termo some — sobra só PEEP + elástica = Pplatô.",hint:"Acompanhe o playhead entrar na pausa: a pressão cai de Ppico para Pplatô."},
+    {q:"Então a queda de Ppico para Pplatô representa:",o:["A PEEP","A pressão resistiva","A FiO₂","O volume corrente"],a:1,fb:"Exato. A seta no gráfico cota essa queda: Ppico − Pplatô = R × fluxo. Não é PEEP — a PEEP é o piso, lá embaixo.",hint:"No 'Raio-X da pressão', a camada de cima (vermelha) é a resistiva."},
+    {q:"Na pilha de pressão do VCV, o que é a PEEP?",o:["A queda entre Ppico e Pplatô","A pressão resistiva","O volume corrente","O piso pressórico a partir do qual as outras camadas são somadas"],a:3,fb:"Correto. PEEP é o piso. A queda Ppico→Pplatô é resistiva; a distância Pplatô→PEEP é elástica. Confundir PEEP com a queda do pico para o platô mistura base com camada.",hint:"No 'Raio-X da pressão', a PEEP é a linha de baixo — as camadas sobem em cima dela."},
+    {q:"A diferença Pplatô − PEEP representa o quê?",o:["A pressão elástica (VT / C)","A pressão resistiva","O atrito do tubo","A frequência"],a:0,fb:"Na pausa não há fluxo: sobra a pressão para distender o pulmão, VT/C. Menos C → maior platô para o mesmo VT.",hint:"Reduza C e veja o platô subir mantendo o mesmo VT."},
+    {q:"Em VCV, qual é a variável RESULTANTE?",o:["A pressão de via aérea","O volume corrente","O fluxo inspiratório","A FR"],a:0,fb:"Você impõe volume e fluxo; a pressão (pico e platô) é o que resulta da mecânica do paciente.",hint:"Rótulos: VT/fluxo = ajuste · Ppico/Pplatô = resultante."},
+    {q:"Mesma R: por que ela 'apareceu' na pressão em VCV, mas mal mexia no volume em PSV?",o:["Porque R muda com o modo","Porque mudou o que está FIXADO: em VCV o fluxo é imposto, então R·fluxo vira pressão visível; em PSV a pressão é imposta e R só molda o tempo","Porque a complacência mudou","Porque a FiO₂ mudou"],a:1,fb:"Essa é a inversão causal. A resistência é a mesma; o que muda é qual variável o ventilador segura. O resultante carrega a assinatura de R.",hint:"Fixe C e R, alterne PSV↔VCV e compare onde R se manifesta."},
+    {q:"No VCV deste tutor, se o VT aumenta e o fluxo continua fixo, o que acontece com o Ti?",o:["Diminui, porque o volume é maior","Não muda, porque PCV controla o tempo","Depende da PEEP","Aumenta, porque Ti = VT / fluxo"],a:3,fb:"Neste modelo, o fluxo do VCV é imposto e constante. Para entregar mais volume com o mesmo fluxo, o ventilador precisa de mais tempo inspiratório. (Ventiladores reais permitem ajustar VT+fluxo ou VT+Ti, com o terceiro resultando — aqui fixamos o fluxo para limpar Ppico−Pplatô.)",hint:"Fluxo = volume / tempo."}
+  ],
+  PCV:[
+    {q:"Em PCV, quais são as DUAS variáveis que você ajusta?",o:["Pressão (ΔP) e tempo inspiratório (Ti)","VT e fluxo","Pressão e volume","FR e FiO₂"],a:0,fb:"PCV é pressão controlada POR TEMPO: você define ΔP e Ti. O volume é resultante — depende da mecânica do paciente.",hint:"Veja os dois sliders de ajuste do PCV no painel."},
+    {q:"O que diferencia PCV de PSV, se ambos são pressóricos com fluxo decelerante?",o:["PCV garante volume; PSV não","Em PCV o Ti é ajustado pelo operador; em PSV o Ti é derivado da ciclagem disparada/conduzida pelo paciente","PCV não usa pressão","PSV é mandatário e PCV é espontâneo"],a:1,fb:"A curva de fluxo é igual (decelerante). A diferença é o ciclo: PCV impõe o Ti; PSV deixa o paciente disparar e ciclar. Essa é a alma do modo.",hint:"Compare quem decide quando a inspiração termina."},
+    {q:"Em PCV, você baixou a complacência (mesmo ΔP e Ti). O que acontece com o VT?",o:["Sobe","Fica garantido","Cai","Vira PEEP"],a:2,fb:"VT = ΔP × C × (1−e^(−Ti/τ)). Pulmão mais rígido (C↓) → menos volume para a mesma pressão. Em modo pressórico, o volume não é protegido.",hint:"Baixe C e veja o VT resultante cair."},
+    {q:"Em PCV, aumentar Ti pode aumentar o VT. O que explica isso mecanicamente?",o:["Mais tempo sob a mesma pressão permite mais enchimento na curva exponencial, até saturar","A relação I:E aumenta e isso empurra ar para dentro","O volume passa a ser garantido","A resistência deixa de existir"],a:0,fb:"I:E muda quando Ti muda, mas I:E é consequência, não causa. A causa é tempo sob pressão: o fluxo decelerante entra por mais tempo, então a área sob a curva aumenta. Depois de alguns τ, o ganho satura.",hint:"Volume = área temporal sob a curva fluxo×tempo. Ti maior aumenta essa área até o fluxo quase zerar."},
+    {q:"Num paciente muito obstrutivo (τ longo) em PCV com Ti curto, o que o readout 'Enchimento no Ti' tende a mostrar?",o:["100% sempre","Não muda com τ","Depende só da FiO₂","Um valor baixo — não houve tempo de encher"],a:3,fb:"τ longo = enchimento lento. Ti curto não dá tempo de chegar perto do platô → fração baixa → VT menor que o possível. No obstrutivo, tempo é tudo.",hint:"Suba R (τ↑) com Ti baixo e veja a fração de enchimento despencar."},
+    {q:"Em PCV, qual é a variável RESULTANTE?",o:["A pressão inspiratória","O volume corrente","O tempo inspiratório","A FR"],a:1,fb:"Você fixa pressão e tempo; o volume é o que resulta da mecânica. Mesmo paradigma do PSV — pressórico — mas com o ciclo no comando do ventilador.",hint:"Rótulos: ΔP e Ti = ajuste · VT = resultante."},
+    {q:"Síntese do fluxo: o que está FIXO e o que RESULTA em cada modo?",o:["Em todos os três o fluxo é ajustado diretamente","VCV: Ti fixo → fluxo resulta · PCV: fluxo fixo → Ti resulta · PSV: você fixa o fluxo","O fluxo é sempre resultante nos três modos","VCV: fluxo fixo → Ti resulta · PCV: Ti fixo → fluxo resulta · PSV: nem fluxo nem Ti são seus (paciente + τ decidem)"],a:3,fb:"Essa é a chave de toda a tríade. VCV: você impõe o FLUXO (constante) e o Ti cai de VT/fluxo. PCV: você impõe o TEMPO (Ti) e o fluxo decelerante resulta da mecânica. PSV: nenhum dos dois é seu — o paciente dispara e a constante τ molda o fluxo, que decai até ciclar.",hint:"Pergunte sempre: neste modo, o fluxo é causa (eu imponho) ou efeito (resulta)?"}
+  ]
+};
+let qi=0;
+const answers={PSV:new Array(BANK.PSV.length).fill(null),PCV:new Array(BANK.PCV.length).fill(null),VCV:new Array(BANK.VCV.length).fill(null)};
+function renderQuestion(){
+  const set=BANK[mode],Q=set[qi],chosen=answers[mode][qi];
+  el('qmeta').textContent=`Modo ${mode} · Pergunta ${qi+1} de ${set.length}`;el('qtext').textContent=Q.q;
+  const opts=el('opts');opts.innerHTML='';const keys=['A','B','C','D'];
+  Q.o.forEach((text,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="key">${keys[i]}</span>${text}`;b.onclick=()=>pick(i);if(chosen!==null){b.disabled=true;if(i===Q.a)b.classList.add('correct');if(i===chosen&&chosen!==Q.a)b.classList.add('wrong');}opts.appendChild(b);});
+  const fb=el('fb');if(chosen!==null){fb.innerHTML=(chosen===Q.a?'✓ ':'✗ ')+Q.fb+`<span class="hint">↳ ${Q.hint}</span>`;fb.classList.add('show');}else{fb.className='fb';fb.innerHTML='';}
+  el('prev').disabled=qi===0;el('next').disabled=qi===set.length-1;el('qcount').textContent=`respondidas: ${answers[mode].filter(x=>x!==null).length}/${set.length}`;
+}
+function pick(i){if(answers[mode][qi]!==null)return;answers[mode][qi]=i;renderQuestion();}
+el('next').onclick=()=>{const set=BANK[mode];if(qi<set.length-1){qi++;renderQuestion();}};
+el('prev').onclick=()=>{if(qi>0){qi--;renderQuestion();}};
+const CLINIC=[
+  {q:"Paciente acordado, disparando bem, em desmame. Qual lógica combina melhor?",o:["PSV","VCV obrigatório","Nenhum suporte","Apenas aumentar PEEP"],a:0,fb:"PSV assiste cada ciclo que o paciente dispara — encaixa no desmame, em que se quer reduzir suporte mantendo o drive ativo.",hint:"PSV pressupõe que o paciente puxa o gatilho."},
+  {q:"Paciente profundamente sedado, sem drive confiável. Qual o cuidado com PSV puro?",o:["Garante todos os ciclos","Pode falhar porque depende do disparo do paciente","Sempre corrige o CO₂","Sempre melhora a oxigenação"],a:1,fb:"PSV só entrega suporte quando o paciente dispara. Sem drive confiável, não há garantia de ventilação — é a principal armadilha do modo.",hint:"Volte ao card do PSV: 'não garante ventilação se o paciente não disparar'."},
+  {q:"Você quer definir o VT e observar a pressão necessária naquele pulmão. Qual lógica é essa?",o:["VCV","PSV","CPAP isolado","Apenas FiO₂"],a:0,fb:"Em VCV você fixa volume e fluxo; a pressão é o que resulta da mecânica. É o modo para 'eu mando o volume, o pulmão me diz a pressão'.",hint:"Qual modo tem o volume como ajuste, não como resultante?"},
+  {q:"Em VCV, a pressão começou a subir ao longo do tempo no mesmo paciente. Causa mecânica mais provável?",o:["A FiO₂ caiu","A resistência subiu ou a complacência caiu","A FR diminuiu sozinha","O VT foi reduzido"],a:1,fb:"No modelo mecânico simplificado, com VT e fluxo fixos, pressão maior sugere aumento da carga resistiva e/ou elástica: R↑ ou C↓. À beira-leito, isso precisa ser correlacionado com paciente, tubo, secreção, assincronia e exame.",hint:"Em VCV o que é fixo não muda; o que sobe é o resultante."},
+  {q:"Paciente obstrutivo (R muito alta, τ longo). Qual o cuidado mecânico independentemente do modo?",o:["Garantir tempo expiratório suficiente para evitar aprisionamento","Aumentar a FR ao máximo","Zerar a PEEP","Ignorar o tempo, focar só na pressão"],a:0,fb:"τ longo = esvaziamento lento. Se a FR for alta demais, a expiração não completa → auto-PEEP. No obstrutivo, o tempo expiratório é a alavanca crítica — em qualquer modo.",hint:"Volte ao fenótipo obstrutivo: o problema dominante é tempo, não pressão."},
+  {q:"Paciente restritivo (C muito baixa). Em VCV com VT fixo, o que esperar — e qual o risco?",o:["O VT dobra sozinho","A resistiva domina a pressão","Pplatô sobe; risco de pressão elevada no pulmão rígido","Pplatô cai; nenhum risco"],a:2,fb:"Pulmão rígido (C↓) precisa de mais pressão elástica (VT/C) para o mesmo VT → Pplatô sobe. Em VCV o volume é fixo, então a pressão é que avisa o perigo.",hint:"No fenótipo restritivo: Pplatô−PEEP = VT/C. Menos C, maior Pplatô."},
+  {q:"Você quer limitar a pressão inspiratória e aceita que o VT varie. Qual lógica é essa?",o:["VCV","PCV","PSV sem drive","Oxigênio nasal"],a:1,fb:"Essa é a lógica do PCV: pressão controlada por tempo, volume resultante. Ajuste ΔP e Ti e observe o VT resultar.",hint:"Qual card fala em 'limitar/controlar pressão' aceitando volume variável?"},
+  {q:"Qual frase resume melhor a diferença entre os três?",o:["Todos garantem o mesmo VT","Todos dependem igualmente do trigger do paciente","PSV assiste esforço; VCV fixa volume; PCV limita pressão por tempo","PEEP é Ppico−Pplatô"],a:2,fb:"Síntese: PSV assiste o esforço do paciente; VCV define VT/fluxo e deixa a pressão resultar; PCV define pressão por tempo e deixa o volume resultar.",hint:"Cada modo 'segura' uma coisa diferente: esforço, volume, ou pressão-por-tempo."}
+];
+let cqi=0;const canswers=new Array(CLINIC.length).fill(null);
+function renderClinic(){
+  const Q=CLINIC[cqi],chosen=canswers[cqi];el('cqmeta').textContent=`Raciocínio clínico · Pergunta ${cqi+1} de ${CLINIC.length}`;el('cqtext').textContent=Q.q;
+  const opts=el('copts');opts.innerHTML='';const keys=['A','B','C','D'];
+  Q.o.forEach((text,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="key">${keys[i]}</span>${text}`;b.onclick=()=>pickClinic(i);if(chosen!==null){b.disabled=true;if(i===Q.a)b.classList.add('correct');if(i===chosen&&chosen!==Q.a)b.classList.add('wrong');}opts.appendChild(b);});
+  const fb=el('cfb');if(chosen!==null){fb.innerHTML=(chosen===Q.a?'✓ ':'✗ ')+Q.fb+`<span class="hint">↳ ${Q.hint}</span>`;fb.classList.add('show');}else{fb.className='fb';fb.innerHTML='';}
+  el('cprev').disabled=cqi===0;el('cnext').disabled=cqi===CLINIC.length-1;el('cqcount').textContent=`respondidas: ${canswers.filter(x=>x!==null).length}/${CLINIC.length}`;
+}
+function pickClinic(i){if(canswers[cqi]!==null)return;canswers[cqi]=i;renderClinic();}
+el('cnext').onclick=()=>{if(cqi<CLINIC.length-1){cqi++;renderClinic();}};
+el('cprev').onclick=()=>{if(cqi>0){cqi--;renderClinic();}};
+const FORMULA=[
+  {q:"Fluxo = volume / tempo. Se o fluxo fica FIXO e o volume aumenta, o tempo precisa…",o:["Aumentar","Diminuir","Ficar igual","Depende da PEEP"],a:0,fb:"Ti = VT / fluxo. Numerador sobe, denominador igual → resultado sobe. Exemplo (0,5 L/s = 500 mL/s): 500 mL ÷ 500 mL/s = 1,0 s; 700 mL ÷ 500 mL/s = 1,4 s. Mais volume com o mesmo fluxo exige MAIS tempo.",hint:"Faça a conta: 500/0,5 vs 700/0,5."},
+  {q:"Volume é a área TEMPORAL sob a curva de fluxo. Isso quer dizer:",o:["A área de secção do brônquio","Somar o fluxo ao longo do tempo (integral no gráfico fluxo × tempo)","O calibre da via aérea","A pressão de pico"],a:1,fb:"É integral temporal: cada fatia de tempo contribui com (fluxo × Δt) de volume. NÃO é a área geométrica/anatômica da via aérea — mesma palavra, eixos diferentes.",hint:"'Área' aqui é no gráfico fluxo×tempo, não no corte do brônquio."},
+  {q:"Em PCV (ΔP e Ti fixos), o VT cai quando a complacência cai porque…",o:["A resistência some","O fluxo vira constante","Para a mesma pressão, um pulmão mais rígido aceita menos volume (VT ≈ ΔP×C)","A PEEP aumenta"],a:2,fb:"VT ≈ ΔP × C × (1−e^(−Ti/τ)). Com ΔP e Ti fixos, menos C → menos volume. A pressão tem teto; o volume não é garantido.",hint:"O que multiplica ΔP na fórmula do volume?"},
+  {q:"Um brônquio estreito pode gerar sibilo MESMO com fluxo total menor porque…",o:["O volume total aumentou","Aumenta a velocidade/turbulência LOCAL na via estreitada — não o volume total","A complacência subiu","A PEEP empurra ar"],a:1,fb:"Sibilo é fenômeno LOCAL: velocidade e turbulência num segmento estreito. Fluxo local ≠ fluxo total.",hint:"Sibilo é som de turbulência local, não medida de volume total."},
+  {q:"Em PCV, aumentar Ti aumenta o VT até SATURAR. Por quê satura?",o:["Porque a PEEP chega a zero","Porque a resistência cresce","Porque o I:E trava","Porque o enchimento é exponencial: conforme o alvéolo enche, o gradiente cai e o fluxo quase zera"],a:3,fb:"O VT se aproxima do teto ΔP×C de forma exponencial (constante τ). Depois de ~3-4τ o fluxo já quase zerou — mais Ti acrescenta área quase nula sob a curva.",hint:"Volume = área sob o fluxo; se o fluxo já zerou, mais tempo não acrescenta área."}
+];
+let fqi=0;const fanswers=new Array(FORMULA.length).fill(null);
+function renderFormula(){
+  const Q=FORMULA[fqi],chosen=fanswers[fqi];el('fqmeta').textContent=`Invariantes · Pergunta ${fqi+1} de ${FORMULA.length}`;el('fqtext').textContent=Q.q;
+  const opts=el('fopts');opts.innerHTML='';const keys=['A','B','C','D'];
+  Q.o.forEach((text,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="key">${keys[i]}</span>${text}`;b.onclick=()=>pickFormula(i);if(chosen!==null){b.disabled=true;if(i===Q.a)b.classList.add('correct');if(i===chosen&&chosen!==Q.a)b.classList.add('wrong');}opts.appendChild(b);});
+  const fb=el('ffb');if(chosen!==null){fb.innerHTML=(chosen===Q.a?'✓ ':'✗ ')+Q.fb+`<span class="hint">↳ ${Q.hint}</span>`;fb.classList.add('show');}else{fb.className='fb';fb.innerHTML='';}
+  el('fprev').disabled=fqi===0;el('fnext').disabled=fqi===FORMULA.length-1;el('fqcount').textContent=`respondidas: ${fanswers.filter(x=>x!==null).length}/${FORMULA.length}`;
+}
+function pickFormula(i){if(fanswers[fqi]!==null)return;fanswers[fqi]=i;renderFormula();}
+el('fnext').onclick=()=>{if(fqi<FORMULA.length-1){fqi++;renderFormula();}};
+el('fprev').onclick=()=>{if(fqi>0){fqi--;renderFormula();}};
+['ps','vt','c','r','fr'].forEach(id=>el(id).addEventListener('input',readControls));
+window.addEventListener('resize',()=>{['cvP','cvQ','cvV'].forEach((id,k)=>drawPlot(el(id),['P','Q','V'][k],phase));if(typeof renderGraph==='function')renderGraph();});
+renderThesis(); readControls(); renderQuestion(); renderClinic(); renderFormula();
+requestAnimationFrame(loop);
+</script>
+<script>
+"use strict";
+/* ============================================================================
+   TUTOR GRÁFICO (Ventila 15) — 12 questões DINÂMICAS lidas na curva.
+   Cada gráfico é computado ao vivo pelo mesmo motor (computeVCV/PCV/PSV +
+   amostradores); nenhuma imagem pré-fabricada. Reaproveita os globais do
+   primeiro <script> (escopo léxico global compartilhado entre scripts clássicos).
+   ========================================================================== */
+const gel=id=>document.getElementById(id);
+function gEnsure(){
+  const cv=gel('gqCanvas'),dpr=window.devicePixelRatio||1,cssW=cv.clientWidth||cv.parentElement.clientWidth||600,cssH=cv.clientHeight||200;
+  cv.width=cssW*dpr;cv.height=cssH*dpr;const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx,w:cssW,h:cssH};
+}
+function gCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+/* mini-plot autoescalado de um canal (P/Q/V) de um modelo, num retângulo */
+function gMini(ctx,R,m,channel,opts){
+  opts=opts||{};const T=m.T,Np=160;
+  const samp=t=>channel==='P'?pressureAt(t,m):channel==='Q'?flowAt(t,m):volumeAt(t,m)*1000; // V em mL
+  let lo=Infinity,hi=-Infinity;for(let i=0;i<=Np;i++){const v=samp(T*i/Np);if(v<lo)lo=v;if(v>hi)hi=v;}
+  if(channel==='P'){lo=0;hi=Math.max(hi,m.Ppeak?m.Ppeak:hi)*1.08;}
+  else if(channel==='Q'){const a=Math.max(Math.abs(lo),Math.abs(hi))*1.12;lo=-a;hi=a;}
+  else{lo=0;hi=Math.max(hi,1)*1.12;}
+  const tx=t=>R.x+(t/T)*R.w, vy=v=>R.y+R.h-((v-lo)/((hi-lo)||1))*R.h;
+  const col=channel==='P'?gCSS('--press'):channel==='Q'?gCSS('--flow'):gCSS('--volume');
+  ctx.fillStyle='#080d12';ctx.fillRect(R.x,R.y,R.w,R.h);
+  ctx.strokeStyle=gCSS('--panel-edge');ctx.lineWidth=1;ctx.strokeRect(R.x+.5,R.y+.5,R.w-1,R.h-1);
+  // base (PEEP/0)
+  const zero=channel==='P'?PEEP:0;ctx.strokeStyle='rgba(255,255,255,.18)';ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(R.x,vy(zero));ctx.lineTo(R.x+R.w,vy(zero));ctx.stroke();ctx.setLineDash([]);
+  if(opts.shadeInsp){const ti=inspEnd(m);ctx.fillStyle='rgba(127,227,163,.12)';
+    for(let i=0;i<Np;i++){const t0=T*i/Np;if(t0>ti)break;const t1=Math.min(ti,T*(i+1)/Np);
+      ctx.fillRect(tx(t0),vy(Math.max(samp(t0),zero)),Math.max(1,tx(t1)-tx(t0)),vy(zero)-vy(Math.max(samp(t0),zero)));}}
+  // curva
+  ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineJoin='round';ctx.beginPath();
+  for(let i=0;i<=Np;i++){const t=T*i/Np,X=tx(t),Y=vy(samp(t));i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}
+  ctx.stroke();
+  if(opts.title){ctx.fillStyle=gCSS('--ink-faint');ctx.font='10px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText(opts.title,R.x+6,R.y+13);}
+  if(opts.highlight)opts.highlight(ctx,{tx,vy,m,R,col});
+}
+function gArrow(ctx,x,yTop,yBot,color,label){
+  const head=4;ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(x,yTop);ctx.lineTo(x,yBot);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x,yTop);ctx.lineTo(x-head,yTop+head);ctx.lineTo(x+head,yTop+head);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(x,yBot);ctx.lineTo(x-head,yBot-head);ctx.lineTo(x+head,yBot-head);ctx.closePath();ctx.fill();
+  ctx.font='9px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText(label,x+7,(yTop+yBot)/2+3);
+}
+function gLabel(ctx,R,txt){ctx.fillStyle=gCSS('--ink');ctx.font='700 12px ui-monospace,monospace';ctx.textAlign='left';ctx.fillText(txt,R.x+6,R.y+R.h-8);}
+/* layout helpers */
+function full(W,H){return {x:36,y:14,w:W-50,h:H-30};}
+function cols(W,H,n){const g=12,w=(W-50-g*(n-1))/n;const a=[];for(let i=0;i<n;i++)a.push({x:36+i*(w+g),y:18,w,h:H-34});return a;}
+
+const VCV=(VT,C,R,FR)=>computeVCV({VT_ml:VT,C_ml:C,R,FR});
+const PCV=(P,Ti,C,R,FR)=>computePCV({Pinsp:P,Ti_set:Ti,C_ml:C,R,FR});
+const PSV=(PS,C,R,FR)=>computePSV({PS,C_ml:C,R,FR});
+
+const GQ=[
+ {cap:'VCV · curva de PRESSÃO (VT 500, C 50, R 15, FR 15) · pausa revela o platô',
+  draw:(ctx,W,H)=>{const m=VCV(500,50,15,15);gMini(ctx,full(W,H),m,'P',{title:'Pressão',highlight:(c,h)=>{
+    const ax=h.tx(m.Ti+m.pause*0.5);gArrow(c,ax,h.vy(m.Ppeak),h.vy(m.Pplateau),gCSS('--warn'),'?');
+  }});},
+  q:'A queda destacada (Ppico → Pplatô), que aparece quando o fluxo zera na pausa, representa:',
+  o:['A PEEP','A pressão resistiva (R × V̇)','A pressão elástica (VT/C)','O volume corrente'],a:1,
+  fb:'Na pausa o fluxo zera e o termo R·V̇ some — a queda Ppico→Pplatô é exatamente a pressão resistiva.',hint:'O que depende do fluxo desaparece quando o fluxo é zero.'},
+
+ {cap:'VCV · duas PRESSÕES, mesmo VT e R · só a complacência mudou',
+  draw:(ctx,W,H)=>{const r=cols(W,H,2);const A=VCV(500,60,12,15),B=VCV(500,28,12,15);
+    gMini(ctx,r[0],A,'P',{title:'A'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'P',{title:'B'});gLabel(ctx,r[1],'B');},
+  q:'Mesmo VT e R. Qual painel é o pulmão mais RÍGIDO (C menor)?',
+  o:['A (platô mais baixo)','B (platô mais alto)','São iguais','Impossível dizer'],a:1,
+  fb:'Pplatô−PEEP = VT/C. Menos C → mais pressão elástica para o mesmo VT → platô mais alto (B).',hint:'O platô é a camada elástica; rigidez sobe o platô.'},
+
+ {cap:'VCV · duas PRESSÕES, mesmo VT e C · só a resistência mudou',
+  draw:(ctx,W,H)=>{const r=cols(W,H,2);const A=VCV(500,50,8,15),B=VCV(500,50,22,15);
+    gMini(ctx,r[0],A,'P',{title:'A'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'P',{title:'B'});gLabel(ctx,r[1],'B');},
+  q:'Mesmo VT e C. O que afastou o Ppico do Pplatô em B (pico bem mais alto, platô igual)?',
+  o:['Mais complacência','Maior resistência (R↑ → R·V̇ maior)','Mais PEEP','Maior FiO₂'],a:1,
+  fb:'O platô (elástica = VT/C) é igual nos dois; só a camada resistiva R·V̇ cresceu em B → pico maior, mesma base elástica.',hint:'Platô igual isola a mudança na camada resistiva.'},
+
+ {cap:'Três curvas de FLUXO · mesmo paciente, modos diferentes',
+  draw:(ctx,W,H)=>{const r=cols(W,H,3);const A=VCV(500,50,12,15),B=PCV(15,1.0,50,12,15),C=PSV(14,50,12,15);
+    gMini(ctx,r[0],A,'Q',{title:'A'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'Q',{title:'B'});gLabel(ctx,r[1],'B');gMini(ctx,r[2],C,'Q',{title:'C'});gLabel(ctx,r[2],'C');},
+  q:'Qual curva de fluxo é o VCV deste tutor (fluxo inspiratório IMPOSTO e constante)?',
+  o:['A — onda quadrada (platô de fluxo)','B — decelerante','C — decelerante','Nenhuma'],a:0,
+  fb:'Em VCV o fluxo é imposto e constante (onda quadrada). B e C são pressóricos (PCV/PSV): fluxo decelerante.',hint:'Fluxo constante = uma linha horizontal na inspiração.'},
+
+ {cap:'Fluxo expiratório · obstrutivo (R 22) com FR alta (24)',
+  draw:(ctx,W,H)=>{const m=VCV(500,55,22,24);gMini(ctx,full(W,H),m,'Q',{title:'Fluxo',highlight:(c,h)=>{
+    const Xe=h.tx(m.T),Ye=h.vy(flowAt(m.T-1e-4,m)*1);c.fillStyle=gCSS('--warn');c.beginPath();c.arc(Xe-3,Ye,3.5,0,7);c.fill();
+    c.font='9px ui-monospace,monospace';c.textAlign='right';c.fillText('não zera',Xe-8,Ye-6);}});},
+  q:'O fluxo expiratório não retorna à linha de base antes do próximo ciclo. Isso denuncia:',
+  o:['Volume corrente ideal','Aprisionamento de ar (Te < ~3τ) / auto-PEEP','Excesso de FiO₂','Complacência perfeita'],a:1,
+  fb:'Esvaziamento incompleto: o tempo expiratório não chega a ~3τ. Conduta dominante no obstrutivo = dar tempo (baixar FR/Ti).',hint:'Curva que não volta ao zero = ar que ficou preso.'},
+
+ {cap:'PCV · dois VOLUMES, mesmo ΔP e Ti curto · só a constante de tempo mudou',
+  draw:(ctx,W,H)=>{const r=cols(W,H,2);const A=PCV(15,0.6,50,8,15),B=PCV(15,0.6,50,22,15);
+    gMini(ctx,r[0],A,'V',{title:'A · τ curto'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'V',{title:'B · τ longo'});gLabel(ctx,r[1],'B');},
+  q:'Mesmo ΔP e Ti (0,6 s). Em qual painel o enchimento ficou INCOMPLETO no Ti?',
+  o:['A (platô de volume cedo)','B (volume ainda subindo, cortado)','Os dois encheram igual','Nenhum encheu'],a:1,
+  fb:'τ longo (R alta) = enchimento lento; o Ti curto corta a exponencial antes do platô → VT menor que o possível (B).',hint:'Enchimento incompleto = a curva de volume foi cortada subindo.'},
+
+ {cap:'Duas curvas de FLUXO idênticas · PSV (A) e PCV (B)',
+  draw:(ctx,W,H)=>{const r=cols(W,H,2);const A=PSV(15,50,12,15),B=PCV(15,A.effectiveTi,50,12,15);
+    gMini(ctx,r[0],A,'Q',{title:'A · PSV'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'Q',{title:'B · PCV'});gLabel(ctx,r[1],'B');},
+  q:'A forma do fluxo é praticamente idêntica. Então o que DISTINGUE PSV de PCV?',
+  o:['O VCV controla o volume','Quem termina a inspiração: em PSV o paciente cicla por queda de fluxo; em PCV o Ti é ajustado','A FiO₂','A PEEP'],a:1,
+  fb:'A física pressórica dá o mesmo fluxo decelerante. A diferença é o comando do ciclo — não se lê na forma da curva, e sim em quem decide o fim da inspiração.',hint:'A curva não conta tudo: o que muda é o ciclo.'},
+
+ {cap:'PCV · curva de FLUXO com a área inspiratória sombreada',
+  draw:(ctx,W,H)=>{const m=PCV(16,1.2,50,12,15);gMini(ctx,full(W,H),m,'Q',{title:'Fluxo (área sombreada = inspiração)',shadeInsp:true});},
+  q:'A área sombreada sob a curva de fluxo (fluxo × tempo) corresponde a:',
+  o:['A área de secção do brônquio','O volume corrente (integral temporal do fluxo)','A resistência','A pressão de pico'],a:1,
+  fb:'Volume = ∫ fluxo dt = área TEMPORAL sob a curva fluxo×tempo. Não confundir com área anatômica (geométrica) da via aérea.',hint:'Mesma palavra "área", eixos diferentes: aqui é fluxo×tempo.'},
+
+ {cap:'PCV · PRESSÃO mantida (cima) e FLUXO decelerante (baixo), mesmo paciente',
+  draw:(ctx,W,H)=>{const m=PCV(16,1.4,50,12,15);const top={x:36,y:14,w:W-50,h:(H-34)/2},bot={x:36,y:14+(H-34)/2+6,w:W-50,h:(H-34)/2};
+    gMini(ctx,top,m,'P',{title:'Pressão (mantida no Ti)'});gMini(ctx,bot,m,'Q',{title:'Fluxo (decai)'});},
+  q:'A pressão aplicada é mantida durante o Ti, mas o fluxo DECAI. Por quê?',
+  o:['O ventilador reduz a pressão','A pressão alveolar sobe com o volume → o gradiente cai → o fluxo cai','A FiO₂ cai','A FR aumenta'],a:1,
+  fb:'Fluxo é gradiente/R. Com a pressão aplicada constante e a alveolar subindo, o gradiente decresce — daí o fluxo decelerante.',hint:'Menor gradiente entre pressão aplicada e alveolar = menor fluxo.'},
+
+ {cap:'VCV · PRESSÃO · distância do platô até a PEEP destacada',
+  draw:(ctx,W,H)=>{const m=VCV(480,45,12,15);gMini(ctx,full(W,H),m,'P',{title:'Pressão',highlight:(c,h)=>{
+    const ax=h.tx(m.Ti+m.pause*0.5);gArrow(c,ax,h.vy(m.Pplateau),h.vy(PEEP),gCSS('--volume'),'?');}});},
+  q:'A distância destacada, do Pplatô até a PEEP, é a:',
+  o:['Pressão resistiva','Pressão elástica = VT/C (a "driving" do sistema)','PEEP intrínseca','Pico de fluxo'],a:1,
+  fb:'Pplatô − PEEP = VT/C = pressão elástica (a driving do sistema respiratório). É o que distende o pulmão, não o componente resistivo.',hint:'Sem fluxo (platô), sobra a pressão que distende — a elástica.'},
+
+ {cap:'VCV · fenótipo MISTO · R alta (20) E C baixa (28)',
+  draw:(ctx,W,H)=>{const m=VCV(450,28,20,15);gMini(ctx,full(W,H),m,'P',{title:'Pressão',highlight:(c,h)=>{
+    const ax=h.tx(m.Ti+m.pause*0.5);gArrow(c,ax-10,h.vy(m.Ppeak),h.vy(m.Pplateau),gCSS('--warn'),'resist.');gArrow(c,ax+34,h.vy(m.Pplateau),h.vy(PEEP),gCSS('--volume'),'elást.');}});},
+  q:'Aqui τ=R·C pode parecer "moderado". Por que esse número engana no fenótipo misto?',
+  o:['Porque τ não existe na mista','Porque R↑ alonga τ e C↓ encurta τ — podem se cancelar, mascarando dois problemas graves','Porque a PEEP muda','Porque a FiO₂ muda'],a:1,
+  fb:'Na mista (ex.: DPOC + congestão), R↑ e C↓ puxam τ em sentidos opostos. O τ pode parecer normal; só olhando resistiva E elástica separadas se vê os dois problemas.',hint:'τ é um produto: dois fatores opostos podem dar um meio-termo enganoso.'},
+
+ {cap:'Mesmo VT (~500 mL) por caminhos diferentes · VCV (A) e PCV (B)',
+  draw:(ctx,W,H)=>{const r=cols(W,H,2);const A=VCV(500,50,12,15),B=PCV(13,1.6,50,12,15);
+    gMini(ctx,r[0],A,'V',{title:'A · VCV (rampa linear)'});gLabel(ctx,r[0],'A');gMini(ctx,r[1],B,'V',{title:'B · PCV (exponencial)'});gLabel(ctx,r[1],'B');},
+  q:'Ambos chegam a um VT semelhante (~500 mL). Olhando as curvas de VOLUME, o que diferiu?',
+  o:['O VT final é diferente','O CAMINHO até o VT: rampa linear (fluxo constante, VCV) vs exponencial (fluxo decelerante, PCV)','A PEEP','Nada — são idênticas'],a:1,
+  fb:'O destino (VT) pode ser o mesmo; o caminho não. VCV sobe linear (fluxo constante); PCV sobe exponencial (fluxo decelerante, enchendo rápido e desacelerando).',hint:'Olhe a FORMA da subida do volume, não só onde ela termina.'}
+];
+let gi=0;const ganswers=new Array(GQ.length).fill(null);
+function renderGraph(){
+  const Q=GQ[gi],chosen=ganswers[gi];
+  gel('gqmeta').textContent=`Ler a curva · Questão ${gi+1} de ${GQ.length}`;
+  gel('gqCap').textContent=Q.cap;
+  try{const {ctx,w,h}=gEnsure();ctx.clearRect(0,0,w,h);Q.draw(ctx,w,h);}catch(e){/* canvas indisponível */}
+  gel('gqtext').textContent=Q.q;
+  const opts=gel('gopts');opts.innerHTML='';const keys=['A','B','C','D'];
+  Q.o.forEach((text,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="key">${keys[i]}</span>${text}`;b.onclick=()=>gpick(i);
+    if(chosen!==null){b.disabled=true;if(i===Q.a)b.classList.add('correct');if(i===chosen&&chosen!==Q.a)b.classList.add('wrong');}opts.appendChild(b);});
+  const fb=gel('gfb');if(chosen!==null){fb.innerHTML=(chosen===Q.a?'✓ ':'✗ ')+Q.fb+`<span class="hint">↳ ${Q.hint}</span>`;fb.classList.add('show');}else{fb.className='fb';fb.innerHTML='';}
+  gel('gprev').disabled=gi===0;gel('gnext').disabled=gi===GQ.length-1;
+  gel('gqcount').textContent=`respondidas: ${ganswers.filter(x=>x!==null).length}/${GQ.length}`;
+}
+function gpick(i){if(ganswers[gi]!==null)return;ganswers[gi]=i;renderGraph();}
+gel('gnext').onclick=()=>{if(gi<GQ.length-1){gi++;renderGraph();}};
+gel('gprev').onclick=()=>{if(gi>0){gi--;renderGraph();}};
+renderGraph();
+</script>
+</body>
+</html>

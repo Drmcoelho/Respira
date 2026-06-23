@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventila · 01 · Por que este paciente está no ventilador?</title>
+<meta name="description" content="Ventila, módulo 1: 'intubado' não é diagnóstico. O plano ventilatório nasce da CAUSA da intubação — cérebro, via aérea, bomba, pulmão, troca, proteção ou procedimento. Mapa de falhas animado, laboratório de fenótipo e caso clínico em cinco atos.">
+<meta name="theme-color" content="#F4EFE4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-deep:#EBE3D3; --ink:#16383B; --ink-soft:#4A6164;
+    --accent:#C0603A; --accent-deep:#A24B2C; --air:#3C7F86; --tissue:#C97F66;
+    --signal:#2E6E8E; --signal-deep:#235874;
+    --correct:#4E7C5A; --correct-bg:#E4ECE0; --wrong:#B0503E; --wrong-bg:#F0E1DB;
+    --warn:#B8862F; --warn-bg:#F2E9D2; --line:#D7CCB8; --shadow:rgba(22,56,59,.13);
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:'Hanken Grotesk', sans-serif;
+    background:radial-gradient(1100px 600px at 80% -8%, rgba(46,110,142,.07), transparent 60%),radial-gradient(900px 700px at -6% 110%, rgba(192,96,58,.07), transparent 55%),var(--paper);
+    color:var(--ink); line-height:1.6; min-height:100vh; padding:0 20px 80px; overflow-x:hidden; -webkit-font-smoothing:antialiased; position:relative; }
+  body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .wrap{ max-width:780px; margin:0 auto; position:relative; z-index:2; }
+
+  header{ padding:44px 0 12px; text-align:center; }
+  .backlink{ display:inline-block; margin-bottom:12px; font-size:.8rem; color:var(--signal-deep); text-decoration:none; letter-spacing:.04em; }
+  .backlink:hover{ text-decoration:underline; }
+  .kicker{ font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--signal-deep); font-weight:600; margin-bottom:12px; }
+  h1{ font-family:'Fraunces', serif; font-weight:500; font-size:clamp(2rem, 5.4vw, 2.9rem); line-height:1.05; letter-spacing:-.01em; margin-bottom:14px; }
+  h1 em{ font-style:italic; color:var(--signal); }
+  .sub{ color:var(--ink-soft); font-size:1.02rem; max-width:600px; margin:0 auto; }
+
+  .nav{ display:flex; flex-wrap:wrap; gap:6px; background:var(--paper-deep); border:1px solid var(--line); border-radius:13px; padding:5px; max-width:600px; margin:28px auto 6px; }
+  .nav button{ flex:1 1 auto; font-family:inherit; font-weight:600; font-size:.84rem; color:var(--ink-soft); background:transparent; border:none; padding:9px 10px; border-radius:9px; cursor:pointer; transition:all .18s ease; white-space:nowrap; }
+  .nav button.active{ background:var(--signal); color:#fff; box-shadow:0 6px 16px -8px var(--signal-deep); }
+  .nav button:not(.active):hover{ color:var(--ink); }
+
+  .meter{ margin:18px 0 4px; display:none; } .meter.on{ display:block; }
+  .meter-top{ display:flex; justify-content:space-between; align-items:baseline; font-size:.78rem; margin-bottom:8px; }
+  .meter-block{ color:var(--signal-deep); font-weight:600; text-transform:uppercase; letter-spacing:.16em; }
+  .meter-count{ color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .meter-track{ height:8px; background:var(--paper-deep); border-radius:99px; overflow:hidden; border:1px solid var(--line); }
+  .meter-fill{ height:100%; width:0; background:linear-gradient(90deg, var(--signal), var(--air)); border-radius:99px; transition:width .6s cubic-bezier(.22,1,.36,1); }
+
+  .card{ background:rgba(255,253,248,.74); border:1px solid var(--line); border-radius:18px; padding:30px 30px 26px; box-shadow:0 14px 40px -22px var(--shadow); backdrop-filter:blur(2px); margin-top:16px; }
+  .pane{ display:none; } .pane.active{ display:block; }
+
+  /* ----- CASO ----- */
+  .act{ border-left:3px solid var(--line); padding:4px 0 4px 18px; margin:0 0 20px; }
+  .act .an{ font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-deep); margin-bottom:6px; }
+  .act h3{ font-family:'Fraunces',serif; font-weight:500; font-size:1.18rem; margin-bottom:8px; }
+  .act p{ color:var(--ink); font-size:1rem; margin-bottom:8px; }
+  .act.trap{ border-left-color:var(--wrong); }
+  .act.reassess{ border-left-color:var(--correct); }
+  .vitals{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .vital{ font-family:var(--mono); font-size:.78rem; background:var(--paper-deep); border:1px solid var(--line); border-radius:8px; padding:6px 10px; }
+  .vital b{ color:var(--signal-deep); }
+  .reveal-row{ margin-top:6px; }
+  .case-lead{ font-family:'Fraunces',serif; font-style:italic; font-size:1.12rem; color:var(--signal-deep); margin-bottom:18px; }
+
+  /* ----- TRILHA / QUIZ ----- */
+  .qtag{ font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--signal-deep); font-weight:600; margin-bottom:14px; }
+  .stem{ font-family:'Fraunces', serif; font-weight:400; font-size:1.28rem; line-height:1.4; margin-bottom:22px; }
+  .opts{ display:flex; flex-direction:column; gap:11px; }
+  .opt{ text-align:left; font-family:inherit; font-size:1rem; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:12px; padding:14px 17px; cursor:pointer; transition:all .18s ease; display:flex; gap:13px; align-items:flex-start; line-height:1.45; }
+  .opt .mark{ flex:0 0 auto; width:24px; height:24px; border-radius:7px; border:1.5px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:.82rem; color:var(--ink-soft); margin-top:1px; }
+  .opt:hover:not(:disabled){ border-color:var(--signal); transform:translateX(3px); } .opt:disabled{ cursor:default; }
+  .opt.correct{ border-color:var(--correct); background:var(--correct-bg); } .opt.correct .mark{ background:var(--correct); border-color:var(--correct); color:#fff; }
+  .opt.wrong{ border-color:var(--wrong); background:var(--wrong-bg); } .opt.wrong .mark{ background:var(--wrong); border-color:var(--wrong); color:#fff; }
+  .opt.dim{ opacity:.5; }
+  .fb{ margin-top:20px; border-radius:13px; padding:18px 20px; border-left:4px solid var(--correct); background:var(--correct-bg); font-size:1rem; line-height:1.6; color:#2c4a35; display:none; }
+  .fb.show{ display:block; } .fb.bad{ border-left-color:var(--wrong); background:var(--wrong-bg); color:#5e2c22; }
+  .fb-head{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; margin-bottom:8px; }
+  /* gabarito robusto de 5 campos */
+  .gab{ display:grid; gap:9px; margin-top:6px; }
+  .gab .f{ background:rgba(255,255,255,.5); border-radius:9px; padding:9px 12px; }
+  .gab .ft{ font-family:var(--mono); font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-deep); display:block; margin-bottom:3px; }
+  .gab .f.trap .ft{ color:var(--wrong); } .gab .f.bed .ft{ color:var(--accent-deep); }
+  .gab a{ color:var(--signal-deep); font-weight:600; }
+
+  .row{ margin-top:22px; display:flex; justify-content:flex-end; gap:12px; }
+  .btn{ font-family:inherit; font-weight:600; font-size:1rem; background:var(--signal); color:#fff; border:none; padding:12px 26px; border-radius:11px; cursor:pointer; transition:all .18s ease; box-shadow:0 8px 20px -10px var(--signal-deep); }
+  .btn:hover{ background:var(--signal-deep); transform:translateY(-2px); }
+  .btn.ghost{ background:transparent; color:var(--signal-deep); box-shadow:none; border:1.5px solid var(--line); }
+  .btn.acc{ background:var(--accent); box-shadow:0 8px 20px -10px var(--accent-deep); } .btn.acc:hover{ background:var(--accent-deep); }
+  .hidden{ display:none !important; }
+  .done{ text-align:center; } .done .score{ font-family:'Fraunces',serif; font-size:3rem; font-weight:500; color:var(--signal); line-height:1; margin:8px 0; }
+  .done h2{ font-family:'Fraunces',serif; font-weight:500; font-size:1.5rem; margin-bottom:12px; }
+
+  /* ----- MAPA DE FALHAS ----- */
+  .maphint{ color:var(--ink-soft); font-size:.96rem; margin-bottom:14px; }
+  .failmap{ background:#15302f; border-radius:14px; padding:8px; }
+  svg.fm{ display:block; width:100%; height:auto; }
+  .fm-node{ transition:fill .3s ease; }
+  .legend{ display:flex; gap:16px; justify-content:center; margin-top:10px; font-size:.78rem; color:var(--ink-soft); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+  .dot.ok{ background:#5fd0c6; } .dot.sick{ background:#E8836A; }
+
+  .phenobar{ display:flex; flex-wrap:wrap; gap:7px; margin:16px 0; }
+  .pheno{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink-soft); background:var(--paper); border:1.5px solid var(--line); border-radius:10px; padding:9px 12px; cursor:pointer; transition:all .16s ease; }
+  .pheno:hover{ border-color:var(--signal); color:var(--ink); }
+  .pheno.active{ background:var(--signal); color:#fff; border-color:var(--signal); }
+
+  /* ----- LAB PLANO ----- */
+  .plan{ display:grid; gap:10px; }
+  .prow{ background:var(--paper-deep); border:1px solid var(--line); border-radius:11px; padding:12px 15px; }
+  .prow .pk{ font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-deep); font-weight:700; margin-bottom:4px; }
+  .prow .pv{ font-size:.98rem; color:var(--ink); line-height:1.5; }
+  .prow.risk .pk{ color:var(--warn); } .prow.err .pk{ color:var(--wrong); }
+  .links{ margin-top:14px; } .links .lt{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; }
+  .labrow{ display:flex; flex-wrap:wrap; gap:7px; }
+  .lab-l{ font-family:inherit; font-size:.82rem; font-weight:600; color:var(--ink); background:var(--paper); border:1.5px solid var(--line); border-radius:9px; padding:7px 11px; text-decoration:none; transition:all .16s ease; display:inline-flex; align-items:center; gap:6px; }
+  .lab-l:hover{ border-color:var(--accent); color:var(--accent-deep); transform:translateY(-1px); } .lab-l .ln{ font-family:var(--mono); font-size:.62rem; color:var(--ink-soft); }
+  .case-chip{ display:inline-block; margin-left:8px; font-family:var(--mono); font-size:.64rem; color:#fff; background:var(--accent); border-radius:99px; padding:2px 9px; vertical-align:middle; }
+
+  .lab-note{ font-size:.84rem; color:var(--ink-soft); margin-top:18px; line-height:1.55; border-top:1px dashed var(--line); padding-top:14px; } .lab-note b{ color:var(--ink); }
+  footer{ text-align:center; margin-top:40px; color:var(--ink-soft); font-size:.82rem; }
+  @media (max-width:560px){ .card{ padding:24px 18px; } .stem{ font-size:1.16rem; } }
+
+/* media viva · atlas aberto Respira/Ventila */
+.media-atlas{margin:18px 0 24px;display:grid;gap:16px}
+.media-viva{margin:0;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2));border:1px solid var(--line,#ccd6d6);border-radius:8px;overflow:hidden}
+.media-viva img{display:block;width:100%;max-height:680px;object-fit:contain;height:auto;border-radius:6px;background:#fff}
+.media-viva figcaption{margin-top:9px;color:var(--ink-soft,var(--soft,#526568));font-size:.88rem;line-height:1.55}
+.media-viva figcaption b{color:var(--accent,var(--sig,#a24b2c))}
+.media-viva .media-credit{display:block;margin-top:6px;font-size:.76rem;opacity:.88}
+.media-viva .media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a class="backlink" href="ventila.html">← Ventila · todos os módulos</a>
+    <div class="kicker">Ventila · Módulo 01</div>
+    <h1>Por que este paciente<br>está no <em>ventilador?</em></h1>
+    <p class="sub">Antes de VCV, PCV ou PSV vem a pergunta que decide tudo: qual falha levou ao tubo? "Intubado" não é diagnóstico — o plano ventilatório nasce da causa. Para a Dani.</p>
+  </header>
+<!-- respira-open-atlas:begin -->
+<section class="media-atlas" aria-label="Atlas visual de Ventila 01"><figure class="media-viva" data-media="v01-intubation-kit.jpg"><img src="assets/respira-ventila-atlas/media/v01-intubation-kit.jpg" alt="Laringoscopio e tubo. Reconheca que entrar no ventilador exige primeiro via aerea, posicionamento e estrategia de seguranca." loading="lazy" decoding="async"><figcaption><b>Ventila 01 · Laringoscopio e tubo.</b> Reconheca que entrar no ventilador exige primeiro via aerea, posicionamento e estrategia de seguranca. <b>Limite:</b> A foto nao ensina sequencia rapida, dose, confirmacao por capnografia ou resgate de via aerea dificil. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Intubation_endotracheal_tube_laryngoscope.jpg" target="_blank" rel="license noopener">Intubation endotracheal tube laryngoscope.jpg</a> · CC BY 3.0 · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
+<!-- respira-open-atlas:end -->
+
+  <nav class="nav">
+    <button class="active" data-pane="caso" onclick="go('caso')">Caso</button>
+    <button data-pane="trilha" onclick="go('trilha')">Trilha</button>
+    <button data-pane="mapa" onclick="go('mapa')">Mapa</button>
+    <button data-pane="lab" onclick="go('lab')">Laboratório</button>
+    <button data-pane="quiz" onclick="go('quiz')">Quiz</button>
+  </nav>
+
+  <div class="meter" id="meter">
+    <div class="meter-top"><span class="meter-block" id="blockLabel"></span><span class="meter-count" id="count"></span></div>
+    <div class="meter-track"><div class="meter-fill" id="fill"></div></div>
+  </div>
+
+  <!-- ============ CASO (Ato 1 abre o módulo) ============ -->
+  <section class="pane active card" id="pane-caso">
+    <div class="qtag">Caso clínico · em cinco atos</div>
+    <p class="case-lead">"Este é o paciente." Leia, decida — e só então revele o desfecho.</p>
+
+    <div class="act"><div class="an">Ato 1 · Entrada</div><h3>Por que chegou ao ventilador</h3>
+      <p>Homem, 42 anos. Encontrado torporoso após ingestão de benzodiazepínico + opioide. Glasgow 6, sem proteção de via aérea. Intubado na emergência por <b>rebaixamento e proteção</b> — não por dificuldade respiratória.</p></div>
+
+    <div class="act"><div class="an">Ato 2 · Leitura</div><h3>O que mostram os dados</h3>
+      <div class="vitals">
+        <span class="vital">SatO₂ <b>96%</b> (FiO₂ baixa)</span>
+        <span class="vital">ausculta <b>limpa</b></span>
+        <span class="vital">RX <b>sem infiltrados</b></span>
+        <span class="vital">pH <b>7,30</b></span>
+        <span class="vital">PaCO₂ <b>52</b></span>
+        <span class="vital">PaO₂ <b>95</b></span>
+        <span class="vital">HCO₃ <b>24</b></span>
+      </div>
+      <p>Troca gasosa preservada; a alteração é <b>hipoventilação</b> (acidose respiratória leve), coerente com depressão do drive — não com lesão pulmonar. <a class="lab-l" style="margin-top:6px" href="mvp4-interativo.html#ph=7.30&co2=52&hco3=24&na=140&cl=104&alb=4&m=bench" target="_blank" rel="noopener">↗ ver esta gasometria <span class="ln">Respira · gaso</span></a></p></div>
+
+    <div class="act"><div class="an">Ato 3 · Decisão</div><h3>O que parece lógico?</h3>
+      <p>Pense antes de revelar: que estratégia ventilatória você instituiria neste paciente — e por quê? Quando tiver sua resposta, abra o <b>Laboratório</b> e selecione o fenótipo dele; depois volte para o desfecho.</p>
+      <div class="reveal-row"><button class="btn ghost" id="revealBtn" onclick="revealCase()">Revelar Ato 4 e 5 →</button></div>
+    </div>
+
+    <div id="caseEnd" class="hidden">
+      <div class="act trap"><div class="an">Ato 4 · Pegadinha</div><h3>A decisão intuitiva que piora</h3>
+        <p>Vendo "paciente intubado + gasometria alterada", a equipe instituiu <b>PEEP 12 e VC baixo "protetor de SDRA"</b>. Resultado: <b>hipotensão</b> — num pulmão normal e complacente, PEEP alto só reduziu o retorno venoso, sem nenhum ganho de troca. Tratou-se uma SDRA que não existia.</p></div>
+      <div class="act reassess"><div class="an">Ato 5 · Reavaliação</div><h3>O que mudou após corrigir</h3>
+        <p>Revertido para <b>ventilação fisiológica</b> (VC ~7 mL/kg do peso predito, PEEP 5, normocapnia visando PaCO₂ ~40), proteção de aspiração e sem hiperóxia. À medida que os fármacos foram metabolizados (± antagonista), o Glasgow subiu e o paciente foi extubado. <b>O tubo era pelo cérebro, não pelo pulmão.</b></p></div>
+      <div class="row" style="justify-content:center"><button class="btn" onclick="go('trilha')">Construir o mecanismo na Trilha →</button></div>
+    </div>
+  </section>
+
+  <!-- ============ TRILHA ============ -->
+  <section class="pane card" id="pane-trilha">
+    <div id="trIntro">
+      <div class="qtag">Trilha socrática</div>
+      <p class="stem" style="font-size:1.18rem">Do senso comum ao mecanismo: seis perguntas para desmontar a ideia de que "intubado" diz algo sobre o pulmão.</p>
+      <div class="row" style="justify-content:center"><button class="btn big" onclick="trStart()">Vamos →</button></div>
+    </div>
+    <div id="trQuiz" class="hidden"></div>
+    <div id="trDone" class="hidden done"></div>
+  </section>
+
+  <!-- ============ MAPA (ilustração dinâmica) ============ -->
+  <section class="pane card" id="pane-mapa">
+    <div class="qtag">Ilustração dinâmica · mapa de falhas</div>
+    <p class="maphint">O sistema respiratório tem sete pontos onde algo pode falhar e levar ao tubo. Selecione o motivo da intubação e veja <b>quais subsistemas estão de fato doentes</b> — e quantos podem estar perfeitamente normais.</p>
+    <div class="phenobar" id="phenobarMap"></div>
+    <div class="failmap">
+      <svg class="fm" id="fmSvg" viewBox="0 0 520 320" role="img" aria-label="Mapa de falhas do sistema respiratório"></svg>
+    </div>
+    <div class="legend"><span><i class="dot ok"></i> funcionando</span><span><i class="dot sick"></i> em falha</span></div>
+    <p class="lab-note" id="mapNote"></p>
+  </section>
+
+  <!-- ============ LABORATÓRIO (Ato 2/3 — mexa nas variáveis dele) ============ -->
+  <section class="pane card" id="pane-lab">
+    <div class="qtag">Laboratório · fenótipo → plano ventilatório</div>
+    <p class="maphint">Escolha o fenótipo de intubação e veja metas, riscos, parâmetros iniciais e armadilhas mudarem. O paciente do caso já vem carregado <span class="case-chip">caso: cérebro/proteção</span></p>
+    <div class="phenobar" id="phenobarLab"></div>
+    <div class="plan" id="planPanel"></div>
+    <div class="links" id="planLinks"></div>
+    <p class="lab-note"><b>"Intubado" não é uma categoria única.</b> O ventilador responde ao motivo do tubo: um pulmão normal protegido por via aérea não pede o plano de um <i>baby lung</i> inflamado. Parâmetros aqui são pontos de partida didáticos, não prescrição.</p>
+  </section>
+
+  <!-- ============ QUIZ (gabarito robusto de 5 campos) ============ -->
+  <section class="pane card" id="pane-quiz">
+    <div id="qzIntro">
+      <div class="qtag">Quiz · gabarito robusto</div>
+      <p class="stem" style="font-size:1.18rem">Cinco questões. Alternativas curtas; o aprendizado mora no gabarito — mecanismo, por que a certa, a armadilha, a beira do leito e a ponte.</p>
+      <div class="row" style="justify-content:center"><button class="btn acc big" onclick="qzStart()">Começar →</button></div>
+    </div>
+    <div id="qzQuiz" class="hidden"></div>
+    <div id="qzDone" class="hidden done"></div>
+  </section>
+
+  <footer>Ventila — material didático de ventilação mecânica · Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira · 01/12 · Para a Dani</footer>
+</div>
+
+<script>
+/* ============================================================
+   VENTILA 01 — Por que este paciente está no ventilador?
+   Estabelece o padrão Ventila: 5 blocos (caso 5 atos · trilha ·
+   ilustração dinâmica · laboratório · quiz c/ gabarito de 5 campos).
+   Tese: "intubado" não é diagnóstico; o plano nasce da CAUSA do tubo.
+   Offline, sem storage. (Será fatorado em ventila-core depois.)
+   ============================================================ */
+const el = id => document.getElementById(id);
+
+/* ---------- navegação de blocos ---------- */
+const PANES = ['caso','trilha','mapa','lab','quiz'];
+function go(pane){
+  if(!PANES.includes(pane)) pane='caso';
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active', b.dataset.pane===pane));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active', p.id==='pane-'+pane));
+  const showMeter = (pane==='trilha' && !el('trQuiz').classList.contains('hidden')) || (pane==='quiz' && !el('qzQuiz').classList.contains('hidden'));
+  el('meter').classList.toggle('on', showMeter);
+  if(location.hash !== '#'+pane) history.replaceState(null,'','#'+pane);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openFromHash(){ const h=(location.hash||'').replace('#',''); if(PANES.includes(h)) go(h); }
+function revealCase(){ el('caseEnd').classList.remove('hidden'); el('revealBtn').classList.add('hidden'); el('caseEnd').scrollIntoView({behavior:'smooth',block:'nearest'}); }
+
+/* ============================================================
+   MAPA DE FALHAS + FENÓTIPOS (ilustração dinâmica + laboratório)
+   ============================================================ */
+const NODES = [
+  {id:'cerebro',   x:260, y:46,  label:'Cérebro / drive'},
+  {id:'protecao',  x:120, y:118, label:'Proteção (aspiração)'},
+  {id:'viaaerea',  x:260, y:120, label:'Via aérea'},
+  {id:'bomba',     x:400, y:128, label:'Bomba (músculo)'},
+  {id:'pulmao',    x:200, y:222, label:'Pulmão'},
+  {id:'troca',     x:330, y:226, label:'Troca gasosa'},
+  {id:'procedimento', x:260, y:292, label:'Procedimento'}
+];
+const EDGES = [['cerebro','viaaerea'],['protecao','viaaerea'],['viaaerea','bomba'],['viaaerea','pulmao'],['pulmao','troca'],['viaaerea','procedimento'],['pulmao','procedimento']];
+
+const PHENOTYPES = {
+  cerebro: { nome:'Cérebro / proteção', sick:['cerebro','protecao'],
+    meta:'Ventilação fisiológica; normocapnia (PaCO₂ ~35–40); proteção de via aérea; aguardar o despertar.',
+    risco:'Hipocapnia (vasoconstrição cerebral) e hiperóxia desnecessárias; aspiração; tratar pulmão normal como SDRA.',
+    params:'VC ~6–8 mL/kg PBW · PEEP 5 · FiO₂ p/ SpO₂ 92–96% · normoventilar.',
+    erro:'PEEP/pressões agressivas num pulmão limpo; hiperventilar "por reflexo".',
+    reaval:'Glasgow/despertar, reflexos de via aérea, reversão da causa do rebaixamento.',
+    links:[{n:'A gasometria de hipoventilação',p:'Respira · gaso',href:'mvp4-interativo.html#ph=7.30&co2=52&hco3=24&na=140&cl=104&alb=4&m=bench'}] },
+  viaaerea: { nome:'Via aérea', sick:['viaaerea','protecao'],
+    meta:'Garantir via aérea pérvia; antecipar extubação difícil; o parênquima pode estar normal no início.',
+    risco:'Edema progressivo (queimadura/trauma) e perda da via aérea; subestimar a dificuldade.',
+    params:'Ventilação fisiológica · tubo de maior calibre possível · cuff leak seriado · não apressar extubação.',
+    erro:'Extubar cedo sem reavaliar edema; presumir doença parenquimatosa.',
+    reaval:'Edema laríngeo (cuff leak), evolução da causa, segurança da via aérea.',
+    links:[] },
+  bomba: { nome:'Bomba (músculo / drive)', sick:['bomba'],
+    meta:'Descansar a musculatura exausta; na obstrução, garantir tempo expiratório; tratar a causa da fadiga.',
+    risco:'Auto-PEEP por Te insuficiente → hipotensão; fadiga não revertida.',
+    params:'Modo controlado inicial · FR baixa + fluxo alto p/ Te longo · broncodilatar · hipercapnia permissiva.',
+    erro:'Subir FR para "lavar CO₂" → mais aprisionamento; desmamar cedo demais.',
+    reaval:'Força muscular, drive, auto-PEEP, reversão (DPOC, eletrólitos, acidose).',
+    links:[{n:'Auto-PEEP: dê tempo de expirar',p:'Respira · mecânica',href:'mvp1-interativo.html#r=20&c=0.08&rr=24&m=sim'}] },
+  pulmao: { nome:'Pulmão (parênquima)', sick:['pulmao','troca'],
+    meta:'Proteção pulmonar: VC 4–6 mL/kg PBW, platô ≤30, driving <15; PEEP/recrutamento/prona conforme gravidade.',
+    risco:'VILI e hiperdistensão; otimizar SatO₂ ignorando driving e hemodinâmica.',
+    params:'VC baixo · PEEP titulada · FiO₂ p/ alvo · considerar prona/BNM se grave.',
+    erro:'Volume alto "porque a SpO₂ está boa"; ignorar a driving pressure.',
+    reaval:'Driving, complacência, P/F, resposta a PEEP/prona.',
+    links:[{n:'Driving e proteção',p:'Respira · protetora',href:'mvp10-interativo.html#proteger'},{n:'Recrutar o alvéolo',p:'Respira · Laplace',href:'mvp5-interativo.html#ra=60&rb=160&peep=10&surf=0&m=lab'}] },
+  procedimento: { nome:'Procedimento (ponte)', sick:['procedimento'],
+    meta:'Ventilação fisiológica transitória; plano claro de extubação precoce.',
+    risco:'Sedação/ventilação prolongadas sem necessidade; atelectasia.',
+    params:'VC fisiológico · PEEP 5 · despertar e extubar assim que seguro.',
+    erro:'Manter intubado/sedado além do necessário; "esquecer" o paciente-ponte.',
+    reaval:'Reversão de sedação/bloqueio; critérios de extubação imediatos.',
+    links:[] }
+};
+const CASE_PHENO = 'cerebro';
+let pheno = CASE_PHENO;
+
+function buildMap(){
+  const svg=el('fmSvg'); let s='';
+  EDGES.forEach(([a,b])=>{ const A=NODES.find(n=>n.id===a),B=NODES.find(n=>n.id===b);
+    s+=`<line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="#2f5450" stroke-width="2"/>`; });
+  NODES.forEach(n=>{
+    s+=`<circle class="halo" id="halo-${n.id}" cx="${n.x}" cy="${n.y}" r="20" fill="#5fd0c6" opacity="0.12"/>`;
+    s+=`<circle class="fm-node" id="node-${n.id}" cx="${n.x}" cy="${n.y}" r="13" fill="#5fd0c6" stroke="#15302f" stroke-width="2"/>`;
+    const anchor = n.x<150?'start':(n.x>380?'end':'middle');
+    s+=`<text x="${n.x}" y="${n.y+28}" fill="#cfe3df" font-size="11" font-family="'Hanken Grotesk',sans-serif" text-anchor="${anchor}">${n.label}</text>`;
+  });
+  svg.innerHTML=s;
+}
+function applyPheno(){
+  const sick=new Set(PHENOTYPES[pheno].sick);
+  NODES.forEach(n=>{ const node=el('node-'+n.id), halo=el('halo-'+n.id); if(!node) return;
+    const isSick=sick.has(n.id);
+    node.setAttribute('fill', isSick?'#E8836A':'#5fd0c6');
+    node.dataset.sick=isSick?'1':'0';
+    if(halo){ halo.setAttribute('fill', isSick?'#E8836A':'#5fd0c6'); } });
+  document.querySelectorAll('.pheno').forEach(b=>b.classList.toggle('active', b.dataset.ph===pheno));
+  const P=PHENOTYPES[pheno];
+  const n=P.sick.length;
+  el('mapNote').innerHTML = `<b>${P.nome}:</b> ${n} subsistema${n>1?'s':''} em falha — os outros ${NODES.length-n} podem estar normais. É por isso que "intubado" não diz o plano: diz só que existe um tubo.`;
+  // painel do laboratório
+  el('planPanel').innerHTML = [
+    ['Meta ventilatória', P.meta, ''],
+    ['Risco principal', P.risco, 'risk'],
+    ['Parâmetros iniciais', P.params, ''],
+    ['Erro comum', P.erro, 'err'],
+    ['Critério de reavaliação', P.reaval, '']
+  ].map(([k,v,c])=>`<div class="prow ${c}"><div class="pk">${k}</div><div class="pv">${v}</div></div>`).join('');
+  el('planLinks').innerHTML = P.links.length? `<div class="lt">Leva ao laboratório do mecanismo (Respira)</div><div class="labrow">${P.links.map(l=>`<a class="lab-l" href="${l.href}" target="_blank" rel="noopener">↗ ${l.n} <span class="ln">${l.p}</span></a>`).join('')}</div>`:'';
+}
+function setPheno(id){ pheno=id; applyPheno(); }
+function buildPhenobars(){
+  const html=Object.entries(PHENOTYPES).map(([id,p])=>`<button class="pheno" data-ph="${id}" onclick="setPheno('${id}')">${p.nome}</button>`).join('');
+  el('phenobarMap').innerHTML=html; el('phenobarLab').innerHTML=html;
+}
+
+/* animação (rAF) — respeita prefers-reduced-motion; estado já é legível por classe/atributo */
+function animateMap(){
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.requestAnimationFrame) return;
+  function tick(ts){
+    const t=ts/1000;
+    NODES.forEach(n=>{ const halo=el('halo-'+n.id), node=el('node-'+n.id); if(!halo||!node) return;
+      const sick=node.dataset.sick==='1';
+      const freq=sick?1.7:0.32, amp=sick?9:4, baseOp=sick?0.30:0.12;
+      const k=(Math.sin(t*freq*2*Math.PI)+1)/2;
+      halo.setAttribute('r', (20+amp*k).toFixed(1));
+      halo.setAttribute('opacity', (baseOp + (sick?0.22:0.06)*k).toFixed(3));
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ============================================================
+   TRILHA SOCRÁTICA (feedback conciso good/bad)
+   ============================================================ */
+const TRILHA = [
+  { block:"Intubado ≠ diagnóstico",
+    stem:"Você vê um paciente intubado. Isso, sozinho, diz que o pulmão dele está doente?",
+    opts:["Sim — intubação significa pulmão ruim","Só se estiver em VCV","Não — intubação tem muitas causas","Depende da idade"], answer:2,
+    good:"O tubo é uma <b>via de suporte</b>, não um diagnóstico. Cérebro, via aérea, bomba muscular, proteção e procedimento podem levar ao ventilador com o pulmão perfeitamente limpo.",
+    bad:"Intubação ≠ doença pulmonar. É uma <b>via de suporte</b>; a causa pode ser cérebro, via aérea, bomba ou proteção — com pulmão normal." },
+  { block:"O caso",
+    stem:"Glasgow 6 por intoxicação, ausculta e radiografia limpas, troca preservada. Por que ele foi intubado?",
+    opts:["Proteção de via aérea e drive baixo","Falência pulmonar","Pneumotórax","Choque"], answer:0,
+    good:"A falha é de <b>cérebro/proteção</b>: drive deprimido e risco de aspiração. O pulmão é espectador — a gasometria mostra hipoventilação, não lesão.",
+    bad:"O pulmão está limpo. Foi intubado por <b>rebaixamento e proteção de via aérea</b> — a gasometria reflete hipoventilação, não doença pulmonar." },
+  { block:"O plano",
+    stem:"Esse pulmão limpo se beneficia do VC baixo + PEEP alto da estratégia de SDRA?",
+    opts:["Sim, é sempre mais protetor","Sim, previne pneumonia","Só com prona","Não — ventilação fisiológica basta"], answer:3,
+    good:"Proteção de SDRA é para o <b>baby lung</b> inflamado. Num pulmão normal e complacente, PEEP alto reduz o retorno venoso (hipotensão) sem ganho de troca.",
+    bad:"Não. Estratégia de SDRA é para pulmão lesado. Aqui, <b>ventilação fisiológica</b>; PEEP alto num pulmão limpo só derruba a pré-carga." },
+  { block:"O papel do PEEP",
+    stem:"Para que serve, afinal, o PEEP?",
+    opts:["Para todo intubado, sempre","Para recrutar alvéolo colapsado","Para baixar a frequência","Para sedar"], answer:1,
+    good:"PEEP combate <b>colapso/shunt</b> (lógica de Laplace). Sua indicação nasce da doença, não da presença do tubo. Pulmão aberto não precisa ser reaberto.",
+    bad:"PEEP serve a <b>recrutamento/oxigenação</b> onde há colapso. Não é um acessório obrigatório do tubo; titule pela doença." },
+  { block:"O CO₂ no neuro",
+    stem:"Intubado por rebaixamento neurológico: qual o alvo de CO₂?",
+    opts:["Hiperventilar sempre","Hipercapnia permissiva ampla","Normocapnia (~35–40)","Tanto faz"], answer:2,
+    good:"CO₂ é vasodilatador cerebral potente. Hiperventilar de rotina causa <b>vasoconstrição → isquemia</b>. Alvo é normocapnia; hipocapnia só como ponte curta na herniação iminente.",
+    bad:"O alvo é <b>normocapnia</b>. Hiperventilar de rotina vasoconstringe e isquemia o cérebro — reservado, breve, só à herniação iminente." },
+  { block:"Síntese",
+    stem:"O que, no fim, define o plano ventilatório de um intubado?",
+    opts:["A causa da intubação","O peso na balança","A marca do ventilador","O tempo de UTI"], answer:0,
+    good:"O ventilador <b>responde ao motivo do tubo</b>. Mesma SatO₂, planos diferentes: cada fenótipo estressa subsistemas diferentes. É o fio que o Ventila 11 retoma.",
+    bad:"É a <b>causa da intubação</b> (o fenótipo). 'Intubado' é categoria vazia; o plano nasce de qual subsistema falhou." }
+];
+
+/* ============================================================
+   QUIZ (gabarito robusto de 5 campos)
+   ============================================================ */
+const QUIZ = [
+  { block:"O plano do caso",
+    stem:"Glasgow 6 por intoxicação, ausculta/RX limpos, troca preservada, intubado para proteção. Ventilação inicial mais adequada?",
+    opts:["Estratégia de SDRA","Hiperventilação neuro","Ventilação fisiológica","PSV imediato"],
+    answer:2,
+    fb:{ mechanism:"O tubo resolve um problema de cérebro/proteção; o pulmão é normal e complacente. A equação do movimento de um pulmão saudável não pede PEEP alto nem VC mínimo.",
+      whyRight:"Pulmão limpo → ventilação fisiológica que mantém a troca sem impor energia extra, enquanto se protege a via aérea e se aguarda o despertar.",
+      trap:"A SDRA-mania e a hiperventilação reflexa seduzem porque a gasometria está 'alterada' — mas a alteração é hipoventilação por rebaixamento, não lesão pulmonar.",
+      bedside:"PEEP 12 num pulmão normal derruba o retorno venoso → hipotensão sem ganho. Normalize a ventilação, proteja contra aspiração, evite hiperóxia/hipocapnia, reavalie o despertar.",
+      bridge:{t:"Releia a gasometria do caso (acidose respiratória por hipoventilação)", href:"mvp4-interativo.html#ph=7.30&co2=52&hco3=24&na=140&cl=104&alb=4&m=bench"} } },
+  { block:"O CO₂ cerebral",
+    stem:"Por que NÃO hiperventilar de rotina um paciente intubado por rebaixamento neurológico?",
+    opts:["Normocapnia protege melhor","Hiperventilar sempre protege","PEEP fica mais alto","Não muda nada"],
+    answer:0,
+    fb:{ mechanism:"O CO₂ é um vasodilatador cerebral potente; a hipocapnia contrai os vasos cerebrais e reduz o fluxo sanguíneo encefálico.",
+      whyRight:"Hipocapnia de rotina troca um problema por isquemia. A hiperventilação só se justifica como medida-ponte transitória diante de herniação.",
+      trap:"O termo 'proteção cerebral' sugere hiperventilar — intuição antiga e perigosa que virou reflexo em muita gente.",
+      bedside:"Mantenha normocapnia (PaCO₂ ~35–40). Reserve hiperventilação para janela curta na deterioração herniária, com plano definitivo em curso.",
+      bridge:{t:"O CO₂ e o equilíbrio ácido-base", href:"mvp4-interativo.html#ph=7.30&co2=52&hco3=24&na=140&cl=104&alb=4&m=bench"} } },
+  { block:"PEEP por hábito",
+    stem:"'Todo paciente intubado precisa de PEEP alto.' Procede?",
+    opts:["Sim, sempre","Previne infecção","Não mexe na hemodinâmica","Depende de recrutamento"],
+    answer:3,
+    fb:{ mechanism:"PEEP mantém alvéolos abertos (Laplace) — útil onde há colapso/shunt. Num pulmão já aberto, é apenas pressão intratorácica que afunda o débito.",
+      whyRight:"A indicação de PEEP nasce da doença (shunt, recrutabilidade), não da existência do tubo.",
+      trap:"Associar tubo↔PEEP alto por hábito; o número 'protetor' vira piloto automático.",
+      bedside:"Pulmão limpo → PEEP fisiológico (~5). Titule pela doença e pela hemodinâmica, não pelo tubo.",
+      bridge:{t:"Recrutamento e PEEP na curva de Laplace", href:"mvp5-interativo.html#ra=60&rb=160&peep=8&surf=0&m=lab"} } },
+  { block:"Outro fenótipo",
+    stem:"Queimadura de face com edema progressivo de via aérea e pulmão radiologicamente limpo. O que domina o plano?",
+    opts:["Estratégia de SDRA","Via aérea","Desmame imediato","PEEP alto"],
+    answer:1,
+    fb:{ mechanism:"A falha é de via aérea (calibre/edema), não de troca gasosa. O pulmão pode estar intacto no início.",
+      whyRight:"O risco dominante é perder a via aérea; o plano gira em torno de mantê-la pérvia e não extubar para um edema em ascensão.",
+      trap:"Ver 'intubado + queimadura grave' e presumir pulmão ruim — quando o perigo está acima da carina.",
+      bedside:"Tubo de bom calibre, cuff leak seriado, não apressar extubação; vigiar lesão inalatória tardia.",
+      bridge:{t:"Compare os fenótipos no laboratório deste módulo", href:"#lab"} } },
+  { block:"Síntese",
+    stem:"Em uma frase: o que define o plano ventilatório de um paciente intubado?",
+    opts:["Peso","Marca","Causa da intubação","Tempo de UTI"],
+    answer:2,
+    fb:{ mechanism:"'Intubado' é uma via de suporte, não um diagnóstico; cada causa estressa subsistemas diferentes.",
+      whyRight:"O ventilador responde ao motivo do tubo — neuro pede normocapnia e proteção; via aérea pede plano de extubação; pulmão pede proteção/driving/PEEP.",
+      trap:"Tratar 'intubado' como categoria única e aplicar um plano genérico a todos.",
+      bedside:"Antes de mexer no modo, pergunte: por que ESTE paciente está na máquina?",
+      bridge:{t:"Este é o fio que o Ventila 11 (fenótipos → plano) retoma", href:"ventila11.html"} } }
+];
+
+/* ---------- engine genérico (trilha e quiz) ---------- */
+function makeEngine(cfg){
+  let i=0, correct=0, answered=false;
+  function start(){ el(cfg.intro).classList.add('hidden'); el(cfg.quiz).classList.remove('hidden'); el('meter').classList.add('on'); render(); }
+  function render(){
+    answered=false; const q=cfg.data[i], L=['A','B','C','D'];
+    el('blockLabel').textContent=q.block; el('count').textContent=`${i+1} / ${cfg.data.length}`; el('fill').style.width=`${(i/cfg.data.length)*100}%`;
+    el(cfg.quiz).innerHTML=`<div class="qtag">${q.block} · ${i+1}/${cfg.data.length}</div><div class="stem">${q.stem}</div>
+      <div class="opts" id="${cfg.key}_opts">${q.opts.map((o,k)=>`<button class="opt" onclick="${cfg.key}_choose(${k})"><span class="mark">${L[k]}</span><span>${o}</span></button>`).join('')}</div>
+      <div class="fb" id="${cfg.key}_fb"></div>
+      <div class="row hidden" id="${cfg.key}_row"><button class="btn" onclick="${cfg.key}_next()">${i===cfg.data.length-1?'Concluir →':'Próxima →'}</button></div>`;
+    el(cfg.quiz).scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function choose(k){
+    if(answered) return; answered=true;
+    const q=cfg.data[i], ok=(k===q.answer); if(ok) correct++;
+    document.querySelectorAll('#'+cfg.key+'_opts .opt').forEach((b,bi)=>{ b.disabled=true;
+      if(bi===q.answer) b.classList.add('correct'); else if(bi===k) b.classList.add('wrong'); else b.classList.add('dim'); });
+    const fb=el(cfg.key+'_fb'); fb.className='fb show'+(ok?'':' bad');
+    fb.innerHTML = cfg.render(q, ok);
+    el(cfg.key+'_row').classList.remove('hidden');
+  }
+  function next(){ i++; (i<cfg.data.length)?render():finish(); }
+  function finish(){
+    el(cfg.quiz).classList.add('hidden'); el('fill').style.width='100%'; el(cfg.done).classList.remove('hidden');
+    el(cfg.done).innerHTML = cfg.finish(correct, cfg.data.length);
+    el(cfg.done).scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  return {start, choose, next, reset(){ i=0; correct=0; answered=false; el(cfg.done).classList.add('hidden'); el(cfg.quiz).classList.remove('hidden'); render(); }};
+}
+
+const trEngine = makeEngine({ key:'tr', data:TRILHA, intro:'trIntro', quiz:'trQuiz', done:'trDone',
+  render:(q,ok)=>`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`,
+  finish:(c,n)=>`<div class="kicker" style="color:var(--signal-deep)">Trilha completa</div><div class="score">${c}/${n}</div>
+    <h2>"Intubado" é uma via, não um diagnóstico.</h2>
+    <p style="color:var(--ink-soft)">Agora veja o sistema responder no <b>Mapa</b> e construa o plano no <b>Laboratório</b>.</p>
+    <div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="go('mapa')">Ver o mapa →</button><button class="btn ghost" onclick="tr_reset()">Rever</button></div>` });
+function tr_choose(k){ trEngine.choose(k); } function tr_next(){ trEngine.next(); } function tr_reset(){ trEngine.reset(); } function trStart(){ trEngine.start(); }
+
+const qzEngine = makeEngine({ key:'qz', data:QUIZ, intro:'qzIntro', quiz:'qzQuiz', done:'qzDone',
+  render:(q,ok)=>{ const f=q.fb;
+    const bridge = f.bridge.href.startsWith('#')
+      ? `${f.bridge.t} <a href="${f.bridge.href}" onclick="openFromHash();return true;">→</a>`
+      : (f.bridge.href.startsWith('ventila') ? `${f.bridge.t} <a href="${f.bridge.href}">→</a>` : `<a href="${f.bridge.href}" target="_blank" rel="noopener">${f.bridge.t} ↗</a>`);
+    return `<div class="fb-head">${ok?'✦ Correta.':'↺ Não é essa — entenda por quê.'}</div>
+      <div class="gab">
+        <div class="f"><span class="ft">Mecanismo</span>${f.mechanism}</div>
+        <div class="f"><span class="ft">Por que a correta</span>${f.whyRight}</div>
+        <div class="f trap"><span class="ft">A armadilha</span>${f.trap}</div>
+        <div class="f bed"><span class="ft">À beira do leito</span>${f.bedside}</div>
+        <div class="f"><span class="ft">Ponte</span>${bridge}</div>
+      </div>`; },
+  finish:(c,n)=>`<div class="kicker" style="color:var(--accent-deep)">Quiz completo · fim do Módulo 1</div><div class="score" style="color:var(--accent)">${c}/${n}</div>
+    <h2>O ventilador responde ao motivo do tubo.</h2>
+    <p style="color:var(--ink-soft)">Próximo: <b>Ventila 2</b> — a máquina, o circuito e o tubo, antes de culpar o pulmão.</p>
+    <div class="row" style="justify-content:center;gap:12px"><button class="btn ghost" onclick="qz_reset()">Rever</button><button class="btn" onclick="go('caso')">Voltar ao caso</button></div>` });
+function qz_choose(k){ qzEngine.choose(k); } function qz_next(){ qzEngine.next(); } function qz_reset(){ qzEngine.reset(); } function qzStart(){ qzEngine.start(); }
+
+/* ---------- INIT ---------- */
+buildMap(); buildPhenobars(); setPheno(CASE_PHENO); animateMap(); openFromHash(); window.addEventListener('hashchange', openFromHash);
+</script>
+</body>
+</html>

@@ -160,6 +160,19 @@
     .stem{ font-size:1.18rem; }
     .ro .v{ font-size:1.1rem; }
   }
+
+/* media viva · atlas aberto Respira/Ventila */
+.media-atlas{margin:18px 0 24px;display:grid;gap:16px}
+.media-viva{margin:0;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2));border:1px solid var(--line,#ccd6d6);border-radius:8px;overflow:hidden}
+.media-viva img{display:block;width:100%;max-height:680px;object-fit:contain;height:auto;border-radius:6px;background:#fff}
+.media-viva figcaption{margin-top:9px;color:var(--ink-soft,var(--soft,#526568));font-size:.88rem;line-height:1.55}
+.media-viva figcaption b{color:var(--accent,var(--sig,#a24b2c))}
+.media-viva .media-credit{display:block;margin-top:6px;font-size:.76rem;opacity:.88}
+.media-viva .media-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.media-sensitive{border:1px solid var(--line,#ccd6d6);border-radius:8px;padding:10px;background:var(--paper-deep,var(--deep,#eef2f2))}
+.media-sensitive summary{cursor:pointer;font-weight:800;color:var(--accent,var(--sig,#a24b2c))}
+.media-sensitive .media-viva{margin-top:10px}
+
 </style>
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style>
 </head>
@@ -173,6 +186,11 @@
     <h1>Como o ar<br><em>entra e sai</em></h1>
     <p class="sub">Entenda a mecânica — e depois aperte o cano e endureça o balão com o dedo, vendo o ar aprisionar e o esforço subir. Para a Dani.</p>
   </header>
+<!-- respira-open-atlas:begin -->
+<section class="media-atlas" aria-label="Atlas visual de Respira 01"><figure class="media-viva" data-media="r01-airway-tree.svg"><img src="assets/respira-ventila-atlas/media/r01-airway-tree.svg" alt="Arvore respiratoria e escala anatomica. Siga traqueia, bronquios e bronquiolos ate a regiao alveolar; a queda progressiva do calibre individual contrasta com o aumento da area transversal total." loading="lazy" decoding="async"><figcaption><b>Respira 01 · Arvore respiratoria e escala anatomica.</b> Siga traqueia, bronquios e bronquiolos ate a regiao alveolar; a queda progressiva do calibre individual contrasta com o aumento da area transversal total. <b>Limite:</b> Nao converter anatomia em resistencia linear: calibre, fluxo, volume pulmonar e distribuicao em paralelo interagem. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Lungs_diagram_detailed.svg" target="_blank" rel="license noopener">Lungs diagram detailed.svg</a> · CC BY 2.5 · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure>
+<figure class="media-viva" data-media="r01-flow-volume-loop.svg"><img src="assets/respira-ventila-atlas/media/r01-flow-volume-loop.svg" alt="Loop fluxo-volume. Leia o ramo expiratorio, o pico de fluxo e a concavidade; compare a forma, nao apenas valores isolados." loading="lazy" decoding="async"><figcaption><b>Respira 01 · Loop fluxo-volume.</b> Leia o ramo expiratorio, o pico de fluxo e a concavidade; compare a forma, nao apenas valores isolados. <b>Limite:</b> Um loop esquematico nao diagnostica sozinho obstrucao nem substitui qualidade tecnica da espirometria. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Flow-volume-loop.svg" target="_blank" rel="license noopener">Flow-volume-loop.svg</a> · CC BY-SA 3.0 · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
+<!-- respira-open-atlas:end -->
+
 
   <div class="segbar">
     <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
