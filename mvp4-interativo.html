@@ -3,11 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <title>Respira · A Gasometria como Narrativa (MVP 4 · interativo)</title>
 <meta name="description" content="Módulo interativo de gasometria: trilha socrática e bancada que calcula pH, pCO2, bicarbonato, compensação, ânion-gap, Henderson-Hasselbalch e delta-delta.">
 <meta name="theme-color" content="#F4EFE4">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · A gasometria como narrativa">
+<meta property="og:description" content="Gasometria interativa: trilha socrática e bancada que calcula pH, pCO₂, bicarbonato, compensação, ânion-gap e delta-delta.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/mvp4-interativo.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · A gasometria como narrativa">
+<meta name="twitter:description" content="Gasometria interativa: trilha socrática e bancada que calcula pH, pCO₂, bicarbonato, compensação, ânion-gap e delta-delta.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
 <style>
 :root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--acid:#B0503E;--base:#3C7F86;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
 *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 78% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -5% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.6;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}.wrap{max-width:760px;margin:0 auto;position:relative;z-index:2}
@@ -29,9 +44,10 @@ header{padding:46px 0 16px;text-align:center}.backlink{display:inline-block;marg
 .media-sensitive .media-viva{margin-top:10px}
 
 </style>
+<style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style>
 </head>
 <body>
-<div class="wrap"><header><a class="backlink" href="index.html">← Respira · todos os módulos</a><div class="phbar idle" id="phbar"><div class="phscale"><div class="phneedle" id="phneedle"></div></div><div class="phticks"><span>6.8</span><span>7.2</span><span>7.4</span><span>7.6</span><span>7.8</span></div></div><div class="kicker">Respira · Módulo 4 · versão interativa</div><h1>A gasometria<br><em>como narrativa</em></h1><p class="sub">Três números contam uma história coerente. Aprenda a lê-la — e depois teste qualquer gasometria na bancada que calcula. Para a Dani.</p></header>
+<div class="wrap"><header><a class="backlink" href="index.html">← Respira · todos os módulos</a> <a class="backlink" href="atlas.html#modulo-4">prancha do módulo ↗</a><div class="phbar idle" id="phbar"><div class="phscale"><div class="phneedle" id="phneedle"></div></div><div class="phticks"><span>6.8</span><span>7.2</span><span>7.4</span><span>7.6</span><span>7.8</span></div></div><div class="kicker">Respira · Módulo 4 · versão interativa</div><h1>A gasometria<br><em>como narrativa</em></h1><p class="sub">Três números contam uma história coerente. Aprenda a lê-la — e depois teste qualquer gasometria na bancada que calcula. Para a Dani.</p></header>
 <!-- respira-open-atlas:begin -->
 <section class="media-atlas" aria-label="Atlas visual de Respira 04"><figure class="media-viva" data-media="r04-davenport.jpg"><img src="assets/respira-ventila-atlas/media/r04-davenport.jpg" alt="Diagrama de Davenport. Localize pH, bicarbonato e linhas de PaCO2 antes de seguir o deslocamento respiratorio ou metabolico." loading="lazy" decoding="async"><figcaption><b>Respira 04 · Diagrama de Davenport.</b> Localize pH, bicarbonato e linhas de PaCO2 antes de seguir o deslocamento respiratorio ou metabolico. <b>Limite:</b> Nao decorar quadrantes sem verificar cronologia, compensacao esperada e disturbios mistos. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Davenport_fig_5.jpg" target="_blank" rel="license noopener">Davenport fig 5.jpg</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure>
 <figure class="media-viva" data-media="r04-acid-base.svg"><img src="assets/respira-ventila-atlas/media/r04-acid-base.svg" alt="Nomograma acido-base. Use a posicao conjunta de pH, PaCO2 e bicarbonato para testar coerencia interna." loading="lazy" decoding="async"><figcaption><b>Respira 04 · Nomograma acido-base.</b> Use a posicao conjunta de pH, PaCO2 e bicarbonato para testar coerencia interna. <b>Limite:</b> Nomograma nao substitui anion gap, delta-delta, lactato nem contexto clinico. <span class="media-credit"><a href="https://commons.wikimedia.org/wiki/File:Acid-base_nomogram.svg" target="_blank" rel="license noopener">Acid-base nomogram.svg</a> · Licenca livre indicada na pagina-fonte · derivado editorial otimizado; proporção e sentido clínico preservados.</span></figcaption></figure></section>
