@@ -59,6 +59,19 @@ Critérios:
 | 09 | Ventilação mecânica — os fundamentos | `modules/respira-09-ventilacao-mecanica-fundamentos.html` | `mvp9-interativo.html` / `mvp9.html` |
 | 10 | Ventilação protetora e desmame | `modules/respira-10-ventilacao-protetora-desmame.html` | `mvp10-interativo.html` / `mvp10.html` |
 
+## Respira · Ponte Funcional
+
+Sub-série **aditiva** entre a arquitetura (Respira 05) e as síndromes (Respira 06). Não renumera nem substitui a matriz 01–10; entra como uma camada própria, com slug semântico na raiz (mesma regra-mãe: o HTML autocontido é a fonte canônica).
+
+| Nº | Título | Arquivo (raiz, canônico) |
+|---:|---|---|
+| RF-01 | Volumes e capacidades | `respira-ponte-01-volumes-capacidades.html` |
+| RF-02 | Espirometria | `respira-ponte-02-espirometria.html` |
+| RF-03 | Padrões funcionais | `respira-ponte-03-padroes.html` |
+| RF-04 | DLCO e troca | `respira-ponte-04-dlco.html` |
+
+Ordem de leitura: Respira 01–05 → **Ponte Funcional** → Respira 06 (síndromes) → 07–10. No índice, a Ponte aparece como seção própria entre os cards 05 e 06.
+
 ## Ventila
 
 Ventila usa os arquivos de raiz como canônicos publicados:
