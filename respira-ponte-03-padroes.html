@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ponte Funcional · RF-03 · Padrões Funcionais</title>
+<meta name="description" content="Ponte Funcional do Respira (RF-03): padrões funcionais — obstrutivo, restritivo, misto e pseudorrestritivo. A matriz VEF1/CVF × CPT, as armadilhas da pseudonormalização e do aprisionamento, com classificador interativo.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RF-03 · Padrões Funcionais">
+<meta property="og:description" content="Obstrutivo, restritivo, misto e pseudorrestritivo: a matriz VEF1/CVF × CPT e as armadilhas, com classificador interativo.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ponte-03-padroes.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RF-03 · Padrões Funcionais">
+<meta name="twitter:description" content="A matriz VEF1/CVF × CPT: obstrutivo, restritivo, misto e as armadilhas do pseudorrestritivo.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pat{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.sl{display:flex;align-items:center;gap:12px;margin:8px 0}.sl label{font-size:.8rem;color:var(--ink-soft);font-weight:600;white-space:nowrap;min-width:104px}
+input[type=range]{flex:1;accent-color:var(--accent)}.sl .val{font-family:var(--mono);font-size:.82rem;color:var(--accent-deep);min-width:52px;text-align:right}
+.labgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media(max-width:620px){.labgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.panel h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:8px}
+.plot{width:100%;height:auto;display:block;overflow:visible}
+.verdict{border-radius:13px;padding:16px 18px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:1rem;line-height:1.55}.verdict b{color:var(--ink)}
+.verdict.obstr{border-left-color:var(--accent);background:rgba(192,96,58,.08)}
+.verdict.restr{border-left-color:var(--warn);background:var(--warn-bg)}
+.verdict.misto{border-left-color:var(--wrong);background:var(--wrong-bg)}
+.verdict .vh{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-bottom:6px}
+.trap{margin-top:10px;font-size:.92rem;padding-top:10px;border-top:1px dashed rgba(22,56,59,.2)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ponte Funcional · RF-03</div>
+  <h1>Padrões funcionais:<br><em>obstruir, restringir, ou ambos</em></h1>
+  <p class="sub">"Obstrutivo ou restritivo?" é pergunta de prova. À beira do leito, o pulmão mistura, aprisiona e disfarça. Duas perguntas — a razão e a CPT — organizam tudo. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Laboratório</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Toda a classificação funcional cabe em <strong>duas perguntas</strong>: a relação <code>VEF1/CVF</code> está baixa? (obstrução) e a <code>CPT</code> está baixa? (restrição). Cruze as duas e você tem quatro destinos — incluindo o <strong>misto</strong>, o pesadelo do intensivista.</p>
+    <p>Terceiro degrau da <strong>Ponte Funcional</strong>. Aqui o objetivo é <strong>impedir o raciocínio simplista</strong>: CVF baixa não é sinônimo de restrição, e razão normal não exclui doença.</p>
+    <ul>
+      <li>A matriz <code>razão × CPT</code> e seus quatro quadrantes.</li>
+      <li><strong>Pseudorrestrição</strong>: obstrução com CVF baixa por aprisionamento.</li>
+      <li><strong>Pseudonormalização</strong>: o misto que finge razão normal (DPOC + fibrose).</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Laboratório · o classificador funcional</div>
+    <p class="lab-lead">Mova a <strong>razão VEF1/CVF</strong> e a <strong>CPT</strong> — o ponto anda pela matriz e a classificação muda. Ou escolha um <strong>caso real</strong> e veja onde ele cai (e onde ele <em>engana</em>).</p>
+    <div class="ctrls" id="cases"></div>
+    <div class="labgrid">
+      <div class="panel">
+        <h4>Matriz funcional · razão × CPT</h4>
+        <svg class="plot" id="matrix" viewBox="0 0 300 250" role="img" aria-label="Matriz funcional VEF1/CVF versus CPT"></svg>
+      </div>
+      <div>
+        <div class="sl"><label>VEF1/CVF</label><input type="range" id="slR" min="40" max="90" value="45" oninput="setR(this.value)"><span class="val" id="vR">45%</span></div>
+        <div class="sl"><label>CPT (% prev.)</label><input type="range" id="slC" min="40" max="125" value="118" oninput="setC(this.value)"><span class="val" id="vC">118%</span></div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+
+    <div class="labrow">
+      <a class="lab" href="respira-ponte-01-volumes-capacidades.html#lab">↗ A CPT que decide <span class="ln">RF-01</span></a>
+      <a class="lab" href="respira-ponte-02-espirometria.html#lab">↗ A razão e a curva <span class="ln">RF-02</span></a>
+      <span class="next">a seguir → RF-04 · DLCO e troca (em breve)</span>
+    </div>
+
+    <p class="honesty"><b>Honestidade do modelo.</b> Os limiares (razão &lt; 0,70; CPT &lt; 80% do previsto) são <b>atalhos didáticos</b>. A prática usa o limite inferior da normalidade (LIN/z-score) por idade, sexo, altura e etnia — o corte fixo de 0,70 superdiagnostica idosos e subdiagnostica jovens. A classificação funcional <b>orienta</b>, mas não substitui clínica, imagem e DLCO. O misto, em especial, costuma só se revelar quando a <b>DLCO</b> (RF-04) entra na conta.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ponte Funcional · RF-03 · padrões funcionais<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'A lógica',stem:'Quais duas medidas organizam toda a classificação funcional?',choices:[['A relação VEF1/CVF e a CPT',1],['VEF1 e PFE',0],['CVF e frequência',0],['PFE e DLCO',0]],
+  good:'<b>Razão e CPT.</b> A razão diz se há <i>obstrução</i>; a CPT diz se há <i>restrição</i>. Cruzadas, definem os quatro padrões.',
+  bad:'A razão (obstrução) e a CPT (restrição) são os dois eixos — o resto é detalhe.'},
+ {block:'Obstrutivo',stem:'Padrão obstrutivo puro:',choices:[['Razão baixa, CPT normal ou alta',1],['Razão baixa, CPT baixa',0],['Razão normal, CPT baixa',0],['Razão normal, CPT normal',0]],
+  good:'<b>Razão baixa, CPT preservada/alta.</b> O ar custa a sair e tende a aprisionar (CPT sobe), sem encolher o pulmão.',
+  bad:'Obstrução = razão baixa; se a CPT também cai, já não é "puro" — é misto.'},
+ {block:'Restritivo',stem:'Padrão restritivo:',choices:[['Razão normal/alta, CPT baixa',1],['Razão baixa, CPT alta',0],['Razão baixa, CPT baixa',0],['Razão normal, CPT normal',0]],
+  good:'<b>CPT baixa com razão preservada.</b> Pulmão pequeno: tudo encolhe junto, a proporção se mantém.',
+  bad:'Restrição é CPT baixa com razão normal/alta — o oposto da obstrução.'},
+ {block:'Misto',stem:'Padrão misto (obstrução + restrição):',choices:[['Razão baixa E CPT baixa',1],['Razão alta e CPT alta',0],['Só razão baixa',0],['Só CPT baixa',0]],
+  good:'<b>Os dois ao mesmo tempo.</b> Razão baixa (obstrui) e CPT baixa (restringe). É o terreno do silicose+enfisema, DPOC+fibrose.',
+  bad:'Misto = obstrução E restrição juntas: razão baixa com CPT também baixa.'},
+ {block:'Pseudorrestrição',stem:'DPOC grave com CVF baixa, razão muito baixa e CPT ALTA. Isso é restrição?',choices:[['Não — é obstrução com aprisionamento (pseudorrestrição)',1],['Sim, restrição',0],['Sim, misto',0],['Exame inválido',0]],
+  good:'<b>Pseudorrestrição.</b> A CVF caiu porque o ar ficou preso (VR alto), não porque o pulmão encolheu. A CPT alta exclui restrição.',
+  bad:'CVF baixa com CPT alta é aprisionamento, não restrição. A CPT desfaz a confusão.'},
+ {block:'A armadilha da CVF',stem:'"CVF baixa significa restrição." Esta frase é:',choices:[['Falsa — CVF baixa só sugere; a CPT decide',1],['Verdadeira sempre',0],['Verdadeira se a razão for baixa',0],['Verdadeira em idosos',0]],
+  good:'<b>Falsa.</b> CVF baixa aparece na restrição, mas também na obstrução com aprisionamento. Só a CPT separa.',
+  bad:'CVF baixa é inespecífica: pode ser pulmão pequeno ou pulmão aprisionado. A CPT é o juiz.'},
+ {block:'Pseudonormalização',stem:'DPOC + fibrose podem dar relação VEF1/CVF quase normal porque:',choices:[['A obstrução baixa o VEF1 e a fibrose baixa a CVF, na mesma proporção',1],['A fibrose cura a obstrução',0],['O VEF1 sobe',0],['A CVF sobe',0]],
+  good:'<b>Pseudonormalização.</b> Numerador e denominador caem juntos: a razão "engana". CPT e, sobretudo, DLCO desmascaram.',
+  bad:'No misto, VEF1 e CVF caem proporcionalmente e a razão parece normal — desconfie e peça volumes/DLCO.'},
+ {block:'À beira do leito',stem:'Silicose com tabagismo: marmorista, dispneia progressiva, função "quase normal" na razão. Conduta de raciocínio?',choices:[['Suspeitar de misto e buscar CPT e DLCO',1],['Liberar como normal',0],['Tratar só como asma',0],['Ignorar a história ocupacional',0]],
+  good:'<b>Desconfiar.</b> História ocupacional + dispneia + razão "boa" demais pedem volumes e DLCO. O misto se esconde na média.',
+  bad:'Razão normal não fecha normalidade num exposto sintomático — investigue CPT e DLCO.'},
+ {block:'Por que importa',stem:'Por que não basta a razão para classificar?',choices:[['Porque ela não vê restrição nem aprisionamento — só a CPT vê',1],['Porque ela mede CO₂',0],['Porque é sempre errada',0],['Porque depende do PFE',0]],
+  good:'<b>A razão é cega para tamanho.</b> Ela detecta obstrução, mas não distingue pulmão pequeno de pulmão aprisionado. A CPT completa.',
+  bad:'A razão isolada confunde restrição, aprisionamento e misto; a CPT é o eixo que falta.'},
+ {block:'Síntese',stem:'Em uma frase, o mapa funcional é:',choices:[['Razão separa obstruir de não; CPT separa pequeno de aprisionado',1],['VEF1 decide tudo',0],['CVF baixa = restrição',0],['Só a clínica importa',0]],
+  good:'<b>Dois eixos, quatro destinos.</b> E, quando enganam (pseudo-), a DLCO entra como árbitro — é o próximo módulo.',
+  bad:'Razão (obstrução) e CPT (restrição) são os eixos; juntos resolvem os quatro padrões e as armadilhas.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — nenhuma armadilha passou.':pct>=75?'Domínio sólido. A matriz já é reflexo.':pct>=50?'Boa base. Vá ao Laboratório e provoque os casos que enganam.':'O número não importa: cada erro veio com o mecanismo. Manipule a matriz no Laboratório.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RF-03</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>Dois eixos, quatro destinos.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>Razão baixa</strong> = obstrução. <strong>CPT baixa</strong> = restrição. As duas = <strong>misto</strong>.</li><li><strong>Pseudorrestrição</strong>: CVF baixa por aprisionamento (CPT alta) — não é restrição.</li><li><strong>Pseudonormalização</strong>: o misto finge razão normal — peça CPT e DLCO.</li><li>Num exposto sintomático, razão "normal" não tranquiliza.</li></ol></div><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao Laboratório →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== LABORATÓRIO (matriz funcional) ===================== */
+const CASES=[
+ {id:'normal',nome:'Normal',R:82,C:100,cvf:'normal'},
+ {id:'dpoc',nome:'DPOC (hiperinsuflado)',R:42,C:118,cvf:'baixa por aprisionamento'},
+ {id:'asma',nome:'Asma',R:60,C:102,cvf:'normal/limítrofe'},
+ {id:'fibrose',nome:'Fibrose',R:86,C:54,cvf:'baixa'},
+ {id:'misto',nome:'Silicose + tabaco (misto)',R:55,C:60,cvf:'baixa'},
+ {id:'cpfe',nome:'DPOC + fibrose (CPFE)',R:76,C:84,cvf:'baixa'}
+];
+let R=42, C=118, activeCase='dpoc';
+function buildCases(){el('cases').innerHTML=CASES.map(c=>`<button class="pat${c.id===activeCase?' active':''}" onclick="setCase('${c.id}')">${c.nome}</button>`).join('')}
+function setCase(id){const c=CASES.find(x=>x.id===id);activeCase=id;R=c.R;C=c.C;el('slR').value=R;el('slC').value=C;el('vR').textContent=R+'%';el('vC').textContent=C+'%';buildCases();renderLab()}
+function setR(v){R=+v;el('vR').textContent=R+'%';activeCase=null;buildCases();renderLab()}
+function setC(v){C=+v;el('vC').textContent=C+'%';activeCase=null;buildCases();renderLab()}
+function classify(r,c){const lowR=r<70,lowC=c<80;if(!lowR&&!lowC)return 'normal';if(lowR&&!lowC)return 'obstr';if(!lowR&&lowC)return 'restr';return 'misto';}
+function renderLab(){
+ const x0=40,x1=286,y0=16,y1=200; // C: 40..125 ; R: 40..90
+ const cx=c=>x0+((c-40)/(125-40))*(x1-x0);
+ const ry=r=>y1-((r-40)/(90-40))*(y1-y0);
+ const xDiv=cx(80), yDiv=ry(70);
+ let s=`
+  <rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}" fill="none" stroke="var(--line)"/>
+  <line x1="${xDiv}" y1="${y0}" x2="${xDiv}" y2="${y1}" stroke="var(--line)" stroke-dasharray="3 3"/>
+  <line x1="${x0}" y1="${yDiv}" x2="${x1}" y2="${yDiv}" stroke="var(--line)" stroke-dasharray="3 3"/>
+  <text x="${(x0+xDiv)/2}" y="${(y0+yDiv)/2}" font-size="9" fill="var(--warn)" text-anchor="middle" font-weight="600">RESTRITIVO</text>
+  <text x="${(xDiv+x1)/2}" y="${(y0+yDiv)/2}" font-size="9" fill="var(--correct)" text-anchor="middle" font-weight="600">NORMAL</text>
+  <text x="${(x0+xDiv)/2}" y="${(yDiv+y1)/2}" font-size="9" fill="var(--wrong)" text-anchor="middle" font-weight="600">MISTO</text>
+  <text x="${(xDiv+x1)/2}" y="${(yDiv+y1)/2}" font-size="9" fill="var(--accent)" text-anchor="middle" font-weight="600">OBSTRUTIVO</text>
+  <text x="${x0}" y="${y1+14}" font-size="8" fill="var(--ink-soft)">CPT 40%</text>
+  <text x="${x1}" y="${y1+14}" font-size="8" fill="var(--ink-soft)" text-anchor="end">CPT 125% →</text>
+  <text x="${x0-4}" y="${y0+6}" font-size="8" fill="var(--ink-soft)" text-anchor="end" transform="rotate(-90 ${x0-4} ${y0+6})">VEF1/CVF ↑</text>
+  <line x1="${xDiv}" y1="${y1}" x2="${xDiv}" y2="${y1+5}" stroke="var(--ink-soft)"/><text x="${xDiv}" y="${y1+14}" font-size="7" fill="var(--ink-soft)" text-anchor="middle">80%</text>`;
+ const px=cx(Math.max(40,Math.min(125,C))), py=ry(Math.max(40,Math.min(90,R)));
+ s+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="6" fill="var(--ink)" stroke="#fff" stroke-width="2"/>`;
+ el('matrix').innerHTML=s;
+ const k=classify(R,C);
+ const titles={normal:'Normal',obstr:'Obstrutivo',restr:'Restritivo',misto:'Misto'};
+ let trap='';
+ if(k==='obstr'&&C>=100){trap='<div class="trap"><b>Cuidado — pseudorrestrição.</b> Se a CVF estiver baixa aqui, é por <b>aprisionamento</b> (VR/CRF altos), não por restrição. A CPT alta exclui pulmão pequeno.</div>';}
+ if(k==='restr'){trap='<div class="trap"><b>Confirme.</b> CPT baixa fecha restrição — mas a DLCO dirá se a barreira de troca também está doente (RF-04).</div>';}
+ if(k==='misto'){trap='<div class="trap"><b>O pesadelo.</b> Obstrui e restringe ao mesmo tempo. A razão pode ainda <i>pseudonormalizar</i> — não relaxe com um número "quase bom".</div>';}
+ if(k==='normal'&&activeCase==='cpfe'){trap='<div class="trap"><b>Falsa paz (CPFE).</b> DPOC + fibrose: a razão pseudonormalizou e a CPT mal caiu. Aqui a <b>DLCO desproporcionalmente baixa</b> é o que denuncia — vide RF-04.</div>';}
+ const desc={
+  normal:'Razão preservada e CPT normal. Função dentro do esperado para o modelo.',
+  obstr:'Razão &lt; 70% com CPT preservada/alta: o ar custa a sair e tende a aprisionar.',
+  restr:'CPT &lt; 80% com razão preservada: pulmão pequeno — restrição.',
+  misto:'Razão &lt; 70% E CPT &lt; 80%: obstrução e restrição coexistindo.'};
+ const vd=el('verdict');vd.className='verdict '+(k==='normal'?'':k);
+ vd.innerHTML=`<div class="vh">${titles[k]}</div><div>${desc[k]}</div>${trap}`;
+}
+
+function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildCases();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>

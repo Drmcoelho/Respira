@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ponte Funcional · RF-01 · Volumes e Capacidades</title>
+<meta name="description" content="Ponte Funcional do Respira (RF-01): volumes e capacidades pulmonares — VC, VRI, VRE, VR, CI, CRF, CV, CPT. Reserva, aprisionamento, hiperinsuflação e restrição verdadeira, com laboratório de barras interativo.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RF-01 · Volumes e Capacidades">
+<meta property="og:description" content="O tamanho do fôlego: volumes e capacidades pulmonares, reserva, aprisionamento e restrição verdadeira — com laboratório interativo.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ponte-01-volumes-capacidades.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RF-01 · Volumes e Capacidades">
+<meta name="twitter:description" content="O tamanho do fôlego: volumes e capacidades pulmonares, reserva, aprisionamento e restrição verdadeira.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.pat{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.sevwrap{display:flex;align-items:center;gap:12px;margin:14px 0 18px}.sevwrap label{font-size:.82rem;color:var(--ink-soft);font-weight:600;white-space:nowrap}
+input[type=range]{flex:1;accent-color:var(--accent)}.sevval{font-family:var(--mono);font-size:.8rem;color:var(--accent-deep);min-width:64px;text-align:right}
+.labgrid{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start}
+@media(max-width:620px){.labgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.panel h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:8px}
+.volbar{width:100%;height:auto;display:block;overflow:visible}
+.read{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.read .cell{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+.read .k{font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.read .v{font-family:var(--mono);font-size:1.12rem;color:var(--ink);font-weight:600;line-height:1.2}
+.read .v small{font-size:.6em;color:var(--ink-soft);font-weight:400}
+.verdict{margin-top:16px;border-radius:13px;padding:16px 18px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:1rem;line-height:1.55}
+.verdict b{color:var(--ink)}
+.verdict.trap{border-left-color:var(--accent);background:rgba(192,96,58,.08)}
+.verdict.restr{border-left-color:var(--warn);background:var(--warn-bg)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+.defs{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px}.defs h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:10px}
+.defrow{display:flex;gap:11px;align-items:flex-start;padding:8px 0;border-top:1px solid var(--line);font-size:.95rem}.defrow:first-of-type{border-top:none}
+.defrow .ab{flex:0 0 56px;font-family:var(--mono);font-weight:600;color:var(--accent-deep);font-size:.84rem}.defrow .dd{color:var(--ink-soft)}.defrow .dd b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.read{grid-template-columns:repeat(2,1fr)}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ponte Funcional · RF-01</div>
+  <h1>Volumes e capacidades:<br><em>o tamanho do fôlego</em></h1>
+  <p class="sub">Antes de dizer "obstrutivo" ou "restritivo", é preciso saber de que tamanho é o pulmão — e quanto de reserva ele guarda. Esta é a régua dos volumes. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Laboratório</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 9</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Um pulmão não é só "cheio" ou "vazio". Ele se reparte em <strong>volumes</strong> que se somam em <strong>capacidades</strong> — e é nessa contabilidade que mora a diferença entre <em>reserva</em>, <em>aprisionamento</em> e <em>pulmão pequeno de verdade</em>.</p>
+    <p>Este é o primeiro degrau da <strong>Ponte Funcional</strong>, entre a arquitetura (Respira 05) e as síndromes (Respira 06). Sem volumes, "restrição" vira palavra decorada.</p>
+    <ul>
+      <li>Os quatro volumes (<code>VC</code>, <code>VRI</code>, <code>VRE</code>, <code>VR</code>) e como se somam em capacidades.</li>
+      <li>Reserva: por que a <code>CI</code> que cai explica a dispneia ao esforço.</li>
+      <li>Aprisionamento × restrição: o <code>VR</code> que sobe versus a <code>CPT</code> que encolhe.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Laboratório · a barra dos volumes</div>
+    <p class="lab-lead">Escolha um <strong>estado</strong> e ajuste a <strong>gravidade</strong>. A barra mostra os volumes empilhados (do <code>VR</code>, embaixo, ao topo da <code>CPT</code>) e os colchetes das capacidades. Repare onde o pulmão <strong>repousa</strong> (a <code>CRF</code>) e quanta <strong>reserva</strong> sobra para inspirar (a <code>CI</code>).</p>
+    <div class="ctrls" id="pats"></div>
+    <div class="sevwrap"><label for="sev">Gravidade</label><input type="range" id="sev" min="0" max="100" value="60" oninput="setSev(this.value)"><span class="sevval" id="sevVal">moderado</span></div>
+
+    <div class="labgrid">
+      <div class="panel">
+        <h4>Volumes &amp; capacidades</h4>
+        <svg class="volbar" id="volbar" viewBox="0 0 210 260" role="img" aria-label="Volumes e capacidades pulmonares"></svg>
+      </div>
+      <div>
+        <div class="read" id="read"></div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+
+    <div class="labrow">
+      <a class="lab" href="mvp1-interativo.html#r=4&c=0.03&rr=20&m=sim">↗ Complacência / pulmão duro <span class="ln">mód 1</span></a>
+      <a class="lab" href="mvp5-interativo.html#ra=70&rb=160&peep=5&surf=0&m=lab">↗ Recolhimento &amp; Laplace <span class="ln">mód 5</span></a>
+      <span class="next">a seguir → RF-02 · Espirometria (em breve)</span>
+    </div>
+
+    <p class="honesty"><b>Honestidade do modelo.</b> Valores ilustrativos e arredondados (litros) para tornar o mecanismo visível — não são valores previstos de um paciente real, que dependem de idade, sexo, altura e etnia. Ponto central, e ponte para o próximo módulo: <b>a espirometria não mede <code>VR</code>, <code>CRF</code> nem <code>CPT</code></b> — só o ar que sai pela boca. Esses volumes "escondidos" exigem <b>pletismografia de corpo inteiro</b> ou <b>diluição de gás (hélio)</b>. É por isso que a restrição verdadeira (CPT baixa) não se prova só com a espirometria.</p>
+
+    <div class="defs">
+      <h3>O vocabulário</h3>
+      <div class="defrow"><span class="ab">VC</span><span class="dd"><b>Volume corrente</b> — o ar de uma respiração tranquila (~0,5 L).</span></div>
+      <div class="defrow"><span class="ab">VRI</span><span class="dd"><b>Reserva inspiratória</b> — o que ainda dá para inspirar além do VC.</span></div>
+      <div class="defrow"><span class="ab">VRE</span><span class="dd"><b>Reserva expiratória</b> — o que ainda dá para expirar além do repouso.</span></div>
+      <div class="defrow"><span class="ab">VR</span><span class="dd"><b>Volume residual</b> — o que sobra após expiração máxima. Não sai pela boca.</span></div>
+      <div class="defrow"><span class="ab">CI</span><span class="dd"><b>Capacidade inspiratória</b> = VC + VRI. Cai na hiperinsuflação → dispneia ao esforço.</span></div>
+      <div class="defrow"><span class="ab">CRF</span><span class="dd"><b>Capacidade residual funcional</b> = VR + VRE. O volume de repouso (pulmão ⇄ parede).</span></div>
+      <div class="defrow"><span class="ab">CV</span><span class="dd"><b>Capacidade vital</b> = VRI + VC + VRE. Tudo que dá para mobilizar.</span></div>
+      <div class="defrow"><span class="ab">CPT</span><span class="dd"><b>Capacidade pulmonar total</b> = CV + VR. O teto — e o juiz da restrição.</span></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Respira — Ponte Funcional · RF-01 · volumes e capacidades<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'O básico',stem:'O "volume corrente" (VC) é:',choices:[['O ar de uma respiração tranquila (~0,5 L)',1],['Todo o ar do pulmão cheio',0],['O ar que sobra após expirar tudo',0],['A relação VEF1/CVF',0]],
+  good:'<b>A respiração de repouso.</b> VC é o vai-e-vem tranquilo (~0,5 L). Os demais volumes são reservas em torno dele.',
+  bad:'VC é o ar de uma respiração calma — o ponto de partida; as reservas ficam acima e abaixo dele.'},
+ {block:'O teto',stem:'Capacidade Pulmonar Total (CPT) é:',choices:[['Todo o ar no fim de uma inspiração máxima (CV + VR)',1],['O ar de uma respiração calma',0],['Só o ar que dá para expirar',0],['O volume residual',0]],
+  good:'<b>O teto.</b> CPT = capacidade vital + volume residual. É ela que define restrição quando reduzida.',
+  bad:'CPT é o pulmão cheio no ápice da inspiração: CV + VR.'},
+ {block:'O invisível',stem:'O Volume Residual (VR) é o ar que:',choices:[['Permanece após a expiração máxima',1],['Entra numa inspiração forçada',0],['Sai numa respiração tranquila',0],['É igual ao VEF1',0]],
+  good:'<b>O que não sai.</b> VR fica preso mesmo após expirar tudo — por isso a espirometria não o enxerga.',
+  bad:'VR é o ar residual ao fim da expiração máxima: invisível ao que sopra pela boca.'},
+ {block:'O repouso',stem:'A Capacidade Residual Funcional (CRF) corresponde a:',choices:[['O volume ao fim de uma expiração tranquila (VR + VRE)',1],['O volume de uma inspiração máxima',0],['A capacidade vital',0],['O volume corrente',0]],
+  good:'<b>O ponto de equilíbrio.</b> Na CRF, o recolhimento elástico do pulmão (para dentro) e o da parede (para fora) se anulam.',
+  bad:'CRF é o volume de repouso, ao fim da expiração calma: VR + VRE.'},
+ {block:'Reserva',stem:'Por que a queda da Capacidade Inspiratória (CI) explica dispneia ao esforço na DPOC?',choices:[['Sobra pouco espaço para aumentar o volume corrente ao exercício',1],['A CI mede o CO₂',0],['A CI aumenta a complacência',0],['A CI substitui a CRF',0]],
+  good:'<b>Reserva espremida.</b> Preso em volume alto, o paciente já respira perto do teto: a CI baixa limita o quanto pode aumentar o VC ao esforço.',
+  bad:'CI = VC + VRI é a margem para inspirar mais. Hiperinsuflado, essa margem encolhe e o esforço falta ar.'},
+ {block:'Aprisionamento',stem:'Na hiperinsuflação por aprisionamento aéreo (DPOC), o esperado é:',choices:[['VR e CRF aumentados, CI reduzida',1],['VR e CRF reduzidos',0],['CPT igual a zero',0],['CV aumentada',0]],
+  good:'<b>O pulmão incha e sobe de repouso.</b> Ar preso eleva VR e CRF (e até a CPT); a CV e a CI ficam espremidas por cima.',
+  bad:'Aprisionamento empurra o repouso para cima: VR e CRF sobem, CI cai.'},
+ {block:'Restrição verdadeira',stem:'Restrição "verdadeira" é definida fisiologicamente por:',choices:[['CPT reduzida',1],['VEF1/CVF reduzida',0],['VR aumentado',0],['Apenas CVF baixa na espirometria',0]],
+  good:'<b>CPT baixa.</b> Restrição é o pulmão pequeno: a capacidade total encolhe. CVF baixa só sugere — a CPT confirma.',
+  bad:'O juiz da restrição é a CPT reduzida; a espirometria sozinha apenas levanta a suspeita.'},
+ {block:'A ponte',stem:'Por que a espirometria não enxerga VR, CRF e CPT?',choices:[['Porque mede só o ar que sai pela boca, e esses incluem ar que não sai',1],['Porque o aparelho é antigo',0],['Porque eles não existem',0],['Porque dependem do CO₂',0]],
+  good:'<b>O que não sai, ela não mede.</b> VR (e tudo que o contém: CRF, CPT) fica no pulmão. Precisa de pletismografia ou diluição de hélio.',
+  bad:'A espirometria mede o mobilizável. VR/CRF/CPT contêm ar que não é expirado — exigem outro método.'},
+ {block:'Síntese',stem:'Dois pacientes com a mesma CVF baixa: um com CPT alta, outro com CPT baixa. O que muda?',choices:[['Um aprisiona (obstrução); o outro é pequeno (restrição)',1],['Nada, são iguais',0],['Ambos têm restrição',0],['Ambos têm asma',0]],
+  good:'<b>A CPT separa.</b> CVF baixa com CPT alta = aprisionamento/obstrução; CVF baixa com CPT baixa = restrição verdadeira.',
+  bad:'Mesma CVF não é mesmo mecanismo: a CPT distingue o que aprisiona do que é pequeno.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — a contabilidade do fôlego está clara.':pct>=75?'Base sólida. VR, CRF e CPT deixaram de ser siglas.':pct>=50?'Boa partida. Vá ao Laboratório e veja as barras se moverem.':'O número não importa: cada erro veio com o mecanismo. Abra o Laboratório e manipule os estados.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RF-01</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>O tamanho do fôlego.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>Volumes</strong> (VC, VRI, VRE, VR) somam-se em <strong>capacidades</strong> (CI, CRF, CV, CPT).</li><li><strong>Reserva</strong> mora na CI; ela cai na hiperinsuflação → dispneia ao esforço.</li><li><strong>Aprisionamento</strong> sobe VR/CRF; <strong>restrição verdadeira</strong> baixa a CPT.</li><li>A <strong>espirometria não vê</strong> VR/CRF/CPT — guarde isso para o RF-02.</li></ol></div><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao Laboratório →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== LABORATÓRIO (barras de volumes) ===================== */
+const NORMAL={TLC:6.0,RV:1.5,ERV:1.5,VT:0.5,IRV:2.5};
+const STATES={
+ normal:        {TLC:6.0,RV:1.5,ERV:1.5,VT:0.5,IRV:2.5},
+ aprisionamento:{TLC:7.6,RV:3.6,ERV:1.0,VT:0.5,IRV:2.5},
+ restritivo:    {TLC:3.4,RV:1.0,ERV:0.8,VT:0.4,IRV:1.3}
+};
+const LABELS=[['normal','Normal'],['aprisionamento','Aprisionamento (hiperinsuflação)'],['restritivo','Pulmão pequeno (restrição)']];
+let state='aprisionamento', sev=0.6;
+function lerp(a,b,t){return a+(b-a)*t}
+function model(){const s=STATES[state];const t=(state==='normal')?0:sev;const m={};for(const k of ['TLC','RV','ERV','VT','IRV'])m[k]=lerp(NORMAL[k],s[k],t);m.VC=m.TLC-m.RV;m.FRC=m.RV+m.ERV;m.CI=m.VT+m.IRV;return m;}
+function buildPats(){el('pats').innerHTML=LABELS.map(p=>`<button class="pat${p[0]===state?' active':''}" onclick="setState('${p[0]}')">${p[1]}</button>`).join('')}
+function setState(p){state=p;buildPats();renderLab()}
+function setSev(v){sev=v/100;const lbl=sev<0.34?'leve':sev<0.7?'moderado':'grave';el('sevVal').textContent=(state==='normal')?'—':lbl;renderLab()}
+function renderLab(){
+ const m=model();
+ const bx=58,bw=70,btop=14,bbot=242,FULL=8.0;
+ const scale=v=>(v/FULL)*(bbot-btop);const yOf=v=>bbot-scale(v);
+ const segs=[['VR',0,m.RV,'#B0503E'],['VRE',m.RV,m.RV+m.ERV,'#C97F66'],['VC',m.RV+m.ERV,m.RV+m.ERV+m.VT,'#3C7F86'],['VRI',m.RV+m.ERV+m.VT,m.TLC,'#4E7C5A']];
+ let s='';
+ for(const g of segs){const y2=yOf(g[1]),y1=yOf(g[2]);s+=`<rect x="${bx}" y="${y1.toFixed(1)}" width="${bw}" height="${(y2-y1).toFixed(1)}" fill="${g[3]}" opacity="0.85" stroke="#fff" stroke-width="0.6"/>`;const mid=(y1+y2)/2;if((y2-y1)>13)s+=`<text x="${bx+bw/2}" y="${(mid+3).toFixed(1)}" font-size="9" fill="#fff" text-anchor="middle" font-weight="600">${g[0]}</text>`;}
+ // referência da CPT normal (linha tracejada)
+ s+=`<line x1="${bx-4}" y1="${yOf(NORMAL.TLC).toFixed(1)}" x2="${bx+bw+4}" y2="${yOf(NORMAL.TLC).toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3"/><text x="${bx-7}" y="${(yOf(NORMAL.TLC)-3).toFixed(1)}" font-size="7" fill="var(--ink-soft)" text-anchor="end">CPT normal</text>`;
+ function bracket(vb,vt,label,off){const yb=yOf(vb),yt=yOf(vt),xx=bx+bw+8+off;return `<path d="M ${xx} ${yt.toFixed(1)} h6 V ${yb.toFixed(1)} h-6" fill="none" stroke="var(--ink-soft)" stroke-width="1"/><text x="${xx+9}" y="${((yt+yb)/2+3).toFixed(1)}" font-size="8" fill="var(--ink-soft)">${label}</text>`}
+ s+=bracket(0,m.FRC,'CRF',0)+bracket(m.FRC,m.TLC,'CI',26)+bracket(m.RV,m.TLC,'CV',52)+bracket(0,m.TLC,'CPT',78);
+ el('volbar').innerHTML=s;
+ const f=x=>x.toFixed(1);
+ el('read').innerHTML=`
+  <div class="cell"><div class="k">CPT</div><div class="v">${f(m.TLC)}<small> L</small></div></div>
+  <div class="cell"><div class="k">CV</div><div class="v">${f(m.VC)}<small> L</small></div></div>
+  <div class="cell"><div class="k">VR</div><div class="v">${f(m.RV)}<small> L</small></div></div>
+  <div class="cell"><div class="k">CRF</div><div class="v">${f(m.FRC)}<small> L</small></div></div>
+  <div class="cell"><div class="k">CI</div><div class="v">${f(m.CI)}<small> L</small></div></div>
+  <div class="cell"><div class="k">VR / CPT</div><div class="v">${Math.round(m.RV/m.TLC*100)}<small> %</small></div></div>`;
+ let cls='',txt='';
+ if(state==='normal'){txt='<b>Pulmão de referência.</b> Repouso (CRF) confortável e reserva inspiratória ampla (CI). A relação VR/CPT fica em torno de 25–30%.';}
+ else if(state==='aprisionamento'){cls='trap';txt='<b>Aprisionamento / hiperinsuflação.</b> O ar não sai por completo: o <b>VR</b> e a <b>CRF</b> sobem, e a <b>CPT</b> aumenta. O preço é a <b>CI</b> espremida — pouca reserva para o esforço. A relação VR/CPT dispara. Atenção: a CVF pode cair <i>por aprisionamento</i>, não por restrição.';}
+ else{cls='restr';txt='<b>Pulmão pequeno (restrição verdadeira).</b> Tudo encolhe junto e a <b>CPT cai</b> — o juiz da restrição. A reserva é pequena porque o pulmão é pequeno, não porque está cheio. Aqui a relação VR/CPT costuma se preservar.';}
+ const vd=el('verdict');vd.className='verdict'+(cls?' '+cls:'');vd.innerHTML=txt;
+}
+
+function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildPats();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>
