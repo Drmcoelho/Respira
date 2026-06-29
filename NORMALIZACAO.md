@@ -70,7 +70,18 @@ Sub-série **aditiva** entre a arquitetura (Respira 05) e as síndromes (Respira
 | RF-03 | Padrões funcionais | `respira-ponte-03-padroes.html` |
 | RF-04 | DLCO e troca | `respira-ponte-04-dlco.html` |
 
-Ordem de leitura: Respira 01–05 → **Ponte Funcional** → Respira 06 (síndromes) → 07–10. No índice, a Ponte aparece como seção própria entre os cards 05 e 06.
+Ordem de leitura: Respira 01–05 → **Ponte Funcional** → **Respira Ocupacional** → Respira 06 (síndromes) → 07–10. No índice, a Ponte e o bloco Ocupacional aparecem como seções próprias entre os cards 05 e 06.
+
+## Respira · Ocupacional
+
+Bloco **aditivo**, lido após a Ponte Funcional e antes das síndromes. Foco na realidade ocupacional brasileira (sub-representada na literatura de referência). Arquivos na raiz com slug semântico; nada renumerado.
+
+| Nº | Título | Arquivo (raiz, canônico) |
+|---:|---|---|
+| RO-01 | Profissão como sinal vital | `respira-ocupacional-01-profissao-sinal-vital.html` |
+| RO-02 | Poeiras minerais | `respira-ocupacional-02-poeiras-minerais.html` |
+| RO-03 | Pulmão rural e biomassa | `respira-ocupacional-03-rural-biomassa.html` |
+| RO-04 | Solda, tinta e asma ocupacional | `respira-ocupacional-04-asma-ocupacional.html` |
 
 ## Ventila
 
