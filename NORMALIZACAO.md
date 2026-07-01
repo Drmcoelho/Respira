@@ -82,6 +82,8 @@ Bloco **aditivo**, lido após a Ponte Funcional e antes das síndromes. Foco na 
 | RO-02 | Poeiras minerais | `respira-ocupacional-02-poeiras-minerais.html` |
 | RO-03 | Pulmão rural e biomassa | `respira-ocupacional-03-rural-biomassa.html` |
 | RO-04 | Solda, tinta e asma ocupacional | `respira-ocupacional-04-asma-ocupacional.html` |
+| RO-05 | Silicose acelerada do jateamento | `respira-ocupacional-05-silicose-jateamento.html` |
+| RO-06 | DPOC da biomassa | `respira-ocupacional-06-dpoc-biomassa.html` |
 
 ## Ventila
 
