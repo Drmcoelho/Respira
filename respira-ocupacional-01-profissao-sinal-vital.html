@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ocupacional · RO-01 · Profissão como sinal vital</title>
+<meta name="description" content="Respira Ocupacional (RO-01): a anamnese ocupacional brasileira como sinal vital. O que faz, há quanto tempo, ambiente, poeira, EPI, colegas doentes e melhora no afastamento — com anamnese interativa que aponta o agente e o padrão provável.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RO-01 · Profissão como sinal vital">
+<meta property="og:description" content="A anamnese ocupacional como sinal vital: as perguntas que mudam o diagnóstico — com ferramenta interativa de suspeição.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ocupacional-01-profissao-sinal-vital.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RO-01 · Profissão como sinal vital">
+<meta name="twitter:description" content="A anamnese ocupacional como sinal vital: as perguntas que mudam o diagnóstico.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.pat{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.flags{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+@media(max-width:560px){.flags{grid-template-columns:1fr}}
+.flag{display:flex;gap:10px;align-items:flex-start;text-align:left;font-family:inherit;font-size:.9rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:11px;padding:11px 13px;cursor:pointer;transition:all .16s ease;line-height:1.35}
+.flag:hover{border-color:var(--accent)}
+.flag.on{border-color:var(--accent);background:rgba(192,96,58,.08)}
+.flag .bx{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:.7rem;color:#fff;margin-top:1px}
+.flag.on .bx{background:var(--accent);border-color:var(--accent)}
+.susp{margin-top:18px}
+.susp-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.8rem;color:var(--ink-soft);margin-bottom:6px;font-weight:600}
+.susp-track{height:14px;background:var(--paper-deep);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.susp-fill{height:100%;width:0;border-radius:99px;transition:width .4s ease,background .4s ease}
+.verdict{margin-top:16px;border-radius:13px;padding:16px 18px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:1rem;line-height:1.55}.verdict b{color:var(--ink)}
+.verdict.hi{border-left-color:var(--accent);background:rgba(192,96,58,.08)}
+.verdict .vh{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-bottom:6px}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+@media(max-width:560px){.facts{grid-template-columns:1fr}}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.86rem}
+.fact .fk{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.fact .fv{color:var(--ink)}
+.pergunta{margin-top:12px;border-left:3px solid var(--accent);background:var(--paper-deep);border-radius:0 11px 11px 0;padding:11px 14px;font-family:'Fraunces',serif;font-style:italic;font-size:1.05rem;color:var(--accent-deep)}
+.trap{margin-top:10px;font-size:.92rem;padding-top:10px;border-top:1px dashed rgba(22,56,59,.2)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ocupacional · RO-01</div>
+  <h1>Profissão<br><em>como sinal vital</em></h1>
+  <p class="sub">Pressão, pulso, temperatura, saturação… e ocupação. A pergunta "o que o(a) senhor(a) faz?" reclassifica o pulmão — e quase nunca é feita. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Anamnese</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">A maior parte da literatura de referência é do hemisfério norte. O <strong>marmorista</strong> com silicose, a <strong>cozinheira de fogão a lenha</strong> com DPOC sem nunca ter fumado, o <strong>pintor</strong> com asma por isocianato — esses pulmões são subnotificados lá e centrais aqui.</p>
+    <p>Este é o degrau de abertura do <strong>Respira Ocupacional</strong>. Antes de qualquer poeira específica, a ferramenta: a <strong>anamnese ocupacional</strong> como sinal vital que muda a conduta.</p>
+    <ul>
+      <li>As perguntas que reclassificam: o que faz, há quanto tempo, ambiente, EPI real, colegas, e a <strong>melhora no afastamento</strong>.</li>
+      <li>Latência: sílica e asbesto cobram décadas depois.</li>
+      <li>A armadilha de pôr tudo na conta do cigarro.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Anamnese · a profissão que reclassifica</div>
+    <p class="lab-lead">Escolha uma <strong>ocupação</strong> (ela preenche o típico) e marque os <strong>sinais da anamnese</strong>. O medidor de <strong>suspeição</strong> e o veredito apontam o agente provável, o padrão funcional e o próximo passo.</p>
+    <div class="ctrls" id="profs"></div>
+    <div class="flags" id="flags"></div>
+
+    <div class="susp">
+      <div class="susp-top"><span>Suspeição ocupacional</span><span id="suspPct">0%</span></div>
+      <div class="susp-track"><div class="susp-fill" id="suspFill"></div></div>
+    </div>
+
+    <div class="verdict" id="verdict"></div>
+
+    <div class="labrow">
+      <a class="lab" href="respira-ponte-03-padroes.html#lab">↗ Padrões funcionais <span class="ln">RF-03</span></a>
+      <a class="lab" href="respira-ponte-04-dlco.html#lab">↗ DLCO e troca <span class="ln">RF-04</span></a>
+      <span class="next">a seguir → RO-02 · Poeiras minerais (em breve)</span>
+    </div>
+
+    <p class="honesty"><b>Honestidade do modelo.</b> O "medidor de suspeição" é um organizador didático de pistas, <b>não um escore validado</b>. A história ocupacional real é qualitativa, detalhada e às vezes a única chave do diagnóstico — exige nexo temporal, técnico (processo de trabalho) e, quando indicado, vigilância e notificação (é doença de notificação compulsória). Os padrões e latências são típicos, com muitas exceções. O objetivo aqui é criar o <b>reflexo de perguntar</b>.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ocupacional · RO-01 · profissão como sinal vital<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'O sinal que falta',stem:'Por que tratar a ocupação como um sinal vital?',choices:[['Porque a exposição pode ser a causa — e muda diagnóstico e conduta',1],['Porque é exigência burocrática do prontuário',0],['Porque define a classe social',0],['Porque substitui a gasometria',0]],
+  good:'<b>Pode ser a causa.</b> A exposição reclassifica o pulmão (de "DPOC do tabaco" para "silicose", por exemplo) e muda manejo, prognóstico e até notificação.',
+  bad:'A ocupação não é dado social solto: é potencial etiologia. Não perguntar é perder o diagnóstico.'},
+ {block:'As perguntas',stem:'Qual conjunto melhor compõe a anamnese ocupacional?',choices:[['O que faz, há quanto tempo, ambiente/EPI, colegas doentes, melhora no afastamento',1],['Apenas a profissão atual',0],['Apenas se fuma',0],['Apenas a idade',0]],
+  good:'<b>Processo, tempo, ambiente, coletivo e tempo-resposta.</b> Não basta o nome do cargo: importa o que se faz, por quanto tempo, com que proteção e se melhora longe do trabalho.',
+  bad:'A profissão isolada diz pouco; o que diagnostica é o processo de trabalho, o tempo, o EPI real e o padrão temporal.'},
+ {block:'Latência',stem:'Sobre sílica e asbesto, é correto dizer:',choices:[['A doença pode surgir anos a décadas após a exposição',1],['Os sintomas são imediatos à exposição',0],['Só causam doença se ainda houver exposição ativa',0],['Nunca causam fibrose',0]],
+  good:'<b>Latência longa.</b> Pneumoconioses cobram décadas depois — pergunte a história ocupacional <i>pregressa</i>, não só a atual.',
+  bad:'A latência é longa: o paciente pode ter parado a exposição há anos e adoecer agora. Pergunte o passado.'},
+ {block:'O padrão temporal',stem:'Tosse e chiado que MELHORAM nos fins de semana e nas férias sugerem:',choices:[['Componente ocupacional reativo (asma ocupacional, pneumonite de hipersensibilidade)',1],['Doença puramente genética',0],['Pneumoconiose fixa',0],['Simulação',0]],
+  good:'<b>Nexo temporal.</b> Melhorar longe do trabalho e piorar ao voltar é a assinatura da asma ocupacional / hipersensibilidade — e é reversível se afastar cedo.',
+  bad:'Melhora no afastamento aponta gatilho do ambiente: pense asma ocupacional / PH, não doença fixa.'},
+ {block:'O padrão temporal',stem:'Dispneia PROGRESSIVA que continua mesmo anos após deixar a mineração sugere:',choices:[['Pneumoconiose (doença fixa, fibrótica)',1],['Asma ocupacional',0],['Quadro que regride sozinho',0],['Ansiedade',0]],
+  good:'<b>Fixa e progressiva.</b> Sílica/carvão deixam fibrose que evolui apesar do afastamento — o oposto temporal da asma ocupacional.',
+  bad:'Progressão apesar do afastamento + latência longa = pneumoconiose fibrótica, não reativa.'},
+ {block:'A armadilha',stem:'Marmorista de 50 anos, tabagista, com dispneia. Qual o erro comum?',choices:[['Atribuir tudo ao cigarro e não investigar sílica (pode ser misto)',1],['Pedir espirometria',0],['Perguntar o tempo de profissão',0],['Solicitar imagem',0]],
+  good:'<b>A conta fácil do cigarro.</b> Tabagismo não exclui silicose — eles se somam (misto). Fechar em "DPOC do fumo" perde a sílica.',
+  bad:'O cigarro é o álibi preguiçoso. Exposto + sintomas pedem investigar sílica, mesmo que ele fume.'},
+ {block:'Realidade brasileira',stem:'Sobre EPI na anamnese, o mais útil é perguntar:',choices:[['Se o EPI existia E era usado de forma efetiva no dia a dia',1],['Apenas se a empresa fornecia EPI',0],['A marca do equipamento',0],['Nada, EPI não importa',0]],
+  good:'<b>EPI nominal × EPI real.</b> Fornecer não é usar. Em trabalho informal, sem fiscalização, a proteção efetiva costuma faltar — pergunte o uso real.',
+  bad:'O que protege é o uso efetivo, não o EPI no papel. Pergunte como era de verdade no chão de fábrica.'},
+ {block:'O coletivo',stem:'Colegas de trabalho com sintomas semelhantes indicam:',choices:[['Possível causa ambiental compartilhada (agrupamento)',1],['Coincidência irrelevante',0],['Contágio genético',0],['Erro do paciente',0]],
+  good:'<b>Cluster.</b> Adoecimento em grupo aponta o ambiente como denominador comum — pista forte e gatilho de vigilância.',
+  bad:'Vários doentes no mesmo posto não é acaso: é sinal de exposição coletiva. Investigue o ambiente.'},
+ {block:'Da exposição ao padrão',stem:'De modo geral, poeiras minerais (sílica, asbesto) tendem a causar padrão:',choices:[['Intersticial / restritivo (com DLCO baixa)',1],['Obstrutivo reversível',0],['Sempre normal',0],['Alcalose metabólica',0]],
+  good:'<b>Fibrosante.</b> Mineral fibrosa o interstício → restrição e DLCO baixa. Já irritantes/sensibilizantes (tinta, farinha) tendem ao obstrutivo/asma.',
+  bad:'Mineral → interstício/restrição; sensibilizante/irritante → obstrução/asma. A exposição prevê o padrão — que você confirma na Ponte Funcional.'},
+ {block:'Síntese',stem:'O que a anamnese ocupacional acrescenta ao raciocínio?',choices:[['Um eixo causal que reclassifica o paciente e orienta função, imagem e até a ventilação',1],['Apenas um dado de cadastro',0],['A substituição da prova de função',0],['Nada de relevante na UTI',0]],
+  good:'<b>Um eixo causal.</b> Ela liga a história à fisiologia (Ponte Funcional) e, lá na frente, à estratégia ventilatória do pulmão que "já veio ferido do trabalho".',
+  bad:'A ocupação é eixo de raciocínio: muda hipótese, exames e conduta — inclusive na UTI.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — a pergunta virou reflexo.':pct>=75?'Base sólida. A ocupação já entra na sua anamnese.':pct>=50?'Boa partida. Vá à Anamnese e monte os casos.':'O número não importa: cada erro veio com o mecanismo. Abra a Anamnese e provoque os cenários.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RO-01</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>Perguntar é o exame.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>Ocupação é sinal vital</strong>: o que faz, há quanto tempo, ambiente, EPI real, colegas.</li><li><strong>Melhora no afastamento</strong> → reativo (asma/PH); <strong>progressão apesar do afastamento</strong> → pneumoconiose.</li><li><strong>Latência longa</strong>: pergunte a exposição pregressa.</li><li>Não feche tudo no cigarro — o misto existe.</li></ol></div><p style="font-size:.95rem">Com a pergunta no lugar, os próximos módulos abrem os agentes: poeiras minerais, biomassa e sensibilizantes.</p><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir à Anamnese →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== ANAMNESE (lab) ===================== */
+const FLAGS=[
+ {id:'fechado',w:15,t:'Ambiente fechado / sem ventilação'},
+ {id:'poeira',w:15,t:'Poeira ou fumaça visível no ar'},
+ {id:'epi',w:15,t:'EPI ausente ou só "no papel"'},
+ {id:'colegas',w:18,t:'Colegas com sintomas parecidos'},
+ {id:'melhora',w:22,t:'Melhora no afastamento / férias'},
+ {id:'tempo',w:15,t:'Exposição prolongada (anos)'}
+];
+const PROFS=[
+ {id:'marmorista',nome:'Marmoraria / jateamento',agente:'Sílica cristalina',latencia:'anos a décadas (acelerada/aguda no jateamento)',padrao:'Intersticial / restritivo · DLCO baixa (silicose; risco de TB e fibrose maciça)',pergunta:'Corta ou poli pedra a seco? Já jateou areia?',preset:{fechado:1,poeira:1,epi:1,colegas:1,melhora:0,tempo:1}},
+ {id:'asbesto',nome:'Telha / freio / construção',agente:'Asbesto (amianto)',latencia:'décadas',padrao:'Restritivo · placas pleurais, asbestose; risco de mesotelioma',pergunta:'Mexeu com telha/caixa d’água de amianto ou lonas de freio?',preset:{fechado:0,poeira:1,epi:1,colegas:0,melhora:0,tempo:1}},
+ {id:'soldador',nome:'Soldador / funileiro',agente:'Fumos metálicos',latencia:'variável',padrao:'Bronquite, siderose, pneumonite; "febre dos fumos"',pergunta:'Solda em local fechado? Material galvanizado (zinco)?',preset:{fechado:1,poeira:1,epi:1,colegas:0,melhora:1,tempo:0}},
+ {id:'pintor',nome:'Pintor / espuma (isocianato)',agente:'Isocianatos, solventes',latencia:'semanas a meses',padrao:'Obstrutivo · asma ocupacional, RADS',pergunta:'Tinta/spray de poliuretano? Piora no trabalho, melhora fora?',preset:{fechado:1,poeira:0,epi:1,colegas:0,melhora:1,tempo:0}},
+ {id:'lavrador',nome:'Lavoura / fogão a lenha / aviário',agente:'Biomassa, mofo, aves, grãos',latencia:'meses a anos',padrao:'DPOC não tabágica · pneumonite de hipersensibilidade',pergunta:'Cozinha em fogão a lenha? Lida com aves, feno ou silo?',preset:{fechado:1,poeira:1,epi:1,colegas:0,melhora:1,tempo:1}},
+ {id:'padeiro',nome:'Padeiro / farinha',agente:'Poeira de farinha e enzimas',latencia:'meses a anos',padrao:'Obstrutivo · "asma do padeiro"',pergunta:'Tosse/chiado pioram ao amassar e melhoram de férias?',preset:{fechado:1,poeira:1,epi:1,colegas:0,melhora:1,tempo:0}}
+];
+let prof='marmorista', state={};
+FLAGS.forEach(f=>state[f.id]=false);
+function buildProfs(){el('profs').innerHTML=PROFS.map(p=>`<button class="pat${p.id===prof?' active':''}" onclick="setProf('${p.id}')">${p.nome}</button>`).join('')}
+function buildFlags(){el('flags').innerHTML=FLAGS.map(f=>`<button class="flag${state[f.id]?' on':''}" onclick="toggleFlag('${f.id}')"><span class="bx">${state[f.id]?'✓':''}</span><span>${f.t}</span></button>`).join('')}
+function setProf(id){prof=id;const p=PROFS.find(x=>x.id===id);FLAGS.forEach(f=>state[f.id]=!!p.preset[f.id]);buildProfs();buildFlags();renderLab()}
+function toggleFlag(id){state[id]=!state[id];buildFlags();renderLab()}
+function renderLab(){
+ const p=PROFS.find(x=>x.id===prof);
+ let score=0;FLAGS.forEach(f=>{if(state[f.id])score+=f.w});
+ score=Math.min(score,100);
+ el('suspPct').textContent=score+'%';
+ const col=score>=66?'linear-gradient(90deg,var(--accent),var(--accent-deep))':score>=33?'linear-gradient(90deg,var(--warn),var(--tissue))':'linear-gradient(90deg,var(--air),var(--correct))';
+ el('suspFill').style.width=score+'%';el('suspFill').style.background=col;
+ const temporal = state.melhora ? 'reativo' : (state.tempo ? 'fixo' : 'indef');
+ let trap='';
+ if(temporal==='reativo')trap='<div class="trap"><b>Padrão temporal reativo.</b> A melhora no afastamento aponta gatilho do ambiente — asma ocupacional / hipersensibilidade. Afastar cedo pode reverter.</div>';
+ else if(temporal==='fixo')trap='<div class="trap"><b>Padrão temporal fixo.</b> Exposição longa sem melhora ao afastar sugere doença fibrótica/pneumoconiose — investigue mesmo após anos fora.</div>';
+ const lvl=score>=66?'alta':score>=33?'intermediária':'baixa';
+ const vd=el('verdict');vd.className='verdict'+(score>=66?' hi':'');
+ vd.innerHTML=`<div class="vh">Suspeição ${lvl} · ${p.nome}</div>
+   <div class="facts">
+     <div class="fact"><div class="fk">Agente provável</div><div class="fv">${p.agente}</div></div>
+     <div class="fact"><div class="fk">Latência típica</div><div class="fv">${p.latencia}</div></div>
+     <div class="fact"><div class="fk">Padrão funcional esperado</div><div class="fv">${p.padrao}</div></div>
+     <div class="fact"><div class="fk">Próximo passo</div><div class="fv">História pregressa, imagem e prova funcional (volumes + DLCO).</div></div>
+   </div>
+   <div class="pergunta">“${p.pergunta}”</div>${trap}`;
+}
+
+function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildProfs();buildFlags();setProf('marmorista');
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>

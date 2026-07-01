@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ocupacional · RO-03 · Pulmão rural e biomassa</title>
+<meta name="description" content="Respira Ocupacional (RO-03): pulmão rural e biomassa — fogão a lenha, mofo, aves, grãos, cana, algodão e agrotóxicos. DPOC não tabágica, pneumonite de hipersensibilidade, bissinose e bronquiolite, com comparador interativo de mecanismo e padrão temporal.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RO-03 · Pulmão rural e biomassa">
+<meta property="og:description" content="Fogão a lenha, mofo, aves, grãos, cana e agrotóxicos: DPOC não tabágica, pneumonite de hipersensibilidade e mais — com comparador interativo.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ocupacional-03-rural-biomassa.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RO-03 · Pulmão rural e biomassa">
+<meta name="twitter:description" content="Fogão a lenha, mofo, aves, grãos e agrotóxicos: mecanismo, padrão e conduta.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--blood:#8E2F39;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.pat{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.labgrid{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:start}
+@media(max-width:620px){.labgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+.mech{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;border-radius:7px;padding:4px 10px;letter-spacing:.04em}
+.mech.imune{background:var(--blood)}.mech.irritante{background:var(--accent)}.mech.particula{background:var(--ink-soft)}.mech.toxico{background:var(--warn)}
+.doenca{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin:12px 0 4px;line-height:1.2}
+.tempo{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.86rem;color:var(--ink-soft)}
+.tempo .dot{width:10px;height:10px;border-radius:50%}
+.tempo .dot.rev{background:var(--correct)}.tempo .dot.fix{background:var(--wrong)}.tempo .dot.agu{background:var(--warn)}
+.facts{display:grid;grid-template-columns:1fr;gap:8px}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.9rem}
+.fact .fk{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+.fact .fv{color:var(--ink)}
+.pergunta{margin-top:12px;border-left:3px solid var(--accent);background:var(--paper-deep);border-radius:0 11px 11px 0;padding:11px 14px;font-family:'Fraunces',serif;font-style:italic;font-size:1.04rem;color:var(--accent-deep)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ocupacional · RO-03</div>
+  <h1>Pulmão rural<br><em>e biomassa</em></h1>
+  <p class="sub">O campo adoece o pulmão por três caminhos: a fumaça que irrita, o mofo que sensibiliza e o veneno que destrói. A mulher que cozinha em fogão a lenha e nunca fumou é o rosto mais invisível da DPOC brasileira. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Comparador</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Nem toda DPOC fuma; nem toda dispneia rural é asma. O ambiente do campo tem <strong>partículas</strong> (biomassa), <strong>antígenos orgânicos</strong> (mofo, aves, bagaço) e <strong>tóxicos</strong> (agrotóxicos, gases de silo) — e cada caminho deixa um padrão.</p>
+    <p>Terceiro módulo do <strong>Respira Ocupacional</strong>. O eixo aqui é o <strong>mecanismo</strong>: irritante, imune ou tóxico — e o tempo da doença.</p>
+    <ul>
+      <li><strong>Biomassa</strong>: DPOC não tabágica, sobretudo em mulheres rurais.</li>
+      <li><strong>Pneumonite de hipersensibilidade</strong>: aguda reversível × crônica fibrótica.</li>
+      <li>Pistas com nome: bissinose (algodão), bagaçose (cana), doença do silo.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Comparador · três caminhos do campo</div>
+    <p class="lab-lead">Escolha a <strong>exposição rural</strong>: o painel mostra o <strong>mecanismo</strong> (irritante, imune ou tóxico), a doença, o padrão funcional, a <strong>pista temporal</strong> e a conduta. Repare quem melhora no afastamento — e quem não.</p>
+    <div class="ctrls" id="exps"></div>
+    <div class="labgrid">
+      <div class="panel">
+        <span class="mech" id="mech"></span>
+        <div class="doenca" id="doenca"></div>
+        <div class="tempo" id="tempo"></div>
+      </div>
+      <div>
+        <div class="facts" id="facts"></div>
+        <div class="pergunta" id="pergunta"></div>
+      </div>
+    </div>
+
+    <div class="labrow">
+      <a class="lab" href="respira-ocupacional-01-profissao-sinal-vital.html#lab">↗ A anamnese ocupacional <span class="ln">RO-01</span></a>
+      <a class="lab" href="respira-ponte-02-espirometria.html#lab">↗ Espirometria <span class="ln">RF-02</span></a>
+      <span class="next">a seguir → RO-04 · Solda, tinta e asma ocupacional (em breve)</span>
+    </div>
+
+    <p class="honesty"><b>Honestidade do modelo.</b> Os mecanismos são organizadores didáticos; muitas exposições combinam vias (a fumaça de biomassa irrita e tem partículas; o mofo pode sensibilizar e infectar). A pneumonite de hipersensibilidade tem formas aguda, subaguda e crônica, com fenótipos fibrosantes que imitam fibrose pulmonar idiopática — o diagnóstico exige história de exposição minuciosa, TC, lavado/precipitinas e, às vezes, biópsia. Padrões e condutas são típicos, não protocolos.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ocupacional · RO-03 · pulmão rural e biomassa<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'Biomassa',stem:'Mulher de 60 anos, roça, cozinha a vida toda em fogão a lenha, nunca fumou, com dispneia e padrão obstrutivo. O diagnóstico mais provável:',choices:[['DPOC por biomassa (não tabágica)',1],['Asma alérgica clássica',0],['Silicose',0],['Pulmão normal',0]],
+  good:'<b>DPOC por biomassa.</b> A fumaça de lenha em ambiente fechado causa DPOC sem cigarro — frequentíssima em mulheres rurais e subdiagnosticada.',
+  bad:'Não fumar não exclui DPOC: a fumaça de biomassa é causa maior, sobretudo na mulher rural.'},
+ {block:'Mecanismo',stem:'A pneumonite de hipersensibilidade (PH) ocorre por:',choices:[['Resposta imune a antígenos orgânicos inalados (mofo, aves, bagaço)',1],['Fibrose por partícula mineral',0],['Broncoespasmo por frio',0],['Infecção bacteriana aguda',0]],
+  good:'<b>Imune.</b> Não é a toxicidade da partícula, e sim a resposta imunológica (alveolite) a antígenos orgânicos — daí o nexo com exposição repetida.',
+  bad:'PH é imunológica: o pulmão reage ao antígeno orgânico inalado, não a uma toxina direta.'},
+ {block:'PH aguda × crônica',stem:'Sobre o tempo da pneumonite de hipersensibilidade:',choices:[['A forma aguda melhora ao afastar do antígeno; a crônica pode fibrosar e imitar FPI',1],['É sempre irreversível',0],['Nunca melhora com afastamento',0],['Não tem relação com a exposição',0]],
+  good:'<b>Tempo importa.</b> Aguda/subaguda regride com afastamento; a crônica fibrosa e pode parecer fibrose pulmonar idiopática — afastar cedo muda o prognóstico.',
+  bad:'A PH aguda melhora longe do antígeno; a crônica fibrosa. Reconhecer cedo evita o pulmão fixo.'},
+ {block:'Nome próprio',stem:'"Pulmão do fazendeiro" está ligado a:',choices:[['Feno/mofo (actinomicetos termofílicos)',1],['Poeira de algodão',0],['Bagaço de cana',0],['Gases de silo',0]],
+  good:'<b>Mofo do feno.</b> Actinomicetos termofílicos em feno/silagem mofados causam a PH clássica do fazendeiro.',
+  bad:'O pulmão do fazendeiro vem do feno/mofo (actinomicetos); algodão e cana têm outros nomes.'},
+ {block:'Nome próprio',stem:'A "bissinose" (poeira de algodão) tem como pista temporal clássica:',choices:[['Piora ao retornar ao trabalho após a folga ("febre de segunda-feira")',1],['Melhora ao retornar ao trabalho',0],['Sintomas só à noite',0],['Nenhum padrão temporal',0]],
+  good:'<b>Febre de segunda-feira.</b> Aperto torácico que piora no primeiro dia após a pausa e atenua na semana — assinatura da bissinose.',
+  bad:'A bissinose piora no retorno após a folga (segunda-feira) — padrão temporal característico.'},
+ {block:'Nome próprio',stem:'A "doença do silo" (silo filler) é causada sobretudo por:',choices:[['Dióxido de nitrogênio (NO₂) liberado na fermentação — lesão tóxica e bronquiolite',1],['Resposta imune ao grão',0],['Sílica',0],['Asbesto',0]],
+  good:'<b>Tóxico (NO₂).</b> O gás que se acumula no silo lesa a via aérea distal; pode ser bifásico e evoluir para bronquiolite obliterante.',
+  bad:'É lesão tóxica por NO₂ (não imune): cuidado com o curso bifásico e a bronquiolite.'},
+ {block:'Tóxico',stem:'A ingestão/exposição a paraquat (herbicida) é temida no pulmão porque:',choices:[['Causa fibrose pulmonar progressiva e grave',1],['Causa apenas tosse leve',0],['Melhora com oxigênio em alta dose',0],['Não afeta o pulmão',0]],
+  good:'<b>Fibrose letal.</b> O paraquat concentra-se no pulmão e gera fibrose progressiva; oxigênio em excesso pode até piorar (estresse oxidativo).',
+  bad:'Paraquat é fibrosante pulmonar grave; cautela inclusive com O₂ suplementar desnecessário.'},
+ {block:'Padrão funcional',stem:'De modo geral, a PH (mofo/aves) tende a um padrão:',choices:[['Restritivo com DLCO baixa (na forma estabelecida/crônica)',1],['Obstrutivo reversível sempre',0],['Sempre normal',0],['Alcalose metabólica',0]],
+  good:'<b>Restritivo + DLCO baixa.</b> A alveolite/fibrose reduz volumes e difusão — conecta direto com a Ponte Funcional (RF-01 e RF-04).',
+  bad:'PH estabelecida dá restrição e DLCO baixa; a biomassa, por sua vez, tende ao obstrutivo.'},
+ {block:'Nexo temporal',stem:'Por que perguntar sobre fins de semana e férias é decisivo no pulmão rural?',choices:[['Melhora no afastamento aponta gatilho ambiental reversível (PH/asma)',1],['Para saber se a pessoa descansa',0],['Não tem relevância',0],['Só para preencher o prontuário',0]],
+  good:'<b>Nexo temporal.</b> Como no RO-01: melhorar longe da exposição é a pista que separa o reversível do fixo — e orienta afastar cedo.',
+  bad:'Melhora no afastamento sinaliza causa ambiental reativa; é a pergunta que muda a conduta.'},
+ {block:'Síntese',stem:'O eixo que organiza o pulmão rural é:',choices:[['O mecanismo: irritante (biomassa→obstrução), imune (PH→restrição) e tóxico (NO₂/paraquat)',1],['A idade do paciente',0],['A cidade onde mora',0],['O tipo sanguíneo',0]],
+  good:'<b>Mecanismo.</b> Ele prevê o padrão (obstrutivo × restritivo × bronquiolite) e a conduta — e você confirma na prova funcional.',
+  bad:'Irritante, imune ou tóxico: o mecanismo guia o padrão e o manejo do pulmão rural.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — o campo deixou de ser caixa-preta.':pct>=75?'Base sólida. Mecanismo, padrão e tempo conversam.':pct>=50?'Boa partida. Use o Comparador para fixar os três caminhos.':'O número não importa: cada erro veio com o mecanismo. Abra o Comparador.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RO-03</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>Três caminhos do campo.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>Irritante</strong> (biomassa) → DPOC não tabágica (obstrutivo).</li><li><strong>Imune</strong> (mofo, aves, bagaço) → pneumonite de hipersensibilidade (restritivo, DLCO baixa); aguda reverte, crônica fibrosa.</li><li><strong>Tóxico</strong> (NO₂ do silo, paraquat) → bronquiolite/fibrose.</li><li>Pergunte o <strong>tempo</strong>: melhora no afastamento separa o reversível do fixo.</li></ol></div><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao Comparador →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== COMPARADOR (lab) ===================== */
+const TEMPOS={rev:['rev','Melhora no afastamento (reversível se precoce)'],fix:['fix','Progressivo / fixo (fibrose ou DPOC estabelecida)'],agu:['agu','Agudo após exposição (pode ser bifásico)']};
+const EXPS=[
+ {id:'biomassa',nome:'Fogão a lenha / biomassa',mech:'irritante',mechL:'Irritante / partícula',doenca:'DPOC não tabágica',padrao:'Obstrutivo (± misto)',tempo:'fix',fonte:'Cozinha em ambiente fechado, fumaça crônica',conduta:'Fogão melhorado/ventilação, cessar exposição; espirometria, broncodilatador',pergunta:'Cozinha em fogão a lenha dentro de casa, sem chaminé?'},
+ {id:'fazendeiro',nome:'Mofo / feno (fazendeiro)',mech:'imune',mechL:'Imune (hipersensibilidade)',doenca:'Pneumonite de hipersensibilidade',padrao:'Restritivo · DLCO baixa',tempo:'rev',fonte:'Feno/silagem mofados (actinomicetos termofílicos)',conduta:'Afastar antígeno; TC, precipitinas/lavado; corticoide em casos',pergunta:'Mexe com feno/silagem mofada? Melhora nas férias?'},
+ {id:'aves',nome:'Aves (criador)',mech:'imune',mechL:'Imune (hipersensibilidade)',doenca:'Pulmão do criador de aves',padrao:'Restritivo · DLCO baixa',tempo:'rev',fonte:'Pombos, papagaios, galinheiro — proteínas aviárias',conduta:'Afastar as aves (inclusive edredons de pena); investigar PH',pergunta:'Cria aves? Sintomas ligados ao contato com elas?'},
+ {id:'cana',nome:'Cana / bagaço',mech:'imune',mechL:'Imune (hipersensibilidade)',doenca:'Bagaçose',padrao:'Restritivo · DLCO baixa',tempo:'agu',fonte:'Bagaço de cana mofado (Thermoactinomyces)',conduta:'Afastar bagaço armazenado; investigar PH',pergunta:'Trabalha com bagaço de cana estocado/úmido?'},
+ {id:'algodao',nome:'Algodão (bissinose)',mech:'irritante',mechL:'Irritante (endotoxina)',doenca:'Bissinose',padrao:'Obstrutivo',tempo:'agu',fonte:'Poeira de algodão/têxtil',conduta:'Reduzir poeira; espirometria seriada; padrão de "segunda-feira"',pergunta:'Aperto no peito piora no 1º dia após a folga?'},
+ {id:'silo',nome:'Gases de silo (NO₂)',mech:'toxico',mechL:'Tóxico (gás)',doenca:'Doença do silo / bronquiolite',padrao:'Obstrutivo / bronquiolite',tempo:'agu',fonte:'NO₂ da fermentação em silo fechado',conduta:'Suporte; vigiar curso bifásico e bronquiolite obliterante',pergunta:'Entrou em silo recém-fechado? Falta de ar horas depois?'},
+ {id:'paraquat',nome:'Agrotóxico (paraquat)',mech:'toxico',mechL:'Tóxico (oxidativo)',doenca:'Fibrose pulmonar pelo paraquat',padrao:'Restritivo · DLCO baixa (grave)',tempo:'fix',fonte:'Herbicida (ingestão acidental/intencional, exposição)',conduta:'Evitar O₂ desnecessário; suporte; toxicologia — prognóstico reservado',pergunta:'Houve contato/ingestão de herbicida (paraquat)?'}
+];
+let exp='biomassa';
+function buildExps(){el('exps').innerHTML=EXPS.map(e=>`<button class="pat${e.id===exp?' active':''}" onclick="setExp('${e.id}')">${e.nome}</button>`).join('')}
+function setExp(id){exp=id;buildExps();renderLab()}
+function renderLab(){
+ const e=EXPS.find(x=>x.id===exp);
+ el('mech').className='mech '+(e.mech==='particula'?'particula':e.mech);
+ el('mech').textContent=e.mechL;
+ el('doenca').textContent=e.doenca;
+ const t=TEMPOS[e.tempo];
+ el('tempo').innerHTML=`<span class="dot ${t[0]}"></span><span>${t[1]}</span>`;
+ el('facts').innerHTML=`
+  <div class="fact"><div class="fk">Fonte</div><div class="fv">${e.fonte}</div></div>
+  <div class="fact"><div class="fk">Padrão funcional</div><div class="fv">${e.padrao}</div></div>
+  <div class="fact"><div class="fk">Conduta</div><div class="fv">${e.conduta}</div></div>`;
+ el('pergunta').textContent='“'+e.pergunta+'”';
+}
+
+function setMode(md){const trail=md==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildExps();renderLab();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ocupacional · RO-04 · Solda, tinta e asma ocupacional</title>
+<meta name="description" content="Respira Ocupacional (RO-04): solda, tinta, solvente e asma ocupacional. Sensibilizante (isocianato) × irritante (RADS) × sistêmico (febre dos fumos), com diário de pico de fluxo interativo que mostra o padrão trabalho × folga.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RO-04 · Solda, tinta e asma ocupacional">
+<meta property="og:description" content="Asma ocupacional por sensibilizante, RADS e febre dos fumos — com diário de pico de fluxo interativo (padrão trabalho × folga).">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ocupacional-04-asma-ocupacional.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RO-04 · Solda, tinta e asma ocupacional">
+<meta name="twitter:description" content="Sensibilizante × irritante (RADS) × sistêmico — com diário de pico de fluxo interativo.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--blood:#8E2F39;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pat{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px}
+.panel h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:8px}
+.plot{width:100%;height:auto;display:block;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:.76rem;color:var(--ink-soft)}.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{width:14px;height:10px;border-radius:2px;display:inline-block}
+.mech{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;color:#fff;border-radius:7px;padding:4px 10px;letter-spacing:.04em;margin-top:14px}
+.mech.sens{background:var(--blood)}.mech.irrit{background:var(--accent)}.mech.sist{background:var(--warn)}
+.verdict{margin-top:14px;border-radius:13px;padding:16px 18px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:1rem;line-height:1.55}.verdict b{color:var(--ink)}
+.verdict.sens{border-left-color:var(--blood);background:var(--wrong-bg)}
+.verdict.irrit{border-left-color:var(--accent);background:rgba(192,96,58,.08)}
+.verdict.sist{border-left-color:var(--warn);background:var(--warn-bg)}
+.verdict .vh{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-bottom:6px}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ocupacional · RO-04</div>
+  <h1>Solda, tinta<br><em>e asma ocupacional</em></h1>
+  <p class="sub">Há asma que nasce no trabalho — e melhora longe dele. O diário de pico de fluxo desenha esse vínculo em dente-de-serra. Reconhecer cedo pode devolver o pulmão; tarde demais, ele fica. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Diário de PFE</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Solvente, tinta de poliuretano, fumo de solda, farinha, persulfato de cabeleireiro. Alguns <strong>sensibilizam</strong> (resposta imune, com latência); outros <strong>irritam</strong> em dose alta única (RADS, sem latência). Distinguir muda tudo: a asma do sensibilizante pode <strong>reverter</strong> se a pessoa sair cedo.</p>
+    <p>Quarto e último módulo do <strong>Respira Ocupacional</strong>. A ferramenta-chave aqui é temporal: o <strong>diário de pico de fluxo</strong> ligando sintoma e trabalho.</p>
+    <ul>
+      <li><strong>Asma ocupacional sensibilizante</strong>: isocianato é a causa nº 1.</li>
+      <li><strong>RADS</strong>: exposição única e intensa, sem latência.</li>
+      <li><strong>Febre dos fumos metálicos</strong>: parece gripe, não é asma.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Diário de pico de fluxo · 14 dias</div>
+    <p class="lab-lead">Escolha um <strong>cenário</strong>. O gráfico traça o <strong>pico de fluxo (PFE)</strong> por 14 dias; as colunas sombreadas são <strong>dias de trabalho</strong>. Procure o <strong>dente-de-serra</strong>: cair na semana e recuperar na folga é a assinatura da asma ocupacional.</p>
+    <div class="ctrls" id="cenarios"></div>
+    <div class="panel">
+      <h4>Pico de fluxo (% do melhor pessoal) · ●dia de trabalho</h4>
+      <svg class="plot" id="diary" viewBox="0 0 320 220" role="img" aria-label="Diário de pico de fluxo ao longo de 14 dias"></svg>
+      <div class="legend"><span><i style="background:rgba(192,96,58,.16)"></i>dia de trabalho</span><span><i style="background:var(--accent);height:3px"></i>PFE</span><span><i style="background:var(--ink-soft);height:3px"></i>limiar 80%</span></div>
+    </div>
+    <span class="mech" id="mech"></span>
+    <div class="verdict" id="verdict"></div>
+
+    <div class="labrow">
+      <a class="lab" href="respira-ocupacional-01-profissao-sinal-vital.html#lab">↗ A anamnese ocupacional <span class="ln">RO-01</span></a>
+      <a class="lab" href="respira-ponte-02-espirometria.html#lab">↗ Espirometria &amp; reversibilidade <span class="ln">RF-02</span></a>
+      <span class="next">Respira Ocupacional · bloco completo ✓</span>
+    </div>
+
+    <p class="honesty"><b>Honestidade do modelo.</b> As curvas são esquemáticas — um diário real tem ruído, medidas múltiplas ao dia e exige técnica e adesão. A confirmação de asma ocupacional usa PFE seriado no e fora do trabalho, espirometria com broncodilatador, e às vezes testes específicos (provocação). RADS e febre dos fumos são entidades distintas e o quadro pode se sobrepor. Asma ocupacional é <b>doença de notificação</b> e a decisão de afastamento tem peso social — não é só clínica.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ocupacional · RO-04 · asma ocupacional<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'Sensibilizante',stem:'A asma ocupacional por sensibilizante (ex.: isocianato) caracteriza-se por:',choices:[['Latência, piora no trabalho e melhora no afastamento',1],['Início imediato após uma única exposição intensa',0],['Não ter relação com o trabalho',0],['Melhorar ao voltar ao trabalho',0]],
+  good:'<b>Imune, com latência.</b> Após um período de sensibilização, os sintomas pioram nos dias de trabalho e melhoram fora — o vínculo temporal é a chave.',
+  bad:'Sensibilizante = resposta imune com latência, pior no trabalho e melhor longe dele.'},
+ {block:'A causa nº 1',stem:'A causa mais comum de asma ocupacional sensibilizante em ambientes industriais é:',choices:[['Isocianatos (tintas/espumas de poliuretano)',1],['Oxigênio',0],['Vapor de água',0],['Luz solar',0]],
+  good:'<b>Isocianatos.</b> Tinta e espuma de poliuretano (pintura automotiva, spray) lideram — pergunte sobre poliuretano e ventilação.',
+  bad:'Isocianatos (poliuretano) são a principal causa industrial de asma ocupacional sensibilizante.'},
+ {block:'RADS',stem:'A RADS (síndrome de disfunção reativa das vias aéreas) ocorre após:',choices:[['Uma exposição única e intensa a irritante, sem latência, com sintomas asmatiformes persistentes',1],['Anos de exposição imune',0],['Exposição mínima repetida',0],['Infecção viral',0]],
+  good:'<b>Irritante, dose única alta.</b> Vazamento de cloro/amônia, fumaça — sem período de sensibilização. A hiper-reatividade pode persistir.',
+  bad:'RADS é irritativa, por exposição única e intensa, sem latência — diferente do sensibilizante.'},
+ {block:'A prova',stem:'A ferramenta que liga sintoma e trabalho na asma ocupacional é:',choices:[['O diário seriado de pico de fluxo (no e fora do trabalho)',1],['A radiografia de tórax',0],['O hemograma',0],['A gasometria isolada',0]],
+  good:'<b>PFE seriado.</b> Medir várias vezes ao dia mostra a queda nos dias de trabalho e a recuperação na folga — o dente-de-serra.',
+  bad:'É o diário de pico de fluxo que demonstra o padrão trabalho × folga; imagem e sangue não fecham isso.'},
+ {block:'Prognóstico',stem:'Por que o reconhecimento PRECOCE da asma ocupacional importa tanto?',choices:[['Afastar cedo do agente pode reverter; a exposição prolongada tende a fixar a doença',1],['Não muda nada',0],['Só importa para o INSS',0],['Piora se afastar',0]],
+  good:'<b>Janela de reversibilidade.</b> Quanto antes cessa a exposição, maior a chance de recuperação; persistir fixa a hiper-reatividade.',
+  bad:'O tempo de exposição após o início decide o prognóstico — afastar cedo pode reverter.'},
+ {block:'Não é asma',stem:'A "febre dos fumos metálicos" (solda de galvanizado/zinco) é:',choices:[['Um quadro gripal autolimitado horas após soldar — não é asma',1],['Uma asma grave irreversível',0],['Uma pneumoconiose',0],['Um câncer',0]],
+  good:'<b>Sistêmico e benigno.</b> Febre, mialgia e mal-estar que passam em 1–2 dias; o PFE fica praticamente normal. Há tolerância ao longo da semana.',
+  bad:'Febre dos fumos é gripal e autolimitada, não asma — o PFE não desenha dente-de-serra.'},
+ {block:'Outros sensibilizantes',stem:'Qual associação está correta?',choices:[['Farinha → asma do padeiro; persulfatos → asma do cabeleireiro',1],['Farinha → silicose',0],['Persulfatos → asbestose',0],['Látex → DPOC do tabaco',0]],
+  good:'<b>Cada ofício, seu sensibilizante.</b> Farinha/enzimas (padeiro), persulfatos (cabeleireiro), látex (saúde), madeira, anidridos — todos podem sensibilizar.',
+  bad:'Padeiro = farinha; cabeleireiro = persulfatos. São sensibilizantes ocupacionais clássicos.'},
+ {block:'Nexo temporal',stem:'Um soldador diz que a falta de ar some nas férias e volta na 2ª semana de trabalho. Isso sugere:',choices:[['Componente ocupacional (trabalho-relacionado) — investigar com PFE seriado',1],['Doença sem relação com trabalho',0],['Simulação',0],['Necessidade de alta imediata',0]],
+  good:'<b>Trabalho-relacionado.</b> O mesmo nexo do RO-01/RO-03: melhora longe, piora perto. Documente com o diário de PFE.',
+  bad:'Melhorar nas férias e piorar ao voltar é sinal forte de asma ocupacional — investigue.'},
+ {block:'Conduta',stem:'Confirmada asma ocupacional sensibilizante, a medida mais decisiva é:',choices:[['Afastar o trabalhador do agente (e notificar)',1],['Aumentar a exposição para criar tolerância',0],['Apenas trocar de broncodilatador',0],['Ignorar se os sintomas forem leves',0]],
+  good:'<b>Remover a exposição.</b> Nenhum remédio substitui afastar do agente; é também doença de notificação, com implicações trabalhistas.',
+  bad:'O tratamento que mais muda o curso é tirar a pessoa do agente — medicação sozinha não basta.'},
+ {block:'Síntese',stem:'O eixo que organiza este módulo é:',choices:[['Sensibilizante (imune, latência, dente-de-serra) × irritante (RADS) × sistêmico (febre dos fumos)',1],['A idade do trabalhador',0],['O salário',0],['A cidade',0]],
+  good:'<b>Três entidades, um diário.</b> O padrão temporal — sobretudo o PFE seriado — separa as três e fecha o bloco ocupacional.',
+  bad:'Sensibilizante × irritante × sistêmico: o mecanismo e o tempo distinguem, e o diário de PFE prova.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — o dente-de-serra não engana mais.':pct>=75?'Base sólida. Sensibilizante, RADS e fumos não se confundem.':pct>=50?'Boa partida. Use o diário para fixar os padrões.':'O número não importa: cada erro veio com o mecanismo. Abra o Diário de PFE.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do Respira Ocupacional</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>O trabalho no traçado.</h2><p>${nota}</p><div class="synth"><h3>O bloco Ocupacional, fechado:</h3><ol><li><strong>RO-01</strong>: a ocupação como sinal vital.</li><li><strong>RO-02</strong>: poeiras minerais (fibrose + complicações a rastrear).</li><li><strong>RO-03</strong>: pulmão rural e biomassa (irritante/imune/tóxico).</li><li><strong>RO-04</strong>: asma ocupacional — sensibilizante × RADS × fumos, provada no diário de PFE.</li></ol></div><p style="font-size:.95rem">A fisiologia, a prova funcional e a vida real do trabalho agora conversam. Falta o último elo: esse pulmão na <strong>UTI</strong>.</p><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao Diário →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== DIÁRIO DE PFE (lab) ===================== */
+const WORK=[1,1,1,1,1,0,0,1,1,1,1,1,0,0];
+const CEN=[
+ {id:'isocianato',nome:'Tinta poliuretano (isocianato)',mech:'sens',mechL:'Sensibilizante (imune)',
+   vh:'Asma ocupacional sensibilizante',
+   txt:'Dente-de-serra clássico: o PFE cai ao longo dos dias de trabalho e recupera na folga. Latência prévia, isocianato como agente. <b>Afastar cedo pode reverter.</b>'},
+ {id:'padeiro',nome:'Farinha (padeiro)',mech:'sens',mechL:'Sensibilizante (imune)',
+   vh:'Asma do padeiro',
+   txt:'Mesmo mecanismo, agente diferente (farinha/enzimas). O diário mostra a relação com os dias de trabalho — confirme com espirometria e reversibilidade.'},
+ {id:'cabeleireiro',nome:'Persulfato (cabeleireiro)',mech:'sens',mechL:'Sensibilizante (imune)',
+   vh:'Asma do cabeleireiro',
+   txt:'Persulfatos de descoloração sensibilizam. Padrão trabalho × folga no PFE; ventilação e afastamento do agente são decisivos.'},
+ {id:'rads',nome:'Vazamento único (RADS)',mech:'irrit',mechL:'Irritante (dose única alta)',
+   vh:'RADS — sem padrão trabalho/folga',
+   txt:'Uma exposição intensa derruba o PFE e os sintomas <b>persistem sem o dente-de-serra</b>: não há latência nem recuperação nas folgas. É irritativa, não imune.'},
+ {id:'fumos',nome:'Solda galvanizado (febre dos fumos)',mech:'sist',mechL:'Sistêmico (autolimitado)',
+   vh:'Febre dos fumos metálicos — não é asma',
+   txt:'O PFE fica praticamente normal: o quadro é gripal e sistêmico, autolimitado em 1–2 dias, com tolerância na semana. Não é asma — não há queda funcional sustentada.'}
+];
+let cen='isocianato';
+function pfe(scn){
+ const out=[];let v=100;
+ if(scn==='rads'){for(let d=0;d<14;d++){if(d<2)v=99;else if(d===2)v=56;else v=Math.min(94,v+3.2);out.push(v);}return out;}
+ if(scn==='fumos'){for(let d=0;d<14;d++){out.push(96+(WORK[d]?-2:2));}return out;}
+ const wk=scn==='isocianato'?6:scn==='cabeleireiro'?5.5:4.5;
+ for(let d=0;d<14;d++){if(WORK[d]){v=v-wk-(d>0&&WORK[d-1]?1.5:0);}else{v=Math.min(100,v+7.5);}v=Math.max(52,v);out.push(v);}
+ return out;
+}
+function buildCen(){el('cenarios').innerHTML=CEN.map(c=>`<button class="pat${c.id===cen?' active':''}" onclick="setCen('${c.id}')">${c.nome}</button>`).join('')}
+function setCen(id){cen=id;buildCen();renderLab()}
+function renderLab(){
+ const c=CEN.find(x=>x.id===cen);const series=pfe(cen);
+ const x0=30,x1=305,y0=14,y1=180,pMin=45,pMax=105;
+ const xd=d=>x0+(d/13)*(x1-x0), yp=p=>y1-((p-pMin)/(pMax-pMin))*(y1-y0);
+ let s='';
+ // colunas de trabalho
+ const colW=(x1-x0)/13;
+ for(let d=0;d<14;d++){if(WORK[d]){s+=`<rect x="${(xd(d)-colW/2).toFixed(1)}" y="${y0}" width="${colW.toFixed(1)}" height="${y1-y0}" fill="rgba(192,96,58,.10)"/>`;}}
+ // eixos
+ s+=`<line x1="${x0}" y1="${y1}" x2="${x1}" y2="${y1}" stroke="var(--line)"/><line x1="${x0}" y1="${y0}" x2="${x0}" y2="${y1}" stroke="var(--line)"/>`;
+ // limiar 80%
+ s+=`<line x1="${x0}" y1="${yp(80).toFixed(1)}" x2="${x1}" y2="${yp(80).toFixed(1)}" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3"/><text x="${x1}" y="${(yp(80)-3).toFixed(1)}" font-size="7" fill="var(--ink-soft)" text-anchor="end">80%</text>`;
+ // marcas y
+ [60,80,100].forEach(p=>{s+=`<text x="${x0-4}" y="${(yp(p)+3).toFixed(1)}" font-size="7" fill="var(--ink-soft)" text-anchor="end">${p}</text>`;});
+ s+=`<text x="${x0}" y="${y1+14}" font-size="8" fill="var(--ink-soft)">dia 1</text><text x="${x1}" y="${y1+14}" font-size="8" fill="var(--ink-soft)" text-anchor="end">dia 14 →</text>`;
+ // linha PFE
+ const pts=series.map((p,d)=>`${xd(d).toFixed(1)},${yp(p).toFixed(1)}`).join(' ');
+ s+=`<polyline points="${pts}" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>`;
+ series.forEach((p,d)=>{s+=`<circle cx="${xd(d).toFixed(1)}" cy="${yp(p).toFixed(1)}" r="${WORK[d]?3:2.4}" fill="${WORK[d]?'var(--accent-deep)':'var(--air)'}"/>`;});
+ el('diary').innerHTML=s;
+ el('mech').className='mech '+c.mech;el('mech').textContent=c.mechL;
+ const vd=el('verdict');vd.className='verdict '+c.mech;
+ vd.innerHTML=`<div class="vh">${c.vh}</div><div>${c.txt}</div>`;
+}
+
+function setMode(md){const trail=md==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildCen();renderLab();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>
