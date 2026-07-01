@@ -93,6 +93,8 @@ ventila0.html
 ventila1.html
 ...
 ventila15.html
+...
+ventila29.html
 ```
 
 A decisão atual é **não mover Ventila para uma arquitetura dependente de `/modules/` nem de build obrigatório**.
