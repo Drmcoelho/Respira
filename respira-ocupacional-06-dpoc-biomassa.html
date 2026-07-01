@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ocupacional · RO-06 · DPOC da biomassa</title>
+<meta name="description" content="Respira Ocupacional (RO-06): DPOC da biomassa — a fumaça que não é cigarro. Fenótipo de via aérea, antracofibrose brônquica, a mulher rural não fumante e a prevenção (fogão melhorado), com comparador biomassa × tabaco × misto.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RO-06 · DPOC da biomassa">
+<meta property="og:description" content="A fumaça que não é cigarro: o fenótipo de via aérea da DPOC por biomassa, a antracofibrose e a prevenção — com comparador interativo.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ocupacional-06-dpoc-biomassa.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RO-06 · DPOC da biomassa">
+<meta name="twitter:description" content="A fumaça que não é cigarro: o fenótipo de via aérea da DPOC por biomassa.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--blood:#8E2F39;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.pat{font-family:inherit;font-size:.84rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer;transition:all .16s ease}
+.pat.active{background:var(--accent);color:#fff;border-color:var(--accent)}.pat:not(.active):hover{border-color:var(--accent);color:var(--accent-deep)}
+.balance{margin:6px 0 14px}
+.balance .bl{display:flex;justify-content:space-between;font-size:.74rem;color:var(--ink-soft);font-weight:600;margin-bottom:6px}
+.balance .track{position:relative;height:14px;background:linear-gradient(90deg,rgba(60,127,134,.3),var(--paper-deep),rgba(192,96,58,.3));border:1px solid var(--line);border-radius:99px}
+.balance .mk{position:absolute;top:-4px;width:14px;height:22px;background:var(--ink);border:2px solid #fff;border-radius:5px;transform:translateX(-50%);transition:left .4s ease}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:560px){.facts{grid-template-columns:1fr}}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.88rem}
+.fact .fk{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}.fact .fv{color:var(--ink)}
+.verdict{margin-top:14px;border-radius:13px;padding:14px 16px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:.98rem;line-height:1.5}.verdict b{color:var(--ink)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ocupacional · RO-06</div>
+  <h1>DPOC da biomassa:<br><em>a fumaça que não é cigarro</em></h1>
+  <p class="sub">Milhões cozinham a vida inteira em fogão a lenha, dentro de casa, sem chaminé. A DPOC que aparece não fuma — e tem cara própria: mais via aérea, menos enfisema. É a face mais invisível da doença. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Fenótipos</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Aprofundamento do RO-03. A DPOC não é sinônimo de cigarro. A <strong>fumaça de biomassa</strong> (lenha, carvão vegetal) em ambiente fechado é uma das maiores causas mundiais — e recai sobretudo sobre <strong>mulheres rurais</strong> que cozinham desde a infância.</p>
+    <p>E o fenótipo é diferente do tabaco: <strong>menos enfisema, mais doença de via aérea</strong> (bronquite crônica, antracofibrose), com implicações no diagnóstico e no manejo.</p>
+    <ul>
+      <li>A mulher que "nunca fumou" mas tem DPOC: pergunte o fogão.</li>
+      <li>Antracofibrose brônquica — associada à tuberculose.</li>
+      <li>Prevenção: fogão melhorado com chaminé, ventilação, combustível limpo.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Comparador · o mesmo rótulo, fenótipos diferentes</div>
+    <p class="lab-lead">Escolha a <strong>origem da DPOC</strong>. A balança mostra o eixo <strong>via aérea ↔ enfisema</strong>; as fichas trazem população, imagem, reversibilidade e o que rastrear. "DPOC" é um guarda-chuva — o mecanismo muda a leitura.</p>
+    <div class="ctrls" id="origens"></div>
+    <div class="balance">
+      <div class="bl"><span>via aérea / bronquite</span><span>enfisema</span></div>
+      <div class="track"><div class="mk" id="mk"></div></div>
+    </div>
+    <div class="facts" id="facts"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="labrow">
+      <a class="lab" href="respira-ocupacional-03-rural-biomassa.html#lab">↗ Pulmão rural e biomassa <span class="ln">RO-03</span></a>
+      <a class="lab" href="respira-ponte-02-espirometria.html#lab">↗ Espirometria <span class="ln">RF-02</span></a>
+      <a class="lab" href="respira-ocupacional-01-profissao-sinal-vital.html#lab">↗ Anamnese <span class="ln">RO-01</span></a>
+    </div>
+    <p class="honesty"><b>Honestidade do modelo.</b> A oposição "via aérea × enfisema" é uma simplificação: há grande sobreposição individual, e biomassa e tabaco frequentemente coexistem. As diferenças de fenótipo são tendências de população, com exceções. O diagnóstico de DPOC exige espirometria (obstrução persistente); o manejo é individual. O objetivo aqui é criar o reflexo de <b>perguntar o fogão</b> e não fechar tudo (ou nada) no cigarro.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ocupacional · RO-06 · DPOC da biomassa<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'Sem cigarro',stem:'Mulher rural, 62 anos, nunca fumou, cozinha a vida toda em fogão a lenha, com obstrução persistente. Causa mais provável:',choices:[['DPOC por biomassa',1],['Asma alérgica',0],['Fibrose idiopática',0],['Pulmão normal',0]],
+  good:'<b>Biomassa.</b> A fumaça de lenha em ambiente fechado é causa maior de DPOC não tabágica, sobretudo em mulheres rurais.',
+  bad:'DPOC não exige cigarro: a biomassa é a explicação clássica na mulher rural não fumante.'},
+ {block:'Fenótipo',stem:'Comparada à DPOC do tabaco, a DPOC da biomassa tende a ter:',choices:[['Mais doença de via aérea/bronquite e menos enfisema',1],['Mais enfisema e bolhas',0],['Nenhuma obstrução',0],['Padrão restritivo puro',0]],
+  good:'<b>Via aérea.</b> O fenótipo é mais brônquico (bronquite crônica, espessamento) e menos enfisematoso que o do cigarro.',
+  bad:'Biomassa inclina para via aérea/bronquite; o enfisema domina mais no tabaco.'},
+ {block:'Antracofibrose',stem:'A antracofibrose brônquica (antracose com distorção/estenose) associa-se a:',choices:[['Tuberculose',1],['Asma alérgica sazonal',0],['Refluxo isolado',0],['Nada relevante',0]],
+  good:'<b>Ligada à TB.</b> A pigmentação antracótica com estreitamento brônquico tem forte associação com tuberculose — investigue.',
+  bad:'Antracofibrose tem nexo com TB; não é um achado inocente.'},
+ {block:'Mecanismo',stem:'O mecanismo central da DPOC da biomassa é:',choices:[['Inalação crônica de partículas e irritantes de combustão em ambiente fechado',1],['Alergia a pólen',0],['Infecção viral aguda',0],['Deficiência de surfactante',0]],
+  good:'<b>Combustão em ambiente fechado.</b> Partículas finas e gases irritantes, por décadas, inflamam a via aérea — sem chaminé, a exposição é enorme.',
+  bad:'É a combustão de biomassa em ambiente fechado que inflama a via aérea cronicamente.'},
+ {block:'Diagnóstico',stem:'Por que a DPOC da biomassa é subdiagnosticada?',choices:[['A espirometria é subutilizada e não se pergunta a exposição doméstica',1],['Não causa sintomas',0],['Só ocorre em fumantes',0],['A radiografia é sempre normal',0]],
+  good:'<b>Face invisível.</b> Sem espirometria e sem perguntar o fogão, o diagnóstico passa batido — atribui-se a "idade" ou "bronquite".',
+  bad:'Falta espirometria e falta a pergunta sobre biomassa doméstica — por isso escapa.'},
+ {block:'Prevenção',stem:'A intervenção preventiva mais eficaz é:',choices:[['Fogão melhorado com chaminé, ventilação e combustível mais limpo (GLP)',1],['Mais broncodilatador apenas',0],['Fechar as janelas',0],['Aumentar o tempo de cozimento',0]],
+  good:'<b>Reduzir a fumaça.</b> Chaminé/exaustão, fogões eficientes e combustíveis limpos (gás) cortam a exposição — prevenção primária.',
+  bad:'A chave é reduzir a fumaça inalada: chaminé, ventilação e combustível limpo.'},
+ {block:'Reversibilidade',stem:'A resposta ao broncodilatador na DPOC da biomassa tende a ser:',choices:[['Menor (obstrução mais fixa) — mas ainda vale testar',1],['Sempre completa',0],['Idêntica à asma',0],['Ausente por definição',0]],
+  good:'<b>Obstrução fixa.</b> A reversibilidade costuma ser menor que na asma; ainda assim, a prova broncodilatadora orienta o manejo.',
+  bad:'Tende a ser pouco reversível (obstrução fixa); testar continua útil.'},
+ {block:'Sobreposição',stem:'Uma cozinheira rural que também fumou tem:',choices:[['Somatório de riscos (biomassa + tabaco) — DPOC potencialmente mais grave',1],['Proteção mútua',0],['Apenas o risco do cigarro',0],['Risco zero',0]],
+  good:'<b>Somam.</b> Biomassa e tabaco se acumulam; não descarte um por causa do outro (evita a armadilha de "é só o cigarro").',
+  bad:'Os dois somam: exposição dupla agrava. Não atribua tudo a um só.'},
+ {block:'Síntese',stem:'A lição operacional do módulo é:',choices:[['Perguntar o fogão: sem isso, perde-se o diagnóstico da DPOC não tabágica',1],['DPOC é sempre do cigarro',0],['Biomassa não causa doença',0],['Espirometria é dispensável',0]],
+  good:'<b>Pergunte o fogão.</b> A anamnese doméstica + espirometria revelam uma epidemia silenciosa e evitável.',
+  bad:'A pergunta sobre biomassa doméstica é o que traz à luz a DPOC não tabágica.'}
+];
+const QUESTIONS=rawQuestions.filter(q=>q&&q.choices&&q.choices[0]&&q.choices[0][0]).map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — a fumaça deixou de ser invisível.':pct>=75?'Base sólida. O fenótipo da biomassa ficou claro.':pct>=50?'Boa partida. Use o comparador de fenótipos.':'O número não importa: cada erro veio com o mecanismo. Abra o comparador.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RO-06</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>Pergunte o fogão.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>DPOC sem cigarro</strong>: biomassa, sobretudo mulheres rurais.</li><li>Fenótipo mais de <strong>via aérea</strong> (menos enfisema); antracofibrose ligada à TB.</li><li>Subdiagnóstico por falta de espirometria e da pergunta sobre o fogão.</li><li>Prevenção: <strong>fogão melhorado</strong>, ventilação, combustível limpo.</li></ol></div><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao comparador →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== COMPARADOR (fenótipos) ===================== */
+const ORIG=[
+ {id:'biomassa',nome:'Biomassa (lenha)',pos:22,vh:'Fenótipo de via aérea',pop:'Mulheres rurais não fumantes; exposição desde a infância',imagem:'Espessamento brônquico, antracose/antracofibrose; menos enfisema',rev:'Costuma ser menor (obstrução fixa)',rastrear:'Tuberculose; comorbidade domiciliar (outros expostos)',nota:'A "DPOC que nunca fumou". Pergunte o fogão e a chaminé.'},
+ {id:'tabaco',nome:'Tabaco',pos:78,vh:'Fenótipo enfisematoso',pop:'História tabágica (maços-ano); ambos os sexos',imagem:'Enfisema centrolobular, hiperinsuflação, bolhas',rev:'Variável; parcial',rastrear:'Cessação do tabagismo; rastreio de câncer quando indicado',nota:'O protótipo dos livros — mas não o único caminho para a DPOC.'},
+ {id:'misto',nome:'Biomassa + tabaco',pos:52,vh:'Fenótipo misto (somatório)',pop:'Cozinheira rural que também fumou',imagem:'Via aérea + enfisema coexistindo',rev:'Variável',rastrear:'TB, cessação e ambos os riscos — não descartar um pelo outro',nota:'Os riscos somam; a DPOC tende a ser mais grave.'}
+];
+let orig='biomassa';
+function buildOrig(){el('origens').innerHTML=ORIG.map(o=>`<button class="pat${o.id===orig?' active':''}" onclick="setOrig('${o.id}')">${o.nome}</button>`).join('')}
+function setOrig(id){orig=id;buildOrig();renderLab()}
+function renderLab(){
+ const o=ORIG.find(x=>x.id===orig);
+ el('mk').style.left=o.pos+'%';
+ el('facts').innerHTML=`
+  <div class="fact"><div class="fk">População típica</div><div class="fv">${o.pop}</div></div>
+  <div class="fact"><div class="fk">Imagem</div><div class="fv">${o.imagem}</div></div>
+  <div class="fact"><div class="fk">Reversibilidade ao BD</div><div class="fv">${o.rev}</div></div>
+  <div class="fact"><div class="fk">Rastrear / conduzir</div><div class="fv">${o.rastrear}</div></div>`;
+ el('verdict').innerHTML=`<b>${o.vh}.</b> ${o.nota}`;
+}
+
+function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+buildOrig();renderLab();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>

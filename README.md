@@ -61,6 +61,9 @@ A Parte B está organizada em `ventila.html` e módulos `ventila0.html` a `venti
 | 24 | `ventila24.html` | Obesidade, gestação e abdome — a parede pesa: Complacência do sistema não é complacência pulmonar: parede e abdome mudam a leitura das pressões. |
 | 25 | `ventila25.html` | Pediatria e neonatologia — pulmão pequeno, tempo curto: Tubo estreito, vazamento, volume garantido e a física específica do recém-nascido e da criança. |
 | 26 | `ventila26.html` | Fora da UTI — transporte e contingência: Oxigênio, bateria, circuito, fixação e plano B: robustez operacional faz parte da ventilação. |
+| 27 | `ventila27.html` | Pulmão restritivo — ventilar pequeno e duro: baixa complacência, driving alto, baixa reserva; o baby lung pouco recrutável. |
+| 28 | `ventila28.html` | Pulmão misto — não entra, não sai, não cabe: obstrução + restrição, qual componente mata primeiro neste minuto. |
+| 29 | `ventila29.html` | Ocupacional na UTI — o pulmão ferido do trabalho: anamnese, imagem, função, gasometria e estratégia ventilatória costuradas. |
 
 ## Contrato arquitetural atual
 

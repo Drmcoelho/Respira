@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4EFE4">
+<title>Respira · Ocupacional · RO-05 · Silicose acelerada do jateamento</title>
+<meta name="description" content="Respira Ocupacional (RO-05): silicose acelerada e aguda do jateamento — a tragédia brasileira. Dose extrema encurta a latência e muda a forma; jateamento de areia e de jeans, silicoproteinose, FMP precoce e prevenção.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Respira">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Respira · RO-05 · Silicose acelerada do jateamento">
+<meta property="og:description" content="A tragédia do jateamento: dose extrema de sílica encurta a latência e muda a forma — acelerada e aguda (silicoproteinose), com plano dose × tempo interativo.">
+<meta property="og:url" content="https://drmcoelho.github.io/Respira/respira-ocupacional-05-silicose-jateamento.html">
+<meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Respira · RO-05 · Silicose acelerada do jateamento">
+<meta name="twitter:description" content="Dose extrema de sílica encurta a latência e muda a forma — acelerada e aguda.">
+<meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4EFE4;--paper-deep:#EBE3D3;--ink:#16383B;--ink-soft:#4A6164;--accent:#C0603A;--accent-deep:#A24B2C;--air:#3C7F86;--tissue:#C97F66;--blood:#8E2F39;--correct:#4E7C5A;--correct-bg:#E4ECE0;--wrong:#B0503E;--wrong-bg:#F0E1DB;--warn:#B8862F;--warn-bg:#F2E9D2;--line:#D7CCB8;--shadow:rgba(22,56,59,.13);--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Hanken Grotesk',sans-serif;background:radial-gradient(1100px 600px at 80% -8%,rgba(192,96,58,.07),transparent 60%),radial-gradient(900px 700px at -6% 110%,rgba(60,127,134,.08),transparent 55%),var(--paper);color:var(--ink);line-height:1.62;min-height:100vh;padding:0 20px 80px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wrap{max-width:820px;margin:0 auto;position:relative;z-index:2}
+header{padding:46px 0 16px;text-align:center}
+.backlink{display:inline-block;margin-bottom:12px;font-size:.8rem;color:var(--accent-deep);text-decoration:none;letter-spacing:.04em}.backlink:hover{text-decoration:underline}
+.kicker{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,5.6vw,3rem);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px}h1 em{font-style:italic;color:var(--accent)}
+.sub{color:var(--ink-soft);font-size:1.02rem;max-width:620px;margin:0 auto}
+.segbar{display:flex;gap:6px;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:5px;max-width:470px;margin:30px auto 6px}
+.seg{flex:1;font-family:inherit;font-weight:600;font-size:.9rem;color:var(--ink-soft);background:transparent;border:none;padding:10px 8px;border-radius:9px;cursor:pointer;transition:all .18s ease}
+.seg.active{background:var(--accent);color:#fff;box-shadow:0 6px 16px -8px var(--accent-deep)}.seg:not(.active):hover{color:var(--ink)}
+.meter{margin:22px 0 8px;display:none}.meter.on{display:block}.meter-top{display:flex;justify-content:space-between;align-items:baseline;font-size:.78rem;letter-spacing:.04em;margin-bottom:8px}.meter-block{color:var(--accent-deep);font-weight:600;text-transform:uppercase;letter-spacing:.18em}.meter-count{color:var(--ink-soft);font-variant-numeric:tabular-nums}.meter-track{height:8px;background:var(--paper-deep);border-radius:99px;overflow:hidden;border:1px solid var(--line)}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--air),var(--tissue));border-radius:99px;transition:width .6s cubic-bezier(.22,1,.36,1)}
+.card{background:rgba(255,253,248,.72);border:1px solid var(--line);border-radius:18px;padding:30px 32px 28px;box-shadow:0 14px 40px -22px var(--shadow);backdrop-filter:blur(2px)}
+.intro p{color:var(--ink-soft);margin-bottom:16px;font-size:1.04rem}.intro .lead{color:var(--ink);font-size:1.1rem}.intro ul{list-style:none;margin:18px 0 26px}.intro li{padding:7px 0 7px 26px;position:relative;color:var(--ink-soft)}.intro li:before{content:"";position:absolute;left:0;top:14px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.qtag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-deep);font-weight:600;margin-bottom:14px}
+.stem{font-family:'Fraunces',serif;font-weight:400;font-size:1.28rem;line-height:1.42;margin-bottom:22px;letter-spacing:-.005em}
+.stem code,.fb code,.synth code,.honesty code{font-family:var(--mono);font-size:.9em;background:rgba(0,0,0,.05);padding:1px 5px;border-radius:5px}
+.opts{display:flex;flex-direction:column;gap:11px}
+.opt{text-align:left;font-family:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:15px 18px;cursor:pointer;transition:all .18s ease;display:flex;gap:13px;align-items:flex-start;line-height:1.45}
+.opt .mark{flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:.82rem;color:var(--ink-soft);margin-top:1px}
+.opt:hover:not(:disabled){border-color:var(--accent);transform:translateX(3px)}
+.opt.correct{border-color:var(--correct);background:var(--correct-bg)}.opt.correct .mark{background:var(--correct);border-color:var(--correct);color:#fff}
+.opt.wrong{border-color:var(--wrong);background:var(--wrong-bg)}.opt.wrong .mark{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.opt.dim{opacity:.56}.opt:disabled{cursor:default}
+.fb{margin-top:22px;border-radius:13px;padding:20px 22px;border-left:4px solid var(--correct);background:var(--correct-bg);font-size:1rem;line-height:1.62;color:#2c4a35;opacity:0;transform:translateY(10px);max-height:0;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+.fb.show{opacity:1;transform:translateY(0);max-height:none}.fb.bad{border-left-color:var(--wrong);background:var(--wrong-bg);color:#5e2c22}
+.fb-head{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:8px}
+.row{margin-top:24px;display:flex;justify-content:flex-end;gap:12px}
+.btn{font-family:inherit;font-weight:600;font-size:1rem;background:var(--accent);color:#fff;border:none;padding:13px 28px;border-radius:11px;cursor:pointer;transition:all .18s ease;box-shadow:0 8px 20px -10px var(--accent-deep)}
+.btn:hover{background:var(--accent-deep);transform:translateY(-2px)}.btn.ghost{background:transparent;color:var(--accent-deep);box-shadow:none;border:1.5px solid var(--line)}.btn.big{padding:15px 34px;font-size:1.05rem}
+.hidden{display:none!important}
+.done{text-align:center}.done .score{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:500;color:var(--accent);line-height:1;margin:10px 0}.done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.7rem;margin-bottom:14px}.done p{color:var(--ink-soft);margin-bottom:14px}
+.synth{text-align:left;background:var(--paper-deep);border:1px solid var(--line);border-radius:13px;padding:22px 24px;margin:22px 0}.synth h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-bottom:12px}.synth ol{margin-left:18px}.synth li{margin-bottom:8px;color:var(--ink)}
+.lab-lead{color:var(--ink-soft);margin-bottom:18px;font-size:1.02rem}.lab-lead strong{color:var(--ink)}
+.sl{display:flex;align-items:center;gap:12px;margin:8px 0}.sl label{font-size:.8rem;color:var(--ink-soft);font-weight:600;white-space:nowrap;min-width:150px}
+input[type=range]{flex:1;accent-color:var(--accent)}.sl .val{font-family:var(--mono);font-size:.82rem;color:var(--accent-deep);min-width:64px;text-align:right}
+.labgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin-top:8px}
+@media(max-width:620px){.labgrid{grid-template-columns:1fr}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px}
+.panel h4{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:8px}
+.plot{width:100%;height:auto;display:block;overflow:visible}
+.verdict{border-radius:13px;padding:16px 18px;border-left:4px solid var(--air);background:rgba(60,127,134,.08);font-size:1rem;line-height:1.55}.verdict b{color:var(--ink)}
+.verdict.acel{border-left-color:var(--accent);background:rgba(192,96,58,.08)}
+.verdict.agu{border-left-color:var(--wrong);background:var(--wrong-bg)}
+.verdict.cron{border-left-color:var(--warn);background:var(--warn-bg)}
+.verdict .vh{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-bottom:6px}
+.facts{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+.fact{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.9rem}
+.fact .fk{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700}.fact .fv{color:var(--ink)}
+.labrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.lab{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:9px 13px;text-decoration:none;transition:all .16s ease;display:inline-flex;align-items:center;gap:7px}
+.lab:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}.lab .ln{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft)}
+.next{font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink-soft);background:var(--paper-deep);border:1px dashed var(--line);border-radius:10px;padding:9px 13px;display:inline-flex;align-items:center;gap:7px}
+.honesty{margin-top:18px;font-size:.86rem;color:var(--ink-soft);line-height:1.55;border-top:1px dashed var(--line);padding-top:14px}.honesty b{color:var(--ink)}
+footer{text-align:center;margin-top:44px;color:var(--ink-soft);font-size:.82rem;line-height:1.7}.dedic{font-style:italic}
+@media(max-width:560px){.card{padding:24px 20px}.stem{font-size:1.18rem}.segbar{max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="backlink" href="index.html">← Respira · todos os módulos</a>
+  <div class="kicker">Respira · Ocupacional · RO-05</div>
+  <h1>Silicose acelerada:<br><em>a tragédia do jateamento</em></h1>
+  <p class="sub">A sílica cobra décadas — a não ser que a dose seja brutal. No jateamento de areia (e de jeans), a concentração é tão alta que a doença chega em poucos anos, ou meses, e mata jovens. É prevenível — e por isso ainda mais grave. Para a Dani.</p>
+</header>
+
+<div class="segbar">
+  <button class="seg active" id="segTrail" onclick="setMode('trail')">Trilha</button>
+  <button class="seg" id="segLab" onclick="setMode('lab')">Dose × tempo</button>
+</div>
+
+<div class="meter" id="meter"><div class="meter-top"><span class="meter-block" id="blockLabel">Início</span><span class="meter-count" id="count">1 / 10</span></div><div class="meter-track"><div class="meter-fill" id="fill"></div></div></div>
+
+<div id="trailMode">
+  <div class="card intro" id="intro">
+    <p class="lead">Aprofundamento do RO-02. A silicose "clássica" é crônica, de décadas. Mas a <strong>dose muda a forma</strong>: exposição extrema encurta a latência para <strong>anos</strong> (acelerada) ou <strong>meses</strong> (aguda, a silicoproteinose) — e a doença fica mais inflamatória e letal.</p>
+    <p>É a face brasileira mais dura do bloco: jateadores e ex-trabalhadores do <strong>jateamento de jeans</strong>, jovens, com pulmão destruído por uma exposição que <strong>não deveria existir</strong>.</p>
+    <ul>
+      <li>Jateamento de areia a seco: concentração de sílica altíssima.</li>
+      <li>Acelerada (5–10 anos) e aguda/silicoproteinose (meses–anos, "crazy paving").</li>
+      <li>Prevenção: substituir o abrasivo, via úmida, ventilação, EPI, vigilância.</li>
+    </ul>
+    <div class="row" style="justify-content:center"><button class="btn big" onclick="start()">Vamos respirar →</button></div>
+  </div>
+  <div class="card hidden" id="quiz"></div>
+  <div class="card done hidden" id="final"></div>
+</div>
+
+<div id="labMode" class="hidden">
+  <div class="card">
+    <div class="qtag">Laboratório · a dose que encurta a latência</div>
+    <p class="lab-lead">Ajuste a <strong>intensidade da exposição</strong> (do trabalho poeirento comum ao jateamento a seco) e o <strong>tempo</strong>. O ponto anda pelo plano e a forma da silicose muda — e com ela a imagem, o prognóstico e a urgência.</p>
+    <div class="sl"><label>Intensidade da exposição</label><input type="range" id="slI" min="1" max="10" step="1" value="9" oninput="setI(this.value)"><span class="val" id="vI">9/10</span></div>
+    <div class="sl"><label>Tempo de exposição (anos)</label><input type="range" id="slT" min="1" max="30" step="1" value="4" oninput="setT(this.value)"><span class="val" id="vT">4 a</span></div>
+    <div class="labgrid">
+      <div class="panel">
+        <h4>Plano dose × tempo</h4>
+        <svg class="plot" id="plane" viewBox="0 0 300 250" role="img" aria-label="Plano intensidade da exposição versus tempo, com a forma da silicose"></svg>
+      </div>
+      <div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+    <div class="labrow">
+      <a class="lab" href="respira-ocupacional-02-poeiras-minerais.html#lab">↗ Poeiras minerais <span class="ln">RO-02</span></a>
+      <a class="lab" href="respira-ocupacional-01-profissao-sinal-vital.html#lab">↗ Anamnese ocupacional <span class="ln">RO-01</span></a>
+      <a class="lab" href="ventila29.html">↗ Ocupacional na UTI <span class="ln">Ventila 29</span></a>
+    </div>
+    <p class="honesty"><b>Honestidade do modelo.</b> Os cortes de "intensidade" e "tempo" são didáticos; a exposição real é cumulativa e depende de concentração respirável, tamanho de partícula, EPI efetivo e suscetibilidade. A silicose aguda (silicoproteinose) é rara e grave, com preenchimento alveolar lipoproteináceo. Nada aqui substitui história ocupacional detalhada, imagem, vigilância e <b>notificação</b> — nem a única medida que de fato resolve: <b>evitar a exposição</b>.</p>
+  </div>
+</div>
+
+<footer>
+  Respira — Ocupacional · RO-05 · silicose acelerada do jateamento<br>
+  Dr. Matheus M. Coelho · CRM-SP 151.318 · Limeira<br>
+  <span class="dedic">Para a Dani.</span>
+</footer>
+</div>
+
+<script>
+/* ===================== TRILHA ===================== */
+const rawQuestions=[
+ {block:'A dose muda a forma',stem:'Por que o jateamento de areia causa silicose em poucos anos, e não em décadas?',choices:[['A concentração de sílica respirável é altíssima (dose extrema)',1],['A sílica do jateamento é diferente da mineral',0],['Porque os trabalhadores são mais velhos',0],['Por acaso',0]],
+  good:'<b>Dose extrema.</b> O jateamento a seco gera concentrações enormes de sílica fina; a carga cumulativa que levaria décadas é atingida em anos.',
+  bad:'É a dose: concentração altíssima de sílica respirável encurta a latência de décadas para anos.'},
+ {block:'Brasil',stem:'O jateamento de jeans ("desbotado a jato de areia") ficou conhecido por:',choices:[['Uma epidemia de silicose em trabalhadores jovens',1],['Ser inofensivo',0],['Causar apenas dermatite',0],['Melhorar a função pulmonar',0]],
+  good:'<b>Epidemia em jovens.</b> Oficinas informais expuseram jovens a sílica extrema para dar aparência desgastada ao jeans — com silicose grave e precoce.',
+  bad:'O jateamento de jeans provocou surtos de silicose em jovens — uma tragédia ocupacional evitável.'},
+ {block:'Acelerada',stem:'A silicose ACELERADA caracteriza-se por:',choices:[['Latência de ~5–10 anos, mais inflamatória, com FMP precoce',1],['Latência de 40 anos',0],['Ausência de fibrose',0],['Regressão espontânea',0]],
+  good:'<b>Rápida e agressiva.</b> Aparece em 5–10 anos, é mais inflamatória que a crônica e evolui cedo para fibrose maciça progressiva.',
+  bad:'Acelerada = 5–10 anos, curso inflamatório e FMP precoce — pior que a clássica crônica.'},
+ {block:'Aguda',stem:'A silicose AGUDA (silicoproteinose) tipicamente mostra:',choices:[['Preenchimento alveolar lipoproteináceo, "crazy paving", curso rápido e grave',1],['Apenas placas pleurais',0],['Nódulos calcificados estáveis',0],['Função pulmonar normal',0]],
+  good:'<b>Como uma proteinose alveolar.</b> Exposição maciça em meses–poucos anos enche os alvéolos de material lipoproteináceo (crazy paving na TC); é frequentemente fatal.',
+  bad:'A aguda lembra proteinose alveolar (crazy paving), com curso rápido e alta letalidade.'},
+ {block:'Complicação',stem:'Na silicose acelerada, o rastreio de tuberculose é:',choices:[['Ainda mais crítico (risco muito elevado)',1],['Dispensável',0],['Só se houver febre',0],['Irrelevante em jovens',0]],
+  good:'<b>Crítico.</b> Quanto mais intensa a silicose, maior o risco de silicotuberculose — rastrear e tratar ILTB é regra, especialmente aqui.',
+  bad:'O risco de TB cresce com a gravidade; na acelerada, rastreio de TB é imperativo.'},
+ {block:'Autoimunidade',stem:'A exposição intensa à sílica associa-se a:',choices:[['Maior risco de doenças autoimunes (esclerose sistêmica, AR, vasculites)',1],['Proteção contra autoimunidade',0],['Diabetes tipo 1',0],['Nenhuma doença sistêmica',0]],
+  good:'<b>Sílica e imunidade.</b> Há associação com esclerose sistêmica, artrite reumatoide e vasculites (anti-MPO) — pergunte sintomas sistêmicos.',
+  bad:'Sílica associa-se a autoimunidade (esclerose sistêmica, AR, vasculites), não o contrário.'},
+ {block:'Prevenção',stem:'A medida que de fato resolve a silicose do jateamento é:',choices:[['Eliminar a exposição: substituir o abrasivo, via úmida, ventilação e EPI efetivo',1],['Dar mais oxigênio',0],['Trocar de broncodilatador',0],['Aumentar a produtividade',0]],
+  good:'<b>Prevenção primária.</b> Jateamento a seco de sílica é proibido/regulado; substituir abrasivo, usar via úmida, ventilação e EPI real é o que salva.',
+  bad:'Nenhum remédio compete com evitar a exposição: substituição, via úmida, ventilação e EPI efetivo.'},
+ {block:'Ética',stem:'Por ser prevenível e de notificação, a silicose acelerada é:',choices:[['Um evento sentinela: um caso já denuncia falha e exige ação coletiva',1],['Um azar individual sem implicações',0],['Um diagnóstico sem consequências legais',0],['Irrelevante para a saúde pública',0]],
+  good:'<b>Evento sentinela.</b> Um jovem com silicose acelerada aponta um ambiente que adoece — notifique e acione vigilância; outros estão expostos.',
+  bad:'É evento sentinela e de notificação: um caso obriga a olhar o coletivo e agir.'},
+ {block:'Diferencial',stem:'Diante de "crazy paving" com preenchimento alveolar num jateador, pense também em:',choices:[['Proteinose alveolar e infecção — mas a história de jateamento sugere silicoproteinose',1],['Apenas asma',0],['Sempre edema cardiogênico',0],['Nada além de pneumonia comum',0]],
+  good:'<b>História decide.</b> O padrão é inespecífico; a exposição maciça a sílica direciona para silicoproteinose (e obriga excluir infecção).',
+  bad:'Crazy paving tem diferenciais, mas a anamnese de jateamento aponta silicoproteinose.'},
+ {block:'Síntese',stem:'A lição central do módulo é:',choices:[['A dose extrema encurta a latência e agrava a forma — e tudo isso é evitável',1],['A silicose é sempre crônica e benigna',0],['O tempo não influencia a forma',0],['Não há o que prevenir',0]],
+  good:'<b>Dose e tempo.</b> Quanto maior a concentração, mais cedo e mais grave a doença — e a única cura verdadeira é não deixar acontecer.',
+  bad:'Dose extrema = latência curta e forma grave; a resposta é prevenção, não só tratamento.'}
+];
+const QUESTIONS=rawQuestions.map((q,n)=>({...q,n:n+1}));
+let idx=0,correct=0,answered=false,current=[];const el=id=>document.getElementById(id);
+function shuffle(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function start(){el('intro').classList.add('hidden');el('quiz').classList.remove('hidden');el('meter').classList.add('on');render()}
+function render(){answered=false;const q=QUESTIONS[idx];current=shuffle(q.choices.map((c,i)=>({t:c[0],ok:!!c[1],i})));el('blockLabel').textContent=q.block;el('count').textContent=`${idx+1} / ${QUESTIONS.length}`;el('fill').style.width=`${(idx/QUESTIONS.length)*100}%`;const L=['A','B','C','D'];el('quiz').innerHTML=`<div class="qtag">${q.block} · questão ${idx+1}</div><div class="stem">${q.stem}</div><div class="opts" id="opts">${current.map((o,i)=>`<button class="opt" onclick="choose(${i})"><span class="mark">${L[i]}</span><span>${o.t}</span></button>`).join('')}</div><div class="fb" id="fb"></div><div class="row hidden" id="row"><button class="btn" onclick="next()">${idx===QUESTIONS.length-1?'Ver fechamento →':'Próxima →'}</button></div>`;el('quiz').scrollIntoView({behavior:'smooth',block:'nearest'})}
+function choose(i){if(answered)return;answered=true;const q=QUESTIONS[idx],ok=current[i].ok;if(ok)correct++;document.querySelectorAll('#opts .opt').forEach((b,bi)=>{b.disabled=true;if(current[bi].ok)b.classList.add('correct');else if(bi===i)b.classList.add('wrong');else b.classList.add('dim')});const fb=el('fb');fb.className='fb'+(ok?'':' bad');fb.innerHTML=`<div class="fb-head">${ok?'✦ Isso.':'↺ Quase — repensa comigo.'}</div><div>${ok?q.good:q.bad}</div>`;void fb.offsetWidth;fb.classList.add('show');el('row').classList.remove('hidden')}
+function next(){idx++;idx<QUESTIONS.length?render():finish()}
+function finish(){el('quiz').classList.add('hidden');el('fill').style.width='100%';el('count').textContent=`${QUESTIONS.length} / ${QUESTIONS.length}`;el('blockLabel').textContent='Completo';const pct=Math.round(correct/QUESTIONS.length*100);let nota=pct===100?'Gabaritou — a dose e o tempo não te enganam mais.':pct>=75?'Base sólida. A forma acelerada e a aguda ficaram claras.':pct>=50?'Boa partida. Use o plano dose × tempo para fixar.':'O número não importa: cada erro veio com o mecanismo. Abra o plano dose × tempo.';el('final').classList.remove('hidden');el('final').innerHTML=`<div class="kicker" style="color:var(--accent-deep)">Fim do RO-05</div><div class="score">${correct}/${QUESTIONS.length}</div><h2>A pressa da pedra.</h2><p>${nota}</p><div class="synth"><h3>O que você leva:</h3><ol><li><strong>Dose extrema</strong> encurta a latência: crônica (décadas) → acelerada (5–10 a) → aguda (meses).</li><li><strong>Jateamento</strong> (areia, jeans) é o cenário-chave — e evitável.</li><li>Rastrear <strong>TB</strong> e autoimunidade; a aguda lembra proteinose (crazy paving).</li><li>Um caso é <strong>evento sentinela</strong>: notifique e olhe o coletivo.</li></ol></div><div class="row" style="justify-content:center;gap:12px"><button class="btn" onclick="setMode('lab')">Ir ao plano →</button><button class="btn ghost" onclick="again()">Rever do início</button></div>`;el('final').scrollIntoView({behavior:'smooth',block:'start'})}
+function again(){idx=0;correct=0;answered=false;el('final').classList.add('hidden');el('quiz').classList.remove('hidden');render()}
+
+/* ===================== LABORATÓRIO (plano dose × tempo) ===================== */
+let I=9,T=4;
+function setI(v){I=+v;el('vI').textContent=I+'/10';renderLab()}
+function setT(v){T=+v;el('vT').textContent=T+' a';renderLab()}
+function classify(i,t){if(i>=8&&t<=4)return 'agu';if(i>=6&&t<=12)return 'acel';if(t>=8)return 'cron';return 'lat';}
+function renderLab(){
+ const x0=40,x1=286,y0=16,y1=200; // t:1..30 ; i:1..10
+ const tx=t=>x0+((t-1)/29)*(x1-x0), iy=i=>y1-((i-1)/9)*(y1-y0);
+ let s=`<rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}" fill="none" stroke="var(--line)"/>`;
+ // zonas (aproximadas)
+ s+=`<rect x="${x0}" y="${y0}" width="${(tx(4)-x0).toFixed(1)}" height="${(iy(8)-y0).toFixed(1)}" fill="rgba(176,80,62,.10)"/>`;
+ s+=`<rect x="${x0}" y="${iy(8).toFixed(1)}" width="${(tx(12)-x0).toFixed(1)}" height="${(iy(6)-iy(8)).toFixed(1)}" fill="rgba(192,96,58,.10)"/>`;
+ s+=`<rect x="${tx(8).toFixed(1)}" y="${iy(6).toFixed(1)}" width="${(x1-tx(8)).toFixed(1)}" height="${(y1-iy(6)).toFixed(1)}" fill="rgba(184,134,47,.10)"/>`;
+ s+=`<text x="${(x0+tx(4))/2}" y="${y0+16}" font-size="8.5" fill="var(--wrong)" text-anchor="middle" font-weight="600">AGUDA</text>`;
+ s+=`<text x="${(x0+tx(12))/2}" y="${(iy(7)).toFixed(1)}" font-size="8.5" fill="var(--accent-deep)" text-anchor="middle" font-weight="600">ACELERADA</text>`;
+ s+=`<text x="${((tx(8)+x1)/2).toFixed(1)}" y="${(y1-10).toFixed(1)}" font-size="8.5" fill="var(--warn)" text-anchor="middle" font-weight="600">CRÔNICA</text>`;
+ s+=`<text x="${x0}" y="${y1+14}" font-size="8" fill="var(--ink-soft)">1 a</text><text x="${x1}" y="${y1+14}" font-size="8" fill="var(--ink-soft)" text-anchor="end">30 a →</text>`;
+ s+=`<text x="${x0-4}" y="${y0+6}" font-size="8" fill="var(--ink-soft)" text-anchor="end" transform="rotate(-90 ${x0-4} ${y0+6})">intensidade ↑</text>`;
+ const px=tx(T),py=iy(I);
+ s+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="6" fill="var(--ink)" stroke="#fff" stroke-width="2"/>`;
+ el('plane').innerHTML=s;
+ const k=classify(I,T);
+ const data={
+  agu:{cls:'agu',vh:'Silicose aguda (silicoproteinose)',fatos:[['Latência','meses a poucos anos'],['Imagem','preenchimento alveolar · "crazy paving"'],['Curso','rápido e frequentemente fatal'],['Alerta','excluir infecção; rastrear TB; notificar']]},
+  acel:{cls:'acel',vh:'Silicose acelerada',fatos:[['Latência','~5–10 anos'],['Imagem','nódulos superiores + FMP precoce'],['Curso','inflamatório, progressivo'],['Alerta','rastrear TB e autoimunidade']]},
+  cron:{cls:'cron',vh:'Silicose crônica',fatos:[['Latência','10–30+ anos'],['Imagem','nódulos superiores · gânglios "casca de ovo"'],['Curso','lento; pode complicar com FMP'],['Alerta','vigilância e rastreio de TB']]},
+  lat:{cls:'',vh:'Exposição de baixa intensidade / latente',fatos:[['Latência','depende do acúmulo'],['Imagem','pode ser normal cedo'],['Curso','risco proporcional à dose cumulativa'],['Alerta','reduzir exposição desde já']]}
+ }[k];
+ const vd=el('verdict');vd.className='verdict'+(data.cls?' '+data.cls:'');
+ vd.innerHTML=`<div class="vh">${data.vh}</div><div class="facts">${data.fatos.map(f=>`<div class="fact"><div class="fk">${f[0]}</div><div class="fv">${f[1]}</div></div>`).join('')}</div>`;
+}
+
+function setMode(m){const trail=m==='trail';el('segTrail').classList.toggle('active',trail);el('segLab').classList.toggle('active',!trail);el('trailMode').classList.toggle('hidden',!trail);el('labMode').classList.toggle('hidden',trail);if(trail){const ini=!el('quiz').classList.contains('hidden')||!el('final').classList.contains('hidden');el('meter').classList.toggle('on',ini)}else{el('meter').classList.remove('on');renderLab()}window.scrollTo({top:0,behavior:'smooth'})}
+
+renderLab();
+if((location.hash||'').indexOf('lab')>=0){setMode('lab');}
+</script>
+</body>
+</html>
