@@ -121,3 +121,7 @@ Antes de alterar qualquer módulo:
 8. manter o rodapé autoral e a dedicatória discreta quando presentes.
 
 A regra editorial final é: **não amputar complexidade clínica para produzir limpeza visual ou manutenção aparente**. O material existe para ensinar raciocínio, não para parecer minimalista.
+
+## Documentação
+
+A documentação do projeto está organizada na pasta [`Docs/`](Docs/) — comece pelo índice [`Docs/README.md`](Docs/README.md). Ele cataloga a nomenclatura canônica (`Docs/NORMALIZACAO.md`), o plano e a auditoria do Atlas, e aponta os arquivos de governança que permanecem na raiz (`CLAUDE.md`, `AGENTS.md`) por serem lidos por ferramentas.
