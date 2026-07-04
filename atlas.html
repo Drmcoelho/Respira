@@ -6,12 +6,12 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#F4EFE4">
 <title>Respira · Atlas de Pranchas</title>
-<meta name="description" content="Atlas visual da série Respira: as pranchas dos módulos 1 a 5, cada uma com detalhamento por painel e questões interativas para fixar o raciocínio.">
+<meta name="description" content="Atlas visual da série Respira: as pranchas da série Respira, cada uma com detalhamento por painel e questões interativas para fixar o raciocínio.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Respira">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:title" content="Respira · Atlas de Pranchas">
-<meta property="og:description" content="As pranchas dos módulos 1 a 5, com detalhamento por painel e questões interativas.">
+<meta property="og:description" content="As pranchas da série Respira, com detalhamento por painel e questões interativas.">
 <meta property="og:url" content="https://drmcoelho.github.io/Respira/atlas.html">
 <meta property="og:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Respira — série de fisiologia respiratória">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Respira · Atlas de Pranchas">
-<meta name="twitter:description" content="As pranchas dos módulos 1 a 5, com detalhamento por painel e questões interativas.">
+<meta name="twitter:description" content="As pranchas da série Respira, com detalhamento por painel e questões interativas.">
 <meta name="twitter:image" content="https://drmcoelho.github.io/Respira/assets/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,6 +97,11 @@ footer .credit{font-family:var(--mono);font-size:.72rem}
     <a href="#modulo-3">03 · V/Q</a>
     <a href="#modulo-4">04 · Gasometria</a>
     <a href="#modulo-5">05 · Arquitetura</a>
+    <a href="#modulo-6">06 · Síndromes</a>
+    <a href="#modulo-7">07 · Terapêutica</a>
+    <a href="#modulo-8">08 · Oxigênio &amp; VNI</a>
+    <a href="#modulo-9">09 · VM fundamentos</a>
+    <a href="#modulo-10">10 · Protetora &amp; desmame</a>
   </nav>
 </header>
 <main id="figuras"></main>
@@ -240,6 +245,121 @@ const FIGURAS=[
     {stem:'A pressão pleural negativa mantém o pulmão aberto porque:',choices:[['Equilibra a retração do pulmão contra a parede torácica',1],['Enche o alvéolo de líquido',0],['Aumenta a tensão superficial',0],['Fecha a via aérea',0]],
       good:'<b>Equilíbrio de forças.</b> Pulmão para dentro, parede para fora → Ppl negativa mantém a expansão.',
       bad:'É o equilíbrio pulmão × parede que cria a Ppl negativa e mantém o pulmão aberto.'}
+  ]
+},
+{
+  id:'modulo-6', mod:'Módulo 06', titulo:'As grandes síndromes', href:'mvp6-interativo.html',
+  img:'assets/figuras/modulo-06.webp',
+  alt:'Prancha do Módulo 6: SDRA (shunt e complacência baixa por surfactante inativado); DPOC/asma (resistência alta, constante de tempo e auto-PEEP); edema agudo (água, shunt e rigidez); pneumonia/atelectasia (sangue sem ar); e TEP/fibrose (espaço morto versus difusão).',
+  essence:'Cada síndrome é uma soma de eixos: shunt, aprisionamento, água, sangue sem ar, espaço morto e difusão.',
+  detalhe:[
+    {n:'1',t:'SDRA',d:'Alvéolo inundado e surfactante inativado: <b>shunt</b> refratário + complacência baixa (pulmão duro).'},
+    {n:'2',t:'DPOC / asma',d:'Via aérea estreitada: <code>R↑</code>, constante de tempo longa e <b>auto-PEEP</b> por ar aprisionado.'},
+    {n:'3',t:'Edema agudo',d:'Água no alvéolo: <b>shunt</b> e complacência baixa. Pressão positiva recruta e ajuda a hemodinâmica.'},
+    {n:'4',t:'Pneumonia / atelectasia',d:'Unidade preenchida ou fechada: <b>sangue sem ar</b> — shunt intrapulmonar.'},
+    {n:'5',t:'TEP / fibrose',d:'Coágulo bloqueia perfusão (<b>espaço morto</b>); fibrose espessa a barreira (<b>difusão↓</b>).'}
+  ],
+  quiz:[
+    {stem:'Na SDRA, o eixo que domina a hipoxemia refratária é:',choices:[['Shunt verdadeiro',1],['Espaço morto puro',0],['Anemia isolada',0],['Débito cardíaco baixo',0]],
+      good:'<b>Shunt.</b> Sangue por alvéolo cheio/colapsado; O2 ajuda pouco, PEEP recruta.',bad:'SDRA grave = shunt: sangue sem ar.'},
+    {stem:'Na exacerbação de DPOC, resistência alta + frequência rápida geram:',choices:[['Auto-PEEP',1],['Alcalose metabólica',0],['CO-Hb',0],['Espaço morto puro',0]],
+      good:'<b>Auto-PEEP.</b> A expiração não termina, sobra volume, nasce pressão escondida.',bad:'Cano apertado + pouco tempo expiratório = aprisionamento e auto-PEEP.'},
+    {stem:'No edema agudo, o líquido alveolar gera principalmente:',choices:[['Shunt e rigidez (complacência baixa)',1],['Só anemia',0],['Espaço morto puro',0],['CO-Hb alta',0]],
+      good:'<b>Dois eixos.</b> Alvéolo inundado não ventila (shunt) e o pulmão fica duro.',bad:'Água no alvéolo = shunt + baixa complacência.'},
+    {stem:'Na embolia pulmonar, o defeito V/Q primário é:',choices:[['Espaço morto',1],['Shunt total',0],['Surfactante baixo',0],['Anemia aguda',0]],
+      good:'<b>Ar sem sangue.</b> O coágulo bloqueia a perfusão; o alvéolo ventilado não troca.',bad:'TEP bloqueia sangue, não ar: espaço morto.'}
+  ]
+},
+{
+  id:'modulo-7', mod:'Módulo 07', titulo:'A terapêutica — as forças', href:'mvp7-interativo.html',
+  img:'assets/figuras/modulo-07.webp',
+  alt:'Prancha do Módulo 7: cada terapia como um vetor sobre um eixo fisiológico — abrir o cano (broncodilatador), recrutar (PEEP/CPAP), secar (diurético), casar V/Q (O2, alto fluxo, iNO) e proteger/resgatar (VT baixo, CO2 permissivo, ECMO).',
+  essence:'Cada intervenção é um vetor sobre um eixo já compreendido: resistência, complacência, shunt, V/Q, conteúdo de O2 e pH.',
+  detalhe:[
+    {n:'1',t:'Abrir o cano',d:'Broncodilatador reduz a resistência (<code>R↓</code>) e a constante de tempo (<code>τ↓</code>).'},
+    {n:'2',t:'Recrutar',d:'PEEP / CPAP / prona reabrem unidades: alvéolo aberto, mais complacência e menos shunt.'},
+    {n:'3',t:'Secar',d:'Diurético / controle de volume / anti-inflamatório: menos água → <code>C↑</code>, <code>shunt↓</code>.'},
+    {n:'4',t:'Casar V/Q',d:'Oxigênio, alto fluxo e vasodilatador inalatório aproximam ventilação e perfusão: V encontra Q.'},
+    {n:'5',t:'Proteger / resgatar',d:'Volume corrente baixo, hipercapnia permissiva e ECMO como ponte: menos energia lesiva.'}
+  ],
+  quiz:[
+    {stem:'O broncodilatador age sobre qual eixo?',choices:[['Resistência (abre o cano)',1],['Complacência do balão',0],['Conteúdo de O2',0],['pH',0]],
+      good:'<b>Resistência.</b> R↓ e τ↓ — o ar sai mais fácil.',bad:'Broncodilatador é problema de cano: reduz a resistência.'},
+    {stem:'A PEEP, num pulmão recrutável, principalmente:',choices:[['Reabre unidades e reduz o shunt',1],['Aumenta a resistência',0],['Reduz a hemoglobina',0],['Substitui a posição',0]],
+      good:'<b>Recruta.</b> Alvéolo aberto: mais troca, menos shunt (com atenção ao VD).',bad:'PEEP recruta o que já tinha sangue — devolve ar à unidade.'},
+    {stem:'No edema agudo, "secar" corresponde a:',choices:[['Diurético/controle de volume, elevando a complacência',1],['Aumentar a FiO2 apenas',0],['Reduzir a hemoglobina',0],['Fechar alvéolos',0]],
+      good:'<b>Menos água.</b> C↑ e shunt↓; a pressão positiva trata a mecânica.',bad:'Secar = tirar volume: o pulmão amolece e o shunt cai.'},
+    {stem:'"Proteger o pulmão" na terapêutica significa sobretudo:',choices:[['Volume corrente baixo e hipercapnia permissiva',1],['Volume corrente alto para lavar CO2',0],['FiO2 sempre 100%',0],['Frequência muito alta',0]],
+      good:'<b>Menos energia lesiva.</b> VT baixo, ΔP baixo; aceitar CO2 protege o parênquima.',bad:'Proteção = volume baixo e CO2 permissivo, não perseguir números.'}
+  ]
+},
+{
+  id:'modulo-8', mod:'Módulo 08', titulo:'Oxigênio e suporte não invasivo', href:'mvp8-interativo.html',
+  img:'assets/figuras/modulo-08.webp',
+  alt:'Prancha do Módulo 8: a escalada do suporte — baixo fluxo (cânula nasal), Venturi, alto fluxo aquecido e umidificado, CPAP e BiPAP, do oxigênio de baixa complexidade ao suporte com pressão.',
+  essence:'A escalada do suporte: do oxigênio que depende da demanda ao BiPAP que descarrega o músculo.',
+  detalhe:[
+    {n:'1',t:'Baixo fluxo',d:'Cânula nasal: a <code>FiO2</code> entregue depende da demanda inspiratória; o ar ambiente (21%) dilui o O2.'},
+    {n:'2',t:'Venturi',d:'Máscara com arraste de ar (entrainment): <code>FiO2</code> mais previsível (24–50%).'},
+    {n:'3',t:'Alto fluxo',d:'Cânula de alto fluxo aquecida e umidificada: fluxo total alto, lavagem do espaço morto e PEEP leve.'},
+    {n:'4',t:'CPAP',d:'Pressão positiva contínua que recruta e mantém alvéolos abertos.'},
+    {n:'5',t:'BiPAP',d:'Dois níveis (IPAP/EPAP): descarga muscular e ventilação, além de recrutamento.'}
+  ],
+  quiz:[
+    {stem:'No oxigênio de baixo fluxo (cânula nasal), a FiO2 entregue:',choices:[['Depende da demanda inspiratória do paciente',1],['É sempre exatamente 100%',0],['Não muda nunca',0],['É a mesma do Venturi',0]],
+      good:'<b>Depende da demanda.</b> O ar ambiente dilui o O2 conforme o paciente puxa.',bad:'Em baixo fluxo a FiO2 real é imprevisível: varia com a demanda.'},
+    {stem:'A vantagem da máscara de Venturi é:',choices:[['FiO2 mais previsível por arraste de ar',1],['Entregar sempre 100%',0],['Dispensar oxigênio',0],['Gerar PEEP alta',0]],
+      good:'<b>Previsibilidade.</b> O entrainment fixa a FiO2 (24–50%).',bad:'Venturi = FiO2 confiável por arraste calibrado de ar.'},
+    {stem:'O alto fluxo, além de FiO2, oferece:',choices:[['Lavagem do espaço morto e PEEP leve',1],['Bloqueio neuromuscular',0],['Redução da hemoglobina',0],['Ventilação de dois níveis',0]],
+      good:'<b>Fluxo total + lavagem.</b> Reduz reinalação de CO2 e dá PEEP discreta, aquecido e umidificado.',bad:'Alto fluxo lava espaço morto e dá PEEP leve — não é só O2.'},
+    {stem:'O que distingue o BiPAP do CPAP?',choices:[['Dois níveis de pressão (IPAP/EPAP), com descarga muscular',1],['Não usar máscara',0],['Ser oxigênio de baixo fluxo',0],['Não gerar pressão',0]],
+      good:'<b>Dois níveis.</b> IPAP ventila e descarrega o músculo; EPAP recruta.',bad:'BiPAP tem IPAP e EPAP; CPAP é pressão única contínua.'}
+  ]
+},
+{
+  id:'modulo-9', mod:'Módulo 09', titulo:'Ventilação mecânica — fundamentos', href:'mvp9-interativo.html',
+  img:'assets/figuras/modulo-09.webp',
+  alt:'Prancha do Módulo 9: equação do movimento (Paw = R·fluxo + V/C + PEEP); VCV (volume prometido, pressão consequente); PCV (pressão prometida, volume consequente); pico versus platô; e driving pressure (ΔP = Pplatô − PEEP).',
+  essence:'A gramática da máquina: equação do movimento, VCV × PCV, pico × platô e a driving pressure.',
+  detalhe:[
+    {n:'1',t:'Equação do movimento',d:'<code>Paw = R·fluxo + V/C + PEEP</code>: componente resistivo, elástico e basal.'},
+    {n:'2',t:'VCV',d:'Volume-controlado: o volume corrente é a promessa (fixo); a pressão varia como consequência.'},
+    {n:'3',t:'PCV',d:'Pressão-controlada: a pressão é a promessa (fixa); o volume varia conforme a mecânica.'},
+    {n:'4',t:'Pico × Platô',d:'Pico = pressão máxima; platô = pressão após pausa. <b>Pico − platô = componente resistivo</b>.'},
+    {n:'5',t:'Driving pressure',d:'<code>ΔP = Pplatô − PEEP</code>: reflete a pressão que distende o pulmão (estresse).'}
+  ],
+  quiz:[
+    {stem:'A equação do movimento decompõe a Paw em:',choices:[['Componente resistivo, elástico e PEEP',1],['Apenas resistência',0],['Apenas volume',0],['pH e CO2',0]],
+      good:'<b>Três parcelas.</b> R·fluxo + V/C + PEEP.',bad:'Paw = R·fluxo + V/C + PEEP: cano, balão e base.'},
+    {stem:'No modo VCV (volume-controlado):',choices:[['O volume é fixo e a pressão varia',1],['A pressão é fixa e o volume varia',0],['Ambos são fixos',0],['Nada é controlado',0]],
+      good:'<b>Volume prometido.</b> A pressão denuncia a mecânica.',bad:'VCV promete volume; a pressão é a consequência.'},
+    {stem:'A diferença pico − platô reflete:',choices:[['O componente resistivo (vias aéreas)',1],['O componente elástico',0],['A PEEP',0],['O débito cardíaco',0]],
+      good:'<b>Resistivo.</b> O platô isola o elástico; a diferença até o pico é resistência.',bad:'Pico − platô = resistência das vias aéreas.'},
+    {stem:'A driving pressure é:',choices:[['Pplatô − PEEP',1],['Pico − PEEP',0],['Pplatô + PEEP',0],['Pico − platô',0]],
+      good:'<b>ΔP = Pplatô − PEEP.</b> A pressão que distende o pulmão.',bad:'Driving pressure = Pplatô − PEEP, não o pico.'}
+  ]
+},
+{
+  id:'modulo-10', mod:'Módulo 10', titulo:'Ventilação protetora e desmame', href:'mvp10-interativo.html',
+  img:'assets/figuras/modulo-10.webp',
+  alt:'Prancha do Módulo 10: volume corrente por peso predito; platô e driving pressure; mechanical power como energia por minuto; hipercapnia permissiva; e o desmame (TRE, RSBI, carga versus capacidade).',
+  essence:'Proteger o pulmão hoje para devolver a bomba amanhã: volume por peso predito, driving, energia e desmame.',
+  detalhe:[
+    {n:'1',t:'VT por peso predito',d:'O volume corrente vai pela <b>altura</b> (peso predito), não pelo peso real: 4–6 mL/kg.'},
+    {n:'2',t:'Platô e ΔP',d:'Platô ≤ ~30 e <b>driving pressure baixa</b> (ΔP = Pplatô − PEEP): menos estresse.'},
+    {n:'3',t:'Mechanical power',d:'Energia por minuto: volume, pressão (ΔP), fluxo e frequência. Menos power = menos lesão.'},
+    {n:'4',t:'Hipercapnia permissiva',d:'Aceitar CO2 para poupar o pulmão; pH ≥ 7,20 costuma ser tolerável (tratando causas reversíveis).'},
+    {n:'5',t:'Desmame · TRE / RSBI',d:'Carga ÷ capacidade. <code>RSBI = FR / VT(L)</code>; ≤ 105 é favorável no teste de respiração espontânea.'}
+  ],
+  quiz:[
+    {stem:'O volume corrente protetor é calculado pelo:',choices:[['Peso predito (pela altura)',1],['Peso real do paciente',0],['Peso ideal do sexo oposto',0],['IMC',0]],
+      good:'<b>Peso predito.</b> O pulmão não cresce com a obesidade; 4–6 mL/kg de PBW.',bad:'VT protetor vai por peso predito (altura), não peso real.'},
+    {stem:'Qual alvo mecânico melhor protege o pulmão?',choices:[['Driving pressure baixa',1],['VT alto',0],['Frequência baixa isolada',0],['FiO2 100%',0]],
+      good:'<b>ΔP baixa.</b> Menos estresse por ciclo — o melhor preditor de proteção.',bad:'Driving pressure baixa (ΔP = Pplatô − PEEP) é o alvo.'},
+    {stem:'Mechanical power representa:',choices:[['A energia por minuto entregue ao pulmão',1],['A hemoglobina',0],['O débito urinário',0],['A temperatura',0]],
+      good:'<b>Energia/min.</b> Volume, pressão, fluxo e frequência somados; menos power, menos lesão.',bad:'Mechanical power é a energia por minuto — quanto mais, mais risco de lesão.'},
+    {stem:'No teste de respiração espontânea, um RSBI favorável é:',choices:[['≤ 105 (FR/VT em L)',1],['≥ 200',0],['Igual à FiO2',0],['Irrelevante',0]],
+      good:'<b>≤ 105.</b> Respiração rápida e superficial (RSBI alto) prediz falha.',bad:'RSBI = FR/VT(L); ≤ 105 é favorável.'}
   ]
 }
 ];
