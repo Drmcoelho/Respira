@@ -97,6 +97,11 @@ footer .credit{font-family:var(--mono);font-size:.72rem}
     <a href="#modulo-3">03 · V/Q</a>
     <a href="#modulo-4">04 · Gasometria</a>
     <a href="#modulo-5">05 · Arquitetura</a>
+    <a href="#ponte-1">RF1 · Volumes</a>
+    <a href="#ponte-2">RF2 · Espirometria</a>
+    <a href="#ponte-3">RF3 · Padrões</a>
+    <a href="#ponte-4">RF4 · DLCO</a>
+    <a href="#ocupacional-1">RO1 · Profissão</a>
     <a href="#modulo-6">06 · Síndromes</a>
     <a href="#modulo-7">07 · Terapêutica</a>
     <a href="#modulo-8">08 · Oxigênio &amp; VNI</a>
@@ -245,6 +250,121 @@ const FIGURAS=[
     {stem:'A pressão pleural negativa mantém o pulmão aberto porque:',choices:[['Equilibra a retração do pulmão contra a parede torácica',1],['Enche o alvéolo de líquido',0],['Aumenta a tensão superficial',0],['Fecha a via aérea',0]],
       good:'<b>Equilíbrio de forças.</b> Pulmão para dentro, parede para fora → Ppl negativa mantém a expansão.',
       bad:'É o equilíbrio pulmão × parede que cria a Ppl negativa e mantém o pulmão aberto.'}
+  ]
+},
+{
+  id:'ponte-1', mod:'Ponte · RF-01', titulo:'Volumes e capacidades', href:'respira-ponte-01-volumes-capacidades.html',
+  img:'assets/figuras/respira-ponte-01.webp',
+  alt:'Prancha RF-01: os quatro volumes (VRI, VC, VRE, VR) e as capacidades (CI, CRF, CV, CPT); barras comparando pulmão normal, aprisionamento e pulmão pequeno; e a reserva como fôlego de segurança.',
+  essence:'O tamanho do fôlego: volumes que se somam em capacidades — e o que muda quando o pulmão aprisiona ou encolhe.',
+  detalhe:[
+    {n:'1',t:'Volumes',d:'As quatro frações: <code>VRI</code> (reserva inspiratória), <code>VC</code> (corrente), <code>VRE</code> (reserva expiratória) e <code>VR</code> (residual).'},
+    {n:'2',t:'Capacidades',d:'Somas de volumes: <code>CI = VRI+VC</code>; <code>CRF = VRE+VR</code>; <code>CV = VRI+VC+VRE</code>; <code>CPT = CV+VR</code>.'},
+    {n:'3',t:'Aprisionamento',d:'O ar que não sai: <code>VR</code> e <code>CRF</code> sobem (hiperinsuflação). A CVF pode cair por aprisionamento, não por restrição.'},
+    {n:'4',t:'Restrição verdadeira',d:'O pulmão pequeno: <code>CPT</code> e <code>CV</code> caem juntas. A CPT reduzida é o que define restrição.'},
+    {n:'5',t:'Reserva',d:'A capacidade inspiratória (VC+VRI) é o fôlego de segurança; encolhe na hiperinsuflação e explica a dispneia ao esforço.'}
+  ],
+  quiz:[
+    {stem:'A Capacidade Pulmonar Total (CPT) é:',choices:[['Todo o ar ao fim da inspiração máxima (CV + VR)',1],['O ar de uma respiração calma',0],['Só o ar que dá para expirar',0],['A relação VEF1/CVF',0]],
+      good:'<b>O teto.</b> CPT = capacidade vital + volume residual.',bad:'CPT é o pulmão cheio: CV + VR.'},
+    {stem:'Por que a espirometria não enxerga o Volume Residual?',choices:[['Porque ele não sai pela boca',1],['Porque o aparelho é antigo',0],['Porque ele não existe',0],['Porque depende do CO2',0]],
+      good:'<b>O que não sai, ela não mede.</b> VR (e CRF, CPT) exigem pletismografia ou diluição de gás.',bad:'A espirometria mede o mobilizável; o VR fica preso e é invisível a ela.'},
+    {stem:'Na hiperinsuflação por aprisionamento, o esperado é:',choices:[['VR e CRF aumentados',1],['VR e CRF reduzidos',0],['CPT igual a zero',0],['CV aumentada',0]],
+      good:'<b>O pulmão incha.</b> Ar preso eleva VR e CRF; a CV e a CI ficam espremidas.',bad:'Aprisionamento sobe o repouso: VR e CRF aumentam.'},
+    {stem:'Restrição verdadeira é definida por:',choices:[['CPT reduzida',1],['VEF1/CVF reduzida',0],['VR aumentado',0],['Só CVF baixa',0]],
+      good:'<b>CPT baixa.</b> O pulmão pequeno; CVF baixa apenas sugere.',bad:'O juiz da restrição é a CPT reduzida.'}
+  ]
+},
+{
+  id:'ponte-2', mod:'Ponte · RF-02', titulo:'Espirometria', href:'respira-ponte-02-espirometria.html',
+  img:'assets/figuras/respira-ponte-02.webp',
+  alt:'Prancha RF-02: VEF1 e CVF na curva volume-tempo; a relação VEF1/CVF (Tiffeneau) num medidor; a alça fluxo-volume normal versus obstrutiva com a concavidade; e a prova broncodilatadora.',
+  essence:'Desenhar o ar em números: VEF1, CVF, a razão, a forma da curva e a reversibilidade.',
+  detalhe:[
+    {n:'1',t:'VEF1',d:'Volume expirado forçado no primeiro segundo — a velocidade de esvaziamento.'},
+    {n:'2',t:'CVF',d:'Capacidade vital forçada: todo o ar da expiração forçada, do ápice ao fim.'},
+    {n:'3',t:'VEF1/CVF (Tiffeneau)',d:'Abaixo do limite (~0,70 / LIN) indica obstrução. Use valores de referência por idade, sexo, altura e etnia.'},
+    {n:'4',t:'Alça fluxo-volume',d:'A descida côncava ("escavada") é a assinatura da obstrução; a alça pequena e estreita sugere restrição.'},
+    {n:'5',t:'Broncodilatador',d:'Resposta significativa: aumento do VEF1 (ou CVF) ≥ 200 mL e ≥ 12% — indica componente reversível.'}
+  ],
+  quiz:[
+    {stem:'VEF1 é:',choices:[['O volume expirado forçado no 1º segundo',1],['Uma citocina inflamatória',0],['O volume residual',0],['O pico de fluxo',0]],
+      good:'<b>O 1º segundo.</b> Parâmetro mecânico, não exame de sangue.',bad:'VEF1 = volume forçado no primeiro segundo.'},
+    {stem:'A relação VEF1/CVF baixa indica:',choices:[['Obstrução',1],['Restrição',0],['Pulmão normal',0],['Anemia',0]],
+      good:'<b>Obstrução.</b> O ar custa a sair; o VEF1 cai mais que a CVF.',bad:'Razão baixa = obstrução; na restrição ela se preserva.'},
+    {stem:'A porção expiratória "escavada" da alça sugere:',choices:[['Obstrução ao fluxo',1],['Restrição pura',0],['Pulmão normal',0],['Erro do aparelho',0]],
+      good:'<b>Obstrução.</b> O colapso dinâmico escava a descida do fluxo.',bad:'A concavidade da descida é típica de obstrução.'},
+    {stem:'Resposta significativa à prova broncodilatadora:',choices:[['≥ 200 mL e ≥ 12% no VEF1 ou CVF',1],['Qualquer aumento',0],['Queda do VEF1',0],['Aumento só do PFE',0]],
+      good:'<b>200 mL e 12%.</b> Os dois critérios juntos sugerem reversibilidade.',bad:'Exige ≥ 200 mL e ≥ 12% — os dois.'}
+  ]
+},
+{
+  id:'ponte-3', mod:'Ponte · RF-03', titulo:'Padrões funcionais', href:'respira-ponte-03-padroes.html',
+  img:'assets/figuras/respira-ponte-03.webp',
+  alt:'Prancha RF-03: obstrutivo, restritivo, misto e pseudorrestrição, cada um com alça e barras de volumes; e a matriz razão VEF1/CVF versus CPT com a armadilha da pseudorrestrição.',
+  essence:'A matriz razão × CPT: obstruir, restringir, ou ambos — e a armadilha do que aprisiona e finge ser pequeno.',
+  detalhe:[
+    {n:'1',t:'Obstrutivo',d:'<code>VEF1/CVF</code> baixo, <code>CPT</code> normal ou alta; alça côncava.'},
+    {n:'2',t:'Restritivo',d:'<code>VEF1/CVF</code> normal ou alto, <code>CPT</code> baixa; alça pequena e estreita.'},
+    {n:'3',t:'Misto',d:'Razão baixa <b>e</b> CPT baixa: obstrução e restrição coexistindo.'},
+    {n:'4',t:'Pseudorrestrição',d:'CVF baixa por <b>aprisionamento</b> (VR muito alto) com CPT normal/alta: parece restrição, mas é obstrução.'},
+    {n:'5',t:'Matriz razão × CPT',d:'Não classificar só pela CVF. A razão separa obstruir de não; a CPT separa pequeno de aprisionado.'}
+  ],
+  quiz:[
+    {stem:'Padrão obstrutivo puro:',choices:[['Razão baixa, CPT normal ou alta',1],['Razão baixa, CPT baixa',0],['Razão normal, CPT baixa',0],['Tudo normal',0]],
+      good:'<b>Razão baixa, CPT preservada.</b> O ar aprisiona sem encolher o pulmão.',bad:'Obstrução = razão baixa; se a CPT cai, já é misto.'},
+    {stem:'Padrão restritivo:',choices:[['Razão normal/alta, CPT baixa',1],['Razão baixa, CPT alta',0],['Razão baixa, CPT baixa',0],['Tudo normal',0]],
+      good:'<b>CPT baixa com razão preservada.</b> Pulmão pequeno.',bad:'Restrição é CPT baixa com razão normal/alta.'},
+    {stem:'Padrão misto:',choices:[['Razão baixa E CPT baixa',1],['Razão alta e CPT alta',0],['Só razão baixa',0],['Só CPT baixa',0]],
+      good:'<b>Os dois juntos.</b> Obstrui e restringe ao mesmo tempo.',bad:'Misto = razão baixa com CPT também baixa.'},
+    {stem:'CVF baixa com CPT normal/alta e VR muito alto é:',choices:[['Pseudorrestrição (aprisionamento, não restrição)',1],['Restrição verdadeira',0],['Pulmão normal',0],['Erro de exame',0]],
+      good:'<b>Pseudorrestrição.</b> A CVF caiu por aprisionamento; a CPT exclui restrição.',bad:'CVF baixa com CPT alta é aprisionamento, não restrição.'}
+  ]
+},
+{
+  id:'ponte-4', mod:'Ponte · RF-04', titulo:'DLCO e troca', href:'respira-ponte-04-dlco.html',
+  img:'assets/figuras/respira-ponte-04.webp',
+  alt:'Prancha RF-04: a unidade alvéolo-capilar onde o CO e o O2 atravessam a barreira; espessura da membrana, área de troca, hemoglobina e leito vascular como determinantes da DLCO; e a distinção entre restrição parenquimatosa e extrapulmonar.',
+  essence:'Quando o volume não conta tudo: a DLCO mede a travessia do gás e depende de barreira, área, hemoglobina e leito capilar.',
+  detalhe:[
+    {n:'1',t:'Barreira',d:'O espessamento da membrana alvéolo-capilar aumenta a distância de difusão: <b>espessura↑ → DLCO↓</b> (fibrose).'},
+    {n:'2',t:'Área',d:'O enfisema destrói septos e reduz a superfície de troca: <b>área↓ → DLCO↓</b>.'},
+    {n:'3',t:'Hemoglobina',d:'O CO (como o O2) liga-se à Hb nas hemácias; menos Hb capta menos CO. <b>Corrija a DLCO para a hemoglobina</b>.'},
+    {n:'4',t:'Vascular',d:'A redução do volume sanguíneo capilar (vasculopatia, TEP crônico) limita a transferência: <b>leito capilar↓ → DLCO↓</b>, às vezes isolada.'},
+    {n:'5',t:'Parênquima × parede',d:'Restrição com <b>DLCO baixa</b> = parenquimatosa (fibrose); restrição com <b>DLCO normal</b> = extrapulmonar (parede, obesidade, neuromuscular). O volume não conta tudo.'}
+  ],
+  quiz:[
+    {stem:'A DLCO mede:',choices:[['A capacidade de difusão da barreira alvéolo-capilar (captação de CO)',1],['O volume residual',0],['A relação VEF1/CVF',0],['A força muscular',0]],
+      good:'<b>A travessia do gás.</b> O CO atravessa a barreira e se liga à Hb; substitui a difusão de O2.',bad:'DLCO é difusão pela barreira, não volume nem fluxo.'},
+    {stem:'A DLCO depende principalmente de:',choices:[['Área, espessura da barreira e sangue capilar (Hb)',1],['Só da frequência',0],['Só do VEF1',0],['Só do pH',0]],
+      good:'<b>Determinantes.</b> Mais área e sangue elevam; barreira espessa reduz.',bad:'Área (↑), espessura (↓) e Hb/leito capilar (↑) governam a DLCO.'},
+    {stem:'Restrição (CPT baixa) com DLCO NORMAL aponta para:',choices:[['Causa extrapulmonar (parede/neuromuscular)',1],['Fibrose pulmonar',0],['Enfisema',0],['Hemorragia alveolar',0]],
+      good:'<b>Fora do pulmão.</b> O pulmão está bom, só não enche; a barreira intacta mantém a DLCO normal.',bad:'Volume pequeno com difusão normal = bomba/parede, não parênquima.'},
+    {stem:'A anemia reduz a DLCO porque:',choices:[['Há menos hemoglobina para captar o CO',1],['A barreira engrossa',0],['A área diminui',0],['O VEF1 cai',0]],
+      good:'<b>Falta receptor.</b> Menos Hb, menos captação; por isso corrige-se a DLCO pela Hb.',bad:'É o sangue: menos Hb capta menos CO. Corrija a DLCO pela hemoglobina.'}
+  ]
+},
+{
+  id:'ocupacional-1', mod:'Ocupacional · RO-01', titulo:'Profissão como sinal vital', href:'respira-ocupacional-01-profissao-sinal-vital.html',
+  img:'assets/figuras/respira-ocupacional-01.webp',
+  alt:'Prancha RO-01: a profissão como sinal vital num monitor ao lado de FC, PA, FR e SpO2; o que a pessoa faz, a exposição real, o EPI usado versus pendurado, o padrão temporal (piora no trabalho, melhora na folga) e o nexo com colegas, ambiente e função/imagem.',
+  essence:'A profissão como sinal vital: sem a ocupação, o diagnóstico do pulmão fica incompleto.',
+  detalhe:[
+    {n:'1',t:'O que faz?',d:'O processo de trabalho: jateamento, solda, lavoura, construção, limpeza — não só o nome do cargo.'},
+    {n:'2',t:'Exposição real',d:'Poeira, fumaça, mofo, fumos metálicos, biomassa: o agente que chega ao alvéolo.'},
+    {n:'3',t:'EPI real',d:'<b>Prescrito ≠ usado.</b> O que protege é o uso efetivo, não o equipamento no papel.'},
+    {n:'4',t:'Tempo e padrão',d:'Piora no trabalho, melhora na folga, retorna ao voltar: o nexo temporal separa o reversível do fixo.'},
+    {n:'5',t:'Nexo',d:'Colegas doentes, condições do ambiente e a prova de função + imagem fecham a história.'}
+  ],
+  quiz:[
+    {stem:'Por que tratar a ocupação como um sinal vital?',choices:[['Porque a exposição pode ser a causa e muda o diagnóstico',1],['Por exigência de prontuário',0],['Para definir a classe social',0],['Para substituir a gasometria',0]],
+      good:'<b>Pode ser a causa.</b> A profissão reclassifica o pulmão e muda manejo e prognóstico.',bad:'A ocupação é etiologia potencial; não perguntar é perder o diagnóstico.'},
+    {stem:'Sintomas que melhoram na folga e pioram ao voltar sugerem:',choices:[['Componente ocupacional reativo (asma/hipersensibilidade)',1],['Doença puramente genética',0],['Pneumoconiose fixa',0],['Simulação',0]],
+      good:'<b>Nexo temporal.</b> Melhorar longe do trabalho aponta gatilho do ambiente, reversível se afastar cedo.',bad:'Melhora no afastamento = causa ambiental reativa.'},
+    {stem:'Sobre o EPI na anamnese, o mais útil é saber se:',choices:[['Existia E era usado de forma efetiva',1],['A empresa apenas fornecia',0],['Qual a marca',0],['Nada, EPI não importa',0]],
+      good:'<b>EPI real.</b> Fornecer não é usar; pergunte o uso efetivo no dia a dia.',bad:'O que protege é o uso efetivo, não o EPI no papel.'},
+    {stem:'Colegas de trabalho com sintomas semelhantes indicam:',choices:[['Possível causa ambiental compartilhada (agrupamento)',1],['Coincidência irrelevante',0],['Contágio genético',0],['Erro do paciente',0]],
+      good:'<b>Cluster.</b> Adoecimento em grupo aponta o ambiente como denominador comum.',bad:'Vários doentes no mesmo posto = exposição coletiva.'}
   ]
 },
 {
