@@ -3,6 +3,8 @@
 Data: 2026-07-04  
 Escopo: expansao do `atlas.html` a partir do estado atual confirmado.
 
+> **Status (2026-07-05): "Lote 1" (as dez laminas abaixo) foi concluido.** `atlas.html` agora tem 15 laminas: modulos 01-10, Ponte Funcional RF1-4 e Ocupacional RO1. As pranchas correspondentes existem em `assets/figuras/`. O plano abaixo permanece como registro do que foi decidido e executado. **O trabalho pendente e o "lote seguinte" ja previsto na secao "Decisao de lote": RO2 a RO6**, que ainda nao tem lamina, arquivo `.webp` nem entrada em `atlas.html`.
+
 ## Estado atual do Atlas
 
 O `atlas.html` esta implementado como Atlas de pranchas dos modulos 01 a 05.

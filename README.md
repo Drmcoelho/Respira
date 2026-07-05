@@ -28,9 +28,11 @@ A Parte A possui 10 módulos interativos, publicados como HTML estático:
 | 09 | `mvp9-interativo.html` | `modules/respira-09-ventilacao-mecanica-fundamentos.html` | VM fundamentos: equação do movimento, VCV/PCV, ondas, pausa, auto-PEEP |
 | 10 | `mvp10-interativo.html` | `modules/respira-10-ventilacao-protetora-desmame.html` | Ventilação protetora e desmame |
 
+Respira também tem duas sub-séries aditivas na raiz do repositório: **Ponte Funcional** (`respira-ponte-01-volumes-capacidades.html` a `respira-ponte-04-dlco.html`) e **Ocupacional** (`respira-ocupacional-01-profissao-sinal-vital.html` a `respira-ocupacional-06-dpoc-biomassa.html`). Mapa completo e ordem de leitura em [`Docs/NORMALIZACAO.md`](Docs/NORMALIZACAO.md).
+
 ### Ventila
 
-A Parte B está organizada em `ventila.html` e módulos `ventila0.html` a `ventila26.html`, na raiz do repositório.
+A Parte B está organizada em `ventila.html` e módulos `ventila0.html` a `ventila29.html`, na raiz do repositório.
 
 | Nº | Arquivo | Tema |
 |---:|---|---|

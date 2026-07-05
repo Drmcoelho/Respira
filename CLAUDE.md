@@ -10,7 +10,7 @@
 2. **HTML single-file é fonte canônica publicada.** Cada módulo deve abrir sozinho no navegador.
 3. **Não introduzir build obrigatório.** Sem bundler, sem pipeline, sem etapa que alguém possa esquecer de rodar.
 4. **Não transformar autonomia em DRY prematuro.** Duplicação em módulo fechado é custo latente, não defeito ativo.
-5. **Ventila agora vai até 26.** Não voltar para a matriz antiga de 12 módulos.
+5. **Ventila agora vai até 29.** Não voltar para a matriz antiga de 12 módulos. Respira ganhou também a Ponte Funcional (RF1–4) e o bloco Ocupacional (RO1–6) — ver `Docs/NORMALIZACAO.md`.
 6. **Sempre preservar links antigos.** Não quebrar `mvp*`, `ventilaN.html`, `ventila.html` ou deep-links Respira↔Ventila.
 7. **Mecanismo antes de protocolo.** Curva, pulmão, tubo, drive e decisão clínica precisam conversar.
 8. **Material didático, não prescrição.** Toda estimativa clínica precisa de caixa de honestidade quando aplicável.
@@ -125,6 +125,8 @@ mvp10 #lab | #proteger | #desmamar
 
 Use esses links quando o Ventila precisar apontar de volta para a fisiologia base.
 
+Além dos 10 módulos principais, Respira tem duas sub-séries aditivas — Ponte Funcional (RF1–4, entre Respira 05 e 06) e Ocupacional (RO1–6, entre a Ponte e Respira 06). Mapa completo, arquivos e ordem de leitura em `Docs/NORMALIZACAO.md`.
+
 ## 5. Matriz atual do Ventila
 
 | Nº | Arquivo | Tese / função | Motor visual principal |
@@ -145,6 +147,20 @@ Use esses links quando o Ventila precisar apontar de volta para a fisiologia bas
 | 13 | `ventila13.html` | Traqueostomia é plataforma, não cura | tubo, Poiseuille, decanulação |
 | 14 | `ventila14.html` | O pulmão na tela: shunt, recrutamento, hiperdistensão, auto-PEEP | campo alveolar |
 | 15 | `ventila15.html` | PSV · VCV · PCV: inversão causal e leitura de curvas | tutor comparativo multimodal |
+| 16 | `ventila16.html` | Tutor adaptativo de sessão: BKT, grafo de pré-requisitos, remediação dirigida | motor de mastery/BKT |
+| 17 | `ventila17.html` | SDRA: PEEP só compra pulmão se recrutamento superar hiperdistensão e custo hemodinâmico | recrutabilidade |
+| 18 | `ventila18.html` | Obstrutivo grave: dar tempo para sair sem perseguir número com FR lesiva | R, τ, auto-PEEP, hipercapnia permissiva |
+| 19 | `ventila19.html` | Coração-pulmão: o VD sente a pressão positiva | retorno venoso, RVP, septo |
+| 20 | `ventila20.html` | Neuroventilação: CO₂ também é hemodinâmica | PaCO₂, fluxo cerebral, PIC |
+| 21 | `ventila21.html` | Prona e resgate: redistribuir antes de escalar | V/Q regional, estresse |
+| 22 | `ventila22.html` | APRV: abrir sem aprisionar | T-high/T-low, terminação de fluxo |
+| 23 | `ventila23.html` | ECMO/ECCO₂R: a máquina compra proteção, não cura | fluxo, sweep, ultraprotação |
+| 24 | `ventila24.html` | Obesidade, gestação, abdome: a parede pesa | complacência do sistema × pulmonar |
+| 25 | `ventila25.html` | Pediatria/neonatologia: pulmão pequeno, tempo curto | tubo estreito, vazamento, volume garantido |
+| 26 | `ventila26.html` | Fora da UTI: transporte e contingência | robustez operacional |
+| 27 | `ventila27.html` | Pulmão restritivo: ventilar pequeno e duro | baby lung, driving alto, baixa reserva |
+| 28 | `ventila28.html` | Pulmão misto: obstrução + restrição, qual componente mata primeiro | classificador de componente dominante |
+| 29 | `ventila29.html` | Ocupacional na UTI: anamnese, imagem, função e gasometria costuradas | estratégia ventilatória por fenótipo ocupacional |
 
 ## 6. Fórmulas e motores — invariantes
 
@@ -318,8 +334,10 @@ Manter vivos:
 
 - `index.html`
 - `ventila.html`
-- `ventila0.html` a `ventila26.html`
+- `ventila0.html` a `ventila29.html`
 - `mvp1-interativo.html` a `mvp10-interativo.html`
+- `respira-ponte-01-*.html` a `respira-ponte-04-*.html`
+- `respira-ocupacional-01-*.html` a `respira-ocupacional-06-*.html`
 - aliases/wrappers existentes em `/modules/`
 
 Ao criar rota nova, preferir adicionar, não substituir.
@@ -377,7 +395,8 @@ Quando o fenômeno real depender de heterogeneidade pulmonar, esforço, parede t
 ### Do projeto
 
 - Respira 10 módulos vivos;
-- Ventila 0–26 vivos;
+- Ponte Funcional (RF1–4) e Ocupacional (RO1–6) vivos;
+- Ventila 0–29 vivos;
 - `ventila.html` atualizado;
 - links Respira↔Ventila preservados;
 - nenhuma redução de módulos robustos;
