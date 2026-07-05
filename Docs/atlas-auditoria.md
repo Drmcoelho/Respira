@@ -4,6 +4,8 @@ Data da revisao: 2026-07-04
 Repositorio auditado: `Drmcoelho/Respira`  
 Escopo principal: parte Respira, com enfase em `index.html`, `atlas.html`, `data/respira-modules.json`, `modules/`, `assets/figuras/` e midias em `assets/respira-ventila-atlas/media/`.
 
+> **Status (2026-07-05): o achado P0 abaixo foi resolvido.** Depois desta auditoria, o Atlas foi expandido para 20 laminas, integrando os modulos 01-10, a Ponte Funcional RF1-4 e o bloco Ocupacional RO1-RO6 completo. As pranchas correspondentes ja existem em `assets/figuras/`, e os metadados de `atlas.html` foram atualizados e nao dizem mais "modulos 1 a 5". O texto abaixo permanece como registro historico do estado antes da correcao — nao editado, para preservar o raciocinio da auditoria original.
+
 ## Sumario executivo
 
 O projeto nao esta em estado "quase pronto" do ponto de vista de entrega editorial/navegacional. Ha conteudo e estrutura importante, mas a publicacao esta fragmentada em tres camadas:

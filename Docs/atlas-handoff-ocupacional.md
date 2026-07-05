@@ -1,5 +1,7 @@
 # Handoff — completar o Atlas com o bloco Ocupacional (RO2–RO6)
 
+> **Status (2026-07-05): concluído.** A tarefa deste handoff foi executada por outra sessão em paralelo (branch `claude/documentation-review-r8qpwu`, PR #10): as 5 pranchas RO2–RO6 foram integradas em `atlas.html` (paineis + quiz), fechando o Atlas em 20 laminas. As imagens RO5 e RO6, que este handoff marcava como pendentes/não confirmadas, foram recebidas e confirmadas visualmente nessa mesma sessão. Ver `Docs/atlas-laminas-plano.md` para o registro atualizado. O conteúdo abaixo permanece como registro histórico do handoff original — não editado.
+
 > Documento de passagem para outra sessão (mesmo modelo, Claude). Objetivo único: **inserir as pranchas RO2 a RO6 no `atlas.html`**, no mesmo formato das demais, e dar push. Todo o resto do Atlas já está pronto e publicado.
 
 Data: 2026-07-04 · Branch de trabalho: `claude/beautiful-cray-gZWCC`

@@ -102,6 +102,11 @@ footer .credit{font-family:var(--mono);font-size:.72rem}
     <a href="#ponte-3">RF3 · Padrões</a>
     <a href="#ponte-4">RF4 · DLCO</a>
     <a href="#ocupacional-1">RO1 · Profissão</a>
+    <a href="#ocupacional-2">RO2 · Poeiras minerais</a>
+    <a href="#ocupacional-3">RO3 · Rural &amp; biomassa</a>
+    <a href="#ocupacional-4">RO4 · Solda &amp; tinta</a>
+    <a href="#ocupacional-5">RO5 · Silicose jateamento</a>
+    <a href="#ocupacional-6">RO6 · DPOC biomassa</a>
     <a href="#modulo-6">06 · Síndromes</a>
     <a href="#modulo-7">07 · Terapêutica</a>
     <a href="#modulo-8">08 · Oxigênio &amp; VNI</a>
@@ -365,6 +370,121 @@ const FIGURAS=[
       good:'<b>EPI real.</b> Fornecer não é usar; pergunte o uso efetivo no dia a dia.',bad:'O que protege é o uso efetivo, não o EPI no papel.'},
     {stem:'Colegas de trabalho com sintomas semelhantes indicam:',choices:[['Possível causa ambiental compartilhada (agrupamento)',1],['Coincidência irrelevante',0],['Contágio genético',0],['Erro do paciente',0]],
       good:'<b>Cluster.</b> Adoecimento em grupo aponta o ambiente como denominador comum.',bad:'Vários doentes no mesmo posto = exposição coletiva.'}
+  ]
+},
+{
+  id:'ocupacional-2', mod:'Ocupacional · RO-02', titulo:'Poeiras minerais', href:'respira-ocupacional-02-poeiras-minerais.html',
+  img:'assets/figuras/respira-ocupacional-02.webp',
+  alt:'Prancha RO-02: cinco poeiras minerais e seu padrão — sílica (nódulos em lobos superiores, calcificação hiliar em casca de ovo, silicose e TB), asbesto (placas pleurais, fibrose basal, mesotelioma), carvão (nódulos antracóticos, fibrose maciça progressiva), berílio (padrão granulomatoso que imita sarcoidose) e metais duros (lesão intersticial difusa).',
+  essence:'Poeira mineral não é um agente único: cada mineral tem alvo, latência e padrão radiológico próprios.',
+  detalhe:[
+    {n:'1',t:'Sílica',d:'Nódulos em lobos superiores e calcificação hiliar <b>em casca de ovo</b>: silicose, com risco somado de tuberculose.'},
+    {n:'2',t:'Asbesto',d:'Fibras migram até a pleura: <b>placas pleurais</b> e fibrose basal; risco tardio de mesotelioma, décadas depois.'},
+    {n:'3',t:'Carvão',d:'Nódulos antracóticos que coalescem em <b>fibrose maciça progressiva (FMP)</b> quando a dose é alta.'},
+    {n:'4',t:'Berílio',d:'Granulomas não caseosos: o padrão <b>imita sarcoidose</b> sem a história ocupacional (aeroespacial, eletrônica).'},
+    {n:'5',t:'Metais duros',d:'Lesão intersticial difusa progressiva — fibrose ocupacional sem o padrão nodular clássico das outras poeiras.'}
+  ],
+  quiz:[
+    {stem:'Nódulos em lobos superiores com calcificação hiliar "em casca de ovo" sugerem:',choices:[['Silicose',1],['Asbestose',0],['Beriliose',0],['Metais duros',0]],
+      good:'<b>Silicose.</b> Padrão clássico: nódulos apicais + calcificação em casca de ovo dos linfonodos hilares.',bad:'Asbestose cursa com fibrose basal e placas pleurais, não nódulos apicais calcificados.'},
+    {stem:'Exposição a asbesto está classicamente associada a:',choices:[['Placas pleurais e mesotelioma',1],['Padrão granulomatoso símile-sarcoidose',0],['Fibrose maciça progressiva do carvão',0],['Lesão intersticial difusa de metais duros',0]],
+      good:'<b>Placas pleurais/mesotelioma.</b> As fibras migram até a pleura, formando placas hialinas e abrindo risco de mesotelioma décadas depois.',bad:'O padrão granulomatoso é do berílio; a FMP nodular é do carvão.'},
+    {stem:'Berílio mimetiza clinicamente e radiologicamente:',choices:[['Sarcoidose',1],['Tuberculose miliar',0],['Edema pulmonar',0],['Embolia pulmonar',0]],
+      good:'<b>Sarcoidose.</b> A beriliose crônica forma granulomas não caseosos indistinguíveis da sarcoidose sem a história de exposição.',bad:'Sem perguntar a exposição a berílio, o quadro vira "sarcoidose idiopática" por engano.'},
+    {stem:'A fibrose maciça progressiva (FMP) é complicação tardia associada sobretudo a:',choices:[['Pneumoconiose do carvão e silicose',1],['Asbestose isolada',0],['Beriliose aguda',0],['Metais duros',0]],
+      good:'<b>Carvão/sílica.</b> Nódulos coalescem em massas fibróticas conglomeradas, sobretudo em lobos superiores.',bad:'Metais duros geram lesão intersticial difusa, não massas nodulares conglomeradas.'}
+  ]
+},
+{
+  id:'ocupacional-3', mod:'Ocupacional · RO-03', titulo:'Pulmão rural e biomassa', href:'respira-ocupacional-03-rural-biomassa.html',
+  img:'assets/figuras/respira-ocupacional-03.webp',
+  alt:'Prancha RO-03: fogão a lenha e DPOC não tabágica; mofo e feno causando pneumonite de hipersensibilidade; aves como fonte de antígeno inalado; cana, algodão e grãos como poeira orgânica; agrotóxicos como irritantes/tóxicos — cinco exposições rurais convergindo no mesmo pulmão.',
+  essence:'O pulmão rural recebe cinco famílias de agressão diferentes — fumaça, mofo, pena, poeira orgânica e agrotóxico — cada uma com seu próprio mecanismo.',
+  detalhe:[
+    {n:'1',t:'Fogão a lenha',d:'Fumaça doméstica crônica: via aérea pequena e <b>DPOC não tabágica</b>, sem história de cigarro.'},
+    {n:'2',t:'Mofo e feno',d:'Antígeno orgânico inalado repetidamente: <b>pneumonite de hipersensibilidade</b> — "pulmão do fazendeiro".'},
+    {n:'3',t:'Aves',d:'Penas e excretas como fonte de <b>antígeno inalado</b>: mesma via imunológica do feno, outro reservatório.'},
+    {n:'4',t:'Cana, algodão, grãos',d:'Poeira orgânica de colheita e beneficiamento — bronquite/asma relacionada à poeira vegetal.'},
+    {n:'5',t:'Agrotóxicos',d:'Irritante e tóxico direto da via aérea, além do risco sistêmico da exposição a defensivos agrícolas.'}
+  ],
+  quiz:[
+    {stem:'DPOC em quem nunca fumou, mas cozinhou a vida toda em fogão a lenha, aponta para:',choices:[['DPOC não tabágica por fumaça de biomassa',1],['Erro diagnóstico — DPOC exige tabagismo',0],['Asma ocupacional isolada',0],['Silicose',0]],
+      good:'<b>DPOC não tabágica.</b> A fumaça de biomassa em ambiente fechado lesa a via aérea pequena tanto quanto o cigarro.',bad:'DPOC não é exclusiva do tabaco; a fumaça doméstica de lenha é a segunda maior causa global.'},
+    {stem:'Feno mofado e dejetos de aves compartilham qual mecanismo de doença pulmonar?',choices:[['Pneumonite de hipersensibilidade por antígeno orgânico inalado',1],['Fibrose por partícula mineral inorgânica',0],['Obstrução mecânica direta da via aérea',0],['Infecção bacteriana crônica',0]],
+      good:'<b>Antígeno orgânico.</b> Ambos sensibilizam o pulmão por via imunológica — "pulmão do fazendeiro" e "pulmão do criador de aves" são a mesma família de doença.',bad:'Não é poeira mineral (isso é sílica/asbesto); é reação imune a antígeno orgânico repetido.'},
+    {stem:'Poeira orgânica de cana, algodão e grãos na colheita/beneficiamento causa principalmente:',choices:[['Bronquite/asma relacionada à poeira vegetal',1],['Placas pleurais calcificadas',0],['Granuloma não caseoso símile-sarcoidose',0],['Nódulos com calcificação em casca de ovo',0]],
+      good:'<b>Via aérea.</b> A poeira vegetal irrita e inflama brônquios, gerando quadro obstrutivo/bronquítico recorrente com a exposição.',bad:'Placas pleurais são do asbesto; granuloma é do berílio — mecanismos minerais, não vegetais.'},
+    {stem:'Na anamnese ocupacional rural, o agrotóxico deve ser investigado como:',choices:[['Irritante respiratório e risco tóxico sistêmico, não só "produto agrícola"',1],['Substância inofensiva se aplicada por profissional',0],['Risco exclusivamente dermatológico',0],['Fator irrelevante para o pulmão',0]],
+      good:'<b>Irritante e tóxico.</b> Defensivos agrícolas agridem a via aérea diretamente e podem ter efeito sistêmico, além do EPI frequentemente inadequado no campo.',bad:'Reduzir agrotóxico a "risco de pele" ignora o efeito irritativo direto sobre a via aérea.'}
+  ]
+},
+{
+  id:'ocupacional-4', mod:'Ocupacional · RO-04', titulo:'Solda, tinta e asma ocupacional', href:'respira-ocupacional-04-asma-ocupacional.html',
+  img:'assets/figuras/respira-ocupacional-04.webp',
+  alt:'Prancha RO-04: isocianatos (TDI, MDI) como sensibilizantes de tintas e vernizes; fumos metálicos da solda; RADS por irritante em alta dose; hiper-responsividade brônquica com espessamento da parede e muco excessivo; pico de fluxo caindo no trabalho e recuperando na folga; febre dos fumos metálicos como síndrome sistêmica autolimitada.',
+  essence:'Do sensibilizante ao irritante agudo, o eixo comum é a via aérea hiper-responsiva: edema, broncoespasmo e muco.',
+  detalhe:[
+    {n:'1',t:'Isocianatos',d:'TDI, MDI: sensibilizantes de tintas, vernizes e espumas — exigem <b>latência</b> antes de desencadear asma.'},
+    {n:'2',t:'Solda',d:'Fumos metálicos (óxidos de ferro, manganês, níquel, cromo) irritam e sensibilizam a via aérea.'},
+    {n:'3',t:'RADS',d:'Irritante em <b>alta dose única</b>: início súbito em horas, sem sensibilização prévia necessária.'},
+    {n:'4',t:'Pico de fluxo',d:'Cai durante a semana de trabalho e recupera na folga: assinatura funcional do componente <b>ocupacional reversível</b>.'},
+    {n:'5',t:'Febre dos fumos',d:'Síndrome sistêmica autolimitada (24–48h) após inalar fumos metálicos: febre, calafrios, mialgia, mal-estar.'}
+  ],
+  quiz:[
+    {stem:'TDI e MDI (isocianatos) causam asma ocupacional por:',choices:[['Sensibilização imunológica, com período de latência',1],['Irritação química imediata, sem latência',0],['Infecção respiratória',0],['Efeito puramente físico da partícula',0]],
+      good:'<b>Sensibilização.</b> Isocianatos atuam como haptenos e sensibilizam a via aérea após exposição repetida — diferente do RADS.',bad:'O RADS é a exposição única em alta dose; isocianatos clássicos exigem sensibilização prévia.'},
+    {stem:'O RADS (síndrome de disfunção reativa da via aérea) se define por:',choices:[['Início agudo após exposição única a irritante em alta concentração',1],['Sintomas graduais ao longo de anos',0],['Sensibilização prévia obrigatória',0],['Febre e mialgia autolimitadas',0]],
+      good:'<b>Exposição única.</b> Diferente da asma sensibilizante, o RADS não exige contato prévio — a dose alta e aguda já basta.',bad:'Febre e mialgia autolimitadas descrevem a febre dos fumos metálicos, não o RADS.'},
+    {stem:'Pico de fluxo que cai durante a semana de trabalho e recupera na folga sugere:',choices:[['Componente ocupacional reversível da via aérea',1],['Doença fixa, sem relação com o trabalho',0],['Erro de técnica na manobra',0],['Efeito do clima',0]],
+      good:'<b>Reversível.</b> Queda no trabalho e recuperação na folga é a assinatura funcional da asma ocupacional.',bad:'Um padrão fixo, sem variação trabalho-folga, afasta o componente ocupacional reversível.'},
+    {stem:'Febre, calafrios e mialgia horas após soldar, autolimitados em 24–48h, sugerem:',choices:[['Febre dos fumos metálicos',1],['Pneumonia bacteriana',0],['RADS',0],['Asma por isocianato',0]],
+      good:'<b>Febre dos fumos.</b> Síndrome sistêmica autolimitada por inalação de óxidos metálicos, sem necessidade de antibiótico.',bad:'A resolução espontânea em 24–48h distingue a febre dos fumos de uma pneumonia bacteriana.'}
+  ]
+},
+{
+  id:'ocupacional-5', mod:'Ocupacional · RO-05', titulo:'Silicose acelerada do jateamento', href:'respira-ocupacional-05-silicose-jateamento.html',
+  img:'assets/figuras/respira-ocupacional-05.webp',
+  alt:'Prancha RO-05: dose extrema de sílica respirável no jateamento; latência curta (meses a poucos anos) versus a forma crônica (décadas); silicoproteinose aguda com alvéolos preenchidos por material proteináceo; nódulos e fibrose maciça progressiva em lobos superiores; prevenção por métodos úmidos, enclausuramento, respirador ajustado e substituição do abrasivo — "não é EPI sozinho".',
+  essence:'Mesma sílica, dose extrema: a latência da silicose crônica encurta para meses quando a exposição é maciça.',
+  detalhe:[
+    {n:'1',t:'Dose extrema',d:'Jateamento gera sílica respirável &lt;10 μm em concentração muito acima da exposição crônica típica.'},
+    {n:'2',t:'Latência curta',d:'Meses a poucos anos, não décadas: quanto maior a dose, mais rápido o curso.'},
+    {n:'3',t:'Silicoproteinose aguda',d:'Alvéolos preenchidos por material <b>proteináceo</b> — fase aguda, distinta dos nódulos crônicos.'},
+    {n:'4',t:'Nódulos e FMP',d:'Nódulos e <b>fibrose maciça progressiva</b>, com predomínio em lobos superiores.'},
+    {n:'5',t:'Prevenção',d:'Métodos úmidos, enclausuramento, ventilação exaustora, respirador bem ajustado e troca do abrasivo: <b>EPI sozinho não basta</b>.'}
+  ],
+  quiz:[
+    {stem:'Jateamento de areia (sílica respirável em alta dose) está associado a:',choices:[['Silicose acelerada, com latência de meses a poucos anos',1],['Silicose crônica só após décadas',0],['Ausência de risco se usar máscara comum',0],['Doença exclusivamente reversível',0]],
+      good:'<b>Silicose acelerada.</b> A dose extrema de sílica &lt;10 μm encurta drasticamente a latência frente à forma crônica.',bad:'A forma crônica (décadas) é a de baixa exposição; o jateamento é dose alta e latência curta.'},
+    {stem:'O enchimento alveolar por material proteináceo na silicose acelerada é chamado de:',choices:[['Silicoproteinose',1],['Fibrose maciça progressiva',0],['Antracofibrose',0],['Bronquiolite respiratória',0]],
+      good:'<b>Silicoproteinose.</b> Fase aguda/acelerada, com alvéolos preenchidos por material proteináceo, distinta dos nódulos crônicos.',bad:'A FMP é a fase tardia de coalescência nodular, não o enchimento alveolar agudo.'},
+    {stem:'A prevenção mais eficaz na silicose do jateamento depende de:',choices:[['Controle coletivo da fonte (métodos úmidos, enclausuramento) além do EPI',1],['Apenas fornecer respirador ao trabalhador',0],['Trocar o jateamento por lixamento manual',0],['Reduzir a jornada sem mudar o processo',0]],
+      good:'<b>Controle coletivo.</b> Métodos úmidos, enclausuramento e troca do abrasivo reduzem a dose na fonte — EPI isolado não basta.',bad:'Respirador isolado falha se ajuste, troca de filtro e manutenção não forem garantidos.'},
+    {stem:'O padrão radiológico típico da silicose acelerada do jateamento predomina em:',choices:[['Lobos superiores, com nódulos e fibrose maciça progressiva',1],['Bases pulmonares com placas pleurais',0],['Vidro fosco difuso bilateral',0],['Consolidação lobar única',0]],
+      good:'<b>Lobos superiores.</b> Nódulos e FMP concentram-se nos ápices, padrão típico das pneumoconioses por sílica.',bad:'Placas pleurais basais são marca do asbesto, não da silicose.'}
+  ]
+},
+{
+  id:'ocupacional-6', mod:'Ocupacional · RO-06', titulo:'DPOC da biomassa', href:'respira-ocupacional-06-dpoc-biomassa.html',
+  img:'assets/figuras/respira-ocupacional-06.webp',
+  alt:'Prancha RO-06: exposição crônica à fumaça doméstica de fogão a lenha; via aérea pequena com bronquiolite (espessamento da parede, infiltrado inflamatório, lúmen reduzido); antracofibrose com brônquio pigmentado; comparação DPOC da biomassa (via aérea, menor destruição alveolar) versus DPOC do tabaco (enfisema, destruição alveolar, hiperinsuflação); prevenção por chaminé, ventilação, fogão melhorado e troca de combustível.',
+  essence:'DPOC da biomassa não é a DPOC do tabaco: o alvo é a via aérea pequena, não o alvéolo.',
+  detalhe:[
+    {n:'1',t:'Fumaça doméstica',d:'Exposição crônica ao cozinhar com lenha em ambiente fechado — risco concentrado em mulheres.'},
+    {n:'2',t:'Via aérea pequena',d:'Bronquiolite: espessamento da parede, infiltrado inflamatório e <b>lúmen reduzido</b>.'},
+    {n:'3',t:'Antracofibrose',d:'Brônquio pigmentado pela deposição crônica de partículas da fumaça.'},
+    {n:'4',t:'Biomassa × tabaco',d:'Biomassa preserva mais o alvéolo (menos enfisema); tabaco destrói alvéolo e hiperinsufla. <b>Não é a mesma DPOC.</b>'},
+    {n:'5',t:'Prevenção',d:'Chaminé, ventilação cruzada, fogão melhorado e troca de combustível: tirar a fumaça de dentro de casa.'}
+  ],
+  quiz:[
+    {stem:'A DPOC da biomassa acomete predominantemente:',choices:[['Mulheres expostas à fumaça de fogão a lenha em ambiente fechado',1],['Homens fumantes em ambiente industrial',0],['Trabalhadores de jateamento',0],['Crianças por infecção viral recorrente',0]],
+      good:'<b>Exposição doméstica.</b> Cozinhar com biomassa em cômodo fechado, sobretudo por mulheres, é a exposição clássica.',bad:'O perfil de risco por tabaco é diferente do perfil por fumaça doméstica de biomassa.'},
+    {stem:'O fenótipo predominante na DPOC por biomassa é:',choices:[['Via aérea pequena (bronquiolite), com menor destruição alveolar',1],['Enfisema com destruição alveolar extensa',0],['Bronquiectasias difusas',0],['Fibrose pleural isolada',0]],
+      good:'<b>Via aérea pequena.</b> Espessamento da parede e infiltrado na bronquiolite, com volumes mais preservados que no enfisema do tabaco.',bad:'O enfisema com destruição alveolar e hiperinsuflação é o padrão do tabaco, não da biomassa.'},
+    {stem:'O achado de brônquio pigmentado por depósito de carbono é chamado:',choices:[['Antracofibrose',1],['Silicoproteinose',0],['Granuloma não caseoso',0],['Placa pleural',0]],
+      good:'<b>Antracofibrose.</b> Pigmentação e fibrose da parede brônquica pela deposição crônica de partículas de fumaça.',bad:'Silicoproteinose é achado alveolar da sílica, não brônquico da biomassa.'},
+    {stem:'A intervenção mais custo-efetiva para reduzir a DPOC da biomassa é:',choices:[['Tirar a fumaça de dentro de casa (chaminé, ventilação, fogão melhorado)',1],['Broncodilatador de longa duração para todos',0],['Vacina anual',0],['Suplementação de oxigênio domiciliar precoce',0]],
+      good:'<b>Ventilação/fonte.</b> Chaminé, ventilação cruzada, fogão eficiente e troca de combustível cortam a exposição na origem.',bad:'Broncodilatador trata sintoma; não remove a exposição contínua que perpetua a doença.'}
   ]
 },
 {

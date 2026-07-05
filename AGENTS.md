@@ -86,9 +86,11 @@ O índice principal é `index.html`.
 
 Wrappers canônicos em `/modules/` podem existir para navegação e nomenclatura, mas os arquivos legados continuam válidos.
 
+Respira também tem duas sub-séries aditivas, com arquivo próprio na raiz e slug semântico: Ponte Funcional (`respira-ponte-01-volumes-capacidades.html` a `respira-ponte-04-dlco.html`) e Ocupacional (`respira-ocupacional-01-profissao-sinal-vital.html` a `respira-ocupacional-06-dpoc-biomassa.html`). Mapa completo em `Docs/NORMALIZACAO.md`.
+
 ## 5. Estado atual do Ventila
 
-Ventila está organizado por `ventila.html` e módulos de raiz `ventila0.html` a `ventila26.html`.
+Ventila está organizado por `ventila.html` e módulos de raiz `ventila0.html` a `ventila29.html`.
 
 A matriz atual é:
 
@@ -121,8 +123,11 @@ A matriz atual é:
 | 24 | `ventila24.html` | Obesidade, gestação e abdome — a parede pesa: Complacência do sistema não é complacência pulmonar: parede e abdome mudam a leitura das pressões. |
 | 25 | `ventila25.html` | Pediatria e neonatologia — pulmão pequeno, tempo curto: Tubo estreito, vazamento, volume garantido e a física específica do recém-nascido e da criança. |
 | 26 | `ventila26.html` | Fora da UTI — transporte e contingência: Oxigênio, bateria, circuito, fixação e plano B: robustez operacional faz parte da ventilação. |
+| 27 | `ventila27.html` | Pulmão restritivo — ventilar pequeno e duro: baixa complacência, driving alto, baixa reserva; o baby lung pouco recrutável. |
+| 28 | `ventila28.html` | Pulmão misto — não entra, não sai, não cabe: obstrução + restrição, qual componente mata primeiro neste minuto. |
+| 29 | `ventila29.html` | Ocupacional na UTI — o pulmão ferido do trabalho: anamnese, imagem, função, gasometria e estratégia ventilatória costuradas. |
 
-Não rebaixar a série para 12 módulos. Ventila agora tem 0–26.
+Não rebaixar a série para 12 módulos. Ventila agora tem 0–29.
 
 ## 6. Cinco blocos obrigatórios por módulo Ventila
 
@@ -220,13 +225,16 @@ Respira:
 
 - `index.html`
 - `mvp1-interativo.html` a `mvp10-interativo.html`
+- `respira-ponte-01-*.html` a `respira-ponte-04-*.html`
+- `respira-ocupacional-01-*.html` a `respira-ocupacional-06-*.html`
+- `respira-ocupacional-exploracao.html` — banco de questões transversal do bloco Ocupacional
 - aliases/wrappers em `/modules/` quando existirem
 - arquivos auxiliares em `assets/` e `data/` quando já estiverem presentes
 
 Ventila:
 
 - `ventila.html` — índice da Parte B
-- `ventila0.html` a `ventila26.html` — módulos publicados canônicos
+- `ventila0.html` a `ventila29.html` — módulos publicados canônicos
 
 Não mover Ventila para `/modules/` se isso criar dependência ou confusão. Aliases estáticos podem ser aceitos futuramente, mas não substituem os arquivos de raiz.
 
