@@ -103,6 +103,7 @@ footer .credit{font-family:var(--mono);font-size:.72rem}
     <a href="#ponte-4">RF4 · DLCO</a>
     <a href="#ocupacional-1">RO1 · Profissão</a>
     <a href="#ocupacional-2">RO2 · Poeiras minerais</a>
+    <a href="#ocupacional-3">RO3 · Rural &amp; biomassa</a>
     <a href="#ocupacional-4">RO4 · Solda &amp; tinta</a>
     <a href="#ocupacional-5">RO5 · Silicose jateamento</a>
     <a href="#ocupacional-6">RO6 · DPOC biomassa</a>
@@ -392,6 +393,29 @@ const FIGURAS=[
       good:'<b>Sarcoidose.</b> A beriliose crônica forma granulomas não caseosos indistinguíveis da sarcoidose sem a história de exposição.',bad:'Sem perguntar a exposição a berílio, o quadro vira "sarcoidose idiopática" por engano.'},
     {stem:'A fibrose maciça progressiva (FMP) é complicação tardia associada sobretudo a:',choices:[['Pneumoconiose do carvão e silicose',1],['Asbestose isolada',0],['Beriliose aguda',0],['Metais duros',0]],
       good:'<b>Carvão/sílica.</b> Nódulos coalescem em massas fibróticas conglomeradas, sobretudo em lobos superiores.',bad:'Metais duros geram lesão intersticial difusa, não massas nodulares conglomeradas.'}
+  ]
+},
+{
+  id:'ocupacional-3', mod:'Ocupacional · RO-03', titulo:'Pulmão rural e biomassa', href:'respira-ocupacional-03-rural-biomassa.html',
+  img:'assets/figuras/respira-ocupacional-03.webp',
+  alt:'Prancha RO-03: fogão a lenha e DPOC não tabágica; mofo e feno causando pneumonite de hipersensibilidade; aves como fonte de antígeno inalado; cana, algodão e grãos como poeira orgânica; agrotóxicos como irritantes/tóxicos — cinco exposições rurais convergindo no mesmo pulmão.',
+  essence:'O pulmão rural recebe cinco famílias de agressão diferentes — fumaça, mofo, pena, poeira orgânica e agrotóxico — cada uma com seu próprio mecanismo.',
+  detalhe:[
+    {n:'1',t:'Fogão a lenha',d:'Fumaça doméstica crônica: via aérea pequena e <b>DPOC não tabágica</b>, sem história de cigarro.'},
+    {n:'2',t:'Mofo e feno',d:'Antígeno orgânico inalado repetidamente: <b>pneumonite de hipersensibilidade</b> — "pulmão do fazendeiro".'},
+    {n:'3',t:'Aves',d:'Penas e excretas como fonte de <b>antígeno inalado</b>: mesma via imunológica do feno, outro reservatório.'},
+    {n:'4',t:'Cana, algodão, grãos',d:'Poeira orgânica de colheita e beneficiamento — bronquite/asma relacionada à poeira vegetal.'},
+    {n:'5',t:'Agrotóxicos',d:'Irritante e tóxico direto da via aérea, além do risco sistêmico da exposição a defensivos agrícolas.'}
+  ],
+  quiz:[
+    {stem:'DPOC em quem nunca fumou, mas cozinhou a vida toda em fogão a lenha, aponta para:',choices:[['DPOC não tabágica por fumaça de biomassa',1],['Erro diagnóstico — DPOC exige tabagismo',0],['Asma ocupacional isolada',0],['Silicose',0]],
+      good:'<b>DPOC não tabágica.</b> A fumaça de biomassa em ambiente fechado lesa a via aérea pequena tanto quanto o cigarro.',bad:'DPOC não é exclusiva do tabaco; a fumaça doméstica de lenha é a segunda maior causa global.'},
+    {stem:'Feno mofado e dejetos de aves compartilham qual mecanismo de doença pulmonar?',choices:[['Pneumonite de hipersensibilidade por antígeno orgânico inalado',1],['Fibrose por partícula mineral inorgânica',0],['Obstrução mecânica direta da via aérea',0],['Infecção bacteriana crônica',0]],
+      good:'<b>Antígeno orgânico.</b> Ambos sensibilizam o pulmão por via imunológica — "pulmão do fazendeiro" e "pulmão do criador de aves" são a mesma família de doença.',bad:'Não é poeira mineral (isso é sílica/asbesto); é reação imune a antígeno orgânico repetido.'},
+    {stem:'Poeira orgânica de cana, algodão e grãos na colheita/beneficiamento causa principalmente:',choices:[['Bronquite/asma relacionada à poeira vegetal',1],['Placas pleurais calcificadas',0],['Granuloma não caseoso símile-sarcoidose',0],['Nódulos com calcificação em casca de ovo',0]],
+      good:'<b>Via aérea.</b> A poeira vegetal irrita e inflama brônquios, gerando quadro obstrutivo/bronquítico recorrente com a exposição.',bad:'Placas pleurais são do asbesto; granuloma é do berílio — mecanismos minerais, não vegetais.'},
+    {stem:'Na anamnese ocupacional rural, o agrotóxico deve ser investigado como:',choices:[['Irritante respiratório e risco tóxico sistêmico, não só "produto agrícola"',1],['Substância inofensiva se aplicada por profissional',0],['Risco exclusivamente dermatológico',0],['Fator irrelevante para o pulmão',0]],
+      good:'<b>Irritante e tóxico.</b> Defensivos agrícolas agridem a via aérea diretamente e podem ter efeito sistêmico, além do EPI frequentemente inadequado no campo.',bad:'Reduzir agrotóxico a "risco de pele" ignora o efeito irritativo direto sobre a via aérea.'}
   ]
 },
 {

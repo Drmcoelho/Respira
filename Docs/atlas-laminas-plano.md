@@ -5,7 +5,7 @@ Escopo: expansao do `atlas.html` a partir do estado atual confirmado.
 
 > **Status (2026-07-05): "Lote 1" (as dez laminas abaixo) foi concluido.** `atlas.html` agora tem 15 laminas: modulos 01-10, Ponte Funcional RF1-4 e Ocupacional RO1. As pranchas correspondentes existem em `assets/figuras/`. O plano abaixo permanece como registro do que foi decidido e executado.
 >
-> **Atualizacao (2026-07-05, mesma data): parte do "lote seguinte" tambem foi concluida.** RO2 (Poeiras minerais), RO4 (Solda, tinta e asma ocupacional), RO5 (Silicose acelerada do jateamento) e RO6 (DPOC da biomassa) ganharam lamina, arquivo `.webp` em `assets/figuras/respira-ocupacional-0{2,4,5,6}.webp` e entrada completa em `atlas.html` (paineis + quiz). `atlas.html` tem agora 19 laminas. **Pendencia remanescente: RO3 (Pulmao rural e biomassa)** ainda nao tem lamina — e o unico item do lote original que falta para fechar RO1-RO6 no Atlas.
+> **Atualizacao (2026-07-05, mesma data): o "lote seguinte" foi concluido.** RO2 (Poeiras minerais), RO3 (Pulmao rural e biomassa), RO4 (Solda, tinta e asma ocupacional), RO5 (Silicose acelerada do jateamento) e RO6 (DPOC da biomassa) ganharam lamina, arquivo `.webp` em `assets/figuras/respira-ocupacional-0{2,3,4,5,6}.webp` e entrada completa em `atlas.html` (paineis + quiz). `atlas.html` tem agora 20 laminas: os 10 modulos Respira, RF1-4 e **RO1-RO6 completo**. Nao ha mais pendencia de lamina no bloco Ocupacional.
 
 ## Estado atual do Atlas
 
