@@ -85,6 +85,14 @@ Bloco **aditivo**, lido após a Ponte Funcional e antes das síndromes. Foco na 
 | RO-05 | Silicose acelerada do jateamento | `respira-ocupacional-05-silicose-jateamento.html` |
 | RO-06 | DPOC da biomassa | `respira-ocupacional-06-dpoc-biomassa.html` |
 
+### Respira · Ocupacional · Exploração
+
+Adendo **transversal** ao bloco Ocupacional: não substitui nem renumera RO-01 a RO-06, mas cruza o raciocínio entre eles. Seis lâminas de leitura/raciocínio (radiografia, TC, linha do tempo exposição-sintoma, função pulmonar como mapa, caso integrador, observação clínica), cada uma com banco de questões próprio — múltipla escolha, dissertativa e verdadeiro/falso comentado, em dificuldade crescente.
+
+Arquivo (raiz, canônico): `respira-ocupacional-exploracao.html`.
+
+Figuras: `assets/figuras/exploracao-01-radiografia-mecanismo.webp` a `exploracao-06-observacao-clinica-imagem.webp`.
+
 ## Ventila
 
 Ventila usa os arquivos de raiz como canônicos publicados:

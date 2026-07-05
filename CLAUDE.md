@@ -338,6 +338,7 @@ Manter vivos:
 - `mvp1-interativo.html` a `mvp10-interativo.html`
 - `respira-ponte-01-*.html` a `respira-ponte-04-*.html`
 - `respira-ocupacional-01-*.html` a `respira-ocupacional-06-*.html`
+- `respira-ocupacional-exploracao.html`
 - aliases/wrappers existentes em `/modules/`
 
 Ao criar rota nova, preferir adicionar, não substituir.

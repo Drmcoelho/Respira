@@ -225,6 +225,9 @@ Respira:
 
 - `index.html`
 - `mvp1-interativo.html` a `mvp10-interativo.html`
+- `respira-ponte-01-*.html` a `respira-ponte-04-*.html`
+- `respira-ocupacional-01-*.html` a `respira-ocupacional-06-*.html`
+- `respira-ocupacional-exploracao.html` — banco de questões transversal do bloco Ocupacional
 - aliases/wrappers em `/modules/` quando existirem
 - arquivos auxiliares em `assets/` e `data/` quando já estiverem presentes
 
