@@ -1,0 +1,211 @@
+version: 1
+project: Ventila Atlas 00-29
+status: acquisition-and-production
+policy: Docs/VENTILA-IMAGE-LIBRARY.md
+
+source_registry:
+  drive:
+    - id: drive-pilbeam-8e
+      title: Pilbeams Mechanical Ventilation 8th ed 2024
+      file_id: 1UniOn0KVvUA0AapjoWL-3VO7Ip9SQ8FO
+      role: private_reference_only
+      redistribution: prohibited_without_permission
+    - id: drive-pilbeam-6e
+      title: Pilbeam's Mechanical Ventilation — Physiological and Clinical Applications, 6e
+      file_id: 1cTBZrb8NJ7NX4ermeOBoM-UrATd8pWHJ
+      role: private_reference_only
+      redistribution: prohibited_without_permission
+    - id: drive-mechvent-physiology-practice
+      title: Mechanical Ventilation — Physiology and Practice
+      file_id: 1FnYLvjBA9VrQv9Fv1c1-FOR-KEEb9b6j
+      role: private_reference_only
+      redistribution: prohibited_without_permission
+  open:
+    - id: openstax-breathing
+      title: OpenStax Anatomy and Physiology — Process of Breathing
+      url: https://openstax.org/books/anatomy-and-physiology/pages/22-3-the-process-of-breathing
+      license: CC-BY
+      use: anatomy_and_mechanics_reference
+    - id: openstax-lungs
+      title: OpenStax Anatomy and Physiology — The Lungs
+      url: https://openstax.org/books/anatomy-and-physiology/pages/22-2-the-lungs
+      license: CC-BY
+      use: pulmonary_anatomy_reference
+    - id: cdc-phil-normal-cxr
+      title: CDC PHIL 17298 — normal PA chest radiograph
+      url: https://wwwn.cdc.gov/phil/Details.aspx?pid=17298
+      license: public_domain
+      use: radiology_reference
+    - id: cdc-phil-atelectasis
+      title: CDC PHIL 6242 — atelectasis and bronchiectasis
+      url: https://wwwn.cdc.gov/phil/Details.aspx?pid=6242
+      license: public_domain
+      use: radiology_reference
+    - id: cdc-phil-bronchiectasis
+      title: CDC PHIL 23981 — bronchiectasis
+      url: https://wwwn.cdc.gov/phil/Details.aspx?pid=23981
+      license: public_domain
+      use: radiology_reference
+    - id: commons-flow-time
+      title: Wikimedia Commons — Ventilator waveforms flow-time
+      url: https://commons.wikimedia.org/wiki/File:Ventilatorwaveformsflowtime.jpg
+      license: verify_on_file_page
+      use: waveform_reference_not_final_overlay
+    - id: commons-ventilator-circuit
+      title: Wikimedia Commons — Biology of ventilation
+      url: https://commons.wikimedia.org/wiki/File:Biology_of_ventilation.gif
+      license: verify_on_file_page
+      use: circuit_and_gas_exchange_reference
+    - id: pmc-waveforms
+      title: The Basics of Ventilator Waveforms
+      url: https://pmc.ncbi.nlm.nih.gov/articles/PMC7782574/
+      license: verify_article_and_figure_specific_terms
+      use: scientific_reference_only_unless_figure_license_allows
+
+production_rules:
+  final_plate:
+    aspect_ratio: '4:3'
+    raster_px: [1448, 1086]
+    format: webp
+  generated_base:
+    text: none_or_short_symbols
+    final_labels: deterministic_svg_overlay
+  curves_loops_formulas:
+    method: deterministic_svg_or_canvas
+  radiology:
+    method: licensed_real_image_or_clearly_schematic_redraw
+  private_books:
+    method: understand_compare_and_redraw_original
+
+modules:
+  - id: V00
+    slug: gramatica-da-maquina
+    thesis: Todo modo é um contrato; a variável garantida cria uma variável livre.
+    assets:
+      - {kind: generated_plate, status: planned, destination: assets/ventila/atlas/v00-gramatica-da-maquina.webp}
+      - {kind: deterministic_overlay, status: planned, destination: assets/ventila/overlays/v00-gramatica-da-maquina.svg}
+    references: [drive-pilbeam-8e, drive-pilbeam-6e, commons-ventilator-circuit]
+  - id: V01
+    slug: indicacao-e-falha
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V02
+    slug: maquina-circuito-tubo-paciente
+    assets: [{kind: generated_plate, status: planned}, {kind: equipment_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, commons-ventilator-circuit]
+  - id: V03
+    slug: curvas-pressao-fluxo-volume
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, pmc-waveforms, commons-flow-time]
+  - id: V04
+    slug: loops
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_loops, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, pmc-waveforms]
+  - id: V05
+    slug: vcv-por-dentro
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, drive-pilbeam-6e]
+  - id: V06
+    slug: pcv-por-dentro
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, drive-pilbeam-6e]
+  - id: V07
+    slug: hibridos-prvc
+    assets: [{kind: generated_plate, status: planned}, {kind: control_loop_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V08
+    slug: espontaneos-psv-cpap-simv
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V09
+    slug: assincronias
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_neural_and_ventilator_traces, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, pmc-waveforms]
+  - id: V10
+    slug: sedacao-analgesia-bloqueio
+    assets: [{kind: generated_plate, status: planned}, {kind: mechanism_icons, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V11
+    slug: fenotipos-plano
+    assets: [{kind: generated_plate, status: planned}, {kind: classifier_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V12
+    slug: desmame-extubacao-falha
+    assets: [{kind: generated_plate, status: planned}, {kind: load_capacity_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V13
+    slug: traqueostomia
+    assets: [{kind: generated_plate, status: planned}, {kind: airway_anatomy_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, openstax-lungs]
+  - id: V14
+    slug: pulmao-na-tela
+    assets: [{kind: generated_plate, status: planned}, {kind: heterogeneous_alveoli_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, openstax-lungs]
+  - id: V15
+    slug: psv-vcv-pcv
+    assets: [{kind: generated_plate, status: planned}, {kind: comparative_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, drive-pilbeam-6e]
+  - id: V16
+    slug: tutor-adaptativo
+    assets: [{kind: generated_plate, status: planned}, {kind: prerequisite_graph_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: []
+  - id: V17
+    slug: sdra-recrutabilidade
+    assets: [{kind: generated_plate, status: planned}, {kind: baby_lung_svg, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, cdc-phil-atelectasis]
+  - id: V18
+    slug: obstrutivo-grave
+    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, cdc-phil-bronchiectasis, pmc-waveforms]
+  - id: V19
+    slug: coracao-pulmao-vd
+    assets: [{kind: generated_plate, status: planned}, {kind: pvr_curve_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V20
+    slug: neuroventilacao
+    assets: [{kind: generated_plate, status: planned}, {kind: cerebral_flow_curve_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V21
+    slug: prona-e-resgate
+    assets: [{kind: generated_plate, status: planned}, {kind: supine_prone_distribution_svg, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V22
+    slug: aprv
+    assets: [{kind: generated_plate, status: planned}, {kind: aprv_timeline_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V23
+    slug: ecmo-e-ecco2r
+    assets: [{kind: generated_plate, status: planned}, {kind: extracorporeal_circuit_svg, status: planned}, {kind: equipment_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V24
+    slug: obesidade-gestacao-abdome
+    assets: [{kind: generated_plate, status: planned}, {kind: springs_and_transpulmonary_pressure_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, openstax-breathing]
+  - id: V25
+    slug: pediatria-neonatologia
+    assets: [{kind: generated_plate, status: planned}, {kind: scale_and_resistance_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, pmc-waveforms]
+  - id: V26
+    slug: transporte-e-contingencia
+    assets: [{kind: generated_plate, status: planned}, {kind: equipment_reference, status: search}, {kind: oxygen_battery_budget_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e]
+  - id: V27
+    slug: restritivo-pequeno-duro
+    assets: [{kind: generated_plate, status: planned}, {kind: pressure_volume_curve_svg, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, cdc-phil-normal-cxr]
+  - id: V28
+    slug: pulmao-misto
+    assets: [{kind: generated_plate, status: planned}, {kind: combined_waveforms_and_loops, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, cdc-phil-bronchiectasis]
+  - id: V29
+    slug: ocupacional-na-uti
+    assets: [{kind: generated_plate, status: planned}, {kind: exposure_timeline_svg, status: planned}, {kind: radiology_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    references: [drive-pilbeam-8e, cdc-phil-bronchiectasis]
+
+transversal:
+  - id: X01
+    slug: mapa-respira-ventila
+    assets: [{kind: causal_network_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+  - id: X02
+    slug: mapa-hexapode
+    assets: [{kind: system_map_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
