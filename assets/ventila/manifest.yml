@@ -104,7 +104,7 @@ modules:
     references: [drive-pilbeam-8e, pmc-waveforms, commons-flow-time]
   - id: V04
     slug: loops
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_loops, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v04-loops.svg, catalog_id: HEX-VENT-V04-PLATE}, {kind: deterministic_loops, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, pmc-waveforms]
   - id: V05
     slug: vcv-por-dentro
@@ -116,7 +116,7 @@ modules:
     references: [drive-pilbeam-8e, drive-pilbeam-6e]
   - id: V07
     slug: hibridos-prvc
-    assets: [{kind: generated_plate, status: planned}, {kind: control_loop_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v07-hibridos-prvc.svg, catalog_id: HEX-VENT-V07-PLATE}, {kind: control_loop_svg, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e]
   - id: V08
     slug: espontaneos-psv-cpap-simv
