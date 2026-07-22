@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">V02 — Máquina, circuito, tubo e paciente</title>
+  <desc id="desc">Prancha didática que representa a cadeia ventilador-circuito-tubo-paciente, os pontos de medição e as fontes de resistência, complacência e vazamento.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.ink{fill:#25333a}.petrol{fill:#146c72}.amber{fill:#e3a323}.soft{fill:#e9f3f3}.warn{fill:#fff3d6}.line{stroke:#25333a;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;fill:none}.flow{stroke:#146c72;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;fill:none}.leak{stroke:#e3a323;stroke-width:8;stroke-linecap:round;fill:none;stroke-dasharray:14 12}.txt{font-family:Inter,Arial,sans-serif;fill:#25333a}.h1{font-size:56px;font-weight:800}.h2{font-size:30px;font-weight:700}.body{font-size:24px;font-weight:500}.small{font-size:20px}.white{fill:#fff}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#146c72"/></marker>
+    <marker id="amberArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e3a323"/></marker>
+  </defs>
+  <rect class="bg" width="1448" height="1086"/>
+  <text x="72" y="92" class="txt h1">V02 · Máquina → circuito → tubo → paciente</text>
+  <text x="72" y="137" class="txt body">A pressão exibida é o resultado de uma cadeia inteira; interpretar exige localizar onde ela foi criada e onde foi perdida.</text>
+
+  <rect x="55" y="196" width="300" height="650" rx="34" class="soft"/>
+  <rect x="397" y="196" width="300" height="650" rx="34" class="warn"/>
+  <rect x="739" y="196" width="300" height="650" rx="34" class="soft"/>
+  <rect x="1081" y="196" width="310" height="650" rx="34" class="warn"/>
+
+  <text x="205" y="250" text-anchor="middle" class="txt h2">MÁQUINA</text>
+  <rect x="115" y="304" width="180" height="235" rx="22" class="ink"/>
+  <rect x="141" y="332" width="128" height="82" rx="10" class="petrol"/>
+  <path d="M155 385c25-42 45-42 70 0s45 42 66 0" stroke="#fff" stroke-width="6" fill="none"/>
+  <circle cx="164" cy="468" r="18" class="amber"/>
+  <circle cx="225" cy="468" r="18" fill="#fff"/>
+  <text x="93" y="612" class="txt body">Gera:</text>
+  <text x="93" y="650" class="txt small">pressão · fluxo · volume</text>
+  <text x="93" y="686" class="txt small">tempo · alarmes</text>
+  <text x="93" y="748" class="txt body">Mede proximalmente</text>
+  <text x="93" y="782" class="txt small">ao próprio equipamento.</text>
+
+  <text x="547" y="250" text-anchor="middle" class="txt h2">CIRCUITO</text>
+  <path d="M445 370c55-62 150-62 205 0s55 126 0 188-150 62-205 0-55-126 0-188Z" class="line"/>
+  <path d="M473 395c43-40 104-40 148 0s43 95 0 136-105 40-148 0-43-96 0-136Z" class="flow"/>
+  <path d="M475 620h150" class="leak" marker-end="url(#amberArrow)"/>
+  <text x="427" y="680" class="txt body">Pode acrescentar:</text>
+  <text x="427" y="718" class="txt small">complacência compressível</text>
+  <text x="427" y="752" class="txt small">resistência · condensado</text>
+  <text x="427" y="786" class="txt small">vazamento · desconexão</text>
+
+  <text x="889" y="250" text-anchor="middle" class="txt h2">TUBO</text>
+  <path d="M805 330h84c52 0 87 38 87 92v172" class="line"/>
+  <path d="M827 360h61c29 0 50 23 50 58v176" class="flow" marker-end="url(#arrow)"/>
+  <ellipse cx="957" cy="613" rx="58" ry="34" class="amber"/>
+  <path d="M951 646v71" class="line"/>
+  <text x="777" y="680" class="txt body">É um resistor variável:</text>
+  <text x="777" y="718" class="txt small">diâmetro · comprimento</text>
+  <text x="777" y="752" class="txt small">secreção · dobra · mordida</text>
+  <text x="777" y="786" class="txt small">posição e cuff.</text>
+
+  <text x="1236" y="250" text-anchor="middle" class="txt h2">PACIENTE</text>
+  <path d="M1165 350c-40 28-55 98-39 158 12 44 36 71 67 71 28 0 51-24 62-65 15-60 1-133-40-164" class="line"/>
+  <path d="M1306 350c40 28 55 98 39 158-12 44-36 71-67 71-28 0-51-24-62-65-15-60-1-133 40-164" class="line"/>
+  <path d="M1236 314v230" class="flow"/>
+  <path d="M1139 635h194" class="line"/>
+  <path d="M1160 635v-87M1210 635v-126M1260 635v-173M1310 635v-101" stroke="#146c72" stroke-width="22"/>
+  <text x="1115" y="700" class="txt body">Entrega a resposta:</text>
+  <text x="1115" y="738" class="txt small">resistência das vias</text>
+  <text x="1115" y="772" class="txt small">complacência do sistema</text>
+  <text x="1115" y="806" class="txt small">esforço muscular próprio.</text>
+
+  <path d="M355 475h42M697 475h42M1039 475h42" class="flow" marker-end="url(#arrow)"/>
+
+  <rect x="87" y="891" width="1274" height="119" rx="28" class="ink"/>
+  <text x="724" y="938" text-anchor="middle" class="txt body white">Equação mental de beira-leito</text>
+  <text x="724" y="980" text-anchor="middle" class="txt h2 white">Pressão total = componente resistivo + componente elástico + PEEP ± esforço do paciente</text>
+</svg>
