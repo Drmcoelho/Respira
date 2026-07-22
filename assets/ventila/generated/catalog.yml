@@ -68,7 +68,7 @@ assets:
     status: completed
     file: v07-hibridos-prvc.svg
     kind: original_vector_plate
-    alt_text: Prancha mostrando o laço de controle do PRVC, a adaptação da pressão entre ciclos e a interferência do esforço espontâneo sobre o volume medido.
+    alt_text: Prancha mostrando o laco de controle do PRVC, a adaptacao da pressao entre ciclos e a interferencia do esforco espontaneo sobre o volume medido.
     learning_objectives:
       - explicar que o PRVC ajusta pressao entre ciclos para perseguir volume-alvo
       - distinguir volume-alvo de volume garantido em cada ciclo
@@ -77,9 +77,39 @@ assets:
       Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Show a closed adaptive control loop linking target volume, controller, applied inspiratory pressure and measured expired volume. Add a four-cycle sequence with pressure adjustments approaching target, plus a warning panel showing spontaneous effort increasing measured volume and leading the controller to reduce pressure. No manufacturer branding, no radiography, deterministic Portuguese labels.
     linked_modules: [V05, V06, V07, V08, V09, V15]
     commit: bfb97710820fb4059d47111b7c631ab77ca41a67
+  - id: HEX-VENT-V08-PLATE
+    module: V08
+    title: Modos espontaneos PSV CPAP SIMV
+    status: completed
+    file: v08-espontaneos-psv-cpap-simv.svg
+    kind: original_vector_plate
+    alt_text: Prancha em tres colunas comparando PSV, CPAP e SIMV segundo quem dispara, qual variavel e limitada, quem cicla e como o esforco altera fluxo e volume.
+    learning_objectives:
+      - distinguir a divisao do trabalho respiratorio em PSV CPAP e SIMV
+      - identificar trigger limite e ciclagem de cada estrategia
+      - reconhecer que o nome do modo nao quantifica o esforco do paciente
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Three-column causal comparison of PSV, CPAP and SIMV. For each mode show patient effort, ventilator contribution, trigger, limiting variable, cycling rule and a simplified synchronized trace. Anonymous patient icon, generic ventilator, no branding, no radiography, concise deterministic Portuguese labels, clinically exact division of respiratory work.
+    linked_modules: [V01, V05, V06, V07, V08, V09, V12, V15]
+    commit: 4ba2596f344ea70dbf1da4b76da9e6664d34ae62
+  - id: HEX-VENT-V09-PLATE
+    module: V09
+    title: Assincronias paciente ventilador
+    status: completed
+    file: v09-assincronias.svg
+    kind: original_vector_plate
+    alt_text: Prancha comparando esforco neural e entrega do ventilador em esforco ineficaz, auto-trigger, duplo disparo, fome de fluxo e ciclagem tardia.
+    learning_objectives:
+      - comparar temporalmente intencao neural e resposta mecanica
+      - reconhecer cinco assincronias frequentes e seus mecanismos
+      - relacionar cada padrao a causas provaveis e ajustes direcionados
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Parallel traces use amber for patient neural effort and petrol for ventilator delivery. Five panels: ineffective effort, auto-trigger, double trigger, flow starvation and late cycling. Show causal timing mismatch, concise mechanism and correction cue. No commercial ventilator interface, no radiography, deterministic Portuguese labels and precise waveform geometry.
+    linked_modules: [V02, V03, V04, V05, V06, V07, V08, V09, V10, V12, V15, V18]
+    commit: 0278eca21ed1add963f131ddc10ae30ef1797782
 progress:
-  completed: 4
+  completed: 6
   target: 600
   next_candidates:
-    - V08 generated_plate
-    - V09 generated_plate
+    - V10 generated_plate
+    - V11 generated_plate
