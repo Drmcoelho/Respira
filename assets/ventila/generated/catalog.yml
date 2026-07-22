@@ -47,9 +47,39 @@ assets:
       Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Four connected stations from left to right: mechanical ventilator, breathing circuit, endotracheal tube with cuff, and anonymous schematic lungs. Show directional airflow, measurement points, circuit compliance and leak, tube resistance and patient resistance-compliance-effort. Include a deterministic bottom equation panel. No photorealism, no manufacturer branding, no radiography, clean vector geometry, precise clinical causality.
     linked_modules: [V02, V03, V05, V06, V09]
     commit: 8ba8a4d6b007bf43d9a8c8c8e71f3641b9a7cad5
+  - id: HEX-VENT-V04-PLATE
+    module: V04
+    title: Loops ventilatorios
+    status: completed
+    file: v04-loops.svg
+    kind: original_vector_plate
+    alt_text: Prancha comparando loops pressao-volume e fluxo-volume, com sinais de complacencia alterada, resistencia, recrutamento, sobredistensao e aprisionamento.
+    learning_objectives:
+      - relacionar inclinacao do loop pressao-volume com complacencia
+      - reconhecer concavidade expiratoria como sinal de obstrucao
+      - identificar fechamento incompleto como aprisionamento e auto-PEEP
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Two large deterministic panels: pressure-volume loop and flow-volume loop. Compare normal geometry with low compliance, increased resistance, recruitment, overdistension and incomplete expiratory closure. No radiography, no photorealistic patient, concise Portuguese labels, clinical causality before decoration.
+    linked_modules: [V03, V04, V09, V17, V18, V27, V28]
+    commit: 8dc7e3c2d6d5149b64fbe8f0d84b54b5680b810f
+  - id: HEX-VENT-V07-PLATE
+    module: V07
+    title: PRVC e controle adaptativo
+    status: completed
+    file: v07-hibridos-prvc.svg
+    kind: original_vector_plate
+    alt_text: Prancha mostrando o laço de controle do PRVC, a adaptação da pressão entre ciclos e a interferência do esforço espontâneo sobre o volume medido.
+    learning_objectives:
+      - explicar que o PRVC ajusta pressao entre ciclos para perseguir volume-alvo
+      - distinguir volume-alvo de volume garantido em cada ciclo
+      - reconhecer como maior esforco espontaneo pode reduzir a pressao entregue
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Show a closed adaptive control loop linking target volume, controller, applied inspiratory pressure and measured expired volume. Add a four-cycle sequence with pressure adjustments approaching target, plus a warning panel showing spontaneous effort increasing measured volume and leading the controller to reduce pressure. No manufacturer branding, no radiography, deterministic Portuguese labels.
+    linked_modules: [V05, V06, V07, V08, V09, V15]
+    commit: bfb97710820fb4059d47111b7c631ab77ca41a67
 progress:
-  completed: 2
+  completed: 4
   target: 600
   next_candidates:
-    - V04 generated_plate
-    - V07 generated_plate
+    - V08 generated_plate
+    - V09 generated_plate
