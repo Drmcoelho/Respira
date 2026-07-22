@@ -1,0 +1,55 @@
+version: 1
+project: Hexapode visual production
+parent_manifest: ../manifest.yml
+updated_at: 2026-07-22
+style_system:
+  canvas: [1448, 1086]
+  aspect_ratio: '4:3'
+  palette:
+    petrol: '#146c72'
+    amber: '#e3a323'
+    graphite: '#25333a'
+    white: '#ffffff'
+  visual_language: flat_vector_medical_infographic
+  rules:
+    - anonymous schematic anatomy
+    - no photorealistic patient
+    - deterministic labels and typography
+    - clinical causality before decoration
+assets:
+  - id: HEX-VENT-V01-PLATE
+    module: V01
+    title: Indicacao e falha do suporte ventilatorio
+    status: completed
+    file: v01-indicacao-e-falha.svg
+    kind: original_vector_plate
+    alt_text: Prancha em tres colunas mostrando desequilibrio entre demanda e capacidade respiratoria, escalada do suporte e criterios clinicos de falha.
+    learning_objectives:
+      - reconhecer indicacao pela relacao demanda-capacidade
+      - estabelecer meta, janela de resposta e criterio de falha
+      - reconhecer falha como tendencia clinica convergente
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Three-column causal storyboard: respiratory demand exceeding patient capacity; rational escalation from oxygen to noninvasive support to invasive ventilation; failure recognized through rising work of breathing, absent gas-exchange response, instability and declining consciousness. Anonymous schematic lungs, clean line icons, no realistic face, no radiography, concise Portuguese labels added deterministically, strong visual hierarchy and clinically exact relationships.
+    linked_modules: [V01, V08, V12]
+    commit: 6f53f1f085da80ece82c676ce7d8be50f2de12a1
+  - id: HEX-VENT-V02-PLATE
+    module: V02
+    title: Maquina circuito tubo paciente
+    status: completed
+    file: v02-maquina-circuito-tubo-paciente.svg
+    kind: original_vector_plate
+    alt_text: Prancha mostrando a cadeia ventilador, circuito, tubo e paciente, com fontes de resistencia, complacencia, vazamento e esforço muscular.
+    learning_objectives:
+      - localizar onde pressao e fluxo sao gerados e medidos
+      - distinguir resistencia do tubo, perdas do circuito e mecanica do paciente
+      - aplicar a equacao mental da pressao total a beira-leito
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Four connected stations from left to right: mechanical ventilator, breathing circuit, endotracheal tube with cuff, and anonymous schematic lungs. Show directional airflow, measurement points, circuit compliance and leak, tube resistance and patient resistance-compliance-effort. Include a deterministic bottom equation panel. No photorealism, no manufacturer branding, no radiography, clean vector geometry, precise clinical causality.
+    linked_modules: [V02, V03, V05, V06, V09]
+    commit: 8ba8a4d6b007bf43d9a8c8c8e71f3641b9a7cad5
+progress:
+  completed: 2
+  target: 600
+  next_candidates:
+    - V04 generated_plate
+    - V07 generated_plate
