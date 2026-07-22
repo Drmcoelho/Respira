@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">Loops ventilatórios: pressão-volume e fluxo-volume</title>
+  <desc id="desc">Prancha didática comparando loops pressão-volume e fluxo-volume normais e alterados, destacando complacência, resistência, hiperinsuflação e recrutamento.</desc>
+  <rect width="1448" height="1086" fill="#ffffff"/>
+  <style>.t{font-family:Arial,sans-serif;fill:#25333a}.h{font-size:44px;font-weight:700}.s{font-size:24px}.l{font-size:20px}.axis{stroke:#25333a;stroke-width:4}.grid{stroke:#d7dfe2;stroke-width:2}.petrol{stroke:#146c72;fill:none;stroke-width:10}.amber{stroke:#e3a323;fill:none;stroke-width:10}.soft{fill:#eef6f7;stroke:#146c72;stroke-width:3}.warn{fill:#fff7df;stroke:#e3a323;stroke-width:3}</style>
+  <text x="80" y="85" class="t h">V04 — Loops: forma, mecânica e diagnóstico</text>
+  <text x="80" y="125" class="t s">A geometria do ciclo revela complacência, resistência, aprisionamento e sobredistensão.</text>
+  <rect x="60" y="165" width="640" height="730" rx="24" class="soft"/>
+  <rect x="748" y="165" width="640" height="730" rx="24" class="soft"/>
+  <text x="95" y="220" class="t s">Loop pressão × volume</text>
+  <line x1="150" y1="780" x2="620" y2="780" class="axis"/><line x1="150" y1="780" x2="150" y2="300" class="axis"/>
+  <text x="520" y="825" class="t l">Pressão</text><text x="78" y="330" class="t l" transform="rotate(-90 78 330)">Volume</text>
+  <path d="M180 750 C230 710 300 620 350 470 C400 340 500 300 560 360 C610 420 560 540 470 610 C380 680 280 735 180 750Z" class="petrol"/>
+  <path d="M180 750 C250 740 330 700 420 620 C520 530 600 520 620 570 C645 635 560 710 460 740 C350 770 250 770 180 750Z" class="amber"/>
+  <text x="205" y="360" class="t l">↑ complacência: curva mais à esquerda</text>
+  <text x="265" y="690" class="t l">↓ complacência: curva achatada</text>
+  <line x1="505" y1="335" x2="575" y2="300" stroke="#e3a323" stroke-width="5"/><text x="585" y="300" class="t l">sobredistensão</text>
+  <line x1="210" y1="710" x2="235" y2="650" stroke="#e3a323" stroke-width="5"/><text x="245" y="645" class="t l">recrutamento</text>
+  <text x="785" y="220" class="t s">Loop fluxo × volume</text>
+  <line x1="835" y1="565" x2="1305" y2="565" class="axis"/><line x1="835" y1="780" x2="835" y2="300" class="axis"/>
+  <text x="1190" y="825" class="t l">Volume</text><text x="785" y="345" class="t l" transform="rotate(-90 785 345)">Fluxo</text>
+  <path d="M850 560 C900 350 1040 285 1190 390 C1270 445 1280 520 1235 560 C1180 610 1060 690 900 710 C860 685 845 625 850 560Z" class="petrol"/>
+  <path d="M850 560 C890 390 1010 340 1130 420 C1200 470 1220 520 1190 560 C1120 590 1050 610 980 650 C930 685 885 700 850 680Z" class="amber"/>
+  <text x="905" y="330" class="t l">pico expiratório reduzido</text>
+  <text x="1010" y="720" class="t l">concavidade = obstrução</text>
+  <line x1="870" y1="565" x2="870" y2="730" stroke="#e3a323" stroke-width="5" stroke-dasharray="10 8"/><text x="885" y="755" class="t l">não fecha em zero: aprisionamento</text>
+  <rect x="80" y="930" width="1288" height="105" rx="18" class="warn"/>
+  <text x="110" y="975" class="t s">Leitura causal:</text><text x="300" y="975" class="t l">largura = resistência; inclinação = complacência; área = trabalho; fechamento incompleto = auto-PEEP.</text>
+  <text x="110" y="1010" class="t l">Nunca interprete um loop sem conferir escala, direção do traçado e contexto do ciclo.</text>
+</svg>
