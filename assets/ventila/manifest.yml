@@ -87,11 +87,16 @@ modules:
     references: [drive-pilbeam-8e, drive-pilbeam-6e, commons-ventilator-circuit]
   - id: V01
     slug: indicacao-e-falha
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets:
+      - {kind: generated_plate, status: completed, destination: assets/ventila/generated/v01-indicacao-e-falha.svg, catalog_id: HEX-VENT-V01-PLATE}
+      - {kind: deterministic_overlay, status: planned}
     references: [drive-pilbeam-8e]
   - id: V02
     slug: maquina-circuito-tubo-paciente
-    assets: [{kind: generated_plate, status: planned}, {kind: equipment_reference, status: search}, {kind: deterministic_overlay, status: planned}]
+    assets:
+      - {kind: generated_plate, status: completed, destination: assets/ventila/generated/v02-maquina-circuito-tubo-paciente.svg, catalog_id: HEX-VENT-V02-PLATE}
+      - {kind: equipment_reference, status: search}
+      - {kind: deterministic_overlay, status: planned}
     references: [drive-pilbeam-8e, commons-ventilator-circuit]
   - id: V03
     slug: curvas-pressao-fluxo-volume
