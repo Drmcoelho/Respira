@@ -120,11 +120,11 @@ modules:
     references: [drive-pilbeam-8e]
   - id: V08
     slug: espontaneos-psv-cpap-simv
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v08-espontaneos-psv-cpap-simv.svg, catalog_id: HEX-VENT-V08-PLATE}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e]
   - id: V09
     slug: assincronias
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_neural_and_ventilator_traces, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v09-assincronias.svg, catalog_id: HEX-VENT-V09-PLATE}, {kind: deterministic_neural_and_ventilator_traces, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, pmc-waveforms]
   - id: V10
     slug: sedacao-analgesia-bloqueio
