@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1448" height="1086" viewBox="0 0 1448 1086" role="img" aria-labelledby="title desc">
+  <title id="title">V01 — Indicação e falha do suporte ventilatório</title>
+  <desc id="desc">Prancha didática em três colunas mostrando demanda respiratória, capacidade do paciente e escalada racional do suporte quando a demanda supera a capacidade.</desc>
+  <defs>
+    <style>
+      .bg{fill:#fff}.ink{fill:#25333a}.petrol{fill:#146c72}.amber{fill:#e3a323}.soft{fill:#e9f3f3}.warn{fill:#fff3d6}.line{stroke:#25333a;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}.thin{stroke:#146c72;stroke-width:6;stroke-linecap:round;fill:none}.txt{font-family:Inter,Arial,sans-serif;fill:#25333a}.h1{font-size:56px;font-weight:800}.h2{font-size:32px;font-weight:700}.body{font-size:25px;font-weight:500}.small{font-size:21px}.white{fill:#fff}.dash{stroke-dasharray:16 14}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#146c72"/></marker>
+  </defs>
+  <rect class="bg" width="1448" height="1086"/>
+  <text x="72" y="92" class="txt h1">V01 · Indicação e falha</text>
+  <text x="72" y="137" class="txt body">Ventilar é corrigir um desequilíbrio entre demanda e capacidade — não apenas um número.</text>
+
+  <rect x="65" y="190" width="410" height="720" rx="34" class="soft"/>
+  <rect x="519" y="190" width="410" height="720" rx="34" class="warn"/>
+  <rect x="973" y="190" width="410" height="720" rx="34" class="soft"/>
+
+  <text x="105" y="250" class="txt h2">1 · Leia o desequilíbrio</text>
+  <path d="M190 350c-40 30-55 100-38 162 12 45 37 72 68 72 28 0 53-25 63-66 15-62 0-137-42-168" class="line"/>
+  <path d="M352 350c40 30 55 100 38 162-12 45-37 72-68 72-28 0-53-25-63-66-15-62 0-137 42-168" class="line"/>
+  <path d="M271 310v236" class="thin"/>
+  <path d="M126 675h288" class="line"/>
+  <rect x="146" y="614" width="106" height="61" rx="12" class="petrol"/>
+  <rect x="292" y="565" width="102" height="110" rx="12" class="amber"/>
+  <text x="155" y="713" class="txt small">CAPACIDADE</text>
+  <text x="303" y="713" class="txt small">DEMANDA</text>
+  <text x="105" y="785" class="txt body">Sinais convergentes:</text>
+  <text x="105" y="825" class="txt small">trabalho respiratório · consciência</text>
+  <text x="105" y="858" class="txt small">troca gasosa · fadiga · trajetória</text>
+
+  <text x="558" y="250" class="txt h2">2 · Teste o suporte</text>
+  <path d="M722 322v390" class="line"/>
+  <circle cx="722" cy="380" r="42" class="petrol"/>
+  <circle cx="722" cy="510" r="42" class="amber"/>
+  <circle cx="722" cy="640" r="42" class="ink"/>
+  <path d="M764 380h91M764 510h91M764 640h91" class="thin" marker-end="url(#arrow)"/>
+  <text x="552" y="390" class="txt body">Oxigênio</text>
+  <text x="552" y="520" class="txt body">VNI / alto fluxo</text>
+  <text x="552" y="650" class="txt body">Ventilação invasiva</text>
+  <text x="558" y="775" class="txt body">Cada etapa precisa de:</text>
+  <text x="558" y="815" class="txt small">meta explícita · janela curta · critério de falha</text>
+  <text x="558" y="855" class="txt small">e plano de escalada já preparado.</text>
+
+  <text x="1012" y="250" class="txt h2">3 · Reconheça a falha</text>
+  <path d="M1045 402c70-92 142-92 214 0s142 92 80-28" class="thin dash"/>
+  <path d="M1045 510c65-25 131-19 198 20s105 46 118 22" class="thin"/>
+  <path d="M1045 610h300" class="line"/>
+  <path d="M1090 610v-115M1160 610v-155M1230 610v-210M1300 610v-267" stroke="#e3a323" stroke-width="28"/>
+  <text x="1012" y="704" class="txt body">Falha é tendência, não surpresa:</text>
+  <text x="1012" y="745" class="txt small">esforço crescente</text>
+  <text x="1012" y="780" class="txt small">troca gasosa sem resposta</text>
+  <text x="1012" y="815" class="txt small">instabilidade ou rebaixamento</text>
+  <text x="1012" y="850" class="txt small">necessidade progressiva de suporte</text>
+
+  <rect x="128" y="946" width="1192" height="82" rx="25" class="ink"/>
+  <text x="724" y="998" text-anchor="middle" class="txt body white">Princípio: suporte insuficiente prolongado também é uma intervenção — e pode ser a errada.</text>
+</svg>
