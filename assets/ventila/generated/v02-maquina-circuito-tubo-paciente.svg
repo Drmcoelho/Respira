@@ -3,10 +3,10 @@
   <desc id="desc">Prancha didática que representa a cadeia ventilador-circuito-tubo-paciente, os pontos de medição e as fontes de resistência, complacência e vazamento.</desc>
   <defs>
     <style>
-      .bg{fill:#fff}.ink{fill:#25333a}.petrol{fill:#146c72}.amber{fill:#e3a323}.soft{fill:#e9f3f3}.warn{fill:#fff3d6}.line{stroke:#25333a;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;fill:none}.flow{stroke:#146c72;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;fill:none}.leak{stroke:#e3a323;stroke-width:8;stroke-linecap:round;fill:none;stroke-dasharray:14 12}.txt{font-family:Inter,Arial,sans-serif;fill:#25333a}.h1{font-size:56px;font-weight:800}.h2{font-size:30px;font-weight:700}.body{font-size:24px;font-weight:500}.small{font-size:20px}.white{fill:#fff}
+      .bg{fill:#F4EFE4}.ink{fill:#16383B}.petrol{fill:#2E6E8E}.amber{fill:#C0603A}.soft{fill:#F4EFE4}.warn{fill:#F4EFE43d6}.line{stroke:#16383B;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;fill:none}.flow{stroke:#2E6E8E;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;fill:none}.leak{stroke:#C0603A;stroke-width:8;stroke-linecap:round;fill:none;stroke-dasharray:14 12}.txt{font-family:Inter,Arial,sans-serif;fill:#16383B}.h1{font-size:56px;font-weight:800}.h2{font-size:30px;font-weight:700}.body{font-size:24px;font-weight:500}.small{font-size:20px}.white{fill:#fff}
     </style>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#146c72"/></marker>
-    <marker id="amberArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#e3a323"/></marker>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#2E6E8E"/></marker>
+    <marker id="amberArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#C0603A"/></marker>
   </defs>
   <rect class="bg" width="1448" height="1086"/>
   <text x="72" y="92" class="txt h1">V02 · Máquina → circuito → tubo → paciente</text>
@@ -20,9 +20,9 @@
   <text x="205" y="250" text-anchor="middle" class="txt h2">MÁQUINA</text>
   <rect x="115" y="304" width="180" height="235" rx="22" class="ink"/>
   <rect x="141" y="332" width="128" height="82" rx="10" class="petrol"/>
-  <path d="M155 385c25-42 45-42 70 0s45 42 66 0" stroke="#fff" stroke-width="6" fill="none"/>
+  <path d="M155 385c25-42 45-42 70 0s45 42 66 0" stroke="#F4EFE4" stroke-width="6" fill="none"/>
   <circle cx="164" cy="468" r="18" class="amber"/>
-  <circle cx="225" cy="468" r="18" fill="#fff"/>
+  <circle cx="225" cy="468" r="18" fill="#F4EFE4"/>
   <text x="93" y="612" class="txt body">Gera:</text>
   <text x="93" y="650" class="txt small">pressão · fluxo · volume</text>
   <text x="93" y="686" class="txt small">tempo · alarmes</text>
@@ -53,7 +53,7 @@
   <path d="M1306 350c40 28 55 98 39 158-12 44-36 71-67 71-28 0-51-24-62-65-15-60-1-133 40-164" class="line"/>
   <path d="M1236 314v230" class="flow"/>
   <path d="M1139 635h194" class="line"/>
-  <path d="M1160 635v-87M1210 635v-126M1260 635v-173M1310 635v-101" stroke="#146c72" stroke-width="22"/>
+  <path d="M1160 635v-87M1210 635v-126M1260 635v-173M1310 635v-101" stroke="#2E6E8E" stroke-width="22"/>
   <text x="1115" y="700" class="txt body">Entrega a resposta:</text>
   <text x="1115" y="738" class="txt small">resistência das vias</text>
   <text x="1115" y="772" class="txt small">complacência do sistema</text>

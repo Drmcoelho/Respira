@@ -3,9 +3,9 @@
   <desc id="desc">Prancha didática em três colunas mostrando demanda respiratória, capacidade do paciente e escalada racional do suporte quando a demanda supera a capacidade.</desc>
   <defs>
     <style>
-      .bg{fill:#fff}.ink{fill:#25333a}.petrol{fill:#146c72}.amber{fill:#e3a323}.soft{fill:#e9f3f3}.warn{fill:#fff3d6}.line{stroke:#25333a;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}.thin{stroke:#146c72;stroke-width:6;stroke-linecap:round;fill:none}.txt{font-family:Inter,Arial,sans-serif;fill:#25333a}.h1{font-size:56px;font-weight:800}.h2{font-size:32px;font-weight:700}.body{font-size:25px;font-weight:500}.small{font-size:21px}.white{fill:#fff}.dash{stroke-dasharray:16 14}
+      .bg{fill:#F4EFE4}.ink{fill:#16383B}.petrol{fill:#2E6E8E}.amber{fill:#C0603A}.soft{fill:#F4EFE4}.warn{fill:#F4EFE43d6}.line{stroke:#16383B;stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}.thin{stroke:#2E6E8E;stroke-width:6;stroke-linecap:round;fill:none}.txt{font-family:Inter,Arial,sans-serif;fill:#16383B}.h1{font-size:56px;font-weight:800}.h2{font-size:32px;font-weight:700}.body{font-size:25px;font-weight:500}.small{font-size:21px}.white{fill:#fff}.dash{stroke-dasharray:16 14}
     </style>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#146c72"/></marker>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#2E6E8E"/></marker>
   </defs>
   <rect class="bg" width="1448" height="1086"/>
   <text x="72" y="92" class="txt h1">V01 · Indicação e falha</text>
@@ -45,7 +45,7 @@
   <path d="M1045 402c70-92 142-92 214 0s142 92 80-28" class="thin dash"/>
   <path d="M1045 510c65-25 131-19 198 20s105 46 118 22" class="thin"/>
   <path d="M1045 610h300" class="line"/>
-  <path d="M1090 610v-115M1160 610v-155M1230 610v-210M1300 610v-267" stroke="#e3a323" stroke-width="28"/>
+  <path d="M1090 610v-115M1160 610v-155M1230 610v-210M1300 610v-267" stroke="#C0603A" stroke-width="28"/>
   <text x="1012" y="704" class="txt body">Falha é tendência, não surpresa:</text>
   <text x="1012" y="745" class="txt small">esforço crescente</text>
   <text x="1012" y="780" class="txt small">troca gasosa sem resposta</text>

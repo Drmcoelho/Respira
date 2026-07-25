@@ -5,11 +5,19 @@ updated_at: 2026-07-22
 style_system:
   canvas: [1448, 1086]
   aspect_ratio: '4:3'
+  palette_source: ../../../CODEX.md#3.2 (paleta semântica)
   palette:
-    petrol: '#146c72'
-    amber: '#e3a323'
-    graphite: '#25333a'
-    white: '#ffffff'
+    paper: '#F4EFE4'
+    paper_deep: '#EBE3D3'
+    ink: '#16383B'
+    ink_soft: '#4A6164'
+    machine_signal: '#2E6E8E'
+    gas_flow: '#3C7F86'
+    tissue_effort_cost: '#C0603A'
+    benefit_recruitment: '#4E7C5A'
+    harm_failure: '#B0503E'
+    alert: '#B8862F'
+    line_divider: '#D7CCB8'
   visual_language: flat_vector_medical_infographic
   rules:
     - anonymous schematic anatomy
@@ -29,7 +37,7 @@ assets:
       - estabelecer meta, janela de resposta e criterio de falha
       - reconhecer falha como tendencia clinica convergente
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Three-column causal storyboard: respiratory demand exceeding patient capacity; rational escalation from oxygen to noninvasive support to invasive ventilation; failure recognized through rising work of breathing, absent gas-exchange response, instability and declining consciousness. Anonymous schematic lungs, clean line icons, no realistic face, no radiography, concise Portuguese labels added deterministically, strong visual hierarchy and clinically exact relationships.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Three-column causal storyboard: respiratory demand exceeding patient capacity; rational escalation from oxygen to noninvasive support to invasive ventilation; failure recognized through rising work of breathing, absent gas-exchange response, instability and declining consciousness. Anonymous schematic lungs, clean line icons, no realistic face, no radiography, concise Portuguese labels added deterministically, strong visual hierarchy and clinically exact relationships.
     linked_modules: [V01, V08, V12]
     commit: 6f53f1f085da80ece82c676ce7d8be50f2de12a1
   - id: HEX-VENT-V02-PLATE
@@ -44,7 +52,7 @@ assets:
       - distinguir resistencia do tubo, perdas do circuito e mecanica do paciente
       - aplicar a equacao mental da pressao total a beira-leito
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Four connected stations from left to right: mechanical ventilator, breathing circuit, endotracheal tube with cuff, and anonymous schematic lungs. Show directional airflow, measurement points, circuit compliance and leak, tube resistance and patient resistance-compliance-effort. Include a deterministic bottom equation panel. No photorealism, no manufacturer branding, no radiography, clean vector geometry, precise clinical causality.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Four connected stations from left to right: mechanical ventilator, breathing circuit, endotracheal tube with cuff, and anonymous schematic lungs. Show directional airflow, measurement points, circuit compliance and leak, tube resistance and patient resistance-compliance-effort. Include a deterministic bottom equation panel. No photorealism, no manufacturer branding, no radiography, clean vector geometry, precise clinical causality.
     linked_modules: [V02, V03, V05, V06, V09]
     commit: 8ba8a4d6b007bf43d9a8c8c8e71f3641b9a7cad5
   - id: HEX-VENT-V04-PLATE
@@ -59,7 +67,7 @@ assets:
       - reconhecer concavidade expiratoria como sinal de obstrucao
       - identificar fechamento incompleto como aprisionamento e auto-PEEP
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Two large deterministic panels: pressure-volume loop and flow-volume loop. Compare normal geometry with low compliance, increased resistance, recruitment, overdistension and incomplete expiratory closure. No radiography, no photorealistic patient, concise Portuguese labels, clinical causality before decoration.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Two large deterministic panels: pressure-volume loop and flow-volume loop. Compare normal geometry with low compliance, increased resistance, recruitment, overdistension and incomplete expiratory closure. No radiography, no photorealistic patient, concise Portuguese labels, clinical causality before decoration.
     linked_modules: [V03, V04, V09, V17, V18, V27, V28]
     commit: 8dc7e3c2d6d5149b64fbe8f0d84b54b5680b810f
   - id: HEX-VENT-V07-PLATE
@@ -74,7 +82,7 @@ assets:
       - distinguir volume-alvo de volume garantido em cada ciclo
       - reconhecer como maior esforco espontaneo pode reduzir a pressao entregue
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode clinical palette in petrol blue, amber and graphite. Show a closed adaptive control loop linking target volume, controller, applied inspiratory pressure and measured expired volume. Add a four-cycle sequence with pressure adjustments approaching target, plus a warning panel showing spontaneous effort increasing measured volume and leading the controller to reduce pressure. No manufacturer branding, no radiography, deterministic Portuguese labels.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Show a closed adaptive control loop linking target volume, controller, applied inspiratory pressure and measured expired volume. Add a four-cycle sequence with pressure adjustments approaching target, plus a warning panel showing spontaneous effort increasing measured volume and leading the controller to reduce pressure. No manufacturer branding, no radiography, deterministic Portuguese labels.
     linked_modules: [V05, V06, V07, V08, V09, V15]
     commit: bfb97710820fb4059d47111b7c631ab77ca41a67
   - id: HEX-VENT-V08-PLATE
@@ -89,7 +97,7 @@ assets:
       - identificar trigger limite e ciclagem de cada estrategia
       - reconhecer que o nome do modo nao quantifica o esforco do paciente
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Three-column causal comparison of PSV, CPAP and SIMV. For each mode show patient effort, ventilator contribution, trigger, limiting variable, cycling rule and a simplified synchronized trace. Anonymous patient icon, generic ventilator, no branding, no radiography, concise deterministic Portuguese labels, clinically exact division of respiratory work.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Three-column causal comparison of PSV, CPAP and SIMV. For each mode show patient effort, ventilator contribution, trigger, limiting variable, cycling rule and a simplified synchronized trace. Anonymous patient icon, generic ventilator, no branding, no radiography, concise deterministic Portuguese labels, clinically exact division of respiratory work.
     linked_modules: [V01, V05, V06, V07, V08, V09, V12, V15]
     commit: 4ba2596f344ea70dbf1da4b76da9e6664d34ae62
   - id: HEX-VENT-V09-PLATE
@@ -104,11 +112,86 @@ assets:
       - reconhecer cinco assincronias frequentes e seus mecanismos
       - relacionar cada padrao a causas provaveis e ajustes direcionados
     canonical_prompt: >-
-      Flat vector medical infographic, 4:3 landscape, white background, Hexapode palette in petrol blue, amber and graphite. Parallel traces use amber for patient neural effort and petrol for ventilator delivery. Five panels: ineffective effort, auto-trigger, double trigger, flow starvation and late cycling. Show causal timing mismatch, concise mechanism and correction cue. No commercial ventilator interface, no radiography, deterministic Portuguese labels and precise waveform geometry.
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Parallel traces use terracota for patient neural effort and azul for ventilator delivery. Five panels: ineffective effort, auto-trigger, double trigger, flow starvation and late cycling. Show causal timing mismatch, concise mechanism and correction cue. No commercial ventilator interface, no radiography, deterministic Portuguese labels and precise waveform geometry.
     linked_modules: [V02, V03, V04, V05, V06, V07, V08, V09, V10, V12, V15, V18]
     commit: 0278eca21ed1add963f131ddc10ae30ef1797782
+  - id: HEX-VENT-V00-PLATE
+    module: V00
+    title: Gramatica da maquina
+    status: completed
+    file: v00-gramatica-maquina.svg
+    kind: original_vector_plate
+    alt_text: Prancha vetorial em cinco paineis mostrando ventilador, resistencia, complacencia, fluxo, volume e comparacao entre VCV e PCV.
+    learning_objectives:
+      - reconhecer todo modo ventilatorio como um contrato
+      - distinguir a variavel garantida da variavel livre
+      - relacionar pressao, fluxo, volume e tempo na equacao do movimento
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Five-panel storyboard: ventilator-to-lung system, resistive and elastic cost of pressure, inspiratory flow waveform, time windows (Ti/Te), and a VCV-versus-PCV contract comparison showing guaranteed variable versus free variable. No photorealism, no manufacturer branding, concise deterministic Portuguese labels, clinical causality before decoration.
+    linked_modules: [V00, V05, V06, V15]
+    commit: 1cdd1f8de8f76ac7cbe95aab04cbf76673a2d9a9
+  - id: HEX-VENT-V03-PLATE
+    module: V03
+    title: Curvas de pressao, fluxo e volume
+    status: completed
+    file: v03-curvas-pressao-fluxo-volume.svg
+    kind: original_vector_plate
+    alt_text: Tres curvas alinhadas no tempo e exemplo de fluxo expiratorio que nao retorna a zero antes do ciclo seguinte.
+    learning_objectives:
+      - ler pressao, fluxo e volume como tres ondas alinhadas no tempo
+      - reconhecer fluxo expiratorio que nao zera como ar preso
+      - relacionar a curva de fluxo residual a auto-PEEP
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Three time-aligned waveform panels (pressure, flow, volume) with a highlighted example of expiratory flow that fails to return to zero before the next breath. No photorealism, no manufacturer branding, no radiography, concise deterministic Portuguese labels, precise waveform geometry.
+    linked_modules: [V03, V04, V09, V17, V18]
+    commit: 1d5f8acddd99d1f22b3dfbbec82cfdf63bf3dffe
+  - id: HEX-VENT-V05-PLATE
+    module: V05
+    title: VCV por dentro
+    status: completed
+    file: v05-vcv.svg
+    kind: original_vector_plate
+    alt_text: Comparacao vetorial da pressao resultante no VCV em pulmao normal, resistencia alta e complacencia baixa.
+    learning_objectives:
+      - reconhecer volume e fluxo como fixos e pressao como consequencia no VCV
+      - relacionar pico e platô a resistencia e complacencia respectivamente
+      - antecipar como resistencia alta e complacencia baixa mudam a curva de pressao
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Side-by-side pressure-time comparison under volume control: normal lung, high resistance and low compliance, with peak and plateau pressure clearly marked. No photorealism, no manufacturer branding, no radiography, concise deterministic Portuguese labels, precise waveform geometry.
+    linked_modules: [V00, V02, V03, V05, V07, V08, V09, V15]
+    commit: 5670aed3c614a031253cd830c17b878f09411a3f
+  - id: HEX-VENT-V06-PLATE
+    module: V06
+    title: PCV por dentro
+    status: completed
+    file: v06-pcv.svg
+    kind: original_vector_plate
+    alt_text: Comparacao vetorial do volume resultante no PCV em pulmao normal, complacencia baixa e resistencia elevada.
+    learning_objectives:
+      - reconhecer pressao e Ti como fixos e volume como consequencia no PCV
+      - relacionar volume entregue a complacencia e a constante de tempo
+      - antecipar como complacencia baixa e resistencia alta reduzem o volume sem alarme de pressao
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Side-by-side flow and volume comparison under pressure control: normal lung, low compliance and high resistance, with decelerating flow and resulting tidal volume clearly marked. No photorealism, no manufacturer branding, no radiography, concise deterministic Portuguese labels, precise waveform geometry.
+    linked_modules: [V00, V02, V03, V06, V07, V08, V09, V15]
+    commit: ac60f7ebc0223c88d2e76d51d99bdb5dc611d299
+  - id: HEX-VENT-V15-PLATE
+    module: V15
+    title: PSV x VCV x PCV
+    status: completed
+    file: v15-comparacao-modos.svg
+    kind: original_vector_plate
+    alt_text: Tabela visual comparando disparo, variavel garantida, variavel livre, curva tipica e risco silencioso dos tres modos.
+    learning_objectives:
+      - comparar PSV, VCV e PCV pela mesma grade causal
+      - identificar a variavel garantida e a variavel livre de cada modo
+      - associar cada modo ao seu risco silencioso caracteristico
+    canonical_prompt: >-
+      Flat vector medical infographic, 4:3 landscape, ivory background, CODEX.md clinical palette (marfim, azul de comando, terracota de esforço, verde-grafite). Comparative table-style plate contrasting PSV, VCV and PCV across trigger, guaranteed variable, free variable, typical waveform and silent risk. No photorealism, no manufacturer branding, no radiography, concise deterministic Portuguese labels, strong visual hierarchy.
+    linked_modules: [V00, V05, V06, V07, V08, V09, V15, V16]
+    commit: 9e7701f4031fe29807d252702b8b966a1cfcd522
 progress:
-  completed: 6
+  completed: 11
   target: 600
   next_candidates:
     - V10 generated_plate

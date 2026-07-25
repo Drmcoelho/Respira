@@ -82,7 +82,7 @@ modules:
     slug: gramatica-da-maquina
     thesis: Todo modo é um contrato; a variável garantida cria uma variável livre.
     assets:
-      - {kind: generated_plate, status: planned, destination: assets/ventila/atlas/v00-gramatica-da-maquina.webp}
+      - {kind: generated_plate, status: completed, destination: assets/ventila/generated/v00-gramatica-maquina.svg, catalog_id: HEX-VENT-V00-PLATE}
       - {kind: deterministic_overlay, status: planned, destination: assets/ventila/overlays/v00-gramatica-da-maquina.svg}
     references: [drive-pilbeam-8e, drive-pilbeam-6e, commons-ventilator-circuit]
   - id: V01
@@ -100,7 +100,7 @@ modules:
     references: [drive-pilbeam-8e, commons-ventilator-circuit]
   - id: V03
     slug: curvas-pressao-fluxo-volume
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v03-curvas-pressao-fluxo-volume.svg, catalog_id: HEX-VENT-V03-PLATE}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, pmc-waveforms, commons-flow-time]
   - id: V04
     slug: loops
@@ -108,11 +108,11 @@ modules:
     references: [drive-pilbeam-8e, pmc-waveforms]
   - id: V05
     slug: vcv-por-dentro
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v05-vcv.svg, catalog_id: HEX-VENT-V05-PLATE}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, drive-pilbeam-6e]
   - id: V06
     slug: pcv-por-dentro
-    assets: [{kind: generated_plate, status: planned}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v06-pcv.svg, catalog_id: HEX-VENT-V06-PLATE}, {kind: deterministic_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, drive-pilbeam-6e]
   - id: V07
     slug: hibridos-prvc
@@ -148,7 +148,7 @@ modules:
     references: [drive-pilbeam-8e, openstax-lungs]
   - id: V15
     slug: psv-vcv-pcv
-    assets: [{kind: generated_plate, status: planned}, {kind: comparative_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
+    assets: [{kind: generated_plate, status: completed, destination: assets/ventila/generated/v15-comparacao-modos.svg, catalog_id: HEX-VENT-V15-PLATE}, {kind: comparative_waveforms, status: planned}, {kind: deterministic_overlay, status: planned}]
     references: [drive-pilbeam-8e, drive-pilbeam-6e]
   - id: V16
     slug: tutor-adaptativo
